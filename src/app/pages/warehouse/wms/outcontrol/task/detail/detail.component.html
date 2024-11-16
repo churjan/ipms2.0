@@ -1,105 +1,132 @@
-<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" headerHeight="48px" justifyContent="center"
-    (onClose)="close()" [content]="contentTpl">
-    <ng-template #contentTpl>
-        <div class="m-t--20 tabset-wrapper">
-            <nz-tabset>
-                <nz-tab nzTitle="{{'placard.taskDetail'|i18n }}">
-                    <nz-descriptions nzBordered nzSize="small">
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.name'|i18n }}">{{outControlTaskdata.name}}
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.code'|i18n }}">{{outControlTaskdata.code}}
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.outControl'|i18n }}" [nzSpan]="2">
-                            {{outControlTaskdata.control_name}}</nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.scheme'|i18n }}">
-                            {{outControlTaskdata.relation_name}}</nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.quantity'|i18n }}">
-                            <ng-container *ngIf="!outControlTaskdata.quantity">{{ 'placard.noLimit'|i18n }}
-                            </ng-container>
-                            <ng-container *ngIf="outControlTaskdata.quantity">{{outControlTaskdata.quantity}}
-                            </ng-container>
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOuttask.inboundtime'|i18n }}">
-                            {{outControlTaskdata.inboundtime}}
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOuttask.type_name'|i18n }}">
-                            {{outControlTaskdata.type_name}}
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOuttask.state_name'|i18n }}" [nzSpan]="2">
-                            {{outControlTaskdata.state_name}}
-                        </nz-descriptions-item>
-                        <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.bls_code'|i18n }}" [nzSpan]="3">
-                            <!-- <pre
+<idrawer
+  *ngIf="visible"
+  [title]="title"
+  [width]="width"
+  height="99%"
+  headerHeight="48px"
+  justifyContent="center"
+  (onClose)="close()"
+  [content]="contentTpl"
+>
+  <ng-template #contentTpl>
+    <div class="m-t--20 tabset-wrapper">
+      <nz-tabset>
+        <nz-tab nzTitle="{{ 'placard.taskDetail' | i18n }}">
+          <nz-descriptions nzBordered nzSize="small">
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.name' | i18n }}"
+              >{{ outControlTaskdata.name }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.code' | i18n }}"
+              >{{ outControlTaskdata.code }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.outControl' | i18n }}" [nzSpan]="2">
+              {{ outControlTaskdata.control_name }}</nz-descriptions-item
+            >
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.scheme' | i18n }}">
+              {{ outControlTaskdata.relation_name }}</nz-descriptions-item
+            >
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.quantity' | i18n }}">
+              <ng-container *ngIf="!outControlTaskdata.quantity">{{ "placard.noLimit" | i18n }} </ng-container>
+              <ng-container *ngIf="outControlTaskdata.quantity">{{ outControlTaskdata.quantity }} </ng-container>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOuttask.inboundtime' | i18n }}">
+              {{ outControlTaskdata.inboundtime }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOuttask.type_name' | i18n }}">
+              {{ outControlTaskdata.type_name }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOuttask.state_name' | i18n }}" [nzSpan]="2">
+              {{ outControlTaskdata.state_name }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.bls_code' | i18n }}" [nzSpan]="3">
+              <!-- <pre
                                 *ngFor="let item of outControlTaskdata.routes">{{ 'wmsOutcontrol.bls_code'|i18n }}：{{item.bls_code}}   {{ 'bls_name'|i18n }}：{{item.bls_name}}</pre> -->
-                                <div style="overflow: auto;max-height: 500px;">
-                                    <div *ngFor="let item of outControlTaskdata.routes">
-                                        <span class="mr50">{{ 'wmsOutcontrol.bls_code'|i18n }}：{{item.bls_code}}</span>
-                                        <span>{{ 'wmsOutcontrol.bls_name'|i18n }}：{{item.bls_name}}</span>
-                                    </div>
-                                </div>
-                        </nz-descriptions-item>
-                    </nz-descriptions>
-                </nz-tab>
-                <nz-tab nzTitle="{{'placard.outDetail'|i18n }}">
-                    <form nz-form>
-                        <nz-form-item>
-                            <nz-form-label [nzSpan]="2">{{ 'wmsStockout.code'|i18n }}</nz-form-label>
-                            <nz-form-control [nzSpan]="4">
-                                <input nz-input readonly value="{{data?.code}}" />
-                            </nz-form-control>
-                            <nz-form-label [nzSpan]="2">{{ 'wmsStockout.createtime'|i18n }}</nz-form-label>
-                            <nz-form-control [nzSpan]="4">
-                                <input nz-input readonly value="{{data?.createtime|time}}" />
-                            </nz-form-control>
-                            <nz-form-label [nzSpan]="2">{{ 'wmsStockout.remark'|i18n }}</nz-form-label>
-                            <nz-form-control [nzSpan]="4">
-                                <input nz-input readonly value="{{data?.remark}}" />
-                            </nz-form-control>
-                            <nz-form-label [nzSpan]="2">{{ 'wmsStockout.state_name'|i18n }}</nz-form-label>
-                            <nz-form-control [nzSpan]="4">
-                                <input nz-input readonly value="{{data?.state_name}}" />
-                            </nz-form-control>
-                        </nz-form-item>
-                    </form>
-                    <form nz-form class="details">
-                        <nz-form-item>
-                            <nz-form-control [nzSpan]="24">
-                                <itable class="itable" [data]="tableData" [total]="tableData?.length"
-                                    [loading]="loading" [pageSize]="10" [columns]="tableColumns"
-                                    [frontPagination]="true" [showSelection]="false" yScroll="calc(100%)"
-                                    [tpls]="{filterTpl: filterTpl,timeTpl:timeTpl,isOutboundTpl:isOutboundTpl}">
-                                    <ng-template #filterTpl let-title="title" let-item="item">
-                                        {{title}}
-                                        <nz-filter-trigger [(nzVisible)]="filterFieldsVisible[item.code]"
-                                            (nzVisibleChange)="filterFieldOpen($event,item.code)"
-                                            [nzActive]="filterFieldsValue[item.code]" [nzDropdownMenu]="filterMenu">
-                                            <i nz-icon nzType="search"></i>
-                                        </nz-filter-trigger>
-                                    </ng-template>
-                                    <ng-template #timeTpl let-text="text">
-                                        {{text|time}}
-                                    </ng-template>
-                                    <ng-template #isOutboundTpl let-text="text">
-                                        {{text?'是':'否'}}
-                                    </ng-template>
-                                </itable>
-                            </nz-form-control>
-                        </nz-form-item>
-                    </form>
-                </nz-tab>
-            </nz-tabset>
-        </div>
-    </ng-template>
+              <div style="overflow: auto; max-height: 500px">
+                <div *ngFor="let item of outControlTaskdata.routes">
+                  <span class="mr50">{{ "wmsOutcontrol.bls_code" | i18n }}：{{ item.bls_code }}</span>
+                  <span>{{ "wmsOutcontrol.bls_name" | i18n }}：{{ item.bls_name }}</span>
+                </div>
+              </div>
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </nz-tab>
+        <nz-tab nzTitle="{{ 'placard.outDetail' | i18n }}">
+          <form nz-form>
+            <nz-form-item>
+              <nz-form-label [nzSpan]="2">{{ "wmsStockout.code" | i18n }}</nz-form-label>
+              <nz-form-control [nzSpan]="4">
+                <input nz-input readonly value="{{ data?.code }}" />
+              </nz-form-control>
+              <nz-form-label [nzSpan]="2">{{ "wmsStockout.createtime" | i18n }}</nz-form-label>
+              <nz-form-control [nzSpan]="4">
+                <input nz-input readonly value="{{ data?.createtime | time }}" />
+              </nz-form-control>
+              <nz-form-label [nzSpan]="2">{{ "wmsStockout.remark" | i18n }}</nz-form-label>
+              <nz-form-control [nzSpan]="4">
+                <input nz-input readonly value="{{ data?.remark }}" />
+              </nz-form-control>
+              <nz-form-label [nzSpan]="2">{{ "wmsStockout.state_name" | i18n }}</nz-form-label>
+              <nz-form-control [nzSpan]="4">
+                <input nz-input readonly value="{{ data?.state_name }}" />
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+          <form nz-form class="details">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="24">
+                <itable
+                  class="itable"
+                  [data]="tableData"
+                  [total]="tableData?.length"
+                  [loading]="loading"
+                  [pageSize]="10"
+                  [columns]="tableColumns"
+                  [frontPagination]="true"
+                  [showSelection]="false"
+                  yScroll="calc(100%)"
+                  [tpls]="{ filterTpl: filterTpl, timeTpl: timeTpl, isOutboundTpl: isOutboundTpl }"
+                >
+                  <ng-template #filterTpl let-title="title" let-item="item">
+                    {{ title }}
+                    <nz-filter-trigger
+                      [(nzVisible)]="filterFieldsVisible[item.code]"
+                      (nzVisibleChange)="filterFieldOpen($event, item.code)"
+                      [nzActive]="filterFieldsValue[item.code]"
+                      [nzDropdownMenu]="filterMenu"
+                    >
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </ng-template>
+                  <ng-template #timeTpl let-text="text">
+                    {{ text | time }}
+                  </ng-template>
+                  <ng-template #isOutboundTpl let-text="text">
+                    {{ text ? "是" : "否" }}
+                  </ng-template>
+                </itable>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </ng-template>
 </idrawer>
 
 <nz-dropdown-menu #filterMenu="nzDropdownMenu">
-    <div class="ant-table-filter-dropdown">
-        <div class="search-box">
-            <input type="text" nz-input placeholder="{{ 'inputdata.input'|i18n }}"
-                [(ngModel)]="filterFieldsValue[currentField]" (keydown)="search($event)" />
-            <button nz-button nzSize="small" nzType="primary" (click)="search()"
-                class="search-button">{{ 'btn.search'|i18n }}</button>
-            <button nz-button nzSize="small" (click)="reset()">{{ 'btn.reset'|i18n }}</button>
-        </div>
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'inputdata.input' | i18n }}"
+        [(ngModel)]="filterFieldsValue[currentField]"
+        (keydown)="search($event)"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+        {{ "btn.search" | i18n }}
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">{{ "btn.reset" | i18n }}</button>
     </div>
+  </div>
 </nz-dropdown-menu>
