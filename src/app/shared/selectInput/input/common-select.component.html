@@ -1,0 +1,19 @@
+<nz-select class="drop-down" [nzPlaceHolder]="title" [(ngModel)]="value"
+    (nzScrollToBottom)="loadMore()" [nzDisabled]="isdisabled"
+    [nzLoading]="loading"
+    [nzMode]="multiple==true?'multiple':'default'" nzAllowClear
+    [nzDropdownRender]="isAdd==true?render:''"
+    [nzShowSearch]="isSeach" (nzOnSearch)="Search($event)"
+    [nzServerSearch]="true" (ngModelChange)="clickItem($event)">
+    <nz-option *ngFor="let o of optionList" [nzValue]="o[DataFiled]"
+        [nzLabel]="o.leable?o.leable:o[DataTxt]" (click)="clickItem(o)">
+    </nz-option>
+    <nz-option *ngIf="loading==true" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" class="loading-icon"></i>
+        {{'placard.loading'|i18n}}
+    </nz-option>
+</nz-select>
+<ng-template #render>
+    <nz-divider style="margin: 4px 0;"></nz-divider>
+    <!-- <i nz-icon nzType="plus" [class.hide]="!(isAdd==true)" (click)="ComponentAddData($event);"></i> -->
+</ng-template>

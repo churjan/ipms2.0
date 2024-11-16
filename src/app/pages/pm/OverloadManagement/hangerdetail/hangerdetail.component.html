@@ -1,0 +1,86 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="70%" nzSize="small"
+  (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+  <ng-template #contentTpl>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzRequired>{{ 'pmOverloadManagement.name'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <input nz-input placeholder="{{'inputdata.input'|i18n}}" [(ngModel)]="node.name" name="blsr_name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzRequired>{{ 'pmOverloadManagement.overload_order'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <nz-radio-group [(ngModel)]="node.overload_order" name="overload_order">
+            <label nz-radio [nzValue]="item.value"
+              *ngFor="let item of OverLoadOrderTypeEnum">{{item.Description}}</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5" nzRequired>{{ 'pmOverloadManagement.overload_options'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <ng-container *ngTemplateOutlet="overloadTpl"></ng-container>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <ng-template #overloadTpl>
+      <nz-table #overloadTable nzBordered [nzData]="overload_options" nzSize="small" [nzShowPagination]="false"
+        [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th nzWidth="80px" nzLeft></th>
+            <th>分组</th>
+            <th nzWidth="120px" nzRight nzAlign="center">
+              <a nz-popover nzPopoverTitle="{{'btn.addition'|i18n}}" [nzPopoverPlacement]="'bottom'"
+                nzPopoverTrigger="click" [nzPopoverContent]="plusTpl">
+                <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+              </a>
+              <ng-template #plusTpl>
+                <nz-list nzBordered nzSize="small" style="max-height: 200px;overflow: auto;">
+                  <nz-list-item *ngFor="let item of OvrLoadGroupEnum" nzNoFlex>{{ item.Description }}
+                    <ul nz-list-item-actions>
+                      <nz-list-item-action>
+                        <a (click)="addoverload_options(item)">
+                          <i nz-icon nzType="plus" nzTheme="outline"></i>
+                        </a>
+                      </nz-list-item-action>
+                    </ul>
+                  </nz-list-item>
+                </nz-list>
+              </ng-template>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of overloadTable.data;let i=index">
+            <td>{{i+1}}级分组</td>
+            <td>{{data.value_name}}
+              <!-- <nz-select [(ngModel)]="data.value" name="i" nzPlaceHolder="{{'checkdata.check'|i18n}}"
+                (ngModelChange)="ModelChange($event,data,i)">
+                <nz-option [nzValue]="item.value" nzLabel="{{item.Description}}" *ngFor="let item of OvrLoadGroupEnum">
+                </nz-option>
+              </nz-select> -->
+            </td>
+            <td nzRight nzAlign="right">
+              <a (click)="move(i-1,i)" *ngIf="i>0"><i nz-icon nzType="arrow-up" nzTheme="outline"></i></a>
+              <nz-divider nzType="vertical" *ngIf="i>0"></nz-divider>
+              <a (click)="move(i,i+1)" *ngIf="i<overload_options.length-1"><i nz-icon nzType="arrow-down"
+                  nzTheme="outline"></i></a>
+              <nz-divider nzType="vertical" *ngIf="i<overload_options.length-1"></nz-divider>
+              <a (click)="minus(data,i)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </ng-template>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [nzLoading]="submiting"
+      class="m-l-6">{{'btn.save'|i18n}}</button>
+    <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+  </ng-template>
+</idrawer>

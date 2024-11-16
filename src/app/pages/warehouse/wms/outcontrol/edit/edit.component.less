@@ -1,0 +1,41 @@
+nz-date-picker {
+    width: 100%
+}
+
+.tabset-wrapper {
+    min-width: 700px;
+}
+
+.transfer-table-wrapper {
+    padding: 0 12px 12px;
+    height : 100%;
+
+    nz-table {
+        height: 100%;
+    }
+}
+
+.transfer {
+    height: calc(100% - 15px);
+}
+
+nz-tabset ::ng-deep {
+    height: calc(100% - 92px);
+
+    .ant-tabs-content {
+        height: 100%;
+    }
+}
+
+.transfer ::ng-deep>.ant-transfer-list .ant-transfer-list-body {
+    .ant-transfer-list-body-customize-wrapper {
+        height: calc(100% - 56px);
+
+        .ant-spin-nested-loading,
+        .ant-spin-container,
+        .ant-table,
+        .ant-table-container {
+            height: 100%;
+        }
+    }
+}

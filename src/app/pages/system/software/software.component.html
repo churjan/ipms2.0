@@ -1,0 +1,252 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[isLeftSpinning]="isLeftSpinning"
+[leftTreeTitle]="leftTreeTitle"
+[leftTreeTool]="leftTreeTool"
+[leftTreeInput]="leftTreeInput"
+[leftTree]="leftTree" 
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch"
+[zadvancedSearch]="zadvancedSearch"
+[zadvancedCont]="zadvancedCont"
+[isTablePage]="isTablePage"
+[tablePage]="tablePage"
+[tableData]="tableData"
+[pageSize]="queryParams.pageSize"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[format]="format"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+[isAdvancedSearch]="isAdvancedSearch"
+>
+</zpage>
+
+<!-- 左侧树工具栏内容 -->
+<ng-template #leftTreeTool>
+    <a nz-dropdown nzTrigger="click" class="zleft_top_right_a">
+        <i nz-icon nzTheme="outline" nzType="plus" (click)="toAddTree()"></i>
+    </a>
+    <a nz-dropdown nzTrigger="click" class="zleft_top_right_a">
+        <i nz-icon nzTheme="outline" nzType="reload" (click)="toReloadTree()"></i>
+    </a>
+</ng-template>
+<!-- 左侧树的查询区域 -->
+<ng-template #leftTreeInput>
+    <nz-input-group style="margin-bottom: 10px;" [nzSuffix]="suffixIcon">
+        <input type="text" nz-input [placeholder]="'placard.search'|i18n" ngModel (ngModelChange)="searchValue$.next($event)"/>
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+</ng-template>
+<!-- 左侧树tree -->
+<ng-template #leftTree>
+    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource" nzNoAnimation>
+        <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding class="tree-cont-k">
+            <!-- <nz-tree-node-toggle nzTreeNodeNoopToggle></nz-tree-node-toggle> -->
+            <nz-tree-node-option
+                class="tree-cont"
+                [nzDisabled]="node.disabled"
+                [nzSelected]="selectListSelection.isSelected(node)"
+                (nzClick)="nzTreeEvent(node)"
+            >
+                <span [innerHTML]="node.name | highlight:searchValue" nz-tooltip [nzTooltipTitle]="node.name"></span>
+            </nz-tree-node-option>
+            <button class="tree-cont-function" nz-button nzType="text" nzSize="small" (click)="toUpdateTree(node)">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </button>
+            <button class="tree-cont-function" nz-button nzType="text" nzSize="small" nz-popconfirm [nzPopconfirmTitle]="'btn.isDelete'|i18n" (nzOnConfirm)="treeDel(node)">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </button>
+        </nz-tree-node>
+  
+        <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding class="tree-cont-k">
+            <!-- <nz-tree-node-toggle>
+                <span nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon></span>
+            </nz-tree-node-toggle> -->
+            <nz-tree-node-option
+                class="tree-cont"
+                [nzDisabled]="node.disabled"
+                [nzSelected]="selectListSelection.isSelected(node)"
+                (nzClick)="selectListSelection.toggle(node)"
+            >
+                <span [innerHTML]="node.name | highlight:searchValue" nz-tooltip [nzTooltipTitle]="node.name"></span>
+            </nz-tree-node-option>
+            <button class="tree-cont-function" nz-button nzType="text" nzSize="small" (click)="toUpdateTree(node)">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </button>
+            <button class="tree-cont-function" nz-button nzType="text" nzSize="small" nz-popconfirm [nzPopconfirmTitle]="'btn.isDelete'|i18n" (nzOnConfirm)="treeDel(node)">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+            </button>
+        </nz-tree-node>
+    </nz-tree-view>
+</ng-template>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword'|i18n" [(ngModel)]="queryParams.keywords" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" nzSearch (click)="resetSearch(1)"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+<!-- 高级搜索 搜索按钮 -->
+<ng-template #zadvancedSearch>
+
+</ng-template>
+<!-- 高级搜索 搜索条件 -->
+<ng-template #zadvancedCont>
+
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index" let-value="value">
+    <!-- <ng-container *ngIf="column.format=='arrange'">
+        <span>{{value==='True'?"已排":"待排"}}</span>
+    </ng-container>
+    <ng-container *ngIf="column.format=='sum'">
+        <span>{{(value!=null&&value!='')?value:0}}</span>
+    </ng-container> -->
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 树 弹窗 -------------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTreeTiele" 
+*ngIf="isTreePopup" 
+[width]="500" 
+[height]="290" 
+[isLoading]="isTreeLoading"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupTreeCont"
+[zpopupFoot]="zpopupTreeFoot"
+></zpopup>
+<!-- 弹窗 内容 -->
+<ng-template #zpopupTreeCont>
+    <form nz-form [formGroup]="treeValidateForm">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'popupField.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'popupField.codeTip'|i18n">
+                <input nz-input formControlName="code"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'popupField.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'color.nameTip'|i18n">
+                <input nz-input formControlName="name"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'popupField.sort'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <nz-input-number style="width: 100%;" formControlName="sort" [nzMin]="1" [nzStep]="1" [nzPrecision]="0"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #zpopupTreeFoot>
+    <button *ngIf="popupTreeType=='add' || popupTreeType=='update'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="treeSubmit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 弹窗 -------------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopup" 
+[width]="600" 
+[height]="480" 
+[isLoading]="isLoading"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupCont"
+[zpopupFoot]="zpopupFoot"
+></zpopup>
+<!-- 弹窗 内容 -->
+<ng-template #zpopupCont>
+    <form nz-form [formGroup]="validateForm">
+        <!-- 所属分类 -->
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="ssc_key">{{ 'popupField.ssc_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('checkdata.check'|i18n)+('popupField.ssc_key'|i18n)">
+                <nz-select [nzLoading]="sscLoading" formControlName="ssc_key" [nzPlaceHolder]="'checkdata.check'|i18n">
+                    <nz-option [nzLabel]="item.name" [nzValue]="item.key" *ngFor="let item of softTypeList"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- 版本号 -->
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="vercode">{{ 'popupField.vercode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.vercode'|i18n)">
+                <input nz-input formControlName="vercode" [placeholder]="'inputdata.input'|i18n"/>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- 文件 -->
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bfi_key">{{ 'popupField.bfi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('checkdata.check'|i18n)+('popupField.bfi_key'|i18n)">
+                <input *ngIf="popupType=='add'" style="width: 110px;" nz-input formControlName="bfi_key" [placeholder]="'inputdata.input'|i18n"/>
+                <input *ngIf="popupType=='see'" nz-input formControlName="bfi_key" [placeholder]="'inputdata.input'|i18n"/>
+                <nz-upload
+                *ngIf="popupType=='add'"
+                [nzAction]="upFileUrl"
+                [nzFileList]="fileList"
+                [nzSize]="10240000"
+                (nzChange)="handleFileChange($event)"
+                [nzHeaders]="uploadingHeader()"
+                >
+                <button nz-button style="margin-left: -110px;">
+                    <span nz-icon nzType="upload" ></span>
+                    选择文件
+                </button>
+                </nz-upload>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- 排序 -->
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'popupField.sort'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.sort'|i18n)">
+                <nz-input-number style="width: 100%;" formControlName="sort" [nzMin]="1" [nzStep]="1" [nzPrecision]="0" [nzPlaceHolder]="'inputdata.input'|i18n"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- 更新内容 -->
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'popupField.info'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+                <textarea rows="1" formControlName="info" nz-input></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #zpopupFoot>
+    <button *ngIf="popupType=='add'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 删除---------------------------------------------------->
+<zpopup-confirm
+*ngIf="isPopupConfirm" 
+[delDataNum]="delDataNum"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>

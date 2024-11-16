@@ -1,0 +1,23 @@
+.small {
+    height: 100%;
+}
+
+.small ::ng-deep>.ant-spin-nested-loading {
+    height: calc(100%);
+
+    .ant-spin-container {
+        height: calc(100%);
+
+        .ant-table {
+            height: calc(100% - 40px);
+
+            .ant-table-container {
+                height: calc(100%);
+
+                .ant-table-body {
+                    height: calc(100%);
+                }
+            }
+        }
+    }
+}

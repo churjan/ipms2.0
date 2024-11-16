@@ -1,0 +1,230 @@
+<div class="page-view">
+  <div class="header-view">
+    <span class="card-title text-5"
+      >{{ "checkdata.check_station" | i18n }}：</span
+    >
+    <nz-select
+      [(ngModel)]="wss.curStation"
+      (ngModelChange)="onStationChange()"
+      [compareWith]="compareFn"
+      style="width: 200px"
+    >
+      <nz-option
+        *ngFor="let item of wss.stationList"
+        [nzLabel]="item.fullName"
+        [nzValue]="item"
+      ></nz-option>
+    </nz-select>
+    <button nz-button nzType="primary" class="ml5" [disabled]="!wss.curStation" (click)="onJump()">核箱页面</button>
+  </div>
+  <div class="body-view">
+    <div class="list-view">
+      <div class="list-header-view">
+        <span>{{ "placard.PackagingPlanBox" | i18n }}</span>
+        <span
+          nz-icon
+          nzType="reload"
+          nzTheme="outline"
+          class="mt4"
+          nz-tooltip
+          nzTooltipTitle="{{ 'btn.reset' | i18n }}"
+          (click)="onReset()"
+        ></span>
+      </div>
+      <div class="list-search-view">
+        <nz-input-group [nzSuffix]="suffixIcon">
+          <input
+            type="text"
+            nz-input
+            placeholder="{{ 'placard.search' | i18n }}"
+            [(ngModel)]="searchValue"
+          />
+        </nz-input-group>
+        <ng-template #suffixIcon>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
+      <div class="tree-view">
+        <nz-tree
+          #treeRef
+          [nzData]="scheduleListOfData"
+          nzBlockNode
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzItemClick($event)"
+          [nzTreeTemplate]="nzTreeTemplate"
+          [nzSelectedKeys]="nzSelectedKeys"
+          [nzExpandedKeys]="nzExpandedKeys"
+        ></nz-tree>
+        <ng-template #nzTreeTemplate let-node let-origin="origin">
+          <span *ngIf="!node.isLeaf">
+            <span class="folder-name">
+              {{ node.title }}
+              <nz-tag nzColor="red" *ngIf="origin.all_filter_quantity">
+                缺件 {{ origin.all_filter_quantity }}
+              </nz-tag>
+            </span>
+          </span>
+          <span *ngIf="node.isLeaf">
+            <span class="mr5" [class.finished-txt]="origin.print_time">
+              {{ node.title }}
+            </span>
+            <nz-tag
+              [nzColor]="'orange'"
+              class="mr5"
+              *ngIf="origin.iscurrentstation"
+            >
+              {{ "placard.Within" | i18n }}
+            </nz-tag>
+            <nz-tag nzColor="red" class="mr5" *ngIf="origin.has_filter">
+              缺件
+              <ng-contianer *ngIf="origin.box_filter_quantity"
+                >{{ origin.box_filter_quantity }}
+              </ng-contianer>
+            </nz-tag>
+            <button
+              nz-button
+              nzType="link"
+              nzSize="small"
+              [disabled]="!origin.iscurrentstation"
+              (click)="onShowScanModal($event, origin)"
+            >
+              {{ "btn.Scan" | i18n }}
+            </button>
+          </span>
+        </ng-template>
+      </div>
+    </div>
+    <div class="main-view">
+      <nz-table
+        #detailTable
+        [nzData]="listOfData"
+        [nzScroll]="{ y: 'calc(100vh - 210px)', x: '4400px' }"
+        nzSize="small"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="140px" nzLeft>衣服条码</th>
+            <th nzWidth="160px">载具号</th>
+            <th nzWidth="60px">状态</th>
+            <th nzWidth="120px">包装方案编号</th>
+            <th nzWidth="120px">箱号</th>
+            <th nzWidth="60px">套号</th>
+            <th nzWidth="140px">标签号</th>
+            <th nzWidth="140px">订单编号</th>
+            <th nzWidth="140px">单位</th>
+            <th nzWidth="120px">订单明细</th>
+            <th nzWidth="120px">品名</th>
+            <th nzWidth="120px">规格</th>
+            <th nzWidth="120px">批号</th>
+            <th nzWidth="120px">编号</th>
+            <th nzWidth="120px">姓名</th>
+            <th nzWidth="140px">部门名称</th>
+            <th nzWidth="120px">箱型</th>
+            <th nzWidth="120px">型号</th>
+            <th nzWidth="120px">包装线号</th>
+            <th nzWidth="120px">号型</th>
+            <th nzWidth="160px">成品货号</th>
+            <th nzWidth="120px">隶属基地</th>
+            <th nzWidth="120px">半成品套体包装方案编码</th>
+            <th nzWidth="120px">创建时间</th>
+            <th nzWidth="120px">上线时间</th>
+            <th nzWidth="120px">分拣开始时间</th>
+            <th nzWidth="120px">分拣结束时间</th>
+            <th nzWidth="120px">包装核对时间</th>
+            <th nzWidth="120px">打印时间</th>
+            <th nzWidth="260px">当前位置</th>
+            <th nzWidth="260px">目标位置</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of detailTable.data">
+            <td nzLeft>{{ item.tiaoma }}</td>
+            <td>{{ item.carrierid }}</td>
+            <td>
+              <ng-container [ngSwitch]="item.state">
+                <nz-tag nzColor="error" *ngSwitchCase="2">
+                  {{ item.state_name }}
+                </nz-tag>
+                <nz-tag nzColor="warning" *ngSwitchCase="99">
+                  {{ item.state_name }}
+                </nz-tag>
+                <nz-tag nzColor="processing" *ngSwitchCase="1">
+                  {{ item.state_name }}
+                </nz-tag>
+                <nz-tag nzColor="default" *ngSwitchDefault>
+                  {{ item.state_name }}
+                </nz-tag>
+              </ng-container>
+            </td>
+
+            <td>{{ item.zhuangxinfenzu }}</td>
+            <td>{{ item.expr1 }}</td>
+            <td>{{ item.taohao }}</td>
+            <td>{{ item.pti_tagcode }}</td>
+            <td>{{ item.htbn }}</td>
+            <td>{{ item.zzkh }}</td>
+            <td>{{ item.dingdanmingxid }}</td>
+            <td>{{ item.pinming }}</td>
+            <td>{{ item.guige }}</td>
+            <td>{{ item.pihao }}</td>
+            <td>{{ item.bianhao }}</td>
+            <td>{{ item.xingming }}</td>
+            <td>{{ item.bumenquancheng }}</td>
+            <td>{{ item.xiangxing }}</td>
+            <td>{{ item.xianghao }}</td>
+            <td>{{ item.autobaozhuangline }}</td>
+            <td>{{ item.haoxing }}</td>
+            <td>{{ item.chengpinhuohao }}</td>
+            <td>{{ item.lishujidi }}</td>
+            <td>{{ item.banchengpintaoti }}</td>
+            <td>
+              {{ item.create_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.online_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.sorting_start_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.sorting_end_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.check_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.print_time | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              <ng-container *ngIf="item.current_bls_code">
+                <span class="mr3">{{
+                  "[" + item.current_bls_code + "]" + item.current_bls_name
+                }}</span>
+                <nz-tag [nzColor]="'orange'" *ngIf="item.currenttype <= 0">
+                  {{ "placard.Within" | i18n }}
+                </nz-tag>
+                <nz-tag [nzColor]="'red'" *ngIf="item.currenttype > 0">
+                  {{ "placard.Onmain" | i18n }}
+                </nz-tag>
+              </ng-container>
+              {{ item.bls_code }}
+            </td>
+            <td>
+              <ng-container *ngIf="item.destination_bls_code">
+                <span class="mr3">{{
+                  "[" +
+                    item.destination_bls_code +
+                    "]" +
+                    item.destination_bls_name
+                }}</span>
+              </ng-container>
+              {{ item.bls_code }}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>

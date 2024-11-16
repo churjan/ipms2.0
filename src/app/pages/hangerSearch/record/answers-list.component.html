@@ -1,0 +1,83 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'80%'" justifyContent="center"
+    nzSize="small" [height]="'99%'" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-table #colSpanTable [nzData]="list" nzBordered
+            nzTableLayout="fixed"
+            [nzFrontPagination]="false" [nzShowPagination]="false"
+            nzSize="small"
+            [nzScroll]="{ x:'100%', y: 'calc(100% - 40px)' }">
+            <thead>
+                <tr>
+                    <th nzLeft nzAlign="center" nzWidth="60px">{{'placard.No'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="180px">{{'hanger.poi_name_receive'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.bsm_code_receive'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.hei_name_receive'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="180px">{{'hanger.poi_name_repair'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.bsm_code_repair'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.hei_name_repair'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="160px">{{'hanger.poi_key_repair_time'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="180px">{{'hanger.poi_name_recheck'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.bsm_code_recheck'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="100px">{{'hanger.hei_name_recheck'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="160px">{{'hanger.poi_key_recheck_time'|i18n}}</th>
+                    <th nzAlign="left" nzWidth="200px">{{'hanger.bqci_name'|i18n}}</th>
+                    <th nzRight nzAlign="center" nzWidth="100px">{{'hanger.handlemethod_name'|i18n}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of colSpanTable.data; index as i">
+                    <td nzLeft nzAlign="center">{{i+1}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.poi_name_receive}}">{{data.poi_name_receive}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.bsm_code_receive}}">{{data.bsm_code_receive}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.hei_name_receive}}">{{data.hei_name_receive}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.poi_name_repair}}">{{data.poi_name_repair}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.bsm_code_repair}}">{{data.bsm_code_repair}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.hei_name_repair}}">{{data.hei_name_repair}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.poi_key_repair_time}}">{{data.poi_key_repair_time}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.poi_name_recheck}}">{{data.poi_name_recheck}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.bsm_code_recheck}}">{{data.bsm_code_recheck}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.hei_name_recheck}}">{{data.hei_name_recheck}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.poi_key_recheck_time}}">{{data.poi_key_recheck_time}}</td>
+                    <td nzAlign="left" [nzEllipsis]="true" nz-tooltip
+                        nzTooltipTitle="{{data.bqci_name}}">{{data.bqci_name}}</td>
+                    <td nzRight nzAlign="center" nz-tooltip
+                        nzTooltipTitle="{{data.handlemethod_name}}">{{data.handlemethod_name}}</td>
+                    <!-- <ng-container *ngFor="let columns of modular.quality;let
+                        c=index;">
+                        <td
+                            *ngIf="columns.coums!='bqci_name'&&columns.coums!='poi_name_receive'&&columns.coums!='handlemethod_name'">
+                            {{columns.format?(data[columns.coums]|date:columns.format):qualitytitle(columns,data)}}
+                        </td>
+                        <td
+                            *ngIf="columns.coums=='question'||columns.coums=='question'||columns.coums=='handlemethod_name'">
+                            <nz-list nzSize="small">
+                                <nz-list-item *ngFor="let ql of qa.details;let
+                                    i=index">
+                                    {{columns.format?(ql[columns.coums]|date:columns.format):qualitytitle(columns,ql)}}</nz-list-item>
+                            </nz-list>
+                        </td>
+                    </ng-container>
+                    <td nzRight nzAlign="center">
+                        <a nz-button [nzSize]="size" nzType="link"
+                            (click)="get3(data.pqtr_list)">{{'btn.qir'|i18n}}</a>
+                    </td> -->
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    </ng-template>
+</idrawer>

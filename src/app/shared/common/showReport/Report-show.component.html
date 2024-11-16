@@ -1,0 +1,136 @@
+<nz-table #fixedTable class="listTable" [nzData]="data" [nzScroll]="{ x:
+    '100%',y:'calc(100% - 40px)' }" [nzFrontPagination]="false" [nzBordered]="true" nzShowSizeChanger nzShowQuickJumper
+    nzSize="small" nzTableLayout="fixed" [nzLoading]="loading" [nzOuterBordered]="true" [nzPageIndex]="pageMap.page"
+    [nzPageSize]="pageMap.pagesize" [nzShowPagination]="position" [nzTotal]="options.total" [nzFooter]="FooterTpl"
+    [nzShowTotal]="totalTemplate" [nzPageSizeOptions]="options.pageList" (nzPageSizeChange)="PageSizeChange($event)"
+    (nzPageIndexChange)="PageIndexChange($event)">
+    <thead>
+        <tr nzSingleSort>
+            <th nzLeft="0px" nzWidth="40px" nzShowExpand *ngIf="expandable"></th>
+            <th [nzLeft]="expandable!=true?'0px':'40px'" nzWidth="40px" nzShowCheckbox *ngIf="checkbox"
+                [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+            <ng-container *ngFor="let column of columns;let i=index">
+                <th [id]="column.coums" [nzShowSort]="isSort" [nzLeft]="i==0" nz-resizable
+                    [nzRight]="isAction!=true&&(i==columns.length-1)" [nzWidth]="column.coums=='No'?'55px':column.width"
+                    (nzResizeEnd)="onResize($event, column.coums)"
+                    [nzAlign]="column.alignment?column.alignment:'center'" nzEllipsis nz-tooltip
+                    nzTooltipTitle="{{column.name?column.name:((column.coums=='No'?'placard.No':(jsonname+'.'+column.coums))|i18n)}}">
+                    {{column.name?column.name:((column.coums=='No'?'placard.No':(jsonname+'.'+column.coums))|i18n)}}
+                    <nz-resize-handle nzDirection="right">
+                        <div class="resize-trigger"></div>
+                    </nz-resize-handle>
+                </th>
+            </ng-container>
+            <th nzRight [nzWidth]="btnGroupW+(lastColumnTpl?32*3:0)+'px'" nzAlign="center" *ngIf="isAction" nzEllipsis
+                nz-tooltip nzTooltipTitle="{{'btn.operation'|i18n}}">{{'btn.operation'|i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of fixedTable.data;let i=index" (click)="select(data,i)">
+            <td nzWidth="40px" nzLeft="0px" nzShowExpand *ngIf="expandable" [(nzExpand)]="data.expand"></td>
+            <td nzWidth="40px" [nzLeft]="expandable!=true?'0px':'40px'" *ngIf="checkbox" nzShowCheckbox
+                [(nzChecked)]="data.checked" (nzCheckedChange)="selectRow()">
+            </td>
+            <td [nzLeft]="ci==0" [nzRight]="isAction!=true&&(ci==columns.length-1)"
+                *ngFor="let column of columns;let ci=index" [nzWidth]="column.width?(column.width+'px'):'150px'"
+                [nzAlign]="column.alignment?column.alignment:'center'" [nzEllipsis]="true">
+                <div *ngIf="column.extend==true">
+                    <ng-container *ngTemplateOutlet="ExtendColumnTpl; context:{record: data, index: i,column:column}">
+                    </ng-container>
+                </div>
+                <div *ngIf="column.coums=='No'&&column.extend!=true">{{i+1}}</div>
+                <div *ngIf="column.type=='schedule'&&column.extend!=true" class="progress">
+                    <nz-progress [nzPercent]="data[column.coums]<0?0:data[column.coums]*10" nzSize="small"
+                        [nzStatus]="data[column.coums]==Status?'success':(data[column.coums]==NegStatus?'exception':'normal')"
+                        [nzFormat]="badge"></nz-progress>
+                    <ng-template #badge>
+                        <span class="warning" *ngIf="data[column.coums]<0" [nzText]="data[column.coums+'_name']">
+                        </span>
+                        <span style="font-size: 12px;" *ngIf="data[column.coums]>=0"
+                            [class.warning]="data[column.coums]<0"
+                            [class]="data[column.coums]*10>100?'success':'processing'">
+                            {{data[column.coums+'_name']}}
+                        </span>
+                    </ng-template>
+                    <span class="ribbon"
+                        *ngIf="StandardLine(data[column.StandardLine])==true">{{'placard.Overdue'|i18n}}</span>
+                    <!-- <div class="schedule">
+                        <nz-badge nzStatus="warning" *ngIf="data[column.coums]<0" [nzText]="data[column.coums+'_name']">
+                        </nz-badge>
+                        <nz-badge style="font-size: 12px;" *ngIf="data[column.coums]>=0"
+                            [nzStatus]="data[column.coums]*10>100?'success':'processing'">{{data[column.coums+'_name']}}
+                        </nz-badge>
+                        <span class="spacer"></span>
+                        <span class="ribbon"
+                            *ngIf="StandardLine(data[column.StandardLine])==true">{{'placard.Overdue'|i18n}}</span>
+                    </div>
+                    <nz-progress [nzPercent]="data[column.coums]<0?0:data[column.coums]*10" nzSize="small"
+                        [nzStatus]="data[column.coums]==99?'success':'normal'" [nzShowInfo]="false"></nz-progress> -->
+                </div>
+                <div *ngIf="column.type=='boolean'&&column.extend!=true" nz-tooltip class="Tooltip"
+                    nzTooltipTitle="{{data[print(column.coums)]==true?('placard.yes'|i18n):('placard.no'|i18n)}}">
+                    <nz-badge *ngIf="data[print(column.coums)]==true" nzStatus="success"
+                        nzText="{{ 'placard.yes'|i18n }}"></nz-badge>
+                    <nz-badge *ngIf="data[print(column.coums)]!=true" nzStatus="warning"
+                        nzText="{{ 'placard.no'|i18n }}"></nz-badge>
+                    <!-- {{data[print(column.coums)]==true?('placard.yes'|i18n):('placard.no'|i18n)}} -->
+                </div>
+                <div *ngIf="column.type=='number'&&column.extend!=true" nz-tooltip class="Tooltip"
+                    nzTooltipTitle="{{data[column.coums]}}">
+                    {{data[print(column.coums)]?data[print(column.coums)]:0}}
+                </div>
+                <div *ngIf="column.type!='schedule'&&column.extend!=true&&column.type!='boolean'&&column.type!='number'&&column.coums!='No'"
+                    (click)="column.open==true?open($event,column,data):null" [class.decoration]="column.open"
+                    [class.pointer]="column.open" nz-tooltip class="Tooltip"
+                    nzTooltipTitle="{{column.format?(data[print(column.coums)]|datetime:column.format):data[column.coums]}}">
+                    {{column.format?(data[print(column.coums)]|datetime:column.format):(column.field?delimiter(data,column):data[print(column.coums)])}}
+                </div>
+            </td>
+            <td nzRight [nzWidth]="(btnGroup.single.length+1)*32+'px'" nzAlign="center" *ngIf="isAction">
+                <ng-container *ngTemplateOutlet="lastColumnTpl; context:{record: data, index: i}"></ng-container>
+                <ng-container *ngFor="let btnsin of btnGroup.single;let bi=index">
+                    <a nz-tooltip nzTooltipTitle="{{btnsin.name }}" (click)="operation(btnsin.action,data,btnsin)">
+                        <i nz-icon [nzType]="btnsin.icon" *ngIf="btnsin.icon"></i>
+                        <span *ngIf="!btnsin.icon">{{btnsin.name}}</span>
+                    </a>
+                    <nz-divider nzType="vertical"
+                        [hidden]="(!btnGroup.extend||btnGroup.extend.length==0)&&btnGroup.single.length-1==bi">
+                    </nz-divider>
+                </ng-container>
+                <a *ngIf="btnGroup.extend&&btnGroup.extend.length>0" nz-dropdown [nzDropdownMenu]="menu"
+                    nzPlacement="bottomRight">
+                    <i nz-icon nzType="more"></i>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <ng-container *ngFor="let btnex of btnGroup.extend">
+                            <li nz-menu-item (click)="operation(btnex['action'],data,btnex)">
+                                <a>{{btnex.name}}</a>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </nz-dropdown-menu>
+            </td>
+            <!-- <td *ngIf="isAction&&lastColumnTpl" nzRight nzRight [nzWidth]="(btnGroup.single.length+1)*32+'px'"
+                nzAlign="center">
+                <ng-container *ngTemplateOutlet="lastColumnTpl; context:{record: data, index: i}"></ng-container>
+            </td> -->
+        </tr>
+    </tbody>
+    <tfoot class="tfoot" *ngIf="isStatistics">
+        <tr>
+            <td [nzLeft]="i==0" [nzRight]="isAction!=true&&(i==columns.length-1)"
+                *ngFor="let column of columns;let i=index" class="sticky"
+                [nzWidth]="column.width?(column.width+'px'):'150px'"
+                [nzAlign]="column.alignment?column.alignment:'center'" [nzEllipsis]="true">
+                <span *ngIf="i==0">{{'placard.Statistics'|i18n}}</span>
+                <span *ngIf="i>0">
+                    {{sumNode[print(column.coums)]?sumNode[print(column.coums)]:'-'}}</span>
+            </td>
+            <td nzRight class="sticky" *ngIf="isAction"></td>
+        </tr>
+    </tfoot>
+</nz-table>
+<ng-template #totalTemplate let-total>
+    {{ 'placard.totalnum'|i18n| covertTranslation: total }}
+</ng-template>

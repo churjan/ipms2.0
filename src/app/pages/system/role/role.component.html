@@ -1,0 +1,7 @@
+
+<crud2 #crud [router]="url" [jsonname]="fieldcode"
+    [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="sysRole.name"
+    [columns]="columns" [modular]="modular" [fields]="field"
+    [showAdvanced]="false"></crud2>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>

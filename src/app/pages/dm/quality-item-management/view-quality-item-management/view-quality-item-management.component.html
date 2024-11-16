@@ -1,0 +1,38 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-descriptions nzTitle="{{'placard.basein' | i18n}}">
+            <nz-descriptions-item nzTitle="{{'basQuality.code' | i18n}}">{{detailInfo.code}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'basQuality.name' | i18n}}">{{detailInfo.name}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'basQuality.bqcc_key' | i18n}}">{{detailInfo.bqcc_name}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'basQuality.handlemethod_name' | i18n}}">{{detailInfo.handlemethod_name}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'basQuality.sort' | i18n}}">{{detailInfo.sort}}</nz-descriptions-item>
+        </nz-descriptions>
+        <div class="fz16 bold mb8">{{'placard.qualityWithProcess' | i18n}}</div>
+        <nz-table [nzData]="tableSelectedList" [nzBordered]="true" [nzShowPagination]="false" nzSize="small"
+            [nzScroll]="{y}">
+            <thead>
+                <tr>
+                    <th nzWidth="50px" nzAlign="center">
+                        {{ "placard.No" | i18n }}
+                    </th>
+                    <th>{{ "basQuality.bqci_code" | i18n }}</th>
+                    <th>{{ "basQuality.bqci_name" | i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of tableSelectedList;let i = index">
+                    <td nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.poc_code }}</td>
+                    <td>{{ data.poc_name }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+    </ng-template>
+</idrawer>

@@ -1,0 +1,108 @@
+<idrawer *ngIf="visible" [title]="title+'-----'+model.station_code" [width]="'99%'" justifyContent="center"
+  nzSize="small" [footer]="footerTpl" (onClose)="close()" [content]="contentTpl" height="99%">
+  <ng-template #contentTpl>
+    <!-- 查找 -->
+    <div nz-row style="margin-bottom:5px ;">
+      <nz-input-group nz-col nzSpan="8" [nzSearch]="false" nzSize="small" [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="{{'placard.worksearch'|i18n}}" [(ngModel)]="searchvalue"
+          (change)="Search()" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <!-- <i nz-icon nzType="search"></i> -->
+      </ng-template>
+      <button nz-button nzType="primary" style="margin-left:10kpx ;" (click)="Search()">
+        <i nz-icon nzType="search"></i>查询
+      </button>
+      <button nz-button nzType="primary" style="margin-left:10kpx ;" (click)="allreset()">
+        <i nz-icon nzType="reload" nzTheme="outline"></i>{{'btn.reset'|i18n}}
+      </button>
+    </div>
+    <!-- 列表 -->
+    <nz-table #tableSelect nzBordered class="table" [ngStyle]="{'height': (Scrolly/2)+'px'}" [nzOuterBordered]="true"
+      nzSize="small" nzTableLayout="fixed" [nzScroll]="{ x: '750px', y: (Scrolly/2)-39+'px' }"
+      [nzFrontPagination]="false" [nzShowPagination]="false" [nzData]="optionList">
+      <thead>
+        <tr nzSingleSort>
+          <th *ngFor="let item of column;let i=index" nzCustomFilter nzWidth="150px" [nzLeft]="i==0">
+            {{'pmWork.'+item |i18n}}
+            <nz-filter-trigger [(nzVisible)]="filvisible[item]" [nzActive]="filsearchValue[currentField]"
+              [nzDropdownMenu]="filtertrigger" (nzVisibleChange)="filterFieldOpen($event,item)">
+              <span nz-icon nzType="search"></span>
+            </nz-filter-trigger>
+          </th>
+          <th nzWidth="130px">{{'pmWork.quantity' |i18n}}</th>
+          <th nzRight nzWidth="480px">部件</th>
+          <!-- <th  nzWidth="100px">排序</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of tableSelect.data;let i=index">
+          <td *ngFor="let item of column;let ci=index" [nzLeft]="ci==0">
+            {{data[item]}}</td>
+          <td>{{data.quantity}}</td>
+          <td nzRight  nzWidth="480px">
+            <button nz-button nzSize="small" nzType="primary" (click)="data.isget=true" *ngIf="!data.isget"
+              class="search-button">获取部件</button>
+            <ina-common-select class="select" title="" [(ngModel)]="data.bpi_list" DataFiled="code" DataTxt="name"
+              url="partinfo/extend" Datatyle="GetByWorbbillCode" *ngIf="data.isget" [multiple]="true"
+              [other]="{pwb_code:data.code,station_code:model.station_code}" [ispaging]="false"
+              (onSelect)="clickItem(data)">
+            </ina-common-select>
+          </td>
+          <!-- <td nzRight>
+            <input nz-input [(ngModel)]="data.sort" (change)="clickItem(data)" placeholder="{{ 'inputdata.input'|i18n}}"
+              type="number" min="0" />
+          </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+    <nz-dropdown-menu #filtertrigger="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="{{ 'inputdata.input'|i18n }}"
+            [(ngModel)]="filsearchValue[currentField]" />
+          <button nz-button nzSize="small" nzType="primary" (click)="Search()"
+            class="search-button">{{ 'btn.search'|i18n }}</button>
+          <button nz-button nzSize="small" (click)="empty()">{{ 'btn.reset'|i18n }}</button>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <!-- ———————————————————————————————————————————————————————————————————————————————————————————————————————————————— -->
+    <nz-divider nzText="预览"></nz-divider>
+    <nz-table #table nzBordered class="table" [ngStyle]="{'height': (Scrolly/2)-25+'px'}" [nzOuterBordered]="true"
+      nzSize="small" nzTableLayout="fixed" [nzScroll]="{ x: '750px', y: (Scrolly/2)-39-25+'px' }"
+      [nzFrontPagination]="false" [nzShowPagination]="false" [nzData]="previewList">
+      <thead>
+        <tr>
+          <th *ngFor="let item of column;let i=index" nzWidth="130px" [nzLeft]="i==0">{{'pmWork.'+item |i18n}}</th>
+          <th nzWidth="130px">{{'pmWork.quantity' |i18n}}</th>
+          <th>部件</th>
+          <th nzRight nzWidth="100px">排序</th>
+          <th nzRight nzWidth="100px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data;let i=index">
+          <td *ngFor="let item of column;let ci=index" [nzLeft]="ci==0" nzWidth="130px">{{data.pwb_code}}</td>
+          <td>{{data.quantity}}</td>
+          <td>
+            {{data.bpi_name}}
+            <!-- <span *ngFor="let bpi of data.bpi_list">{{bpi}}&nbsp;&nbsp;</span> -->
+          </td>
+          <td nzRight nzWidth="100px">
+            <input nz-input [(ngModel)]="data.sort" (change)="clickItem(data)" placeholder="{{ 'inputdata.input'|i18n}}"
+              type="number" min="0" />
+          </td>
+          <td nzRight nzWidth="100px">
+            <a (click)="delselect(data)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+      [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+  </ng-template>
+</idrawer>

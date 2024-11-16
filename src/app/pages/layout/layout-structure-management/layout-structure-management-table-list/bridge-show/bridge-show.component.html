@@ -1,0 +1,16 @@
+<nz-table [nzData]="bridgeList" [nzBordered]="true" [nzShowPagination]="false" nzSize="small" [nzScroll]="{y}" >
+    <thead>
+        <tr>
+            <th>{{ "placard.No" | i18n }}</th>
+            <th>{{ "placard.startPostion" | i18n }}</th>
+            <th>{{ "placard.endPostion" | i18n }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of bridgeList; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.start_bls_code }}--{{ data.start_bls_name }}</td>
+            <td>{{ data.end_bls_code }}--{{ data.end_bls_name }}</td>
+        </tr>
+    </tbody>
+</nz-table>

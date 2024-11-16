@@ -1,0 +1,23 @@
+<nz-range-picker
+    nzAllowClear
+    [class]="widthClass"
+    *ngIf="isRange==true"
+    [nzMode]="Mode"
+    [nzSize]="size"
+    [nzRanges]="ranges"
+    [nzShowTime]="ShowTime"
+    [nzFormat]="dateFormat"
+    [nzDisabled]="isDisabled"
+    [(ngModel)]="date"
+    (ngModelChange)="onChange($event)"></nz-range-picker>
+<nz-date-picker
+    nzAllowClear
+    [class]="widthClass"
+    *ngIf="isRange!=true"
+    [nzMode]="Mode"
+    [nzSize]="size"
+    [nzShowTime]="ShowTime"
+    [nzFormat]="dateFormat"
+    [nzDisabled]="isDisabled"
+    [(ngModel)]="date"
+    (ngModelChange)="onChange($event)"></nz-date-picker>

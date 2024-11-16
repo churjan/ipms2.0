@@ -1,0 +1,17 @@
+<div class="cont">
+    <nz-table [nzLoading]="loading" [nzPageSize]="pageSizeSum" #headerTable [nzData]="listOfData" nzSize="small"
+        [nzShowPagination]="false" [nzScroll]="{ y: 'calc(100vh - 290px)' }">
+        <thead>
+            <tr>
+                <th nzWidth="60px">{{'placard.No'|i18n}}</th>
+                <th>{{'placard.content'|i18n}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of headerTable.data,let i = index">
+                <td>{{i+1}}</td>
+                <td [innerHTML]="data.content | highlight:cont"></td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

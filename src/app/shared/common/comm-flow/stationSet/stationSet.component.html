@@ -1,0 +1,68 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="99%" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <nz-tabset>
+            <nz-tab nzTitle="{{bpi.bpi_name}}" *ngFor="let bpi of list" (click)="getdata(bpi)">
+                <nz-table #colSpanTable [nzData]="listOfData" nzBordered [nzShowPagination]="false"
+                    [nzFrontPagination]="false">
+                    <thead>
+                        <tr>
+                            <th nzWidth="200px">{{'commFlow.station_code'|i18n}}</th>
+                            <th nzWidth="200px">{{'commFlow.infeed_code'|i18n}}</th>
+                            <th nzWidth="240px">{{'commFlow.poi_name'|i18n}}</th>
+                            <th>{{'commFlow.infeeds'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let data of colSpanTable.data; index as d">
+                            <ng-container *ngFor="let item of data.infeeds;let i=index">
+                                <tr *ngFor="let last of item.operations;let o=index">
+                                    <td [attr.rowspan]="data.tdrowspan" *ngIf="i==0&&o==0">
+                                        {{ data.station_code }} {{ data.station_name }}
+                                    </td>
+                                    <td [attr.rowspan]="item.tdrowspan" *ngIf="o==0">
+                                        {{ item.infeed_code }}{{ item.infeed_name }}</td>
+                                    <td [nzEllipsis]="true">{{ last.poi_name }}</td>
+                                    <td>
+                                        <a href="javascript:;" nz-tooltip nzTooltipTitle="{{'btn.ruledel'|i18n}}">
+                                            <i nz-icon nzType="delete" nzTheme="outline" (click)="del(last)"></i>
+                                        </a>
+                                        <p (dblclick)="last.pcivisible=true;last.pszvisible=false">
+                                            {{"placard.SpecifyColor"|i18n}}：
+                                            <span *ngIf="last.pcivisible!=true">{{last.pci_name}}</span>
+                                            <span *ngIf="last.pcivisible==true">
+                                                <ina-common-select class="select" [multiple]="true"
+                                                    title="{{ 'checkdata.check_xx'|i18n:('commFlow.pci'|i18n) }}"
+                                                    [(ngModel)]="last.pci_keys" url="colorinfo/Extend"
+                                                    Datatyle="GetByWorkbillStyle" [other]="{psi_key:note.psi_key}"
+                                                    (onSelect)="change($event,last,'pci')">
+                                                </ina-common-select>
+                                            </span>
+                                        </p>
+                                        <p (dblclick)="last.pszvisible=true;last.pcivisible=false">
+                                            {{"placard.SpecifySize"|i18n}}：
+                                            <span *ngIf="last.pszvisible!=true">{{last.psz_name}}</span>
+                                            <span *ngIf="last.pszvisible==true">
+                                                <ina-common-select class="select" [multiple]="true"
+                                                    title="{{ 'checkdata.check_xx'|i18n:('commFlow.psz'|i18n)}}"
+                                                    [(ngModel)]="last.psz_keys" url="sizeinfo/Extend"
+                                                    Datatyle="GetByWorkbillStyle" [other]="{psi_key:note.psi_key}"
+                                                    (onSelect)="change($event,last,'psz')">
+                                                </ina-common-select>
+                                            </span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </nz-table>
+            </nz-tab>
+        </nz-tabset>
+    </ng-template>
+    <!-- 操作栏 -->
+    <ng-template #footerTpl>
+        <button nz-button nzType="primary" (click)="changesave()">{{'btn.save'|i18n}}</button>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>

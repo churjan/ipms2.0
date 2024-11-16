@@ -1,0 +1,20 @@
+
+<idrawer *ngIf="visible" [title]="('btn.permission'|i18n) + '('+roleName+')'" [width]="width" height="100%"  (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <nz-tree
+            [nzData]="permissions"
+            [nzExpandAll]="true"
+            [nzCheckedKeys]="selectedPermissions"
+            [nzCheckStrictly]="true"
+            (nzCheckBoxChange)="nzEvent($event)"
+            nzCheckable
+            nzMultiple
+            >
+        </nz-tree>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{  'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"  [nzLoading]="submiting" class="m-l-6">{{  'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

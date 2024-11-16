@@ -1,0 +1,30 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [isKeyQuery]="true"
+    [isDataOnInit]="false" [isAction]="false" [columns]="columns" [modular]="modular" [fields]="field"
+    [isKeyword]="false" [KeyQuery]="KeyQuery" [checkbox]="false" [isStatistics]="true" [isRefresh]="false"
+    (onReset)="onReset()" [isSetList]="false" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="QueryInspection('psi_code')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportStyledata.psi'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.psi_key" name="psi_key"
+                    url="styleinfo" DataTxt="code" secondary="name">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('bpi_name')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportStyledata.bpi_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.bpi_key" name="bpi_key"
+                    url="PartInfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record">
+    <date-select [isRange]="true" #dateselect
+        (onSelect)="crud.SearchModel.start_date=$event.start;crud.SearchModel.end_date=$event.end"></date-select>
+</ng-template>

@@ -1,0 +1,41 @@
+.container {
+  width : calc(100vw);
+  height: calc(100vh);
+}
+
+.container ::ng-deep>nz-table {
+  height: 100%;
+
+  .ant-spin-nested-loading {
+    height: inherit;
+
+    .ant-spin-container {
+      height: inherit;
+
+      .ant-table {
+        height: calc(100%);
+
+        .ant-table-container {
+          height: 100%;
+
+          .tfoot {
+            position   : -webkit-sticky;
+            position   : sticky;
+            bottom     : 0;
+            z-index    : 999;
+            font-size  : 1rem;
+            font-weight: bold;
+
+            .sticky {
+              position: sticky;
+              bottom  : 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width:1366px) {}

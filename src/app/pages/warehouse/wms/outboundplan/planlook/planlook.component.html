@@ -1,0 +1,272 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'88%'" justifyContent="center" height="99%" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="see_title">{{'placard.basein'|i18n}}</div>
+        <div class="see_cont">
+            <div nz-row class="fontSize">
+                <!-- 编号 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.code || ''">{{model.code || ''}}</span>
+                </div>
+                <!-- 名称 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.name || ''">{{model.name || ''}}</span>
+                </div>
+                <!-- 创建人名 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.create_hei_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.create_hei_name || ''">{{model.create_hei_name || ''}}</span>
+                </div>
+                <!-- 创建日期 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.createtime'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.createtime?model.createtime.substring(0,10):''">{{model.createtime?model.createtime.substring(0,19):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 状态 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.state_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">{{model.state_name || ''}}</div>
+                <!-- 类型 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.type_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.type_name || ''">{{model.type_name || ''}}</span>
+                </div>
+                <!-- 预计开始时间 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.start_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.start_time?model.start_time.substring(0,10):''">{{model.start_time?model.start_time.substring(0,10):''}}</span>
+                </div>
+                <!-- 计划完成时间 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.requestdeliverydate'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.requestdeliverydate?model.requestdeliverydate.substring(0,10):''">{{model.requestdeliverydate?model.requestdeliverydate.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 级别 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.level_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.level_name || ''">{{model.level_name || ''}}</span>
+                </div>
+                <!-- 数量 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.quantity'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.quantity|| ''">{{model.quantity|| ''}}</span>
+                </div>
+                <!-- 实际开始时间 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.production_start_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.production_start_time?model.production_start_time.substring(0,19):''">{{model.production_start_time?model.production_start_time.substring(0,19):''}}</span>
+                </div>
+                <!-- 作业单完成时间 -->
+                <div nz-col nzSpan="3">
+                    {{'wmsOutboundplan.complete_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.complete_time?model.complete_time.substring(0,19):''">{{model.requestdeliverydate?model.requestdeliverydate.substring(0,19):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 修改时间 -->
+                <div nz-col nzSpan="2">
+                    {{'wmsOutboundplan.updatetime'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.updatetime?model.updatetime.substring(0,10):''">{{model.updatetime?model.updatetime.substring(0,19):''}}</span>
+                </div>
+                <!-- 备注 -->
+                <div nz-col nzSpan="2">
+                    {{'popupField.remarks'|i18n}}：
+                </div>
+                <div nz-col nzSpan="16" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.remark || ''">{{model.remark || ''}}</span>
+                </div>
+            </div>
+        </div>
+        <nz-tabset class="tabset">
+            <nz-tab nzTitle="{{'placard.Outboundstation'|i18n}}">
+                <nz-table #table [nzData]="model.routes" [nzFrontPagination]="false" nzSize="small"
+                    [nzShowPagination]="false" [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }" [nzBordered]="true"
+                    nzSize="small">
+                    <thead>
+                        <tr>
+                            <th nzAlign="center">{{'wmsOutboundplan.out_infeed_code'|i18n }}</th>
+                            <th nzAlign="center">{{'wmsOutboundplan.out_infeed_name'|i18n }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of table.data;let i=index">
+                            <td nzAlign="center">{{data.bls_code }}</td>
+                            <td nzAlign="center">{{data.bls_name }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="{{'btn.programme'|i18n}}">
+                <nz-table #outrelations [nzData]="model.outrelations" [nzFrontPagination]="false" nzSize="small"
+                    [nzShowPagination]="false" [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }" [nzBordered]="true"
+                    nzSize="small">
+                    <thead>
+                        <tr>
+                            <th nzAlign="left">{{'wmsOutboundplan.plan'|i18n }}</th>
+                            <th nzAlign="center">{{'wmsOutboundplan.quantity'|i18n }}</th>
+                            <th nzAlign="center">{{'wmsOutboundplan.state_name'|i18n }}</th>
+                            <th nzAlign="center" nzWidth="180px" nzRight>{{'btn.operation'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of outrelations.data;let i=index">
+                            <td nzAlign="left">{{data.wwor_name }}</td>
+                            <td nzAlign="center">{{data.quantity }}</td>
+                            <td nzAlign="center">{{data.state_name }}</td>
+                            <td nzAlign="center" nzRight>
+                                <div nzRow>
+                                    <nz-select [nzDisabled]="data.state == 2 || data.state == 99"
+                                        [ngStyle]="{width: '100px'}" [(ngModel)]="data.state"
+                                        (ngModelChange)="changeStatus(data)" nzPlaceHolder="{{'checkdata.check'|i18n}}">
+                                        <nz-option [nzValue]="item.value" *ngFor="let item of statelist"
+                                            nzLabel="{{ item.description}}"
+                                            [nzDisabled]="data.value == -1 ||item.value==99"></nz-option>
+                                    </nz-select>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a nz-tooltip nzTooltipTitle="{{'btn.information'|i18n}}" (click)="operation(data)">
+                                        <span>{{'btn.information'|i18n}}</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </nz-tab>
+        </nz-tabset>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>
+<idrawer *ngIf="detailvisible" [title]="title" [width]="'88%'" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="detailclose()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-tabset class="tabset">
+            <nz-tab nzTitle="{{'placard.basein'|i18n}}">
+                <nz-descriptions nzBordered nzSize="small">
+                    <nz-descriptions-item nzTitle="{{'wmsOutboundplan.plan'|i18n}}">{{detail.name}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{ 'wmsOutboundplan.quantity'|i18n }}">
+                        <ng-container *ngIf="!detail.quantity">{{ 'placard.noLimit'|i18n }}
+                        </ng-container>
+                        <ng-container *ngIf="detail.quantity">{{detail.quantity}}
+                        </ng-container>
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{ 'wmsOutboundplan.state_name'|i18n }}">
+                        {{detail.state_name}}</nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{'outboundhangermonitoring.conditions'|i18n}}" [nzSpan]="3">
+                        <p *ngFor="let item of detail.conditions">
+                            {{item.field_name || ''}}{{item.operator || ''}}{{item.value_name?item.value_name:item.value || ''}}
+                        </p>
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{ 'wmsOutboundplan.createtime'|i18n }}">
+                        {{detail.createtime.substring(0,19)||''}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{ 'wmsOutboundplan.updatetime'|i18n }}">
+                        {{detail.updatetime.substring(0,19)||''}}</nz-descriptions-item>
+                </nz-descriptions>
+                <div class="see_title" style="margin-bottom: 10px;">{{'placard.CorreOutboundTask'|i18n}}</div>
+                <nz-table #basicTable [nzData]="detail.outtasks">
+                    <thead>
+                        <tr>
+                            <th>{{'outboundhangermonitoring.wwoc_name'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwoc_poi_code'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwoc_poi_name'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwot_code'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwot_name'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwot_quantity'|i18n}}</th>
+                            <th>{{'outboundhangermonitoring.wwot_state_name'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data">
+                            <td>{{ data.wwoc_name }}</td>
+                            <td>{{ data.wwoc_poi_code }}</td>
+                            <td>{{ data.wwoc_poi_name }}</td>
+                            <td>{{ data.wwot_code }}</td>
+                            <td>{{ data.wwot_name }}</td>
+                            <td>{{ data.wwot_quantity }}</td>
+                            <td>{{ data.wwot_state_name }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="{{'placard.outDetail'|i18n}}">
+                <form nz-form class="details">
+                    <nz-form-item>
+                        <nz-form-control [nzSpan]="24">
+                            <itable class="itable" [data]="tableData" [total]="tableData?.length" [loading]="loading"
+                                [pageSize]="10" [columns]="tableColumns" [frontPagination]="true"
+                                [showSelection]="false" yScroll="calc(100%)"
+                                [tpls]="{filterTpl: filterTpl,timeTpl:timeTpl}">
+                                <ng-template #filterTpl let-title="title" let-item="item">
+                                    {{title}}
+                                    <nz-filter-trigger [(nzVisible)]="filterFieldsVisible[item.code]"
+                                        (nzVisibleChange)="filterFieldOpen($event,item.code)"
+                                        [nzActive]="filterFieldsValue[item.code]" [nzDropdownMenu]="filterMenu">
+                                        <i nz-icon nzType="search"></i>
+                                    </nz-filter-trigger>
+                                </ng-template>
+                                <ng-template #timeTpl let-text="text">
+                                    {{text|time}}
+                                </ng-template>
+                            </itable>
+                        </nz-form-control>
+                    </nz-form-item>
+                </form>
+                <nz-dropdown-menu #filterMenu="nzDropdownMenu">
+                    <div class="ant-table-filter-dropdown">
+                        <div class="search-box">
+                            <input type="text" nz-input placeholder="{{ 'inputdata.input'|i18n }}"
+                                [(ngModel)]="filterFieldsValue[currentField]" (keydown)="search($event)" />
+                            <button nz-button nzSize="small" nzType="primary" (click)="search()"
+                                class="search-button">{{ 'btn.search'|i18n }}</button>
+                            <button nz-button nzSize="small" (click)="reset()">{{ 'btn.reset'|i18n }}</button>
+                        </div>
+                    </div>
+                </nz-dropdown-menu>
+            </nz-tab>
+        </nz-tabset>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="detailclose()">{{'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>

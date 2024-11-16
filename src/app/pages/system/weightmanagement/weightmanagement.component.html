@@ -1,0 +1,58 @@
+<div class="page-view beauty-scroll">
+    <nz-table
+        #editRowTable
+        nzBordered
+        [nzData]="listOfData"
+        nzTableLayout="fixed"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+    >
+        <thead>
+            <tr>
+                <th>{{'weightmanagement.feasibleLine' | i18n}}</th>
+                <th>{{'weightmanagement.weight' | i18n}}</th>
+                <th>{{'operation' | i18n}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of editRowTable.data">
+                <ng-container
+                    *ngIf="!editCache[data.id].edit; else editTemplate"
+                >
+                    <td>{{ data.line_code }}</td>
+                    <td>{{ data.weight }}</td>
+                    <td><a (click)="startEdit(data.id)"  *hasPermission="['system_weightmanagement_update']">{{'edit' | i18n}}</a></td>
+                </ng-container>
+                <ng-template #editTemplate>
+                    <!-- <td>
+                        <input
+                            type="text"
+                            nz-input
+                            [(ngModel)]="editCache[data.id].data.line_code"
+                        />
+                    </td> -->
+                    <td>{{ data.line_code }}</td>
+
+                    <td>
+                        <input
+                            type="text"
+                            nz-input
+                            [(ngModel)]="editCache[data.id].data.weight"
+                        />
+                    </td>
+                    <td>
+                        <a
+                            nz-popconfirm
+                            nzPopconfirmTitle="{{'weightmanagement.saveMsg' | i18n}}"
+                            (nzOnConfirm)="saveEdit(data.id)"
+                            class="mr8"
+                        >
+                        {{'save' | i18n}}
+                        </a>
+                        <a (click)="cancelEdit(data.id)"> {{'cancel' | i18n}} </a>
+                    </td>
+                </ng-template>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

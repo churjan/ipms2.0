@@ -1,0 +1,32 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <nz-descriptions nzBordered nzSize="small">
+            <nz-descriptions-item nzTitle="{{'pmWork.code'|i18n}}">{{model.code}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.quantity'|i18n}}" [nzSpan]="2">{{model.quantity}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.psi_code'|i18n}}">{{model.psi_code}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.psi_name'|i18n}}" [nzSpan]="2">{{model.psi_name}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.pci_name'|i18n}}">{{model.pci_name}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.psz_name'|i18n}}" [nzSpan]="2">{{model.psz_name}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.taginfonum'|i18n}}">{{model.taginfonum}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.workbillquantityexcesspercentage'|i18n}}" [nzSpan]="2">
+                {{model.workbillquantityexcesspercentage}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.generatedquantity'|i18n}}">
+                <nz-input-number [(ngModel)]="body.number" [nzMin]="1" [nzStep]="1"></nz-input-number>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmWork.packagenumber'|i18n}}">
+                <nz-input-number [(ngModel)]="body.packagenumber" [nzMin]="1" [nzStep]="1"></nz-input-number>
+            </nz-descriptions-item>
+        </nz-descriptions>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

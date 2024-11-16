@@ -1,0 +1,192 @@
+<!-- 左侧树 -->
+<div class="zleft">
+    <!-- <nz-spin  [nzSpinning]="isLeftSpinning"> -->
+    <div class="zleft_top">
+        <div class="zleft_top_left">{{'layoutExhibition.location'|i18n}}</div>
+        <div class="zleft_top_right">
+
+        </div>
+    </div>
+    <div class="zleft_tree">
+        <!-- 左侧树 查询框 -->
+        <!-- <div class="zleft_tree_input">
+                
+            </div> -->
+        <!-- 左侧树 主体 -->
+        <div class="zleft_tree_all" style="height: 100%;">
+            <div class="zleft_tree_in" style="margin: 10px;">
+                <nz-tree [nzData]="lineList" (nzClick)="nzEvent($event)" [nzSelectedKeys]="selectKey"></nz-tree>
+            </div>
+        </div>
+    </div>
+    <!-- </nz-spin> -->
+</div>
+<!-- 左侧树 加载覆盖区域 -->
+<div class="zleft_loading2" *ngIf="isLeftSpinning">
+    <div class="zleft_loading_in"></div>
+    <nz-spin [nzSpinning]="isLeftSpinning" nzSimple></nz-spin>
+</div>
+<!-- 按钮 -->
+<div [ngClass]="'zright_cont'">
+    <!-- 头部搜索 和 按钮 -->
+    <div class="ztop_in">
+        <div class="ztop_in_select">
+            <!-- 按钮 -->
+            <div [ngClass]="'ztop_in_btn_in'">
+                <button nz-button nzType="primary" (click)="toAllLine()">{{'btn.capacityAll'|i18n}}</button>
+            </div>
+            <!-- 搜索 -->
+            <div class="ztop_in_select_in">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+                    <input type="text" nz-input [placeholder]="'placard.station_code'|i18n"
+                        [(ngModel)]="queryParams.station_code" />
+                </nz-input-group>
+                <ng-template #suffixButton>
+                    <button nz-button nzType="primary" nzSearch (click)="toSearch()">{{ 'btn.search'|i18n }}</button>
+                </ng-template>
+                <button nz-button nzType="default" style="margin-left: 10px;" nzSearch
+                    (click)="resetQueryParams()">{{ 'btn.reset'|i18n }}</button>
+            </div>
+        </div>
+    </div>
+    <!-- 表格 -->
+    <div [ngClass]="'table'" #divTable>
+        <nz-table #Table [nzBordered]="true" [nzShowPagination]="false" [nzPageSize]="queryParams.page_size"
+            [nzData]="tableData" [nzScroll]="{ y: '500px' }" [nzLoading]="tableLoading" nzSize="small">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="64px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                    <th>{{ "popupField.line_code" | i18n }}</th>
+                    <th>{{ "popupField.line_name" | i18n }}</th>
+                    <th>{{ "popupField.station_code" | i18n }}</th>
+                    <th>{{ "popupField.bls_code" | i18n }}</th>
+                    <th>{{ "popupField.volume" | i18n }}</th>
+                    <!-- <th nzRight nzWidth="80px" nzAlign="center">{{ "btn.operation" | i18n }}</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of Table.data,let i = index">
+                    <td nzLeft nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.line_code }}</td>
+                    <td>{{ data.line_name }}</td>
+                    <td>{{ data.station_code }}</td>
+                    <td>{{ data.bls_code }}</td>
+                    <!-- <td>{{ data.volume }}</td> -->
+                    <td>
+                        <div class="editable-cell" [hidden]="editId === data.bls_key" (click)="startEdit(data.bls_key)">
+                            {{ data.volume }}
+                        </div>
+                        <input [hidden]="editId !== data.bls_key" type="text" nz-input [(ngModel)]="data.volume"
+                            (keyup.enter)="keyupEnter()" (blur)="stopEdit(data.bls_key,data.volume)" />
+                    </td>
+                    <!-- <td nzRight nzAlign="center">
+                    <a (click)="toConfig(data)">{{ "placard.config" | i18n }}</a>
+                </td> -->
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <!-- 分页 -->
+    <div class="zpagination">
+        <div class="zpagination_in">
+            <nz-pagination (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page_index" [nzTotal]="total" [nzShowSizeChanger]="true" [nzPageSize]="queryParams.page_size" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+            <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+        </div>
+    </div>
+</div>
+<!-- 进轨配置 -->
+<app-embed-modal [title]="appService.translate('placard.capacityOne')" [marginTop]="'200px'" [width]="'400px'"
+    [bodyHeight]="'160px'" [(isVisible)]="isOneLine" [componentName]="''">
+    <div class="cont-view">
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="volume">{{ 'popupField.volume'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24"
+                    [nzErrorTip]="('inputdata.input'|i18n)+('popupField.volume'|i18n)">
+                    <nz-input-number style="width: 100%;" formControlName="volume" [nzMin]="1" [nzStep]="1"
+                        [nzPrecision]="0"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+
+    <div class="footer-view">
+        <button nz-button nzType="primary" (click)="onOneLineSubmit()" [nzLoading]="isOneLineSubmit">
+            {{ "btn.save" | i18n }}
+        </button>
+        <button nz-button class="ml8" (click)="onOneLineClose()">
+            {{ "btn.cancel" | i18n }}
+        </button>
+    </div>
+</app-embed-modal>
+<!-- 全线配置 -->
+<!-- <app-embed-modal
+    [title]="appService.translate('placard.capacityAll')"
+    [marginTop]="'200px'"
+    [width]="'400px'"
+    [bodyHeight]="'200px'"
+    [(isVisible)]="isAllLine"
+    [componentName]="''"
+>
+    <div class="cont-all-line-view">
+        <form nz-form [formGroup]="validateFormAllLine">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="line_key">{{'popupField.line'|i18n}}</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.line'|i18n)">
+                    <nz-select style="width: 100%;" nzAllowClear formControlName="line_key" nzShowSearch (ngModelChange)="toTreeKey($event)">
+                        <nz-option *ngFor="let item of lineDownList" [nzLabel]="item.title" [nzValue]="item.key"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="volume">{{ 'popupField.volume'|i18n }}</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.volume'|i18n)">
+                    <nz-input-number style="width: 100%;" formControlName="volume" [nzMin]="1" [nzStep]="1" [nzPrecision]="0"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+    <div class="footer-view">
+        <button
+            nz-button
+            nzType="primary"
+            (click)="onAllLineSubmit()"
+            [nzLoading]="isAllLineSubmit"
+        >
+            {{ "btn.save" | i18n }}
+        </button>
+        <button nz-button class="ml8" (click)="onAllLineClose()">
+            {{ "btn.cancel" | i18n }}
+        </button>
+    </div>
+</app-embed-modal> -->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isAllLine" [isLoading]="isAllLineSubmit" [width]="400" [height]="260"
+    (getClosePopup)="closePopup()" [zpopupCont]="zpopupCapacityAllCont" [zpopupFoot]="zpopupCapacityAllFoot"></zpopup>
+<ng-template #zpopupCapacityAllCont>
+    <form nz-form [formGroup]="validateFormAllLine">
+        <nz-form-item>
+            <!-- 产线 -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="line_key">{{'popupField.line'|i18n}}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.line'|i18n)">
+                <nz-select style="width: 100%;" nzAllowClear formControlName="line_key" nzShowSearch
+                    (ngModelChange)="toTreeKey($event)">
+                    <nz-option *ngFor="let item of lineDownList" [nzLabel]="item.title" [nzValue]="item.key">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="volume">{{ 'popupField.volume'|i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="('inputdata.input'|i18n)+('popupField.volume'|i18n)">
+                <nz-input-number style="width: 100%;" formControlName="volume" [nzMin]="1" [nzStep]="1"
+                    [nzPrecision]="0"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #zpopupCapacityAllFoot>
+    <button nz-button nzType="primary" [nzLoading]="isAllLineSubmit"
+        (click)="onAllLineSubmit()">{{ 'btn.adjustmentinfo'|i18n }}</button>
+</ng-template>

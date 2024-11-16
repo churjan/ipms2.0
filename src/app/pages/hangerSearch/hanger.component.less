@@ -1,0 +1,62 @@
+.hangerCard {
+  height: 100%;
+
+  .ant-card-head {
+    text-align: center;
+    height    : 64px;
+    background: #f1f1f1;
+
+    .ant-card-head-wrapper {
+      height: 100%;
+
+      .ant-card-head-title {
+        padding: 0;
+
+        &>span {
+          margin         : 0 auto;
+          display        : flex;
+          justify-content: center;
+          align-items    : center;
+        }
+      }
+    }
+  }
+
+  .position {
+    &>.ant-card-body {
+      padding: 15px;
+    }
+  }
+}
+
+.hangdateil ::ng-deep>.ant-card-body {
+  height: calc(100% - 46px);
+
+  .show {
+    height: 100%;
+
+    .ant-table-wrapper {
+      height: calc(100%);
+
+      .ant-spin-nested-loading,
+      .ant-spin-container,
+      .ant-table,
+      .ant-table-container {
+        height: 100%;
+      }
+    }
+  }
+
+}
+
+.switch {
+  position: absolute;
+  right   : 15px;
+  top     : 15px;
+}
+
+.SKUshow {
+  position: absolute;
+  left    : 15px;
+  top     : 15px;
+}

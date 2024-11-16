@@ -1,0 +1,80 @@
+.ztree-toolbar {
+  height: 35px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bolder;
+  background-color: #c2c9d2;
+}
+.example-full-width {
+  height: 54px;
+}
+.shadow {
+  padding: 0;
+  width: 277px;
+  position: unset;
+  z-index: 9999;
+  cdk-tree {
+    & > mat-tree-node {
+      min-height: 30px;
+    }
+    cdk-nested-tree-node button {
+      height: 30px;
+      width: 30px;
+      line-height: 30px;
+    }
+    .fa {
+      padding: 0;
+    }
+    .tree-node:hover,
+    .tree-node:focus {
+      background: #e4e2e2ad;
+    }
+    .example-tree-invisible {
+      display: none;
+      padding-left: 21px;
+    }
+    .example-tree ul,
+    .example-tree li {
+      margin-top: 0;
+      margin-bottom: 0;
+      list-style-type: none;
+    }
+    .example-tree-node {
+      display: block;
+      .tree-node {
+        padding-left: 10px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+    .example-tree-node {
+      list-style: none;
+      //   margin: 10px;
+      position: relative;
+    }
+    .example-tree-node:before {
+      position: absolute;
+      content: "";
+      top: 0.7em;
+      left: 0.2em;
+      width: 0.6em;
+      height: 0.615em;
+      border-style: none none solid solid;
+      border-width: 0.05em;
+      border-color: #aaa;
+    }
+    .example-tree-node:not(:last-child):after {
+      position: absolute;
+      content: "";
+      top: -0.6em;
+      left: 0.2em;
+      bottom: -13px;
+      border-style: none none none solid;
+      border-width: 0.05em;
+      border-color: #aaa;
+    }
+  }
+}
+.treeSelect{
+  width: 100%;
+}

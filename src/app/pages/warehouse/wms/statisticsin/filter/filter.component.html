@@ -1,0 +1,48 @@
+<idrawer *ngIf="visible" title="{{ 'btn.advancedSearch'|i18n }}" [width]="width" height="100%" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.carrierId'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input formControlName="carrierid" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.enterTime'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <nz-range-picker formControlName="date"></nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.pti_ordercode'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input placeholder="{{ 'inputdata.input'|i18n }}" formControlName="pti_ordercode" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.bls_name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input placeholder="{{ 'inputdata.input'|i18n }}" formControlName="bls_name" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.bls_code'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input placeholder="{{ 'inputdata.input'|i18n }}" formControlName="bls_code" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'statisticsIn.attribute'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <attrfilter [(data)]="tagAttributes" [fieldOptions]="fieldOptions" [valueOptions]="valueOptions"></attrfilter>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <!-- <button nz-button (click)="reset()">{{ 'reset'|i18n }}</button> -->
+        <button nz-button (click)="close()">{{ 'close'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" class="m-l-6">{{ 'query'|i18n }}</button>
+    </ng-template>
+</idrawer>

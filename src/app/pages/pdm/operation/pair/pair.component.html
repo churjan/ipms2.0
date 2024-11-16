@@ -1,0 +1,43 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center"
+    nzSize="small"height="99%"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-transfer nzShowSearch [nzDataSource]="list"
+            [nzShowSelectAll]="false" style="height: 99%;"
+            [nzRenderList]="[renderList, renderList]"
+            (nzSelectChange)="select($event)"
+            (nzChange)="change($event)">
+            <ng-template #renderList let-items
+                let-stat="stat"
+                let-direction="direction"
+                let-onItemSelectAll="onItemSelectAll"
+                let-onItemSelect="onItemSelect">
+                <nz-table #t [nzData]="$asTransferItems(items)" nzSize="small"
+                    [nzFrontPagination]="false" style="height: calc(100% - 60px);" [nzScroll]="{ y: '41rem' }">
+                    <thead>
+                        <tr>
+                            <th
+                                [nzChecked]="stat.checkAll"
+                                [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                            <th>{{'pdmOperation.code'|i18n}}</th>
+                            <th>{{'pdmOperation.pairname'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of t.data;let i= index"
+                            (click)="onItemSelect(data)">
+                            <td
+                                [nzChecked]="!!data.checked"
+                                (nzCheckedChange)="onItemSelect(data)"></td>
+                            <td>{{direction === 'left'? data.code
+                                :data.bpi_code}}</td>
+                            <td>{{direction === 'left'? data.name
+                                :data.bpi_name}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+        </nz-transfer>
+    </ng-template>
+</idrawer>

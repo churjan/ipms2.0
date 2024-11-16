@@ -1,0 +1,1550 @@
+{
+    "basFabric-difficulty": {
+        "title": "面料难度",
+        "url": "Admin/FabricDifficulty/",
+        "otherUrl": {
+            "xlsurl": "FabricDifficulty.xls",
+            "expurl": "public/FabricDifficulty/leadingout/"
+        }
+    },
+    "bas-processlevel": {
+        "title": "工序难度",
+        "url": "admin/OperationDifficulty/",
+        "otherUrl": {
+            "xlsurl": "OperationDifficulty.xls",
+            "expurl": "public/OperationDifficulty/leadingout/"
+        }
+    },
+    "basMachinedevice": {
+        "title": "生产设备",
+        "url": "admin/machinedeviceinfo/",
+        "otherUrl": {
+            "xlsurl": "machinedeviceinfo.xls",
+            "expurl": "public/machinedeviceinfo/leadingout/"
+        },
+        "validity": [
+            "code",
+            "name",
+            "brand",
+            "specification",
+            "purchasedate"
+        ]
+    },
+    "basPart": {
+        "title": "生产部件",
+        "url": "admin/PartInfo/",
+        "otherUrl": {
+            "xlsurl": "PartInfo.xls",
+            "expurl": "public/PartInfo/leadingout/",
+            "PartSingleton": "admin/PartSingleton/"
+        }
+    },
+    "basQuality": {
+        "title": "质检原因",
+        "url": "admin/QualityCauseInfo/",
+        "otherUrl": {
+            "xlsurl": "QualityCauseInfo.xls",
+            "expurl": "public/QualityCauseInfo/leadingout/",
+            "btnurl": "api/admin/MenuButton/",
+            "opcurl": "api/admin/OperationClassQualityCauseRelation/",
+            "OperationClassUrl": "api/admin/OperationClass/",
+            "classurl": "admin/QualityCauseClass/",
+            "qualityCauseRelation": "api/admin/ksOrganizationQualityCauseRelation/",
+            "teamadd": "api/admin/ksOrganizationQualityCauseRelation/",
+            "teamdel": "api/admin/ksOrganizationQualityCauseRelation/",
+            "addbatch": "api/admin/OperationClassQualityCauseRelation/extend/BatchSave/",
+            "delbatch": "api/admin/OperationClassQualityCauseRelation/extend/BatchDelete"
+        },
+        "btnClass": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "icon": "plus"
+            },
+            {
+                "action": "update",
+                "icon": "edit"
+            },
+            {
+                "action": "del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ]
+    },
+    "basWorksection": {
+        "title": "工段管理",
+        "url": "admin/worksectionInfo/",
+        "otherUrl": {
+            "xlsurl": "WorkSectionInfo.xls",
+            "exurl": "public/WorkSectionInfo/leadingout"
+        }
+    },
+    "basPartsingleton": {
+        "title": "多件流转单件流部件",
+        "url": "admin/PartSingleton/",
+        "otherUrl": {
+            "xlsurl": "PartSingleton.xls",
+            "exurl": "public/PartSingleton/leadingout"
+        }
+    },
+    "basOverloadRules": {
+        "title": "超载站规则管理",
+        "url": "admin/schemeoverload/",
+        "otherUrl": {
+            "xlsurl": "schemeoverload.xls",
+            "exurl": "public/schemeoverload/leadingout"
+        }
+    },
+    "basAttribute": {
+        "title": "属性管理",
+        "url": "admin/w_customattribute/",
+        "otherUrl": {
+            "class": "admin/w_customattribute/extend/getattribute/",
+            "xlsurl": "schemeoverload.xls",
+            "exurl": "public/schemeoverload/leadingout"
+        }
+    },
+    "factory": {
+        "url": "api/FactoryInfo/",
+        "otherUrl": {}
+    },
+    "commFlow": {
+        "title": "工序流",
+        "otherUrl": {
+            "opMaster": "admin/OperationProcessMaster/",
+            "copy": "admin/WorkBillOperationProcess/Extend/WorkbillProcessCopy",
+            "impurl": "api/admin/OperationProcessMaster/",
+            "xlsurl": "OperationProcessMaster.xls",
+            "StyleOperation": "admin/StyleOperationProcess/",
+            "WorkBillOperation": "admin/WorkBillOperationProcess/",
+            "history": "api/admin/WorkBillOperationProcessSnapshot/",
+            "getpage": "api/admin/Operationinfo/",
+            "OperationGet": "admin/OperationProcessMaster/",
+            "StyleSave": "admin/StyleOperationProcess",
+            "WorkBillSave": "admin/WorkBillOperationProcess "
+        },
+        "Mastercolumns": [
+            {
+                "coums": "name",
+                "width": "100px"
+            },
+            {
+                "coums": "is_back_flow",
+                "type": "boolean",
+                "nzAlign": "center",
+                "width": "64px"
+            },
+            {
+                "coums": "pwb_list",
+                "extend": true,
+                "width": "200px"
+            },
+            {
+                "coums": "psi_list",
+                "extend": true,
+                "nzAlign": "center",
+                "width": "200px"
+            },
+            {
+                "coums": "create_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "type": "time",
+                "nzAlign": "center",
+                "width": "140px"
+            },
+            {
+                "coums": "update_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "type": "time",
+                "nzAlign": "center",
+                "width": "140px"
+            }
+        ]
+    },
+    "hanger": {
+        "title": "在产衣架查询",
+        "url": "Public/taginfo/",
+        "detailurl": [
+            "Public/taginfo/productionrecord",
+            "Public/taginfo/trackingrecord",
+            "Public/taginfo/parts",
+            "Public/taginfo/QC"
+        ],
+        "otherUrl": {
+            "hanger2Url": "api/public/hanger/expand/",
+            "qcdetail": "api/Public/taginfo/QCDetail/",
+            "WorkBillOpurl": "api/Public/taginfo/WorkBillOperationProcessDetailExpand/"
+        },
+        "oplist": [
+            {
+                "coums": "sort",
+                "nzAlign": "center",
+                "width": "64px"
+            },
+            {
+                "coums": "poi_code",
+                "width": "120px"
+            },
+            {
+                "coums": "poi_name",
+                "width": "160px"
+            },
+            {
+                "coums": "pwrd_list",
+                "width": "280px"
+            },
+            {
+                "coums": "rfid",
+                "width": "120px"
+            },
+            {
+                "coums": "hei_name",
+                "width": "120px"
+            },
+            {
+                "coums": "bls_code",
+                "width": "120px"
+            },
+            {
+                "coums": "isskip",
+                "type": "boolean",
+                "nzAlign": "center",
+                "width": "64px"
+            },
+            {
+                "coums": "operation_requrement",
+                "width": "200px"
+            },
+            {
+                "coums": "create_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "140px"
+            }
+        ],
+        "historylist": [
+            {
+                "coums": "bls_code",
+                "width": "100px"
+            },
+            {
+                "coums": "poi_code",
+                "width": "140px"
+            },
+            {
+                "coums": "poi_name",
+                "width": "160px"
+            },
+            {
+                "coums": "iscompleted",
+                "type": "boolean",
+                "nzAlign": "center",
+                "width": "64px"
+            },
+            {
+                "coums": "isrecordoutput",
+                "type": "boolean",
+                "nzAlign": "center",
+                "width": "64px"
+            },
+            {
+                "coums": "ste_name",
+                "nzAlign": "center",
+                "width": "130px"
+            },
+            {
+                "coums": "rfid",
+                "width": "160px"
+            },
+            {
+                "coums": "hei_name",
+                "width": "100px"
+            },
+            {
+                "coums": "createdate",
+                "width": "160px"
+            },
+            {
+                "coums": "happentime",
+                "width": "160px"
+            },
+            {
+                "coums": "remark",
+                "width": "200px"
+            }
+        ],
+        "siblings": [
+            {
+                "coums": "bpi_code"
+            },
+            {
+                "coums": "bpi_name"
+            },
+            {
+                "coums": "tagcode",
+                "open": true
+            },
+            {
+                "coums": "binding_quantity"
+            },
+            {
+                "coums": "state_name"
+            },
+            {
+                "coums": "id"
+            },
+            {
+                "coums": "currentlocationcode"
+            },
+            {
+                "coums": "destinationlocationcode"
+            }
+        ],
+        "quality": [
+            {
+                "coums": "sfqip",
+                "type": "object",
+                "delimiter": "(_)",
+                "detail": [
+                    "poi_code_back",
+                    "poi_name_back"
+                ]
+            },
+            {
+                "coums": "hei_code_back",
+                "type": "object",
+                "delimiter": "(_)",
+                "detail": [
+                    "hei_code_back",
+                    "hei_name_back"
+                ]
+            },
+            {
+                "coums": "bsm_name_back",
+                "type": "object",
+                "delimiter": "(_)",
+                "detail": [
+                    "bsm_code_back",
+                    "bsm_name_back"
+                ]
+            },
+            {
+                "coums": "bqci_name"
+            },
+            {
+                "coums": "poi_name_receive"
+            },
+            {
+                "coums": "qc_quantity"
+            },
+            {
+                "coums": "handlemethod_name"
+            },
+            {
+                "coums": "date_back",
+                "format": "yyyy-MM-dd HH:mm:ss"
+            },
+            {
+                "coums": "complete_time",
+                "format": "yyyy-MM-dd HH:mm:ss"
+            }
+        ]
+    },
+    "layoutExhibition": {},
+    "layoutStationSupervisoryControl": {
+        "tistle": "站位监控",
+        "url": "admin/layoutstructure/stations/",
+        "otherUrl": {
+            "lineUpdate": "/admin/layoutstructure/volume/line",
+            "oneInfeedsUpdate": "/admin/layoutstructure/volume",
+            "oneLine": "/admin/layoutstructure/station",
+            "infeedInfo": "/admin/layoutstructure/infeed",
+            "carriersList": "/admin/layoutstructure/infeed/carriers",
+            "carrierAbnormal": "/admin/carrier/abnormal"
+        }
+    },
+    "layoutTacticalRules": {},
+    "structureRuleScheme": {
+        "tistle": "规则组合管理",
+        "url": "admin/LayoutStructureSchemeRules/",
+        "window": {
+            "info": "规则组合信息"
+        },
+        "otherUrl": {
+            "Detail": "admin/LayoutStructureSchemeRulesDetail/",
+            "LayoutScheme": "admin/LayoutStructureScheme/"
+        }
+    },
+    "layoutFactory": {
+        "tistle": "工厂管理",
+        "url": "admin/ManufactoryInfo/"
+    },
+    "layoutVirtual": {
+        "tistle": "虚拟结构管理",
+        "url": "admin/VirtualLayout/",
+        "otherUrl": {
+            "setstion": "api/admin/giuvirtuallayoutoutput/extend/BatchSave/",
+            "elim_stion": "api/admin/giuvirtuallayoutoutput/",
+            "vll": "api/admin/VirtualLayoutLayoutStructure/",
+            "svl": "api/admin/VirtualLayoutStyleTargetProduction",
+            "getpage": "api/admin/Operationinfo/",
+            "teamop": "api/admin/ksvirtuallayoutoperation/",
+            "procedure": "api/admin/KSVirtualLayoutOutputOperation/"
+        }
+    },
+    "layoutHandStation": {
+        "tistle": "左右手站",
+        "url": "admin/MatchingStationRelation/",
+        "validity": [
+            "key",
+            "pair_bls_key"
+        ]
+    },
+    "pdmOperation": {
+        "title": "工序信息",
+        "url": "admin/OperationInfo/",
+        "otherUrl": {
+            "impurl": "api/admin/OperationInfo/",
+            "class": "admin/OperationClass/",
+            "operurl": "admin/OperationFiles/",
+            "website": "Admin/OperationStructureRelation/",
+            "batchwebsite": "Admin/OperationStructureRelation/Extend/batch/",
+            "LayoutStructureUrl": "admin/LayoutStructure/",
+            "xlsurl": "OperationInfo.xls",
+            "expurl": "public/OperationInfo/leadingout/",
+            "btnurl": "admin/MenuButton/",
+            "pariurl": "admin/OperationPartRelation/",
+            "Machine": "admin/MachineDeviceInfo/",
+            "toolurl": "admin/OperationMachineDeviceRelation/"
+        },
+        "btnClass": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "icon": "plus"
+            },
+            {
+                "action": "update",
+                "icon": "edit"
+            },
+            {
+                "action": "del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ]
+    },
+    "pdmPartoperation": {
+        "title": "部件与工序配对信息",
+        "url": "admin/OperationPartRelation/",
+        "otherUrl": {
+            "xlsurl": "OperationInfo.xls",
+            "expurl": "public/OperationInfo/leadingout/",
+            "op": "admin/OperationInfo/",
+            "part": "admin/PartInfo/",
+            "BatchSave": "admin/OperationPartRelation/extend/BatchSave"
+        }
+    },
+    "pdmStyle": {
+        "title": "款式信息",
+        "url": "admin/StyleInfo/",
+        "otherUrl": {
+            "StyleWorkurl": "StyleWorkbill.xls",
+            "xlsurl": "StyleInfo.xls",
+            "StyleWorkimpurl": "api/admin/StyleInfo/impExtend/IntegrityExcel/",
+            "impurl": "api/admin/StyleInfo/",
+            "markxlsurl": "StyleMark.xls",
+            "markimpurl": "api/admin/StyleMark/",
+            "fabricxlsurl": "StyleParts.xls",
+            "fabricimpurl": "api/admin/StyleParts/",
+            "class": "admin/styleclass/",
+            "styleurl": "admin/StyleFiles/",
+            "getFlow": "admin/StyleOperationProcessMaster/",
+            "getFlownew": "admin/StyleOperationProcess/",
+            "history": "admin/OperationprocessSnapshot/",
+            "historyflow": "admin/OperationprocessSnapshot/Extend/CompareSnapshot/",
+            "flowimpurl": "api/admin/StyleOperationProcessDetail/",
+            "flowxlsurl": "StyleOperationProcess.xls",
+            "flowexpurl": "public/StyleOperationProcessRouteDetail/leadingout/",
+            "StyleOperation": "admin/StyleOperationProcess/",
+            "StyleSave": "admin/StyleOperationProcess",
+            "flownewimpurl": "api/admin/OperationProcessMaster/",
+            "flownewxlsurl": "OperationProcessMaster.xls",
+            "flownewexpurl": "public/StyleOperationProcessRouteDetail/leadingout/",
+            "flow": {
+                "map": "admin/StyleOperationProcessRouteMaster/",
+                "getmap": "admin/StyleOperationProcessRouteMaster/extend/GetStyleOperationProcessRoute/",
+                "save": "admin/StyleOperationProcessMaster/extend/SaveStyleOperationProcess/",
+                "savemap": "admin/StyleOperationProcessRouteMaster/extend/SaveStyleOperationProcessRoute/",
+                "Styleget": "admin/StyleOperationProcessMaster/extend/GetStyleOperationProcess/"
+            },
+            "Reflux": "admin/StyleOperationProcessMaster/"
+        },
+        "btnClass": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "icon": "plus"
+            },
+            {
+                "action": "update",
+                "icon": "edit"
+            },
+            {
+                "action": "del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ],
+        "tabinfo": [
+            {
+                "name": "basein",
+                "disabled": false,
+                "content": "basein"
+            },
+            {
+                "name": "tuzhi",
+                "disabled": false,
+                "content": "tuzhi"
+            }
+        ],
+        "flow": [
+            {
+                "coums": "code",
+                "width": "120px"
+            },
+            {
+                "coums": "name"
+            },
+            {
+                "width": "120px",
+                "type": "boolean",
+                "extend": true,
+                "coums": "isbackflow"
+            },
+            {
+                "width": "100px",
+                "coums": "version"
+            }
+        ],
+        "flownew": [
+            {
+                "coums": "No",
+                "width": "60px"
+            },
+            {
+                "coums": "name"
+            },
+            {
+                "width": "120px",
+                "type": "boolean",
+                "extend": true,
+                "coums": "isbackflow"
+            },
+            {
+                "width": "100px",
+                "coums": "tag"
+            }
+        ],
+        "historyList": [
+            {
+                "coums": "hei_code"
+            },
+            {
+                "coums": "hei_name"
+            },
+            {
+                "coums": "createtime"
+            }
+        ],
+        "historybtn": {
+            "single": [
+                {
+                    "action": "Look",
+                    "name": "查看",
+                    "icon": "eye"
+                }
+            ],
+            "extend": [],
+            "common": [
+                {
+                    "action": "Look",
+                    "name": "查看",
+                    "icon": "eye"
+                }
+            ]
+        }
+    },
+    "pmOverloadManagement": {
+        "title": "超载站管理",
+        "url": "admin/layoutstructure/station/carriers",
+        "otherUrl": {
+            "ControlScheme": "admin/ControlScheme/",
+            "OverloadGroup": "admin/OverloadGroup/",
+            "SetOverload": "admin/OverloadGroup/Extend/SetOverload/",
+            "OverloadStation": "admin/OverloadStation/",
+            "carrierAbnormal": "/admin/carrier/abnormal/"
+        }
+    },
+    "pmCutting": {
+        "title": "上裁管理",
+        "url": "admin/loadingsetting/",
+        "otherUrl": {
+            "enable": "admin/loadingsetting/extend/enable/",
+            "getclient": "admin/loadingconfig/",
+            "getpage": "admin/Operationinfo/",
+            "batchsave": "admin/LoadingSetting/Extend/Batch/",
+            "getFlow": "admin/WorkBillOperationProcessDetail/extend/GetWorkBillOperationProcessDetail/",
+            "hanger": "admin/taginfo/extend/WorkbillScheduleDetail/",
+            "history": "admin/operationprocesssnapshot/",
+            "historyflow": "admin/OperationprocessSnapshot/Extend/CompareSnapshot/",
+            "flowimpurl": "api/admin/WorkBillOperationProcessDetail/",
+            "flowxlsurl": "WorkBillOperationProcessDetail.xls",
+            "flowexpurl": "public/WorkBillOperationProcessDetail/leadingout/",
+            "flow": {
+                "getmap": "admin/StyleOperationProcessRouteMaster/extend/GetStyleOperationProcessRoute/",
+                "save": "admin/WorkBillOperationProcessDetail/extend/SaveWorkBillOperationProcessDetail/",
+                "xlsurl": "WorkBillOperationProcessDetail.xls",
+                "impurl": "api/admin/WorkBillOperationProcessDetail/",
+                "Styleget": "admin/StyleOperationProcessMaster/extend/GetStyleOperationProcess/"
+            }
+        }
+    },
+    "pmLayingcloth": {
+        "tistle": "铺布记录管理",
+        "url": "admin/FabricSpreadRecordMaster/",
+        "otherUrl": {
+            "cutUrl": "admin/CuttingRecordMaster/",
+            "useurl": "admin/FabricSpreadUsedRecord/",
+            "xlsurl": "FabricSpreadRecord.xls",
+            "detailsUrl": "admin/LayoutStructureRules/",
+            "expurl": "public/FabricSpreadRecordMaster/leadingout/"
+        },
+        "window": {
+            "imp": "铺布记录导入"
+        },
+        "validity": [
+            {
+                "fild": "code",
+                "tigmsg": "input_clothcode"
+            },
+            {
+                "fild": "bed_no",
+                "tigmsg": "input_bedcode"
+            },
+            {
+                "fild": "cloth_width",
+                "tigmsg": "input_clothwidth"
+            },
+            {
+                "fild": "cloth_length",
+                "tigmsg": "input_clothlength"
+            },
+            {
+                "fild": "maker_code",
+                "tigmsg": "input_makercode"
+            },
+            {
+                "fild": "maker_length",
+                "tigmsg": "input_makerlength"
+            },
+            {
+                "fild": "request_quantity",
+                "tigmsg": "input_requestquantity"
+            },
+            {
+                "fild": "real_quantity",
+                "tigmsg": "pfialod"
+            }
+        ]
+    },
+    "pmWork": {
+        "title": "生产作业单",
+        "url": "admin/WorkBill/",
+        "iis": false,
+        "otherUrl": {
+            "setTags2": "admin/taginfo/extend/CreateTag",
+            "setTagsbatch": "admin/aidagaotaginfo/extend/CreateTagBatch",
+            "workClose": "admin/workbill/Extend/Close",
+            "impurl": "api/admin/WorkBill/",
+            "xlsurl": "WorkBill_WorkBillOperationProcess.xls",
+            "expurl": "public/WorkBill/leadingout/",
+            "tagurl": "admin/TagInfo/extend/CreateTagCode",
+            "confirm": "admin/workbill/extend/EnsureProduction/",
+            "keycopy": "admin/WorkBill/extend/copy/",
+            "getpage": "admin/Operationinfo/",
+            "getFlow": "admin/WorkBillOperationProcessDetail/extend/GetWorkBillOperationProcessDetail/",
+            "hanger": "admin/taginfo/extend/WorkbillScheduleDetail/",
+            "history": "admin/operationprocesssnapshot/",
+            "historyflow": "admin/OperationprocessSnapshot/Extend/CompareSnapshot/",
+            "flowimpurl": "api/admin/WorkBillOperationProcessDetail/",
+            "flowxlsurl": "WorkBillOperationProcessDetail.xls",
+            "flowexpurl": "public/WorkBillOperationProcessDetail/leadingout/",
+            "flow": {
+                "getmap": "admin/StyleOperationProcessRouteMaster/extend/GetStyleOperationProcessRoute/",
+                "save": "admin/WorkBillOperationProcessDetail/extend/SaveWorkBillOperationProcessDetail/",
+                "xlsurl": "WorkBillOperationProcessDetail.xls",
+                "impurl": "api/admin/WorkBillOperationProcessDetail/",
+                "Styleget": "admin/StyleOperationProcessMaster/extend/GetStyleOperationProcess/"
+            }
+        },
+        "workmenu": [
+            {
+                "name": "basein",
+                "content": "basein"
+            },
+            {
+                "name": "PWRM",
+                "content": "PWRM"
+            }
+        ],
+        "historyList": [
+            {
+                "coums": "hei_code"
+            },
+            {
+                "coums": "hei_name"
+            },
+            {
+                "coums": "createtime"
+            }
+        ],
+        "Hanger": [
+            {
+                "coums": "No"
+            },
+            {
+                "coums": "tagcode"
+            },
+            {
+                "coums": "bls_code"
+            },
+            {
+                "coums": "psi_name"
+            },
+            {
+                "coums": "pci_name"
+            },
+            {
+                "coums": "psz_name"
+            },
+            {
+                "coums": "bpi_name"
+            }
+        ]
+    },
+    "reportStyledata": {
+        "title": "款式数据汇总表",
+        "url": "admin/Report/StyleProductionDataReport/GetPageList/",
+        "otherUrl": {
+            "expurl": "public/StyleProductionDataReport/leadingout/"
+        },
+        "Explist": [
+            "start_date",
+            "end_date"
+        ],
+        "sumNode": [
+            {
+                "f": "quantity",
+                "c": "statisticsnum"
+            }
+        ],
+        "Required": [
+            "start_date",
+            "end_date"
+        ]
+    },
+    "reportSalaryschedule": {
+        "title": "员工生产数据明细表",
+        "url": "admin/Report/PieceRateDetailReport/GetPageList/",
+        "otherUrl": {
+            "expurl": "public/PieceRateDetailReport/leadingout/"
+        },
+        "Explist": [
+            "start_date",
+            "end_date"
+        ],
+        "sumNode": [
+            {
+                "f": "quantity",
+                "c": "allquantity"
+            },
+            {
+                "f": "piecerate",
+                "c": "allpiecerate"
+            }
+        ],
+        "columnspiecerate": [
+            "hei_code",
+            "hei_name",
+            "hoi_name",
+            "som_code",
+            "poi_code",
+            "poi_name",
+            "quantity",
+            "poi_standard_wages",
+            "piecerate"
+        ],
+        "Required": [
+            "start_date",
+            "end_date"
+        ]
+    },
+    "reportQualitytracking": {
+        "title": "返工信息明细",
+        "url": "admin/Report/QualityTrackingReport/GetPageList/",
+        "otherUrl": {
+            "Customurl": "admin/Report/CustomQualityTrackingReport/GetPageList/",
+            "qcdetail": "api/admin/report/KSQualityTrackingDutyOrgReport/GetDetail",
+            "expurl": "public/QualityTrackingReport/leadingout/",
+            "Customexpurl": "public/CustomQualityTrackingReport/leadingout/",
+            "qcks": "api/admin/report/KSQualityTrackingDutyOrgReport/GetPageList/"
+        },
+        "Explist": [
+            "date_back_start",
+            "date_back_end"
+        ],
+        "fixed": [
+            "tagcode"
+        ],
+        "kscolumns": [
+            "checked",
+            "som_code",
+            "pwb_code",
+            "tagcode",
+            "pcr_id",
+            "hei_back",
+            "poi_name_back",
+            "date_back",
+            "hei_repair",
+            "poi_key_repair_time",
+            "hei_recheck",
+            "poi_key_recheck_time",
+            "bindquantity",
+            "handlemethodname"
+        ],
+        "sumNode": [
+            {
+                "f": "bindquantity",
+                "c": "sumnumber"
+            }
+        ]
+    },
+    "reportOperationdetails": {
+        "title": "工序数据明细表",
+        "url": "admin/Report/OperationProductionDetailsReport/GetPageList/",
+        "otherUrl": {
+            "expurl": "public/OperationProductionDetailsReport/leadingout/"
+        },
+        "Explist": [
+            "start_date",
+            "end_date"
+        ],
+        "Required": [
+            "start_date",
+            "end_date"
+        ],
+        "sumNode": [
+            {
+                "f": "quantity",
+                "c": "statisticsnum"
+            }
+        ]
+    },
+    "reportHangersrecord": {
+        "title": "衣架跟踪记录",
+        "url": "Public/taginfo/trackingrecord/",
+        "otherUrl": {},
+        "Explist": [
+            "createdate_start",
+            "createdate_end",
+            "pti_tagcode",
+            "rfid"
+        ],
+        "fixed": [
+            "pti_tagcode",
+            "rfid"
+        ],
+        "Required": []
+    },
+    "reportYield": {
+        "title": "产量汇总表",
+        "url": "admin/Report/ProductionDatasReport/GetPageList/",
+        "otherUrl": {
+            "Customurl": "admin/Report/CustomProductionReport/GetPageList/",
+            "public": "public/report/ProductionDatasReport/",
+            "expurl": "public/ProductionDatasReport/leadingout/",
+            "Customexpurl": "public/CustomProductionReport/leadingout/",
+            "title": "ProductionDatasReport/"
+        },
+        "Explist": [
+            "start_date",
+            "end_date"
+        ],
+        "fixed": [
+            "hoi_name",
+            "hei_code"
+        ],
+        "Required": [
+            "start_date",
+            "end_date"
+        ],
+        "sumNode": [
+            {
+                "b": true,
+                "f": "pieceworkwage",
+                "c": "sumpieceworkwage"
+            },
+            {
+                "f": "quantity",
+                "c": "sumnumber"
+            }
+        ]
+    },
+    "reportInventoryStatistics": {
+        "title": "库存统计报表",
+        "url": "admin/Report/CustomWarehouseInventoryReport/GetPageList",
+        "otherUrl": {},
+        "sumNode": [
+            {
+                "f": "quantity",
+                "c": "allnum"
+            }
+        ]
+    },
+    "reportReworkStatistics": {
+        "title": "返工统计报表",
+        "url": "admin/Report/QCStatisticsReport/GetPageList",
+        "otherUrl": {
+            "Customurl": "admin/Report/CustomQCStatisticsReport/GetPageList/",
+            "expurl": "public/QCStatisticsReport/leadingout/",
+            "Customexpurl": "public/CustomQCStatisticsReport/leadingout/"
+        },
+        "sumNode": [
+            {
+                "f": "num",
+                "c": "allnum"
+            }
+        ],
+        "Explist": [
+            "start_date",
+            "end_date"
+        ],
+        "Required": [
+            "start_date",
+            "end_date"
+        ]
+    },
+    "saleCustomer": {
+        "title": "客户管理",
+        "url": "admin/customerinfo/",
+        "iis": false,
+        "otherUrl": {
+            "xlsurl": "customerinfo.xls",
+            "expurl": "public/customerinfo/leadingout/"
+        }
+    },
+    "sysDictionary": {
+        "title": "常用代码",
+        "url": "admin/classdata/",
+        "btnClass": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "icon": "plus"
+            },
+            {
+                "action": "update",
+                "icon": "edit"
+            },
+            {
+                "action": "del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ]
+    },
+    "sysLogrun": {
+        "title": "运行日志",
+        "url": "admin/runlog/",
+        "otherUrl": {
+            "impurl": "api/admin/runlog/",
+            "runurl": "/admin/systemlog/",
+            "gettxturl": "admin/SystemLog/extend/gettxt/",
+            "downloadurl": "api/FilesInfo/download/",
+            "expurl": "public/SizeInfo/leadingout/",
+            "fatlogurl": "admin/SystemLog/extend/UploadPadLog/",
+            "Executiveurl": "admin/SystemLog/extend/UploadPerformLog/"
+        }
+    },
+    "sysParameters": {
+        "title": "系统参数信息",
+        "url": "admin/systemparameters/"
+    },
+    "sysMenu": {
+        "title": "系统菜单",
+        "url": "api/MenuInfo/",
+        "otherUrl": {
+            "btnurl": "MenuButton"
+        },
+        "btnClass": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "icon": "plus"
+            },
+            {
+                "action": "update",
+                "icon": "edit"
+            },
+            {
+                "action": "Del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ]
+    },
+    "sysRole": {
+        "title": "角色信息",
+        "url": "admin/roleinfo/",
+        "otherUrl": {
+            "emp": "admin/EmployeeInfo/"
+        },
+        "window": {
+            "menus": "菜单选项",
+            "power": "权限选项"
+        }
+    },
+    "sysClassify": {
+        "title": "常用代码",
+        "url": "api/admin/classdata/"
+    },
+    "sysLanguage": {
+        "title": "语言管理",
+        "url": "admin/LanguageOriginalText/",
+        "otherUrl": {
+            "impurl": "api/admin/LanguageOriginalText/",
+            "expurl": "public/LanguageOriginalText/leadingout",
+            "updata": "admin/LanguageTranslateText/",
+            "VerUrl": "admin/LanguageVersion/"
+        }
+    },
+    "sysLogoperation": {
+        "title": "操作日志",
+        "url": "admin/operationlog/",
+        "otherUrl": {
+            "xlsurl": "",
+            "expurl": "api/public/operationlog/leadingout/"
+        }
+    },
+    "wmsAutooutscheme": {
+        "title": "自动出库方案",
+        "url": "admin/wm_warehouse_out_relation/",
+        "otherUrl": {}
+    },
+    "wmsOutcontrol": {
+        "title": "出库控制",
+        "url": "admin/w_WarehouseOutControl/",
+        "otherUrl": {
+            "detail": "/admin/w_WarehouseOutTask/extend/GetOutMasterForTask"
+        }
+    },
+    "wmsOuttask": {
+        "title": "出库任务",
+        "url": "admin/w_WarehouseOutControl/",
+        "otherUrl": {
+            "detail": "/admin/w_WarehouseOutTask/extend/GetOutMasterForTask"
+        }
+    },
+    "wmsOutboundplan": {
+        "title": "出库计划",
+        "url": "admin/w_warehouseoutboundplan/",
+        "otherUrl": {
+            "detail": "admin/w_warehouseoutboundplanrelation/extend/GetOutDetails",
+            "updataurl": "admin/w_warehouseoutboundplan/extend/changestatus/"
+        }
+    },
+    "whWarehousing": {
+        "title": "入库信息",
+        "url": "admin/WarehouseInMaster/",
+        "otherUrl": {
+            "detaildurl": "admin/WarehouseInDetail/",
+            "exurl": "admin/userinfo/extend/employeeUser/"
+        },
+        "displayed": [
+            "wwim_code",
+            "pti_tagcode",
+            "bls_code",
+            "pwb_code",
+            "som_code",
+            "rfid",
+            "bpi_name",
+            "psi_name",
+            "pci_name",
+            "psz_name",
+            "state_name",
+            "quantity",
+            "indate",
+            "remark"
+        ],
+        "displayedColumns": [
+            {
+                "coums": "pwb_code"
+            },
+            {
+                "coums": "som_code"
+            },
+            {
+                "coums": "bls_code"
+            },
+            {
+                "coums": "bpi_name"
+            },
+            {
+                "coums": "psi_name"
+            },
+            {
+                "coums": "pci_name"
+            },
+            {
+                "coums": "psz_name"
+            },
+            {
+                "coums": "pti_tagcode"
+            },
+            {
+                "coums": "rfid"
+            },
+            {
+                "coums": "indate"
+            },
+            {
+                "coums": "state_name"
+            }
+        ]
+    },
+    "whInventory": {
+        "title": "库存信息",
+        "url": "admin/WarehouseInventory/",
+        "otherUrl": {
+            "expurl": "public/WarehouseInventory/leadingout/"
+        }
+    },
+    "whOutofstock": {
+        "title": "出库信息",
+        "url": "admin/WarehouseOutMaster/",
+        "otherUrl": {
+            "detaildurl": "admin/WarehouseOutDetail/",
+            "closeurl": "admin/WarehouseOutMaster/extend/close/",
+            "closedetailurl": "admin/WarehouseOutDetail/extend/close/"
+        },
+        "detail": [
+            "wwom_code",
+            "pti_tagcode",
+            "bls_code",
+            "pwb_code",
+            "rfid",
+            "psi_name",
+            "state_name",
+            "quantity",
+            "out_bls_code",
+            "sendtime",
+            "outdate"
+        ],
+        "displayedColumns": [
+            {
+                "coums": "No"
+            },
+            {
+                "coums": "pwb_code"
+            },
+            {
+                "coums": "som_code"
+            },
+            {
+                "coums": "bls_code"
+            },
+            {
+                "coums": "bpi_name"
+            },
+            {
+                "coums": "psi_name"
+            },
+            {
+                "coums": "pci_name"
+            },
+            {
+                "coums": "psz_name"
+            },
+            {
+                "coums": "pti_tagcode"
+            },
+            {
+                "coums": "rfid"
+            },
+            {
+                "coums": "outdate"
+            },
+            {
+                "coums": "state_name"
+            }
+        ]
+    },
+    "whOutboundMonitoring": {
+        "title": "出库衣架监控",
+        "url": "admin/WarehouseOutMaster/extend/GetExtendByVO/",
+        "otherUrl": {
+            "detaildurl": "admin/WarehouseOutDetail/",
+            "exurl": "api/admin/userinfo/extend/employeeUser/",
+            "closeurl": "admin/WarehouseOutMaster/extend/close/",
+            "closedetailurl": "admin/WarehouseOutDetail/extend/close/",
+            "UnloadingStation": "api/admin/UnloadingStation/"
+        },
+        "detailcolumns": [
+            {
+                "open": true,
+                "width": "120px",
+                "coums": "pti_tagcode"
+            },
+            {
+                "open": true,
+                "width": "200px",
+                "coums": "rfid"
+            },
+            {
+                "width": "90px",
+                "coums": "state_name"
+            },
+            {
+                "width": "100px",
+                "coums": "bls_code"
+            },
+            {
+                "width": "100px",
+                "coums": "bpi_name"
+            },
+            {
+                "width": "120px",
+                "coums": "out_bls_code"
+            }
+        ],
+        "action": [
+            {
+                "action": "add",
+                "iscomm": true,
+                "noson": true,
+                "icon": "plus"
+            },
+            {
+                "action": "del",
+                "icon": "delete",
+                "isconfirm": true,
+                "confieTile": "confirm.confirm_deln"
+            }
+        ]
+    },
+    "whTaskOut": {
+        "title": "出库任务",
+        "url": "admin/warehouseTaskOut/",
+        "detail": [
+            "wwom_code",
+            "pti_tagcode",
+            "bls_code",
+            "pwb_code",
+            "rfid",
+            "psi_name",
+            "state_name",
+            "quantity",
+            "out_bls_code",
+            "sendtime",
+            "outdate"
+        ]
+    },
+    "wmsStockin": {
+        "title": "入库信息",
+        "url": "admin/w_WarehouseInMaster/",
+        "otherUrl": {
+            "detail": "/admin/w_WarehouseInDetail"
+        },
+        "detail": [
+            {
+                "coums": "bls_name"
+            },
+            {
+                "coums": "bls_code"
+            },
+            {
+                "coums": "type_name"
+            },
+            {
+                "coums": "carrierid"
+            },
+            {
+                "coums": "pti_tagcode"
+            },
+            {
+                "coums": "poi_code"
+            },
+            {
+                "coums": "poi_name"
+            },
+            {
+                "coums": "state_name"
+            },
+            {
+                "coums": "remark"
+            },
+            {
+                "type": "time",
+                "width": "160px",
+                "coums": "indate",
+                "format": "yyyy-MM-dd",
+                "alignment": "center"
+            }
+        ]
+    },
+    "wmsStock": {
+        "title": "库存",
+        "url": "admin/w_WarehouseInventory/"
+    },
+    "wmsInventorySummary": {
+        "title": "库存汇总报表",
+        "url": "admin/Report/w_WarehouseInventoryReport/GetPageList/",
+        "otherUrl": {
+            "expurl": "public/w_WarehouseInventoryReport/leadingout/"
+        },
+        "sumNode": [
+            {
+                "f": "num",
+                "c": "totalnumber"
+            }
+        ]
+    },
+    "wmsStockout": {
+        "title": "出库信息",
+        "url": "admin/w_WarehouseOutMaster/",
+        "otherUrl": {
+            "detail": "/admin/w_WarehouseOutDetail"
+        },
+        "detail": [
+            {
+                "coums": "carrierid"
+            },
+            {
+                "coums": "bls_name"
+            },
+            {
+                "coums": "bls_code"
+            },
+            {
+                "coums": "out_bls_name"
+            },
+            {
+                "coums": "out_bls_code"
+            },
+            {
+                "coums": "pti_tagcode"
+            },
+            {
+                "coums": "poi_code"
+            },
+            {
+                "coums": "poi_name"
+            },
+            {
+                "coums": "state_name"
+            },
+            {
+                "coums": "is_in"
+            }
+        ]
+    },
+    "wmsPackingsolution": {
+        "title": "包装方案",
+        "url": "admin/baozhuang/",
+        "otherUrl": {
+            "detaildurl": "admin/baozhuangdetail/"
+        },
+        "displayedColumns": [
+            {
+                "coums": "tiaoma",
+                "width": "150px"
+            },
+            {
+                "coums": "state_name",
+                "extend": true,
+                "width": "80px"
+            },
+            {
+                "coums": "current_bls_code",
+                "extend": true,
+                "width": "300px"
+            },
+            {
+                "coums": "destination_bls_code",
+                "width": "150px"
+            },
+            {
+                "coums": "carrierid",
+                "width": "150px"
+            },
+            {
+                "coums": "pti_tagcode",
+                "width": "150px"
+            },
+            {
+                "coums": "expr1",
+                "width": "150px"
+            },
+            {
+                "coums": "taohao",
+                "width": "150px"
+            },
+            {
+                "coums": "zhuangxinfenzu",
+                "width": "150px"
+            },
+            {
+                "coums": "htbn",
+                "width": "150px"
+            },
+            {
+                "coums": "zzkh",
+                "width": "150px"
+            },
+            {
+                "coums": "dingdanmingxiid",
+                "width": "150px"
+            },
+            {
+                "coums": "pinming",
+                "width": "150px"
+            },
+            {
+                "coums": "guige",
+                "width": "150px"
+            },
+            {
+                "coums": "pihao",
+                "width": "150px"
+            },
+            {
+                "coums": "bianhao",
+                "width": "150px"
+            },
+            {
+                "coums": "xingming",
+                "width": "150px"
+            },
+            {
+                "coums": "bumenquancheng",
+                "width": "150px"
+            },
+            {
+                "coums": "xiangxing",
+                "width": "150px"
+            },
+            {
+                "coums": "xianghao",
+                "width": "150px"
+            },
+            {
+                "coums": "autobaozhuangline",
+                "width": "150px"
+            },
+            {
+                "coums": "haoxing",
+                "width": "150px"
+            },
+            {
+                "coums": "lishujidi",
+                "width": "150px"
+            },
+            {
+                "coums": "banchengpintaoti",
+                "width": "150px"
+            },
+            {
+                "coums": "create_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "online_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "sorting_start_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "sorting_end_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "check_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "print_time",
+                "format": "yyyy-MM-dd HH:mm:ss",
+                "width": "180px"
+            },
+            {
+                "coums": "operate",
+                "extend": true,
+                "nzRight": true,
+                "width": "180px"
+            }
+        ]
+    },
+    "wmsPriceinfo": {
+        "title": "工价信息",
+        "url": "admin/wages/"
+    },
+    "wmsInventoryclearancemanagement": {
+        "title": "虚拟库管理",
+        "url": "admin/w_warehouseofflineinventory/"
+    },
+    "wmsSkuprocess": {
+        "title": "sku工序流",
+        "url": "admin/skuOperationProcess/"
+    },
+    "wmsAbnormaleventreport": {
+        "title": "异常事件报表",
+        "url": "admin/Report/eventrecord/GetPageList/",
+        "otherUrl": {
+            "expurl": "public/eventrecord/leadingout/"
+        }
+    },
+    "wmsCountingdemand": {
+        "title": "计数需求",
+        "url": "admin/w_WarehouseTally/extend/SumReport/",
+        "otherUrl": {
+            "expurl": "public/w_WarehouseTally/leadingout/"
+        },
+        "Explist": [
+            "starttime",
+            "endtime"
+        ],
+        "sumNode": [
+            {
+                "f": "count",
+                "c": "sumnumber"
+            }
+        ],
+        "Required": [
+            "starttime",
+            "endtime"
+        ]
+    }
+}

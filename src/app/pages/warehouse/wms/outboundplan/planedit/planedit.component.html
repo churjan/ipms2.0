@@ -1,0 +1,187 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9" nzRequired>{{'wmsOutboundplan.code'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <input nz-input formControlName="code" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8" nzRequired>{{'wmsOutboundplan.name'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <input nz-input formControlName="name" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9">{{'wmsOutboundplan.start_time'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <date-select class="select" widthClass="width100" formControlName="start_time">
+                            </date-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9">{{'wmsOutboundplan.type_name'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                formControlName="type" DataFiled="value" DataTxt="description" urltype="enum"
+                                url="warehouseoutboundplantypeenum" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'wmsOutboundplan.quantity'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'wmsOutboundplan.quantity'|i18n }}">
+                            <input nz-input formControlName="quantity" type="number"
+                                placeholder="{{'inputdata.input'|i18n}}" (keydown)="submitForm($event)" min="0" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9">{{'wmsOutboundplan.requestdeliverydate'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <date-select class="select" widthClass="width100" formControlName="requestdeliverydate">
+                            </date-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9">{{'wmsOutboundplan.state_name'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="state" DataFiled="value" DataTxt="description"
+                                urltype="enum" url="warehouseoutboundplanenum" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'wmsOutboundplan.level_name'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                formControlName="level" DataFiled="value" DataTxt="description" urltype="enum"
+                                url="warehouseoutboundplanlevelenum" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="9">{{'wmsOutboundplan.inboundtime'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="15">
+                            <input nz-input formControlName="inboundtime" type="number"
+                                placeholder="{{'inputdata.input'|i18n}}" (keydown)="submitForm($event)" min="0" />
+
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="2" style="margin-left: 2.6rem;">{{'wmsOutboundplan.remark'|i18n }}
+                        </nz-form-label>
+                        <nz-form-control [nzSpan]="22" nzErrorTip="{{'pmWork.addressLengthLimit'|i18n }}">
+                            <textarea nz-input formControlName="remark" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" nzAutosize></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <nz-tabset class="tabset" [(nzSelectedIndex)]="nzSelectedIndex">
+            <nz-tab nzTitle="{{'placard.setODS'|i18n}}">
+                <ina-ztree-select [setting]="setting" [params]="stationRailtree" datatype="NewGetList/"
+                    (onSelect)="getstation($event)"></ina-ztree-select>
+                <nz-transfer nzShowSearch [nzDataSource]="transferData" class="transfer"
+                    [nzRenderList]="[renderList, renderList]" [nzTitles]="['('+('placard.canSelect'|i18n)+')',
+                '('+('placard.selected'|i18n)+')']" [nzListStyle]="{height: 'calc(100%)'}" [nzShowSelectAll]="false"
+                    [nzFilterOption]="filterOption" (nzChange)="transferChange($event)">
+                    <ng-template #renderList let-items let-stat="stat" let-onItemSelectAll="onItemSelectAll"
+                        let-onItemSelect="onItemSelect">
+                        <div class="transfer-table-wrapper">
+                            <nz-table #table [nzData]="$asTransferItems(items)" [nzFrontPagination]="false"
+                                nzSize="small" [nzShowPagination]="false"
+                                [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }" [nzBordered]="true" nzSize="small">
+                                <thead>
+                                    <tr>
+                                        <th nzAlign="center" nzWidth="40px" [nzChecked]="stat.checkAll"
+                                            [nzIndeterminate]="stat.checkHalf"
+                                            (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                        <th nzAlign="center">{{
+                                        'wmsOutboundplan.out_infeed_code'|i18n }}</th>
+                                        <th nzAlign="center">{{
+                                        'wmsOutboundplan.out_infeed_name'|i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                        <td nzAlign="center" nzWidth="40px" [nzChecked]="!!data.checked"
+                                            (nzCheckedChange)="onItemSelect(data)"></td>
+                                        <td nzAlign="center">{{ data.code }}</td>
+                                        <td nzAlign="center">{{ data.title }}</td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </ng-template>
+                </nz-transfer>
+            </nz-tab>
+            <nz-tab nzTitle="{{'placard.Schemeconfig'|i18n}}">
+                <nz-table #table [nzData]="planlist" [nzFrontPagination]="false" nzSize="small"
+                    [nzShowPagination]="false" [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }" [nzBordered]="true"
+                    nzSize="small">
+                    <thead>
+                        <tr>
+                            <th nzAlign="center">{{'wmsOutboundplan.plan'|i18n }}</th>
+                            <th nzAlign="center">{{'wmsOutboundplan.quantity'|i18n }}</th>
+                            <th nzAlign="center">
+                                <a (click)="add()"><i nz-icon nzType="plus"
+                                        nzTheme="outline"></i>{{'btn.plus'|i18n}}</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of table.data;let i=index">
+                            <td nzAlign="center">
+                                <ina-common-select class="select" title="" [(ngModel)]="data.wwor_key" name="wwor_key"
+                                    [isdisabled]="data.key" url="w_WarehouseOutRelation" [isshow]="false">
+                                </ina-common-select>
+                            </td>
+                            <td nzAlign="center">
+                                <input nz-input [(ngModel)]="data.quantity" name="quantity"
+                                    placeholder="{{'inputdata.input'|i18n}}" (keydown)="submitForm($event,i)" min="0" />
+                            </td>
+                            <td nzAlign="center">
+                                <a (click)="del(data,i)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+
+            </nz-tab>
+        </nz-tabset>
+
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button nzType="primary" (click)="submitForm()" *ngIf="validateForm.value.state!=99"
+            (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting"
+            class="m-l-6">{{'btn.save'|i18n}}</button>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

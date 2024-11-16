@@ -1,0 +1,10 @@
+<!-- <div class="page-view">
+    <div class="body-view">
+        <app-structure-rule-scheme-table-list></app-structure-rule-scheme-table-list>
+    </div>
+</div> -->
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [showAdvanced]="false"
+    keyword_placeholder="layoutProgramme.code" [columns]="columns" [modular]="modular" [fields]="field"></crud2>
+<edit-structure-rule-scheme #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit-structure-rule-scheme>
+
+<app-track-config #config [modular]="modular" (editDone)="crud.reloadData($event)"></app-track-config>

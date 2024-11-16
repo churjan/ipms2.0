@@ -1,0 +1,50 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center"
+    height="99%"
+    (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div nz-row style="height: 36px;line-height: 36px;">
+            <nz-button-group>
+                <button nz-button nzType="default" (click)="change(item)"
+                    *ngFor="let item of note">
+                    {{item.bpi_name}}</button>
+            </nz-button-group>
+            <span class="spacer"></span>
+            <button nz-button (click)="update()">
+                <i nz-icon nzType="control" nzTheme="outline" nz-tooltip
+                    nzTitle="{{'btn.Set_floating'|i18n}}"></i>
+            </button>
+
+            <nz-input-group nzAddOnBefore="{{'placard.Float_up'|i18n}}"
+                style="width: 12rem;">
+                <input type="number" nz-input [nzStep]="0.1"
+                    [(ngModel)]="FloatUp"
+                    (keyup)="update()" />
+            </nz-input-group>
+            <nz-input-group nzAddOnBefore="{{'placard.Float_down'|i18n}}"
+                style="width: 12rem;">
+                <input type="number" nz-input [nzStep]="0.1"
+                    [(ngModel)]="FloatDownward"
+                    (keyup)="update()" />
+            </nz-input-group>
+            <!-- <nz-input-number-group
+                nzAddOnBefore="{{'placard.Float_up'|i18n}}">
+                <nz-input-number [nzStep]="0.1" [(ngModel)]="FloatUp"
+                    (keyup)="update()"></nz-input-number>
+            </nz-input-number-group> -->
+            <!-- <nz-input-number-group
+                nzAddOnBefore="{{'placard.Float_down'|i18n}}">
+                <nz-input-number [nzStep]="0.1" [(ngModel)]="FloatDownward"
+                    (keyup)="update()"></nz-input-number>
+            </nz-input-number-group> -->
+        </div>
+        <div style="height:calc(100% - 90px);overflow: auto;width:100%">
+            <div id="myChart" class="chart" echarts #myChart
+                [ngStyle]="{'width':_width>0?((_width>pwidth&&pwidth>0?_width:pwidth)
+                + 'px'):'100%'}"></div>
+        </div>
+    </ng-template>
+    <!-- 操作栏 -->
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>

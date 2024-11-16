@@ -1,0 +1,87 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl" height="99%">
+    <ng-template #contentTpl>
+        <div class="cont_title">{{'popupField.title1'|i18n}}</div>
+        <div class="cont">
+            <!-- 所属站位 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'popupField.station_code2'|i18n}}：</div>
+                <div class="cont_one_val" nz-tooltip [nzTooltipTitle]="lineDetailsList.station_code">
+                    {{lineDetailsList.station_code}}</div>
+                <!-- <div class="cont_one_val" *ngIf="lineDetailsList.station_code" nz-tooltip [nzTooltipTitle]="lineDetailsList.station_code">{{lineDetailsList.station_code.length>24?lineDetailsList.station_code.substring(0,23)+"...":lineDetailsList.station_code}}</div>  -->
+            </div>
+            <!-- 进轨 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'popupField.infeed_code'|i18n}}：</div>
+                <div class="cont_one_val" nz-tooltip [nzTooltipTitle]="lineDetailsList.infeed_code">
+                    {{lineDetailsList.infeed_code}}</div>
+                <!-- <div class="cont_one_val" *ngIf="lineDetailsList.infeed_code" nz-tooltip [nzTooltipTitle]="lineDetailsList.infeed_code">{{lineDetailsList.infeed_code.length>24?lineDetailsList.infeed_code.substring(0,23)+"...":lineDetailsList.infeed_code}}</div>  -->
+            </div>
+            <!-- 载具数 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'popupField.carrier'|i18n}}：</div>
+                <div class="cont_one_val">{{lineDetailsList.carrier_count}}/{{lineDetailsList.volume}}</div>
+            </div>
+            <!-- 是否硬满站 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'padMonitor.hardware_overload'|i18n}}：</div>
+                <div class="cont_one_val">{{(lineDetailsList.hardware_overload?'placard.yes':'placard.no')|i18n}}</div>
+            </div>
+        </div>
+        <div class="cont">
+            <!-- 站内载具数 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'popupField.inside_carrier_count'|i18n}}：</div>
+                <div class="cont_one_val">{{lineDetailsList.inside_carrier_count}}</div>
+            </div>
+            <!-- 在途载具数 -->
+            <div class="cont_one">
+                <div class="cont_one_name">{{'popupField.in_transit_carrier_count'|i18n}}：</div>
+                <div class="cont_one_val">{{lineDetailsList.in_transit_carrier_count}}</div>
+            </div>
+        </div>
+        <div class="cont_title" style="margin-top: 14px;">{{'popupField.title5'|i18n}}</div>
+        <div class="cont_one_table" [style]="'height:'+ (popupContHeight - 190) +'px'">
+            <nz-table #carrierTable [nzData]="carrierData" [nzScroll]="{x:'1580px',y:(popupContHeight - 230)+'px'}"
+                [nzShowPagination]="false" nzSize="small" [nzLoading]="isLineDetailsTableLoading"
+                [nzOuterBordered]="true" [nzBordered]="true" [nzPageSize]="99999999">
+                <thead>
+                    <tr>
+                        <th nzLeft nzWidth="50px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                        <th nzWidth="170px">{{'popupField.carrier_code'|i18n}}</th>
+                        <th nzWidth="180px">{{'popupField.tagcode2'|i18n}}</th>
+
+                        <th>{{'popupField.workbill_code'|i18n}}</th>
+                        <th nzWidth="170px">{{'popupField.part_name'|i18n}}</th>
+                        <th nzWidth="130px">{{'popupField.current_location_code'|i18n}}</th>
+                        <th nzWidth="130px">{{'popupField.current_structure_code'|i18n}}</th>
+                        <th nzWidth="140px">{{'popupField.current_type_name'|i18n}}</th>
+                        <th nzWidth="130px">{{'popupField.in_time'|i18n}}</th>
+                        <th nzWidth="130px">{{'popupField.doing_time'|i18n}}</th>
+                        <th nzWidth="130px">{{'popupField.update_time'|i18n}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of carrierData,let i = index">
+                        <td nzLeft nzWidth="70px" nzAlign="center">{{i+1}}</td>
+                        <td nzWidth="170px">{{data.carrier_code}}</td>
+                        <td nzWidth="180px">{{data.tagcode}}</td>
+                        <td>{{data.workbill_code}}</td>
+                        <td nzWidth="170px">{{data.part_name}}</td>
+                        <td nzWidth="130px"><span
+                                [style]="(data.current_location_code!==lineDetailsList.station_code?'color: #f00;':'')">{{data.current_location_code}}</span>
+                        </td>
+                        <td nzWidth="130px">{{data.current_structure_code}}</td>
+                        <td nzWidth="140px">{{data.current_type_name}}</td>
+                        <td nzWidth="130px">{{data.in_time}}</td>
+                        <td nzWidth="130px">{{data.doing_time}}</td>
+                        <td nzWidth="130px">{{data.update_time}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+    </ng-template>
+</idrawer>

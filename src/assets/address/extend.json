@@ -1,0 +1,312 @@
+{
+    "jindin": {
+        "pmWork": {
+            "fields": [
+                {
+                    "name": "销售订单号",
+                    "code": "mixcode"
+                }
+            ]
+        }
+    },
+    "GIU": {
+        "pmWork": {
+            "fields": [
+                {
+                    "name": "检验结论",
+                    "code": "jyresult"
+                },
+                {
+                    "name": "绣花",
+                    "code": "logo"
+                },
+                {
+                    "name": "面料",
+                    "code": "fnumber"
+                },
+                {
+                    "name": "检验批次",
+                    "code": "jypc"
+                },
+                {
+                    "name": "记忆处理",
+                    "code": "jiyichuli"
+                },
+                {
+                    "name": "纹理",
+                    "code": "wenli"
+                },
+                {
+                    "name": "面料成分",
+                    "code": "ingredients"
+                },
+                {
+                    "name": "撞色",
+                    "code": "zhuangse"
+                },
+                {
+                    "name": "辅料分组",
+                    "code": "cate_name"
+                },
+                {
+                    "name": "面料成分",
+                    "code": "ingredients"
+                },
+                {
+                    "name": "单位",
+                    "code": "unitname"
+                },
+                {
+                    "name": "定额",
+                    "code": "dinge"
+                },
+                {
+                    "name": "用量",
+                    "code": "num"
+                },
+                {
+                    "name": "形状",
+                    "code": "shape"
+                },
+                {
+                    "name": "成分",
+                    "code": "constituent"
+                },
+                {
+                    "name": "是否免烫",
+                    "type": "boolean",
+                    "code": "isnonironing"
+                },
+                {
+                    "name": "商标",
+                    "code": "shangbiao"
+                },
+                {
+                    "name": "暂存出库",
+                    "type": "boolean",
+                    "code": "allow_overloadstore_out"
+                }
+            ]
+        },
+        "reportYield": {
+            "fields": [
+                {
+                    "name": "纹理",
+                    "code": "pwb_wenli"
+                },
+                {
+                    "name": "纹理备注",
+                    "code": "pwb_wenlibeizhu"
+                }
+            ]
+        }
+    },
+    "KS": {
+        "hanger": {
+            "fields": [
+                {
+                    "code": "hinban",
+                    "name": "辅料品番"
+                },
+                {
+                    "code": "color",
+                    "name": "颜色"
+                },
+                {
+                    "code": "size",
+                    "name": "扣尺码"
+                },
+                {
+                    "code": "yarn",
+                    "name": "线色"
+                },
+                {
+                    "code": "inchname",
+                    "name": "寸法名"
+                },
+                {
+                    "code": "subcatename",
+                    "name": "OPT名"
+                },
+                {
+                    "code": "optcode",
+                    "name": "种别编号"
+                },
+                {
+                    "code": "optname",
+                    "name": "种别名"
+                },
+                {
+                    "code": "anthinban",
+                    "name": "防滑条品番"
+                },
+                {
+                    "code": "stripcolor",
+                    "name": "防滑条色番"
+                },
+                {
+                    "code": "differencevalue",
+                    "name": "差值"
+                },
+                {
+                    "code": "question",
+                    "name": "问题"
+                },
+                {
+                    "code": "answer",
+                    "name": "标准答案"
+                },
+                {
+                    "code": "qcvalue",
+                    "name": "提交值"
+                }
+            ]
+        },
+        "pmWork": {
+            "fields": [
+                {
+                    "name": "辅料编号",
+                    "code": "excipient_code"
+                },
+                {
+                    "name": "辅料名称",
+                    "code": "excipient_name"
+                },
+                {
+                    "name": "辅料品番",
+                    "code": "hinban"
+                },
+                {
+                    "name": "扣尺码",
+                    "code": "size"
+                },
+                {
+                    "name": "线色",
+                    "code": "stringcolor"
+                }
+            ]
+        },
+        "pmTags": {
+            "fields": [
+                {
+                    "code": "investment_fan",
+                    "name": "投番"
+                },
+                {
+                    "code": "loadout_time",
+                    "format": "yyyy-MM-dd",
+                    "type": "time",
+                    "name": "出荷日"
+                }
+            ]
+        }
+    },
+    "Kuka": {
+        "pmWork": {
+            "fields": [
+                {
+                    "name": "暂存出库",
+                    "type": "boolean",
+                    "code": "allow_overloadstore_out"
+                }
+            ]
+        }
+    },
+    "YY": {
+        "pmTags": {
+            "columns": [
+                "pwb_code",
+                "mixcode",
+                "psi_code",
+                "pci_name",
+                "psz_name",
+                "style_name",
+                "bpi_name",
+                "bpi_ismain",
+                "serialcode",
+                "binding_quantity",
+                "packageinsidecode",
+                "state_name",
+                "tagcode",
+                "printnum"
+            ],
+            "fields": [
+                {
+                    "name": "包号",
+                    "code": "serialcode"
+                },
+                {
+                    "name": "流水号",
+                    "code": "packageinsidecode"
+                },
+                {
+                    "name": "排程",
+                    "code": "mixcode"
+                }
+            ],
+            "otherUrl": {}
+        }
+    },
+    "BaoQi": {
+        "reportYield": {
+            "fields": [
+                {
+                    "name": "计件工资(￥)",
+                    "code": "pieceworkwage"
+                }
+            ],
+            "columns": [
+                "hoi_name",
+                "hei_code",
+                "hei_name",
+                "bli_name",
+                "bsm_code",
+                "pwb_code",
+                "psi_code",
+                "psi_name",
+                "pci_name",
+                "psz_name",
+                "bpi_name",
+                "poi_code",
+                "poi_name",
+                "quantity",
+                "standardtime",
+                "tvwh",
+                "efficiency",
+                "poi_standard_wages",
+                "pieceworkwage",
+                "date"
+            ],
+            "sumNode": [
+                {
+                    "f": "pieceworkwage",
+                    "c": "sumpieceworkwage"
+                },
+                {
+                    "f": "quantity",
+                    "c": "sumnumber"
+                }
+            ]
+        }
+    },
+    "BaiLiEn": {
+        "pmTags": {
+            "fields": [
+                {
+                    "name": "扎号",
+                    "code": "serialcode"
+                }
+            ]
+        }
+    },
+    "Dongli": {
+        "pmTags": {
+            "fields": [
+                {
+                    "name": "自定义标签",
+                    "code": "customcode"
+                }
+            ]
+        }
+    }
+}

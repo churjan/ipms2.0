@@ -1,0 +1,830 @@
+{
+    "order": [
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.code",
+            "code": "code",
+            "tip": true,
+            "disabled": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.sci_name",
+            "code": "sci_name",
+            "tip": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.total",
+            "code": "total",
+            "tip": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.taking_time",
+            "code": "requestdeliverydate",
+            "tip": true,
+            "format": "time"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.sale_channel",
+            "code": "sale_channel",
+            "tip": true,
+            "format": "sale_channel"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.salername",
+            "code": "salername",
+            "tip": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.state",
+            "code": "state",
+            "tip": true,
+            "width": "230px",
+            "format": "toState",
+            "align": "center"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "saleOrder.create_time",
+            "code": "create_time",
+            "tip": true,
+            "format": "time"
+        }
+    ],
+    "tags": [
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.pwb_code",
+            "code": "pwb_code",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.serialcode",
+            "code": "serialcode",
+            "tip": true,
+            "width": "80px",
+            "isOverflow": true
+        },
+        {
+            "show": false,
+            "save": true,
+            "name": "pmTags.customcode",
+            "code": "customcode",
+            "tip": true,
+            "width": "160px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.psi_name",
+            "code": "psi_name",
+            "tip": true,
+            "width": "160px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.psi_code",
+            "code": "psi_code",
+            "tip": true,
+            "width": "160px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.style_name",
+            "code": "style_name",
+            "tip": true,
+            "width": "90px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.bpi_name",
+            "code": "bpi_name",
+            "tip": true,
+            "width": "160px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.bpi_ismain",
+            "code": "bpi_ismain",
+            "tip": true,
+            "width": "60px",
+            "isOverflow": true,
+            "format": "boolean"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.state_name",
+            "code": "state_name",
+            "tip": true,
+            "width": "80px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.tagcode",
+            "code": "tagcode",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true,
+            "format": "code_1D"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmTags.binding_quantity",
+            "code": "binding_quantity",
+            "tip": true,
+            "width": "80px",
+            "isOverflow": true
+        }
+    ],
+    "specialCoatHangerMark": [
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.hangerid",
+            "code": "hangerid",
+            "tip": true,
+            "width": "180px",
+            "isOverflow": true,
+            "format": "toHangerid"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.tagcode",
+            "code": "tagcode",
+            "tip": true,
+            "width": "150px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.pwb_code",
+            "code": "pwb_code",
+            "tip": true,
+            "width": "150px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.psi_name",
+            "code": "psi_name",
+            "tip": true,
+            "width": "180px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.psi_code",
+            "code": "psi_code",
+            "tip": true,
+            "width": "180px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.pci_name",
+            "code": "pci_name",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.psz_name",
+            "code": "psz_name",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.isabnormal",
+            "code": "isabnormal",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true,
+            "format": "isOk"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.destinationlocation_code",
+            "code": "destinationlocation_code",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.currentlocation_code",
+            "code": "currentlocation_code",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pmSpecialCoatHangerMark.currenttype_str",
+            "code": "currenttype_str",
+            "tip": true,
+            "width": "200px",
+            "isOverflow": true
+        }
+    ],
+    "hangerFlow": [
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_code",
+            "code": "station_code",
+            "tip": true,
+            "width": "100px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_type_name",
+            "code": "station_type_name",
+            "tip": true,
+            "width": "100px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_state_name",
+            "code": "station_type_name",
+            "tip": true,
+            "width": "90px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.pad_mac",
+            "code": "pad_mac",
+            "tip": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.employee_name",
+            "code": "employee_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.current_operation",
+            "code": "current_operation",
+            "tip": true,
+            "width": "150px",
+            "isOverflow": true
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.last_doing_carrier_code",
+            "code": "last_doing_carrier_code",
+            "tip": true,
+            "width": "160px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.last_out_carrier_code",
+            "code": "last_out_carrier_code",
+            "tip": true,
+            "width": "160px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.infeeds",
+            "code": "infeeds",
+            "right": true,
+            "width": "230px",
+            "format": "infeeds"
+        }
+    ],
+    "stationSupervisoryControl": [
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_code",
+            "code": "station_code",
+            "tip": true,
+            "width": "100px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_name",
+            "code": "station_name",
+            "tip": true,
+            "width": "160px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_type_name",
+            "code": "station_type_name",
+            "tip": true,
+            "width": "100px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.station_state_name",
+            "code": "station_state_name",
+            "tip": true,
+            "width": "90px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.pad_mac",
+            "code": "pad_mac",
+            "tip": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.employee_code",
+            "code": "employee_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.employee_name",
+            "code": "employee_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.workbill_code",
+            "code": "pwb_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.style_code",
+            "code": "psi_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.style_name",
+            "code": "psi_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.color_code",
+            "code": "pci_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.color_name",
+            "code": "pci_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.size_code",
+            "code": "psz_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.size_name",
+            "code": "psz_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.part_code",
+            "code": "part_code",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.part_name",
+            "code": "part_name",
+            "tip": true,
+            "width": "110px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.current_operation_code",
+            "code": "current_operation_code",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.current_operation_name",
+            "code": "current_operation_name",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.operation_output",
+            "code": "operation_output",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.operation_worktime",
+            "code": "operation_worktime",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.operation_sam",
+            "code": "operation_sam",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.operation_efficiency",
+            "code": "operation_efficiency",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.total_output",
+            "code": "total_output",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.total_worktime",
+            "code": "total_worktime",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.total_sam",
+            "code": "total_sam",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.total_efficiency",
+            "code": "total_efficiency",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.repair_quantity",
+            "code": "repair_quantity",
+            "tip": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.last_doing_carrier_code",
+            "code": "last_doing_carrier_code",
+            "tip": true,
+            "width": "160px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.last_out_carrier_code",
+            "code": "last_out_carrier_code",
+            "tip": true,
+            "width": "160px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "layoutStationSupervisoryControl.infeeds",
+            "code": "infeeds",
+            "right": true,
+            "width": "350px",
+            "format": "infeeds"
+        }
+    ],
+    "color": [
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmColor.code",
+            "code": "code",
+            "tip": true,
+            "isOverflow": true,
+            "width": "250px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmColor.name",
+            "code": "name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "350px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmColor.customcode",
+            "code": "customcode",
+            "tip": true,
+            "isOverflow": true,
+            "width": "250px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmColor.description",
+            "code": "description",
+            "tip": true,
+            "isOverflow": true,
+            "width": "500px"
+        }
+    ],
+    "size": [
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.code",
+            "code": "code",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.name",
+            "code": "name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.group",
+            "code": "group",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.customcode",
+            "code": "customcode",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.sort",
+            "code": "sort",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "pdmSize.description",
+            "code": "description",
+            "tip": true,
+            "isOverflow": true,
+            "width": "280px"
+        }
+    ],
+    "employee": [
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.code",
+            "code": "code",
+            "tip": true,
+            "isOverflow": true,
+            "width": "180px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.name",
+            "code": "name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "150px",
+            "format": "toName"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.sex",
+            "code": "sex",
+            "tip": true,
+            "isOverflow": true,
+            "width": "150px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.hoi_name",
+            "code": "hoi_name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "180px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.attendanceid",
+            "code": "attendanceid",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrEmployee.phone",
+            "code": "phone",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        }
+    ],
+    "skill": [
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.hei_code",
+            "code": "hei_code",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.hei_name",
+            "code": "hei_name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.poi_code",
+            "code": "poi_code",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.poi_name",
+            "code": "poi_name",
+            "tip": true,
+            "isOverflow": true,
+            "width": "250px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.a",
+            "code": "a",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.b",
+            "code": "b",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "hrSkill.c",
+            "code": "c",
+            "tip": true,
+            "isOverflow": true,
+            "width": "200px"
+        }
+    ],
+    "software": [
+        {
+            "show": true,
+            "save": true,
+            "name": "sysSoftwareUpdate.vercode",
+            "code": "vercode",
+            "width": "120px"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "sysSoftwareUpdate.info",
+            "code": "info"
+        },
+        {
+            "show": true,
+            "save": true,
+            "name": "sysSoftwareUpdate.create_time",
+            "code": "create_time",
+            "width": "180px"
+        }
+    ]
+}

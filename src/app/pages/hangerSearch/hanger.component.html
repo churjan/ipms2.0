@@ -1,0 +1,107 @@
+<nz-card id="hanger" class="hangerCard" [nzTitle]="cardHeader">
+    <nz-descriptions nzSize="small" *ngIf="Basicinfor">
+        <nz-descriptions-item nzTitle="{{'hanger.id'|i18n}}" *ngIf="Basicinfor.id">{{Basicinfor?.id}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.tagcode'|i18n}}" *ngIf="Basicinfor.tagcode">{{Basicinfor.tagcode}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.binding_quantity'|i18n}}" *ngIf="Basicinfor.binding_quantity">
+            {{Basicinfor.binding_quantity}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.parts'|i18n}}" *ngIf="Basicinfor.bpi_name">
+            {{Basicinfor.bpi_name}}[{{Basicinfor.bpi_code}}]</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.label_status'|i18n}}" *ngIf="Basicinfor.state_name">
+            {{Basicinfor.state_name}}</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="{{'hanger.product_code'|i18n}}"*ngIf="Basicinfor.product_code">{{Basicinfor.product_code}}</nz-descriptions-item> -->
+        <nz-descriptions-item nzTitle="{{'hanger.som_code'|i18n}}" *ngIf="Basicinfor.som_code">{{Basicinfor.som_code}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.pwb_code'|i18n}}" *ngIf="Basicinfor.pwb_code">{{Basicinfor.pwb_code}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.psi'|i18n}}" *ngIf="Basicinfor.psi_code">
+            {{Basicinfor.psi_code}}[{{Basicinfor.psi_name}}]</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.pcl'|i18n}}" *ngIf="Basicinfor.pci_name">{{Basicinfor.pci_name}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.psz'|i18n}}" *ngIf="Basicinfor.psz_name">{{Basicinfor.psz_name}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.updatetime'|i18n}}"
+            *ngIf="Basicinfor.phr_entity&&Basicinfor.phr_entity.updatetime">{{Basicinfor.phr_entity.updatetime}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.ispermissionin'|i18n}}"
+            *ngIf="Basicinfor.phr_entity&&Basicinfor.phr_entity.ispermissionin">
+            {{(Basicinfor.phr_entity.ispermissionin==true?'hanger.yes':'hanger.not')|i18n}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.isabnormal'|i18n}}"
+            *ngIf="Basicinfor.phr_entity&&Basicinfor.phr_entity.isabnormal">
+            {{(Basicinfor.phr_entity.isabnormal==true?'hanger.yes':'hanger.not')|i18n}}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.lot_number'|i18n}}" *ngIf="Basicinfor.lot_number">
+            <a class="decoration" (click)="chack(Basicinfor.lot_number)">{{Basicinfor.lot_number}}</a>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="{{'hanger.customcode'|i18n}}" *ngIf="Basicinfor.customcode">
+            {{Basicinfor.customcode}}
+        </nz-descriptions-item>
+    </nz-descriptions>
+    <nz-card *ngIf="Basicinfor&&Basicinfor.phr_entity" class="position">
+        <nz-row [nzGutter]="16">
+            <nz-col [nzSpan]="12">
+                <nz-statistic
+                    nzValue="[{{Basicinfor.phr_entity.currentlocationcode?Basicinfor.phr_entity.currentlocationcode:('warning.NoNote'|i18n)}}]
+          {{Basicinfor.phr_entity.currentlocationname?Basicinfor.phr_entity.currentlocationname:('warning.NoNote'|i18n)}}"
+                    [nzTitle]="'hanger.currentlocationcode'|i18n" [nzSuffix]="Locationtypetemplate"></nz-statistic>
+                <ng-template #Locationtypetemplate>
+                    <nz-checkbox-group [(ngModel)]="Locationtype" (ngModelChange)="handleIndexChange($event)">
+                    </nz-checkbox-group>
+                    <!-- <nz-segmented [nzOptions]="Locationtype" [(ngModel)]="selectedIndex"
+            (nzValueChange)="handleIndexChange($event)"></nz-segmented> -->
+                </ng-template>
+            </nz-col>
+            <nz-col [nzSpan]="12">
+                <nz-statistic
+                    nzValue="[{{Basicinfor.phr_entity.destinationlocationcode?Basicinfor.phr_entity.destinationlocationcode:('warning.NoNote'|i18n)}}]
+          {{Basicinfor.phr_entity.destinationlocationname?Basicinfor.phr_entity.destinationlocationname:('warning.NoNote'|i18n)}}"
+                    [nzTitle]="'hanger.destinationlocationcode'|i18n"></nz-statistic>
+            </nz-col>
+        </nz-row>
+    </nz-card>
+    <nz-card *ngIf="Basicinfor&&!Basicinfor.phr_entity" class="position">
+        <p>{{'warning.Nolocation'|i18n}}</p>
+    </nz-card>
+    <nz-card class="hangdateil">
+        <nz-card-tab>
+            <nz-tabset [(nzSelectedIndex)]="show" (nzSelectChange)="selectTab($event)">
+                <nz-tab nzTitle="{{'placard.label_pro_infor'|i18n}}"></nz-tab>
+                <nz-tab nzTitle="{{'placard.label_flow_infor'|i18n}}"></nz-tab>
+                <nz-tab nzTitle="{{'placard.ass_parts_info'|i18n}}"></nz-tab>
+                <nz-tab nzTitle="{{'placard.quality_check_info'|i18n}}"></nz-tab>
+            </nz-tabset>
+        </nz-card-tab>
+        <div *ngIf="show==0" class="show">
+            <pro_infor #pro_infor [oplist]="oplist" [modular]="modular"></pro_infor>
+        </div>
+        <div *ngIf="show==1" class="show">
+            <flow_infor #flow_infor [historylist]="historylist" [modular]="modular"></flow_infor>
+        </div>
+        <div *ngIf="show==2" class="show">
+            <parts_info #parts_info [siblist]="siblist" [siblings]="siblings" [modular]="modular"
+                (editDone)="chack($event)">
+            </parts_info>
+        </div>
+        <div *ngIf="show==3" class="show">
+            <quality_check #quality_check [quality]="quality" [tracking]="tracking" [modular]="modular"
+                (editDone)="get3($event)"></quality_check>
+        </div>
+    </nz-card>
+</nz-card>
+<ng-template #cardHeader>
+    <span class="SKUshow" *ngIf="Module==1">SKU工序流</span>
+    <span>
+        <label>{{'placard.getHanger'|i18n}}：</label>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" nz-input [(ngModel)]="seachhanger" (keydown)="getHanger($event)" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nz-button nzSearch (click)="getHanger()"><i nz-icon nzType="search"></i></button>
+        </ng-template>
+    </span>
+    <span class="switch" (click)="switch()"><i nz-icon nzType="interaction" nzTheme="outline"></i></span>
+</ng-template>
+<answers #answers [modular]="modular"></answers>

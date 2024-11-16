@@ -1,0 +1,9 @@
+<idrawer *ngIf="visible" title="{{ 'export'|i18n }}" [width]="width" height="100%"  (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <ul>
+            <li *ngFor="let item of languages" class="m-b-15" (click)="download(item)">
+                <button nz-button nzType="primary" nzBlock>{{item.languagename}}</button>
+            </li>
+        </ul>
+    </ng-template>
+</idrawer>

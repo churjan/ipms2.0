@@ -1,0 +1,108 @@
+<idrawer *ngIf="visible" title="{{ 'wmsStock.outTitle'|i18n }}" width="100%"
+    justifyContent="center" height="100%" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3" nzRequired>{{
+                    'wmsStock.stockOutCode'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="5" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'wmsStock.stockOutCode'|i18n }}">
+                    <input nz-input formControlName="code" placeholder="{{
+                        'inputdata.input'|i18n }}"
+                        (keydown)="submitForm($event)" />
+                </nz-form-control>
+                <nz-form-label [nzSpan]="3">{{ 'wmsStock.stockOutExpectTime'|i18n
+                    }}</nz-form-label>
+                <nz-form-control [nzSpan]="5">
+                    <nz-date-picker
+                        formControlName="expected_time"
+                        nzShowTime
+                        nzFormat="yyyy-MM-dd HH:mm:ss"
+                        ngModel></nz-date-picker>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="3">{{ 'wmsStock.remark'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="5">
+                    <textarea nz-input formControlName="remark" placeholder="{{
+                        'inputdata.input'|i18n }}"
+                        (keydown)="submitForm($event)" nzAutosize></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+
+        <form nz-form class="stations">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">{{ 'wmsStock.autoSelectPort'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="9">
+                    <nz-switch (ngModelChange)="autoSelectOutportChange($event)"
+                        name="autoSelectOutport"
+                        [disabled]="!allowToSelectOutport"
+                        [(ngModel)]="autoSelectOutport" nzCheckedChildren="{{
+                        'placard.yes'|i18n }}" nzUnCheckedChildren="{{
+                        'placard.no'|i18n }}"></nz-switch>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="3">{{ 'wmsStock.batchSelectPort'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="9">
+                    <nz-select
+                        [disabled]="autoSelectOutport"
+                        name="blsKeys"
+                        (ngModelChange)="batchSelectPort($event)"
+                        [nzMaxTagCount]="1"
+                        nzMode="multiple"
+                        nzPlaceHolder="{{ 'checkdata.check'|i18n}}"
+                        [(ngModel)]="blsKeys">
+                        <nz-option *ngFor="let item of stations"
+                            [nzLabel]="item.name" [nzValue]="item.key"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="m-b-0">
+                <nz-form-label [nzSpan]="3" nzRequired>{{ 'wmsStock.blsInfo'|i18n
+                    }}</nz-form-label>
+                <nz-form-control [nzSpan]="21">
+                    <itable
+                        [data]="records"
+                        [total]="records?.length"
+                        [columns]="tableColumns"
+                        [tpls]="{outPortTpl: outPortTpl}"
+                        [lastColumnTpl]="operationTpl"
+                        [lastColumnWidth]="'50px'"
+                        [xScroll]="'1400px'"
+                        [showSelection]="false">
+                        <ng-template #outPortTpl let-record="record"
+                            let-index="index">
+                            <nz-select
+                                [disabled]="autoSelectOutport"
+                                [name]="'out_bls_key_'+index"
+                                nzPlaceHolder="{{ 'checkdata.check'|i18n}}"
+                                [(ngModel)]="record.out_bls_key"
+                                nzShowSearch>
+                                <nz-option *ngFor="let item of stations"
+                                    [nzLabel]="item.name" [nzValue]="item.key"></nz-option>
+                            </nz-select>
+                        </ng-template>
+                        <!-- 行内操作按钮 -->
+                        <ng-template #operationTpl let-index="index">
+                            <button
+                                nz-button
+                                nzType="text"
+                                nzSize="small"
+                                (click)="delete(index)"
+                                nz-tooltip
+                                nzTooltipTitle="{{ 'btn.delete'|i18n }}">
+                                <i nz-icon nzType="delete"></i>
+                            </button>
+                        </ng-template>
+                    </itable>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()"
+            (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

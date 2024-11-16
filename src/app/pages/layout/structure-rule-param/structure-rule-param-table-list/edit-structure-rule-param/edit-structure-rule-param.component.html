@@ -1,0 +1,85 @@
+<div class="form-view">
+  <form nz-form [nzLayout]="'horizontal'" [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label nzSpan="4" nzRequired>{{
+                "placard.name" | i18n
+            }}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{
+                    'placard.name' | i18n
+                }}">
+        <input nz-input formControlName="name" placeholder="{{ 'inputdata.input' | i18n }}" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="4" nzRequired>{{"placard.entityFields" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'placard.entityFields' | i18n}}">
+        <input nz-input formControlName="field" placeholder="{{ 'inputdata.input' | i18n }}" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="4" nzRequired>{{"placard.optionMethod" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'checkdata.check' | i18n }}{{'placard.optionMethod' | i18n}}">
+        <app-single-select formControlName="optionmode" [label]="'name'" [valueKey]="'code'" [valueFields]="'code'"
+          [path]="'/admin/classdata/getlist/?pcode=parameterproperties'" [width]="'100%'"
+          (ngModelChange)="onOptionModeChange()">
+        </app-single-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="['select', 'enumselect','extendselect','fullselect'].includes(optionmode.value)">
+      <nz-form-label nzSpan="4" nzRequired>{{"placard.optionValue" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'placard.optionValue' | i18n}}">
+        <input nz-input formControlName="optionvalue" placeholder="{{ 'inputdata.input' | i18n }}" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="['customselect'].includes(optionmode.value)">
+      <nz-form-label nzSpan="4" nzRequired>{{"placard.optionValue" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'checkdata.check' | i18n }}{{'placard.optionValue' | i18n}}">
+        <app-custom-table formControlName="optionvalue"></app-custom-table>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="['input', 'judgment-input'].includes(optionmode.value)">
+      <nz-form-label nzSpan="4" nzRequired>{{"placard.optionValue" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'checkdata.check' | i18n }}{{'placard.optionValue' | i18n}}">
+        <app-single-select formControlName="optionvalue" [label]="'description'" [valueKey]="'name'"
+          [valueFields]="'name'" [width]="'100%'" [path]="'/admin/Enum/?method=inputtypeenum'">
+        </app-single-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzSpan="4">{{"layoutProgramme.group" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'layoutProgramme.group' | i18n}}">
+        <input nz-input formControlName="group" placeholder="{{ 'inputdata.input' | i18n }}" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzSpan="4">{{"placard.weights" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'placard.weights' | i18n}}">
+        <nz-input-number formControlName="weight"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="4">{{"placard.disable" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8">
+        <label nz-checkbox formControlName="isdisabled"> </label>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzSpan="4">{{"placard.sort" | i18n}}</nz-form-label>
+      <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'placard.sort' | i18n}}">
+        <nz-input-number formControlName="sort"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+
+<div class="footer-view">
+  <button nz-button nzType="primary" (click)="onSubmit()" [nzLoading]="isLoading">
+    {{ "btn.save" | i18n }}
+  </button>
+  <button nz-button class="ml8" (click)="onClose()">
+    {{ "btn.cancel" | i18n }}
+  </button>
+</div>

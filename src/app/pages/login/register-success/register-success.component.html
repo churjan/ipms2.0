@@ -1,0 +1,61 @@
+<nz-page-header
+    (nzBack)="onNavigateTo(0)"
+    nzBackIcon
+    nzTitle="{{ 'return' | i18n }}"
+>
+</nz-page-header>
+<form nz-form [formGroup]="validateForm" nzLayout="vertical">
+    <nz-form-item>
+        <nz-form-label nzRequired>{{
+            "install.systemName" | i18n
+        }}</nz-form-label>
+        <nz-form-control>
+            <input
+                formControlName="systemname"
+                nz-input
+                nzSize="large"
+                placeholder="{{ 'install.iptSystemName' | i18n }}"
+            />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label nzRequired>{{
+            "install.expireTime" | i18n
+        }}</nz-form-label>
+        <nz-form-control>
+            <input
+                formControlName="expirationtime"
+                nz-input
+                nzSize="large"
+                placeholder="{{ 'install.iptExpireTime' | i18n }}"
+            />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label nzRequired>{{ "install.copy" | i18n }}</nz-form-label>
+        <nz-form-control>
+            <input
+                formControlName="copyright"
+                nz-input
+                nzSize="large"
+                placeholder="{{ 'install.iptCopy' | i18n }}"
+            />
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<div class="btn-group">
+    <button
+        nz-button
+        nzType="danger"
+        nzSize="large"
+        (click)="onReboot()"
+        style="margin-right: 16px"
+    >
+        <i nz-icon nzType="poweroff"></i>
+        {{ "install.rebootSystem" | i18n }}
+    </button>
+    <button nz-button nzType="primary" nzSize="large" (click)="onNavigateTo(1)">
+        <i nz-icon nzType="trademark"></i>
+        {{ "btn.register" | i18n }}
+    </button>
+</div>

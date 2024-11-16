@@ -1,0 +1,164 @@
+<div class="page-view">
+  <div class="list-view">
+    <div class="list-header-view">
+      <span class="flex-1">{{ "placard.ShippingPort" | i18n }}</span>
+      <span
+        nz-icon
+        nzType="reload"
+        nzTheme="outline"
+        nz-tooltip
+        nzTooltipTitle="{{ 'btn.reset' | i18n }}"
+        (click)="onTreeReset()"
+      ></span>
+    </div>
+    <div class="list-search-view">
+      <nz-input-group [nzSuffix]="suffixIcon">
+        <input type="text" nz-input placeholder="{{ 'placard.search' | i18n }}" [(ngModel)]="searchValue" />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+    <div class="list-tree-view">
+      <nz-tree [nzData]="stationList" nzBlockNode [nzSearchValue]="searchValue" (nzClick)="nzItemClick($event)">
+      </nz-tree>
+    </div>
+  </div>
+
+  <div class="table-view">
+    <div class="flex-v-view mt8 mb8">
+      <div class="table-header-view mr16">{{ "placard.runingout" | i18n }}</div>
+      <div>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+          <input
+            type="text"
+            nz-input
+            [(ngModel)]="keywords"
+            (keyup.enter)="onKeyUp()"
+            placeholder="{{ 'inputdata.input_key' | i18n }}"
+          />
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <button nz-button nzType="primary" nzSearch (click)="onKeyUp()">
+            <i nz-icon nzType="search"></i> {{ "placard.search" | i18n }}
+          </button>
+          <button nz-button nzSearch (click)="onReset()">
+            <i nz-icon nzType="reload"></i>{{ "btn.reset" | i18n }}
+          </button>
+        </ng-template>
+      </div>
+      <nz-select nzMode="multiple" [(ngModel)]="states" (ngModelChange)="onSelectStateChange()" nzPlaceHolder="请选择状态" class="ml8" style="min-width: 150px">
+        <nz-option *ngFor="let item of stateList" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+      </nz-select>
+    </div>
+
+    <nz-table
+      #listTable
+      [nzData]="listOfData"
+      [nzLoading]="tableLoading"
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzBordered]="true"
+      nzSize="small"
+      [nzScroll]="{ y: 'calc((100vh - 276px) / 2)', x: 'auto' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="140px">{{ "outboundhangermonitoring.code" | i18n }}</th>
+          <!-- <th nzWidth="120px">{{'outboundhangermonitoring.expected_time'|i18n}}</th> -->
+          <th nzWidth="60px">{{ "outboundhangermonitoring.state_name" | i18n }}</th>
+          <th nzWidth="180px">{{ "outboundhangermonitoring.createtime" | i18n }}</th>
+          <!-- <th nzWidth="100px">{{'outboundhangermonitoring.remark'|i18n}}</th> -->
+          <th nzWidth="180px">{{ "outboundhangermonitoring.sendtime" | i18n }}</th>
+          <th nzWidth="140px">{{ "outboundhangermonitoring.out_bls_code" | i18n }}</th>
+          <th nzWidth="60px" nzRight>{{ "btn.operation" | i18n }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listTable.data">
+          <td>
+            <span
+              class="link-text"
+              [style.text-decoration]="currentRecord?.uuid === item.uuid ? 'underline' : 'none'"
+              (click)="onTableItemClick(item)"
+              >{{ item.code }}</span
+            >
+          </td>
+          <!-- <td>
+                        {{ item.expected_time | date : "yyyy-MM-dd HH:mm:ss" }}
+                    </td> -->
+          <td>{{ item.state_name }}</td>
+          <td>
+            {{ item.createtime | date : "yyyy-MM-dd HH:mm:ss" }}
+          </td>
+          <!-- <td>{{ item.remark }}</td> -->
+          <td>
+            {{ item.sendtime | date : "yyyy-MM-dd HH:mm:ss" }}
+          </td>
+          <td>{{ item.out_bls_code }}</td>
+          <td nzRight>
+            <a
+              nz-tooltip
+              nzTooltipTitle="{{ 'btn.close' | i18n }}"
+              style="color: red"
+              nz-popconfirm
+              nzPopconfirmTitle="{{ 'confirm.confirm_shut' | i18n }}"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="onTableItemClose(item)"
+            >
+              <span nz-icon nzType="stop" nzTheme="fill"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="table-header-view mt8 mb8">{{ "placard.outOrderDetail" | i18n }}</div>
+    <nz-table
+      #detailListTable
+      [nzData]="detailListOfData"
+      [nzLoading]="tableDetailLoading"
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzBordered]="true"
+      nzSize="small"
+      [nzScroll]="{ y: 'calc((100vh - 276px) / 2)', x: '940px' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="140px">{{ "outboundhangermonitoring.pti_tagcode" | i18n }}</th>
+          <th nzWidth="140px">{{ "outboundhangermonitoring.pti_customcode" | i18n }}</th>
+          <th nzWidth="160px">{{ "outboundhangermonitoring.carrierid" | i18n }}</th>
+          <th nzWidth="80px">{{ "outboundhangermonitoring.state_name" | i18n }}</th>
+          <th nzWidth="120px">{{ "outboundhangermonitoring.bls_code" | i18n }}</th>
+          <th nzWidth="120px">{{ "outboundhangermonitoring.out_blscode" | i18n }}</th>
+          <th nzWidth="120px">{{ "outboundhangermonitoring.is_in" | i18n }}</th>
+          <th nzWidth="60px" nzRight>{{ "btn.operation" | i18n }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of detailListTable.data">
+          <td>{{ item.pti_tagcode }}</td>
+          <td>{{ item.pti_customcode }}</td>
+          <td>{{ item.carrierid }}</td>
+          <td>{{ item.state_name }}</td>
+          <td>{{ item.bls_code }}</td>
+          <td>{{ item.out_bls_code }}</td>
+          <td>{{ (item.is_in ? "format.yes" : "format.no") | i18n }}</td>
+          <td nzRight>
+            <a
+              nz-tooltip
+              nzTooltipTitle="{{ 'btn.close' | i18n }}"
+              style="color: red"
+              nz-popconfirm
+              nzPopconfirmTitle="{{ 'confirm.confirm_shut' | i18n }}"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="onDetailTableItemClose(item)"
+            >
+              <span nz-icon nzType="stop" nzTheme="fill"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

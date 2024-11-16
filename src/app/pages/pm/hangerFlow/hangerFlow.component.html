@@ -1,0 +1,116 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[isLeftSpinning]="isLeftSpinning"
+[leftTreeTitle]="leftTreeTitle"
+[leftTreeTool]="leftTreeTool"
+[leftTreeInput]="leftTreeInput"
+[leftTree]="leftTree" 
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch"
+[isTablePage]="isTablePage"
+[isTableNoCustomize]="isTableNoCustomize"
+[tableData]="tableData"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[noPageCustomTable]="noPageCustomTable"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+(getTableWidthHeightNo)="getTableWidthHeight($event)"
+>
+</zpage>
+
+<!-- 左侧树工具栏内容 -->
+<ng-template #leftTreeTool>
+    <a nz-dropdown nzTrigger="click" class="zleft_top_right_a">
+        <i nz-icon nzTheme="outline" nzType="reload" (click)="toReloadTree()"></i>
+    </a>
+</ng-template>
+<!-- 左侧树的查询区域 -->
+<ng-template #leftTreeInput>
+    <nz-input-group style="margin-bottom: 10px;" [nzSuffix]="suffixIcon">
+        <input type="text" nz-input [placeholder]="'placard.search'|i18n" ngModel (ngModelChange)="searchValue$.next($event)"/>
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+</ng-template>
+<!-- 左侧树tree -->
+<ng-template #leftTree>
+    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource" nzNoAnimation>
+        <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding class="tree-cont-k">
+            <nz-tree-node-option
+                class="tree-cont"
+                [nzDisabled]="node.disabled"
+                [nzSelected]="selectListSelection.isSelected(node)"
+                (nzClick)="nzTreeEvent(node)"
+            >
+                <span [innerHTML]="node.name | highlight:searchValue" nz-tooltip [nzTooltipTitle]="node.name"></span>
+            </nz-tree-node-option>
+        </nz-tree-node>
+  
+        <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding class="tree-cont-k">
+            <nz-tree-node-option
+                class="tree-cont"
+                [nzDisabled]="node.disabled"
+                [nzSelected]="selectListSelection.isSelected(node)"
+                (nzClick)="selectListSelection.toggle(node)"
+            >
+                <span [innerHTML]="node.name | highlight:searchValue" nz-tooltip [nzTooltipTitle]="node.name"></span>
+            </nz-tree-node-option>
+        </nz-tree-node>
+    </nz-tree-view>
+</ng-template>
+
+<!-- 自定义表格 Thead -->
+<ng-template #noPageCustomTable>
+    <nz-table 
+            #basicTable 
+            id="bTable"
+            [nzData]="tableData" 
+            [nzScroll]="toScroll"
+            [nzShowPagination]="false" 
+            [nzSize]="'small'" 
+            [nzLoading]="tableLoading"
+            [nzOuterBordered]="true"
+            [nzBordered]="true"
+            [nzPageSize]="99999999"
+            >
+                <thead>
+                    <tr>
+                        <th rowspan="2" nzAlign="center">{{'popupField.station_code'|i18n}}</th>
+                        <th rowspan="2" nzAlign="center">{{'popupField.hanger'|i18n}}</th>
+                        <th rowspan="2" nzAlign="center">{{'popupField.no_hanger'|i18n}}</th>
+                        <th rowspan="2" nzAlign="center">{{'popupField.capacity_hanger'|i18n}}</th>
+                        <th colspan="2" nzAlign="center">{{'popupField.total'|i18n}}</th>
+                    </tr>
+                    <tr>
+                        <th nzAlign="center">{{'popupField.in_station'|i18n}}</th>
+                        <th nzAlign="center">{{'popupField.out_station'|i18n}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        
+                    </tr>
+                </tbody>
+            </nz-table>
+</ng-template>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <nz-date-picker [(ngModel)]="queryParamsDate" [nzFormat]="dateFormat" (ngModelChange)="onDateChange($event)" style="width: 100%;"></nz-date-picker>
+    </nz-input-group>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" (click)="resetSearch()"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>

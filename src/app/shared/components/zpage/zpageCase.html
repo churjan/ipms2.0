@@ -1,0 +1,249 @@
+<!-- 
+    框架案例
+    主体框架
+    openLeft:boolean = false;//是否开启左边树区域
+    leftTreeTitle:string = "";//左边树区域标题
+    leftTreeInput 下方有html导入左侧树的查询区域
+    leftTree 下方有html导入左侧树的内容区域
+    topBtn 下方有html导入头部按钮
+    isAdvancedSearch:boolean = false;//是否开启高级搜索
+    topAdvancedSearch 下方有html导入高级查询
+    topInput 下方有html导入头部搜索
+    isTablePage:boolean = false;//是否开启单独的翻页
+    tablePage 下方有html导入底部翻页
+    isCheck: boolean = true;//是否开启表格复选 默认开启
+    isCheckAll: boolean = true;//是否开启表格全选 默认开启
+    isNumber: boolean = true;//是否开启序列 默认开启
+    isOperation: boolean = false;//是否开启表格内操作栏 默认关闭
+
+    //查询参数
+    queryParams = {
+        sort:"",//以哪个字段进行排序
+        dortDirections:"",//排序方式 支持的排序方式，取值为 'asc', 'desc', null
+        page: 1,//当前第几页
+        pageSize: 20,//每页显示条数
+    };
+    
+
+    /* ******************表格属性******************************** */
+    setOfCheckedId = new Set<string>();//表格回传回来的当前已选择的数据key
+
+    tableLoading:boolean = false;
+    tableData = [];
+    columns: any[] = [];
+    total:number = 1;//总页数
+    searchValue = '';//左侧树查询框的参数
+
+    // -----------------以下 新增参数-----------------
+    isAdd:boolean = false;//是否打开新增窗口
+    isAddLoading:boolean = false;//是否打开确定按钮的加载
+
+    nodes = [
+      {
+        title: '0-0',
+        key: '0-0',
+        children: [
+          {
+            title: '0-0-0',
+            key: '0-0-0',
+            children: [
+              { title: '0-0-0-0', key: '0-0-0-0', isLeaf: true },
+              { title: '0-0-0-1', key: '0-0-0-1', isLeaf: true },
+              { title: '0-0-0-2', key: '0-0-0-2', isLeaf: true }
+            ]
+          },
+          {
+            title: '0-0-1',
+            key: '0-0-1',
+            children: [
+              { title: '0-0-1-0', key: '0-0-1-0', isLeaf: true },
+              { title: '0-0-1-1', key: '0-0-1-1', isLeaf: true },
+              { title: '0-0-1-2', key: '0-0-1-2', isLeaf: true }
+            ]
+          },
+          {
+            title: '0-0-2',
+            key: '0-0-2',
+            isLeaf: true
+          }
+        ]
+      },
+    {
+      title: '0-1',
+      key: '0-1',
+      children: [
+        { title: '0-1-0-0', key: '0-1-0-0', isLeaf: true },
+        { title: '0-1-0-1', key: '0-1-0-1', isLeaf: true },
+        { title: '0-1-0-2', key: '0-1-0-2', isLeaf: true }
+      ]
+    },
+    {
+      title: '0-2',
+      key: '0-2',
+      isLeaf: true
+    }
+    ];
+
+
+    (getCheckedIdList)="getCheckedId($event)" //回传已选中的数据的key
+    (getSortList)="getSortList($event)" //回传排序的数据
+-->
+<zpage #zpage [openLeft]="openLeft" [leftTreeTitle]="leftTreeTitle" [leftTreeInput]="leftTreeInput"
+    [leftTree]="leftTree" [topBtn]="topBtn" [isAdvancedSearch]="isAdvancedSearch"
+    [topAdvancedSearch]="topAdvancedSearch" [topInput]="topInput" [isTablePage]="isTablePage" [tablePage]="tablePage"
+    [tableData]="tableData" [columns]="columns" [isCheck]="isCheck" [isCheckAll]="isCheckAll" [isNumber]="isNumber"
+    [isOperation]="isOperation" [pageSize]="queryParams.pageSize" [tableLoading]="tableLoading" [operation]="operation"
+    [format]="format" (getCheckedIdList)="getCheckedId($event)" (getSortList)="getSortList($event)">
+</zpage>
+
+<!-- 左侧树的查询区域 -->
+<ng-template #leftTreeInput>
+    <nz-input-group style="margin-bottom: 10px;" [nzSuffix]="suffixIcon">
+        <input nz-input [placeholder]="'placard.searching'|i18n" [(ngModel)]="searchValue" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+</ng-template>
+<!-- 左侧树tree -->
+<ng-template #leftTree>
+    <nz-tree [nzData]="nodes" [nzSearchValue]="searchValue" (nzClick)="nzEvent($event)"
+        (nzExpandChange)="nzEvent($event)" (nzSearchValueChange)="nzEvent($event)"></nz-tree>
+</ng-template>
+
+<!-- 按钮 -->
+<ng-template #topBtn>
+    <button nz-button nzType="primary" *hasPermission="['pm_layingcloth_add']" (click)="add()">
+        <i nz-icon nzType="plus"></i> {{ 'btn.plus'|i18n }}
+    </button>
+    <button nz-button nzType="default" style="margin-left: 10px;" *hasPermission="['pm_layingcloth_del']"
+        (click)="del()">
+        <i nz-icon nzType="delete"></i> {{ 'btn.delete'|i18n }}
+    </button>
+</ng-template>
+
+<!-- 高级查询 -->
+<ng-template #topAdvancedSearch>
+    <div class="zadvanced_search_one">
+        <div class="zlabel">布号</div>
+        <div class="zlabel_input"><input nz-input placeholder="" /></div>
+    </div>
+    <div class="zadvanced_search_one">
+        <div class="zlabel">床号</div>
+        <div class="zlabel_input"><input nz-input placeholder="" /></div>
+    </div>
+    <div class="zadvanced_search_one">
+        <div class="zlabel">唛架号</div>
+        <div class="zlabel_input"><input nz-input placeholder="" /></div>
+    </div>
+    <div class="zadvanced_search_one">
+        <div class="zlabel">创建时间</div>
+        <div class="zlabel_input">
+            <nz-range-picker [(ngModel)]="queryParams.create_time" (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+    </div>
+    <div class="zadvanced_search_one" style="margin-bottom: 10px;">
+        <div class="zlabel_input zlabel_btn" style="margin-left: 10px;"><button class="zlabel_btn" nz-button
+                nzType="default">{{ 'btn.reset'|i18n }}</button></div>
+        <div class="zlabel_input zlabel_btn"><button class="zlabel_btn" nz-button
+                nzType="primary">{{ 'btn.search'|i18n }}</button></div>
+    </div>
+</ng-template>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input placeholder="{{'placard.keyword'|i18n}}" [(ngModel)]="queryParams.keywords" />
+    </nz-input-group>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch>{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: 10px;" nzSearch>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index">
+    <!-- column.format=='d' 这里的d 是columns中format自定义 一一对应 -->
+    <ng-container *ngIf="column.format=='d'">
+        {{data+"1111"}}
+    </ng-container>
+</ng-template>
+
+<!-- 表格操作按钮 item当前点击的这条数据 index计数器-->
+<ng-template #operation let-item="item" let-index="index">
+    <a (click)="update(item,index)">
+        <i nz-icon nzType="edit" nzTheme="outline" nz-tooltip nzTooltipTitle="修改"></i>
+    </a>
+    <nz-divider nzType="vertical"></nz-divider>
+    <a nz-popconfirm nzPopconfirmTitle="是否删除?" (nzOnConfirm)="del(item,index)">
+        <i nz-icon nzType="delete" nzTheme="outline" nz-tooltip nzTooltipTitle="删除"></i>
+    </a>
+    <nz-divider nzType="vertical"></nz-divider>
+    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+        <i nz-icon nzTheme="outline" nzType="more"></i>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+            <li nz-menu-item>1st menu item</li>
+            <li nz-menu-item>2nd menu item</li>
+        </ul>
+    </nz-dropdown-menu>
+</ng-template>
+
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)"
+        (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger
+        [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper>
+    </nz-pagination>
+    <ng-template #totalTemplate let-total>{{'placard.totalnum'|i18n:total}}</ng-template>
+</ng-template>
+
+<!-- 新增弹窗 -->
+<zpopup popupTitle="{{'btn.plus'|i18n}}" *ngIf="isAdd" [width]="700" [height]="700" (getClosePopup)="isAdd=false"
+    [zpopupCont]="zpopupCont" [zpopupFoot]="zpopupFoot"></zpopup>
+<!-- 新增弹窗 内容 -->
+<ng-template #zpopupCont>
+    <div class="aaa">12</div>
+</ng-template>
+<!-- 新增弹窗 底部按钮 -->
+<ng-template #zpopupFoot>
+    <button nz-button nzType="primary" [nzLoading]="isAddLoading">{{'btn.determine'|i18n}}</button>
+</ng-template>
+
+
+<!-- 删除 -->
+<zpopup-confirm *ngIf="isPopupConfirm" [delDataNum]="delDataNum" (getClosePopup)="closePopup()"
+    [zpopupConfirmFoot]="zpopupConfirmFoot">
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 导入 -->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupImport" [width]="700" [height]="400" (getClosePopup)="closePopup()"
+    [zpopupCont]="zpopupImportCont" [zpopupFoot]="zpopupImportFoot">
+</zpopup>
+<!-- 导入 内容 -->
+<ng-template #zpopupImportCont>
+    <div class="down"><button nz-button nzType="dashed">{{ 'btn.downmodel'|i18n }}</button> <span
+            style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span></div>
+    <div class="import">
+        <nz-upload nzType="drag" [nzMultiple]="true" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            (nzChange)="importChange($event)" [nzHeaders]="uploadingHeader()">
+            <p class="ant-upload-drag-icon">
+                <i nz-icon nzType="inbox"></i>
+            </p>
+            <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+            <p class="ant-upload-hint">
+                {{ 'warning.importTip2'|i18n }}
+            </p>
+        </nz-upload>
+    </div>
+</ng-template>
+<!-- 导入 底部 -->
+<ng-template #zpopupImportFoot>
+
+</ng-template>

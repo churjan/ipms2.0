@@ -1,0 +1,8 @@
+<crud #crud [columns]="tableColumns" [showSelection]="false" [tpls]="{oldsourcestationidTpl: oldsourcestationidTpl}" [service]="padrelationService">
+</crud>
+<ng-template #oldsourcestationidTpl let-text="text" let-item="record">
+    <div class="editable-cell" [hidden]="activeRow === item.key" (click)="startEdit(item)">
+        {{ text }}
+    </div>
+    <input [hidden]="activeRow !== item.key" type="text" nz-input [(ngModel)]="oldsourcestationid" (blur)="Editoldsourcestationid(item.key)" />
+</ng-template>

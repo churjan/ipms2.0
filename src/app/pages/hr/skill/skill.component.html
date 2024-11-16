@@ -1,0 +1,345 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[topInput]="topInput"
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch" 
+[zadvancedSearch]="zadvancedSearch" 
+[zadvancedCont]="zadvancedCont"
+[isAdvancedSearch]="isAdvancedSearch"
+[isTablePage]="isTablePage"
+[tablePage]="tablePage"
+[tableData]="tableData"
+[pageSize]="queryParams.pageSize"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[format]="format"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+(getBtnGroup)="getBtnGroup($event)"
+>
+</zpage>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword_xx'|i18n:('placard.codename'|i18n)" [(ngModel)]="queryParams.keywords" (keyup.enter)="toSearch(1)"/>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" (click)="resetSearch()"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index">
+
+</ng-template>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton"
+        class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword_xx'|i18n:('placard.codename'|i18n)" [(ngModel)]="queryParams.keywords"
+            (keyup.enter)="toSearch(1)" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" nzSearch (click)="resetSearch()"><span nz-icon
+            nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+<!-- 高级搜索 搜索按钮 -->
+<ng-template #zadvancedSearch>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" (click)="toSearch(1)">
+        <span nz-icon nzType="search"></span>
+        {{ 'btn.search'|i18n }}
+    </button>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" nzSearch
+        (click)="resetSearch()">
+        <span nz-icon nzType="reload"></span>
+        {{ 'btn.reset'|i18n }}
+    </button>
+</ng-template>
+<!-- 高级搜索 搜索条件 -->
+<ng-template #zadvancedCont>
+    <div class="zadvanced_search_label">{{ 'popupField.jobNo'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input
+            [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.hei_code" /></div>
+    <div class="zadvanced_search_label">{{ 'popupField.realName'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input
+            [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.hei_name" /></div>
+    <div class="zadvanced_search_label">{{ 'popupField.processName'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input
+            [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.poi_name" /></div>
+    <div class="zadvanced_search_label">{{ 'popupField.processNo'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input
+            [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.poi_code" /></div>
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 技能管理 ----------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopup" 
+[isLoading]="isLoading" 
+[width]="1000" [height]="690"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupSkillCont" 
+[zpopupFoot]="zpopupSkillFoot">
+</zpopup>
+<ng-template #zpopupSkillCont>
+    <form nz-form [formGroup]="skillValidateForm">
+        <div class="skill_field">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <!-- 名称 -->
+                        <nz-form-control>
+                            <nz-select style="width: 100%;"
+                            [nzPlaceHolder]=" 'popupField.realName'|i18n "
+                            formControlName="name"
+                            (nzScrollToBottom)="onUserSearch($event)"
+                            (nzOnSearch)="onUserSearch($event)"
+                            (ngModelChange)="onUserSkill($event)"
+                            nzAllowClear
+                            nzShowSearch
+                            [nzServerSearch]="true"
+                            >
+                                <ng-container *ngFor="let item of skillUserList">
+                                    <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+                                </ng-container>
+                                <nz-option *ngIf="skillUserLoading" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    {{ 'url.redirect'|i18n }}...
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="tabs">
+        <div class="tabs_skill_left">
+            <div class="tabs_skill_select">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" nz-input [(ngModel)]="skillLeftSelect" (keydown)="($event.which === 13)?toSkillSearch():0" placeholder="" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" (click)="toSkillSearch()" ><i nz-icon
+                            nzType="search"></i></button>
+                </ng-template>
+            </div>
+            <div class="tabs_skill_table">
+                <nz-table #skillLeftTable [nzScroll]="{y:'330px'}" [nzData]="skillDataLeft" [nzShowPagination]="false"
+                    [nzBordered]="true" nzSize="small" [nzLoading]="skillLeftLoading">
+                    <thead>
+                        <tr>
+                            <!-- 序号 -->
+                            <th nzWidth="70px" nzAlign="center">{{'popupField.sort_num'|i18n}}</th>
+                            <!-- 工序名称 -->
+                            <th>{{'popupField.processName'|i18n}}</th>
+                            <!-- 工序编号 -->
+                            <th>{{'popupField.processNo'|i18n}}</th>
+                            <!-- 操作 -->
+                            <th nzWidth="46px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of skillLeftTable.data,let i = index">
+                            <td nzAlign="center">{{ i + 1 }}</td>
+                            <td>{{data.name}}</td>
+                            <td>{{data.code}}</td>
+                            <td nzAlign="center">
+                                <!-- <a class="tabs_a" (click)="addUserSkill(data)">+</a> -->
+                                <a nz-button nzSize="small" nzType="link" (click)="addUserSkill(data)">
+                                    <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+            <div class="tabs_skill_page">
+                <div class="tabs_skill_page_in">
+                    <nz-pagination [nzHideOnSinglePage]="false" [(nzPageIndex)]="skillPage" [nzTotal]="skillTotal" [nzSize]="'small'" [nzPageSize]="skillSize"
+                        [nzShowTotal]="totalSkillTemplate" (nzPageIndexChange)="pageIndexSkillChange($event)" (nzPageSizeChange)="pageSizeSkillChange($event)">
+                    </nz-pagination>
+                    <ng-template #totalSkillTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: skillTotal }}</ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="tabs_skill_right">
+            <div class="tabs_skill_select">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconRightButton">
+                    <input type="text" nz-input [(ngModel)]="skillRightSelect" (keydown)="($event.which === 13)?toSkillRightSearch():0" placeholder="" />
+                </nz-input-group>
+                <ng-template #suffixIconRightButton>
+                    <button nz-button nzType="primary" nzSearch (click)="toSkillRightSearch()"><i nz-icon
+                            nzType="search"></i></button>
+                </ng-template>
+            </div>
+            <div class="tabs_skill_table">
+                <nz-table #skillRightTable [nzScroll]="{y:'330px'}" [nzData]="skillDataRight" [nzShowPagination]="false"
+                    [nzBordered]="true" nzSize="small" [nzLoading]="skillRightLoading">
+                    <thead>
+                        <tr>
+                            <!-- 序号 -->
+                            <th nzWidth="70px" nzAlign="center">{{'popupField.sort_num'|i18n}}</th>
+                            <!-- 工序名称 -->
+                            <th>{{'popupField.processName'|i18n}}</th>
+                            <!-- 工序编号 -->
+                            <th>{{'popupField.processNo'|i18n}}</th>
+                            <!-- 操作 -->
+                            <th nzWidth="46px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of skillRightTable.data,let i = index">
+                            <td nzAlign="center">{{ i + 1 }}</td>
+                            <td>{{data.poi_name}}</td>
+                            <td>{{data.poi_code}}</td>
+                            <td nzAlign="center">
+                                <!-- <a class="tabs_a" (click)="delUserSkill(data)">-</a> -->
+                                <a nz-button nzSize="small" nzType="link" nz-popconfirm
+                                        [nzPopconfirmTitle]="'confirm.confirm_remove'|i18n"
+                                        (nzOnConfirm)="delUserSkill(data)">
+                                            <i nz-icon nzType="minus" nzTheme="outline"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+            <div class="tabs_skill_page">
+                <div class="tabs_skill_page_in">
+                    <nz-pagination [nzHideOnSinglePage]="false" [(nzPageIndex)]="skillRightPage" [nzTotal]="skillRightTotal" [nzSize]="'small'" [nzPageSize]="skillRightSize"
+                        [nzShowTotal]="totalSkillRightTemplate" (nzPageIndexChange)="pageIndexSkillRightChange($event)" (nzPageSizeChange)="pageSizeSkillRightChange($event)">
+                    </nz-pagination>
+                    <ng-template #totalSkillRightTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: skillRightTotal }}</ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #zpopupSkillCont>
+    <!-- <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.enter'|i18n }}</button> -->
+</ng-template>
+
+<!-- 弹窗 -------------------------------------------------------->
+<!-- <zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopup" 
+[width]="540" 
+[height]="350" 
+(getClosePopup)="closePopup()" 
+[isLoading]="isLoading"
+[zpopupCont]="zpopupCont"
+[zpopupFoot]="zpopupFoot"
+></zpopup> -->
+<!-- 弹窗 内容 -->
+<!-- <ng-template #zpopupCont>
+    <form nz-form [formGroup]="validateForm">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'color.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'color.codeTip'|i18n">
+                <input nz-input formControlName="code"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'color.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'color.nameTip'|i18n">
+                <input nz-input formControlName="name"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="customcode">{{ 'color.customcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <input nz-input formControlName="customcode"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'color.description'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <input nz-input formControlName="description"/>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template> -->
+<!-- 弹窗 底部按钮 -->
+<!-- <ng-template #zpopupFoot>
+    <button *ngIf="popupType=='add'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+    <button *ngIf="popupType=='update'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template> -->
+
+<!-- 删除---------------------------------------------------->
+<zpopup-confirm
+*ngIf="isPopupConfirm" 
+[delDataNum]="delDataNum"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 导入 ---------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopupImport" 
+[width]="700" 
+[height]="400" 
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupImportCont"
+[zpopupFoot]="zpopupImportFoot">
+</zpopup>
+<!-- 导入 内容 -->
+<ng-template #zpopupImportCont>
+    <div class="down"><button nz-button nzType="dashed" (click)="toExcelModel()">{{ 'btn.downmodel'|i18n }}</button> <span style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span></div>
+    <div class="import">
+        <nz-upload
+        nzType="drag"
+        [nzMultiple]="true"
+        [nzAction]="upExcel()"
+        [nzHeaders]="uploadingHeader()"
+        (nzChange)="importChange($event)"
+        [nzBeforeUpload]="beforeUpload"
+        [nzMultiple]="false"
+        [nzDisabled]="isUpload"
+        [nzFileList]="fileList"
+        >
+        <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+        <p class="ant-upload-hint">
+            {{ 'warning.importTip2'|i18n }}
+        </p>
+        </nz-upload>
+    </div>
+</ng-template>
+<!-- 导入 底部 -->
+<ng-template #zpopupImportFoot>
+    
+</ng-template>

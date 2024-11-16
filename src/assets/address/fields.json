@@ -1,0 +1,6683 @@
+{
+    "basFabric-difficulty": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "难度等级",
+            "code": "level"
+        },
+        {
+            "name": "难度系数",
+            "type": "number",
+            "code": "coefficient"
+        },
+        {
+            "name": "面料难度",
+            "code": "fabricdifficulty"
+        }
+    ],
+    "bas-processlevel": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "难度系数",
+            "type": "number",
+            "code": "coefficient"
+        },
+        {
+            "name": "工序难度",
+            "code": "processlevel"
+        }
+    ],
+    "basMachinedevice": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "品牌",
+            "code": "brand"
+        },
+        {
+            "name": "规格",
+            "alignment": "center",
+            "code": "specification"
+        },
+        {
+            "name": "购入时间",
+            "format": "yyyy-MM-dd",
+            "Width": "120",
+            "type": "time",
+            "alignment": "center",
+            "code": "purchasedate"
+        },
+        {
+            "name": "厂家",
+            "code": "suppliername"
+        },
+        {
+            "name": "生产设备",
+            "code": "machinedevice",
+            "noshow": true
+        },
+        {
+            "name": "性质",
+            "code": "nature",
+            "noshow": true
+        },
+        {
+            "name": "维修次数",
+            "type": "number",
+            "alignment": "center",
+            "code": "repaircount"
+        },
+        {
+            "name": "报废日期",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "Width": "120",
+            "alignment": "center",
+            "code": "planretirementdate"
+        },
+        {
+            "name": "状态",
+            "alignment": "center",
+            "code": "state_name"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        }
+    ],
+    "basPartsingleton": [
+        {
+            "code": "multiple_bpi_code",
+            "name": "多件流部件编号"
+        },
+        {
+            "code": "multiple_bpi_name",
+            "name": "多件流部件名称"
+        },
+        {
+            "code": "key",
+            "noshow": true,
+            "name": "多件流部件"
+        },
+        {
+            "code": "singleton_bpi_key",
+            "noshow": true,
+            "name": "单件流部件"
+        },
+        {
+            "code": "singleton_bpi_name",
+            "name": "单件流部件名称"
+        },
+        {
+            "code": "singleton_bpi_code",
+            "name": "单件流部件编号"
+        }
+    ],
+    "basPart": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "创建时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "create_time"
+        },
+        {
+            "name": "主部件",
+            "code": "ismain",
+            "type": "boolean"
+        },
+        {
+            "name": "部件分类码",
+            "code": "class_code"
+        },
+        {
+            "name": "部件分类名称",
+            "code": "class_name"
+        },
+        {
+            "name": "部件分类",
+            "noshow": true,
+            "code": "class"
+        },
+        {
+            "name": "生产部件",
+            "noshow": true,
+            "code": "part"
+        }
+    ],
+    "basOverloadRules": [
+        {
+            "name": "工序流名称",
+            "code": "popm_name"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "站位",
+            "code": "station_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "规则方案",
+            "noshow": true,
+            "code": "blsr_name"
+        }
+    ],
+    "basAttribute": [
+        {
+            "code": "blr_key",
+            "name": "属性"
+        },
+        {
+            "code": "code",
+            "name": "属性编号"
+        },
+        {
+            "code": "name",
+            "name": "属性名"
+        },
+        {
+            "code": "value",
+            "name": "属性赋值"
+        },
+        {
+            "code": "value_name",
+            "name": "属性赋值中文名"
+        },
+        {
+            "code": "remark",
+            "name": "描述"
+        }
+    ],
+    "basQuality": [
+        {
+            "name": "分类",
+            "code": "bqcc_key",
+            "noshow": true
+        },
+        {
+            "name": "父级",
+            "code": "pkey",
+            "noshow": true
+        },
+        {
+            "name": "分类名称",
+            "code": "class_name"
+        },
+        {
+            "name": "分类编号",
+            "code": "class_code"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "name": "工序分类",
+            "code": "class",
+            "noshow": true
+        },
+        {
+            "name": "质检代码",
+            "code": "code"
+        },
+        {
+            "name": "质检名称",
+            "code": "name"
+        },
+        {
+            "name": "处理方法",
+            "code": "handlemethod",
+            "noshow": true
+        },
+        {
+            "name": "处理方法",
+            "code": "handlemethod_name"
+        },
+        {
+            "name": "名称拼音",
+            "code": "py"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "创建时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "create_time"
+        },
+        {
+            "name": "适用对象",
+            "code": "type",
+            "noshow": true
+        },
+        {
+            "name": "质检原因",
+            "code": "qualitycause",
+            "noshow": true
+        },
+        {
+            "name": "分类编号",
+            "code": "bqci_code"
+        },
+        {
+            "name": "分类名称",
+            "code": "bqci_name"
+        }
+    ],
+    "basWorksection": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "是否默认",
+            "code": "isdefault",
+            "type": "boolean"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "工段管理",
+            "code": "worksectionl",
+            "noshow": true
+        }
+    ],
+    "factory": [
+        {
+            "code": "code",
+            "name": "编号"
+        },
+        {
+            "code": "name",
+            "name": "名称"
+        },
+        {
+            "code": "describe",
+            "name": "描述"
+        }
+    ],
+    "commFlow": [
+        {
+            "code": "tag",
+            "noshow": true,
+            "name": "版本"
+        },
+        {
+            "name": "工序编号/名称",
+            "code": "title"
+        },
+        {
+            "name": "工序编号",
+            "code": "pyso_operationticket"
+        },
+        {
+            "name": "工序编号",
+            "noshow": true,
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "noshow": true,
+            "code": "poi_name"
+        },
+        {
+            "name": "工价",
+            "noshow": true,
+            "code": "wages"
+        },
+        {
+            "name": "部件",
+            "noshow": true,
+            "code": "bpi_key"
+        },
+        {
+            "name": "部件名称",
+            "noshow": true,
+            "code": "bpi_name"
+        },
+        {
+            "name": "部件类型",
+            "noshow": true,
+            "code": "bpi_class_code"
+        },
+        {
+            "name": "主部件",
+            "noshow": true,
+            "code": "bpi_ismain"
+        },
+        {
+            "name": "工序流模式",
+            "code": "opp_type"
+        },
+        {
+            "code": "psi_key",
+            "name": "款式"
+        },
+        {
+            "name": "款式工序流",
+            "code": "styleflow"
+        },
+        {
+            "code": "name",
+            "name": "工序流名称"
+        },
+        {
+            "name": "工序流",
+            "code": "psopm_key"
+        },
+        {
+            "name": "工段",
+            "code": "section"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "位置",
+            "code": "positions"
+        },
+        {
+            "name": "配比",
+            "code": "percentage"
+        },
+        {
+            "name": "标准工时",
+            "code": "production_time"
+        },
+        {
+            "name": "标准工价",
+            "code": "production_wages"
+        },
+        {
+            "name": "工艺要求",
+            "code": "operation_requrement"
+        },
+        {
+            "name": "质检要求",
+            "code": "qc_requrement"
+        },
+        {
+            "name": "站位编号",
+            "code": "setstation"
+        },
+        {
+            "name": "颜色",
+            "code": "pci"
+        },
+        {
+            "name": "尺码",
+            "code": "psz"
+        },
+        {
+            "name": "更新时间",
+            "code": "update_time"
+        },
+        {
+            "name": "创建时间",
+            "code": "create_time"
+        },
+        {
+            "name": "是否回流",
+            "type": "boolean",
+            "code": "is_back_flow"
+        },
+        {
+            "name": "绑定款式",
+            "code": "psi_list"
+        },
+        {
+            "name": "绑定作业单",
+            "code": "pwb_list"
+        },
+        {
+            "name": "作业单号",
+            "noshow": true,
+            "code": "pwb_key"
+        },
+        {
+            "name": "进站规则",
+            "noshow": true,
+            "code": "infeeds"
+        },
+        {
+            "name": "站位",
+            "noshow": true,
+            "code": "station_code"
+        },
+        {
+            "name": "进轨",
+            "noshow": true,
+            "code": "infeed_code"
+        }
+    ],
+    "hanger": [
+        {
+            "code": "hanger_info",
+            "name": "衣架信息"
+        },
+        {
+            "code": "id",
+            "open": "true",
+            "name": "衣架号"
+        },
+        {
+            "code": "tagcode",
+            "open": "true",
+            "name": "标签"
+        },
+        {
+            "code": "product_code",
+            "name": "成品码"
+        },
+        {
+            "code": "som_code",
+            "name": "订单号"
+        },
+        {
+            "code": "pwb_code",
+            "name": "作业单号"
+        },
+        {
+            "code": "lot_number",
+            "name": "父级标签"
+        },
+        {
+            "code": "parts",
+            "name": "部件"
+        },
+        {
+            "code": "psi",
+            "name": "款式"
+        },
+        {
+            "code": "pcl",
+            "name": "颜色"
+        },
+        {
+            "code": "psz",
+            "name": "尺码"
+        },
+        {
+            "code": "customcode",
+            "name": "自定义编号"
+        },
+        {
+            "code": "updatetime",
+            "name": "更新时间"
+        },
+        {
+            "code": "ispermissionin",
+            "name": "进站许可"
+        },
+        {
+            "code": "isabnormal",
+            "name": "异常衣架"
+        },
+        {
+            "code": "label_status",
+            "name": "状态"
+        },
+        {
+            "code": "state_name",
+            "name": "状态"
+        },
+        {
+            "code": "currentlocationcode",
+            "name": "当前位置"
+        },
+        {
+            "code": "factory",
+            "name": "工厂"
+        },
+        {
+            "code": "production_line",
+            "name": "生产线"
+        },
+        {
+            "code": "bls_name",
+            "name": "站位"
+        },
+        {
+            "code": "destinationlocationcode",
+            "name": "目标位置"
+        },
+        {
+            "code": "sort",
+            "width": "64",
+            "name": "序号"
+        },
+        {
+            "code": "poi_code",
+            "name": "工序编号"
+        },
+        {
+            "code": "poi_name",
+            "alignment": "left",
+            "width": "64",
+            "name": "工序名称"
+        },
+        {
+            "code": "operation_requrement",
+            "alignment": "left",
+            "name": "工艺要求"
+        },
+        {
+            "code": "picture",
+            "name": "图片"
+        },
+        {
+            "code": "pwrd_list",
+            "alignment": "left",
+            "name": "安排站位"
+        },
+        {
+            "code": "qir",
+            "name": "质检记录"
+        },
+        {
+            "code": "sfqip",
+            "name": "工序流质检工序",
+            "type": "object",
+            "detail": [
+                "poi_code_back",
+                "poi_name_back"
+            ]
+        },
+        {
+            "code": "bqci_name",
+            "name": "问题"
+        },
+        {
+            "code": "poi_name_receive",
+            "name": "工序"
+        },
+        {
+            "code": "type",
+            "name": "类型"
+        },
+        {
+            "code": "handlemethod_name",
+            "name": "处理方法"
+        },
+        {
+            "code": "standard_value",
+            "name": "标准值"
+        },
+        {
+            "code": "positive_error",
+            "name": "正向误差"
+        },
+        {
+            "code": "negative_allowable_error",
+            "name": "负向允许误差"
+        },
+        {
+            "code": "bls_code",
+            "name": "站位"
+        },
+        {
+            "code": "create_time",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "name": "生产完成时间"
+        },
+        {
+            "code": "isskip",
+            "width": "60",
+            "type": "boolean",
+            "name": "跳工序"
+        },
+        {
+            "code": "iscompleted",
+            "type": "boolean",
+            "width": "60",
+            "alignment": "center",
+            "name": "计完工"
+        },
+        {
+            "code": "isrecordoutput",
+            "type": "boolean",
+            "width": "60",
+            "alignment": "center",
+            "name": "计产量"
+        },
+        {
+            "code": "ste_name",
+            "name": "事件"
+        },
+        {
+            "code": "hei_name",
+            "name": "员工"
+        },
+        {
+            "code": "createdate",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "width": "180",
+            "name": "记录时间"
+        },
+        {
+            "code": "happentime",
+            "type": "time",
+            "width": "180",
+            "name": "发生时间"
+        },
+        {
+            "code": "remark",
+            "width": "200",
+            "name": "备注"
+        },
+        {
+            "code": "yes",
+            "name": "是"
+        },
+        {
+            "code": "not",
+            "name": "否"
+        },
+        {
+            "code": "qc_quantity",
+            "name": "返修件数"
+        },
+        {
+            "code": "bpi_code",
+            "name": "部件码"
+        },
+        {
+            "code": "bpi_name",
+            "name": "部件名称"
+        },
+        {
+            "code": "complete_time",
+            "name": "完成时间"
+        },
+        {
+            "code": "date_back",
+            "name": "发起时间"
+        },
+        {
+            "code": "hei_code_back",
+            "name": "质检员工",
+            "type": "object",
+            "detail": [
+                "hei_code_back",
+                "hei_name_back"
+            ]
+        },
+        {
+            "code": "bsm_name_back",
+            "type": "object",
+            "name": "质检站位",
+            "detail": [
+                "bsm_name_back"
+            ]
+        },
+        {
+            "code": "rfid",
+            "name": "载具号"
+        },
+        {
+            "code": "items",
+            "name": "选项",
+            "type": "object",
+            "detail": [
+                "bsm_name_back"
+            ]
+        },
+        {
+            "code": "acce_name",
+            "name": "辅料"
+        },
+        {
+            "code": "quantity",
+            "name": "数量"
+        },
+        {
+            "code": "basic_value",
+            "name": "基本值"
+        },
+        {
+            "code": "adjusted_value",
+            "name": "差异值"
+        },
+        {
+            "code": "actual_value",
+            "name": "实际值"
+        },
+        {
+            "code": "linename",
+            "name": "线名"
+        },
+        {
+            "code": "stripname",
+            "name": "名称"
+        },
+        {
+            "code": "decisionresult",
+            "name": "判定结果"
+        },
+        {
+            "code": "handlemethod",
+            "name": "处理结果"
+        },
+        {
+            "code": "poi_name_receive",
+            "name": "责任工序"
+        },
+        {
+            "code": "bsm_code_receive",
+            "name": "责任站位"
+        },
+        {
+            "code": "hei_name_receive",
+            "name": "责任员工"
+        },
+        {
+            "code": "poi_name_repair",
+            "name": "返修工序"
+        },
+        {
+            "code": "bsm_code_repair",
+            "name": "返修站位"
+        },
+        {
+            "code": "hei_name_repair",
+            "name": "返修员工"
+        },
+        {
+            "code": "poi_key_repair_time",
+            "name": "返修时间"
+        },
+        {
+            "code": "poi_name_recheck",
+            "name": "复检工序"
+        },
+        {
+            "code": "bsm_code_recheck",
+            "name": "复检站位"
+        },
+        {
+            "code": "hei_name_recheck",
+            "name": "复检员工"
+        },
+        {
+            "code": "poi_key_recheck_time",
+            "name": "复检时间"
+        },
+        {
+            "code": "bqci_name",
+            "name": "返工原因"
+        },
+        {
+            "code": "binding_quantity",
+            "name": "数量"
+        }
+    ],
+    "hrEmployee": [
+        {
+            "name": "工号",
+            "code": "code",
+            "alignment": "left"
+        },
+        {
+            "name": "姓名",
+            "open": "true",
+            "code": "name"
+        },
+        {
+            "name": "性别",
+            "code": "sex"
+        },
+        {
+            "name": "部门",
+            "code": "hoi_key"
+        },
+        {
+            "name": "角色",
+            "code": "sri_key"
+        },
+        {
+            "name": "部门",
+            "code": "hoi_name"
+        },
+        {
+            "name": "考勤卡号",
+            "code": "attendanceid",
+            "alignment": "left"
+        },
+        {
+            "name": "联系方式",
+            "code": "phone"
+        },
+        {
+            "name": "年龄",
+            "code": "age"
+        },
+        {
+            "name": "身份证",
+            "code": "idnumber"
+        },
+        {
+            "name": "出生年月",
+            "code": "birthday"
+        },
+        {
+            "name": "联系地址",
+            "code": "address"
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "入职时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "employmentdate"
+        },
+        {
+            "name": "头像",
+            "code": "picture"
+        },
+        {
+            "name": "民族",
+            "code": "nation"
+        },
+        {
+            "name": "身高",
+            "code": "height"
+        },
+        {
+            "name": "体重",
+            "code": "weight"
+        },
+        {
+            "name": "文化程度",
+            "code": "education"
+        },
+        {
+            "name": "婚姻",
+            "code": "wedded"
+        },
+        {
+            "name": "工资卡号",
+            "code": "cardnumber"
+        },
+        {
+            "name": "入职时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "employmentdate"
+        },
+        {
+            "name": "工种",
+            "code": "worktype"
+        },
+        {
+            "name": "离职时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "resignationdate"
+        },
+        {
+            "name": "显示全部员工",
+            "code": "all"
+        },
+        {
+            "name": "工段名",
+            "code": "bwi_name"
+        },
+        {
+            "name": "账号管理",
+            "code": "account"
+        },
+        {
+            "name": "技能管理",
+            "code": "skill"
+        },
+        {
+            "name": "生产工段",
+            "code": "worksection"
+        }
+    ],
+    "hrSkill": [
+        {
+            "name": "工号",
+            "code": "hei_code"
+        },
+        {
+            "name": "姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "熟练度",
+            "code": "a"
+        },
+        {
+            "name": "工作经验",
+            "code": "b"
+        },
+        {
+            "name": "效率",
+            "code": "c"
+        }
+    ],
+    "layoutExhibition": [
+        {
+            "name": "创建日期",
+            "type": "time",
+            "code": "create_time"
+        },
+        {
+            "name": "创建人",
+            "code": "create_name"
+        },
+        {
+            "name": "布局结构",
+            "code": "layout"
+        },
+        {
+            "name": "布局结构编号",
+            "code": "code"
+        },
+        {
+            "name": "布局结构名称",
+            "code": "name"
+        },
+        {
+            "name": "父级",
+            "code": "pkey"
+        },
+        {
+            "name": "布局结构状态",
+            "code": "state_name"
+        },
+        {
+            "code": "bmi_key",
+            "name": "所属工厂"
+        },
+        {
+            "code": "blst_key",
+            "name": "布局结构类型"
+        },
+        {
+            "code": "description",
+            "name": "描述"
+        },
+        {
+            "code": "ip",
+            "name": "网路地址（IP）"
+        },
+        {
+            "code": "volume",
+            "name": "容量"
+        },
+        {
+            "code": "blsta_key",
+            "name": "属性"
+        },
+        {
+            "code": "attribute",
+            "name": "属性值"
+        },
+        {
+            "name": "规则名称",
+            "code": "blr_name"
+        },
+        {
+            "name": "条件限制",
+            "code": "comparetype"
+        },
+        {
+            "name": "值",
+            "code": "value"
+        },
+        {
+            "name": "生产设备",
+            "code": "dmdi_name"
+        },
+        {
+            "name": "生产设备编号",
+            "code": "dmdi_code"
+        },
+        {
+            "name": "配比",
+            "code": "proportion"
+        },
+        {
+            "name": "方案编号",
+            "code": "blsr_code"
+        },
+        {
+            "name": "方案名称",
+            "code": "blsr_name"
+        },
+        {
+            "name": "开始位置",
+            "code": "start_bls_name"
+        },
+        {
+            "name": "结束位置",
+            "code": "end_bls_name"
+        },
+        {
+            "name": "单项规则",
+            "code": "Singlerule"
+        },
+        {
+            "name": "组合规则",
+            "code": "Combinationrule"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "code": "location",
+            "name": "线位"
+        },
+        {
+            "code": "volume",
+            "name": "容量"
+        },
+        {
+            "code": "sku_composition",
+            "name": "SKU组合方式"
+        },
+        {
+            "code": "sku_maximum",
+            "name": "可存最大SKU数"
+        }
+    ],
+    "layoutStationSupervisoryControl": [
+        {
+            "name": "站位编号",
+            "code": "station_code",
+            "width": 110
+        },
+        {
+            "name": "站位名称",
+            "code": "station_name"
+        },
+        {
+            "name": "站位类型",
+            "code": "station_type_name"
+        },
+        {
+            "name": "站位状态",
+            "noshow": true,
+            "code": "station_state"
+        },
+        {
+            "name": "状态",
+            "code": "station_state_name"
+        },
+        {
+            "name": "MAC",
+            "code": "pad_mac"
+        },
+        {
+            "name": "员工编号",
+            "code": "employee_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "employee_name"
+        },
+        {
+            "name": "作业单",
+            "code": "workbill_code"
+        },
+        {
+            "name": "款号",
+            "code": "style_code"
+        },
+        {
+            "name": "款名",
+            "code": "style_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "color_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "color_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "size_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "size_name"
+        },
+        {
+            "name": "部件编号",
+            "code": "part_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "part_name"
+        },
+        {
+            "name": "在制工序",
+            "noshow": true,
+            "code": "current_operation"
+        },
+        {
+            "name": "在制工序编号",
+            "code": "current_operation_code"
+        },
+        {
+            "name": "在制工序名称",
+            "code": "current_operation_name"
+        },
+        {
+            "name": "工序产量",
+            "type": "number",
+            "code": "operation_output"
+        },
+        {
+            "name": "工序总耗时",
+            "type": "number",
+            "code": "operation_worktime"
+        },
+        {
+            "name": "工序SAM",
+            "type": "number",
+            "code": "operation_sam"
+        },
+        {
+            "name": "工序效率",
+            "code": "operation_efficiency"
+        },
+        {
+            "name": "返修次数",
+            "type": "number",
+            "code": "repair_quantity"
+        },
+        {
+            "name": "员工产量",
+            "type": "number",
+            "code": "total_output"
+        },
+        {
+            "name": "员工总耗时",
+            "type": "number",
+            "code": "total_worktime"
+        },
+        {
+            "name": "员工SAM",
+            "type": "number",
+            "code": "total_sam"
+        },
+        {
+            "name": "员工效率",
+            "code": "total_efficiency"
+        },
+        {
+            "name": "最近做工载具",
+            "code": "last_doing_carrier_code"
+        },
+        {
+            "name": "最近出站载具",
+            "code": "last_out_carrier_code",
+            "width": "200"
+        },
+        {
+            "name": "站位进轨",
+            "extend": true,
+            "nzRight": true,
+            "width": 400,
+            "code": "infeeds"
+        },
+        {
+            "name": "进轨编号",
+            "noshow": true,
+            "code": "infeed_code"
+        },
+        {
+            "name": "进轨容量",
+            "noshow": true,
+            "code": "volume"
+        },
+        {
+            "name": "进轨载具数",
+            "noshow": true,
+            "code": "carrier_count"
+        },
+        {
+            "name": "是否硬满载",
+            "noshow": true,
+            "code": "hardware_overload"
+        },
+        {
+            "code": "sku_composition",
+            "noshow": true,
+            "name": "SKU组合方式"
+        },
+        {
+            "code": "sku_maximum",
+            "noshow": true,
+            "name": "可存最大SKU数"
+        }
+    ],
+    "layoutVirtual": [
+        {
+            "name": "名称",
+            "alignment": "left",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "Width": "120px",
+            "alignment": "left",
+            "code": "code"
+        },
+        {
+            "name": "目标产量",
+            "code": "targetproduction"
+        },
+        {
+            "name": "布局结构名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "布局结构",
+            "code": "bls_key"
+        },
+        {
+            "name": "布局结构编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "款式",
+            "code": "psi_key"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "code": "psi_name",
+            "name": "款式名称"
+        },
+        {
+            "code": "sort",
+            "name": "排序"
+        },
+        {
+            "code": "rwpl",
+            "name": "与产线关系"
+        },
+        {
+            "code": "poi_name",
+            "name": "工序名称"
+        },
+        {
+            "code": "poi_code",
+            "name": "工序编号"
+        }
+    ],
+    "layoutHandStation": [
+        {
+            "name": "配对发起站",
+            "code": "matching_bls_key",
+            "type": "object",
+            "delimiter": "(_)",
+            "field": [
+                "code",
+                "name"
+            ]
+        },
+        {
+            "name": "配对配合站",
+            "code": "pair_bls_key",
+            "type": "object",
+            "delimiter": "(_)",
+            "field": [
+                "pair_bls_code",
+                "pair_bls_name"
+            ]
+        },
+        {
+            "name": "配对发起站-进轨",
+            "code": "key"
+        }
+    ],
+    "layoutTacticalRules": [
+        {
+            "code": "optionvalue",
+            "name": "选项值"
+        },
+        {
+            "code": "optionmode",
+            "name": "选项方式"
+        },
+        {
+            "code": "name",
+            "name": "名称"
+        },
+        {
+            "code": "value",
+            "name": "值"
+        },
+        {
+            "name": "实体的字段",
+            "code": "field"
+        },
+        {
+            "name": "禁用",
+            "code": "isdisabled",
+            "type": "boolean"
+        },
+        {
+            "name": "类型",
+            "code": "inputtype"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "权重",
+            "code": "weight"
+        }
+    ],
+    "pdmOperation": [
+        {
+            "name": "名称",
+            "alignment": "left",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "alignment": "left",
+            "code": "code"
+        },
+        {
+            "name": "类型",
+            "width": "140",
+            "code": "style_name"
+        },
+        {
+            "name": "标准工时(s)",
+            "width": "100",
+            "code": "standard_time"
+        },
+        {
+            "name": "标准工价(￥)",
+            "width": "100",
+            "code": "standard_wages"
+        },
+        {
+            "name": "分类",
+            "width": "140",
+            "code": "poc_name"
+        },
+        {
+            "name": "自定义代码",
+            "code": "custom_code"
+        },
+        {
+            "name": "制作工艺要求",
+            "code": "requrement"
+        },
+        {
+            "name": "质检工艺要求",
+            "code": "qc_requrement"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "name": "生产设备",
+            "noshow": true,
+            "code": "tool"
+        },
+        {
+            "name": "生产设备信息",
+            "noshow": true,
+            "code": "tool_info"
+        },
+        {
+            "name": "设置站点",
+            "noshow": true,
+            "code": "website"
+        },
+        {
+            "name": "站位",
+            "noshow": true,
+            "code": "start"
+        },
+        {
+            "name": "合部件",
+            "noshow": true,
+            "code": "pairing"
+        },
+        {
+            "name": "配对",
+            "noshow": true,
+            "code": "bind"
+        },
+        {
+            "name": "部件名称",
+            "noshow": true,
+            "code": "pairname"
+        },
+        {
+            "name": "配比",
+            "noshow": true,
+            "code": "proportion"
+        },
+        {
+            "name": "工序管理",
+            "noshow": true,
+            "code": "operation"
+        },
+        {
+            "name": "看板不显示",
+            "code": "notspectaculars"
+        },
+        {
+            "name": "创建时间",
+            "code": "create_time"
+        },
+        {
+            "name": "默认",
+            "noshow": true,
+            "code": "isdefault"
+        }
+    ],
+    "pdmPartoperation": [
+        {
+            "name": "工序",
+            "noshow": true,
+            "code": "poi_key"
+        },
+        {
+            "name": "部件",
+            "code": "bpi_list"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "bpi_name"
+        },
+        {
+            "name": "部件编号",
+            "code": "bpi_code"
+        },
+        {
+            "name": "部件",
+            "noshow": true,
+            "code": "bpi_key"
+        },
+        {
+            "name": "工序",
+            "code": "operation"
+        }
+    ],
+    "pdmStyle": [
+        {
+            "name": "名称",
+            "code": "name",
+            "width": "200",
+            "alignment": "left"
+        },
+        {
+            "name": "编号",
+            "code": "code",
+            "width": "200",
+            "alignment": "left"
+        },
+        {
+            "name": "描述",
+            "width": "200",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "name": "款式分类",
+            "noshow": true,
+            "code": "psc_key"
+        },
+        {
+            "name": "款式名称首字母",
+            "noshow": true,
+            "code": "py"
+        },
+        {
+            "name": "客户款号",
+            "code": "custom_code"
+        },
+        {
+            "name": "品牌",
+            "code": "brand"
+        },
+        {
+            "name": "发行年份",
+            "code": "year"
+        },
+        {
+            "name": "季节",
+            "code": "season"
+        },
+        {
+            "name": "性别",
+            "code": "sex"
+        },
+        {
+            "name": "设计者",
+            "code": "designer"
+        },
+        {
+            "name": "款式码",
+            "code": "barcode"
+        },
+        {
+            "name": "生产模式",
+            "code": "producemode"
+        },
+        {
+            "name": "上裁绑定数量",
+            "code": "default_binding_qty"
+        },
+        {
+            "name": "款式管理",
+            "noshow": true,
+            "code": "style"
+        },
+        {
+            "name": "图纸",
+            "noshow": true,
+            "code": "tuzhi"
+        },
+        {
+            "name": "工序流编号",
+            "noshow": true,
+            "code": "psopm_code"
+        },
+        {
+            "name": "工序流编号",
+            "noshow": true,
+            "code": "psopm_code"
+        },
+        {
+            "name": "工序流名称",
+            "noshow": true,
+            "code": "psopm_name"
+        },
+        {
+            "code": "version",
+            "noshow": true,
+            "name": "版本"
+        },
+        {
+            "name": "默认工序流",
+            "noshow": true,
+            "code": "isdefault",
+            "type": "boolean"
+        },
+        {
+            "name": "默认工序流",
+            "noshow": true,
+            "code": "psopm_isdefault",
+            "type": "boolean"
+        },
+        {
+            "name": "默认路线图",
+            "noshow": true,
+            "type": "boolean",
+            "code": "psorm_isdefault"
+        },
+        {
+            "name": "路线图名称",
+            "noshow": true,
+            "code": "psorm_name"
+        },
+        {
+            "noshow": true,
+            "name": "员工",
+            "code": "hei_name"
+        },
+        {
+            "name": "员工编号",
+            "noshow": true,
+            "code": "hei_code"
+        },
+        {
+            "name": "启用时间",
+            "noshow": true,
+            "type": "time",
+            "code": "createtime"
+        },
+        {
+            "name": "当前启用时间",
+            "noshow": true,
+            "type": "time",
+            "code": "currenttime"
+        },
+        {
+            "noshow": true,
+            "name": "颜色",
+            "code": "pci_key"
+        },
+        {
+            "code": "isbackflow",
+            "noshow": true,
+            "name": "是否回流"
+        },
+        {
+            "code": "tag",
+            "noshow": true,
+            "name": "版本"
+        }
+    ],
+    "pdmColor": [
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "自定义编号",
+            "code": "customcode"
+        },
+        {
+            "name": "描述",
+            "code": "description"
+        },
+        {
+            "name": "颜色管理",
+            "code": "color"
+        },
+        {
+            "name": "颜色信息导入",
+            "code": "imp"
+        }
+    ],
+    "pdmSize": [
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "分类",
+            "code": "group"
+        },
+        {
+            "name": "自定义编号",
+            "code": "customcode"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "描述",
+            "code": "description"
+        },
+        {
+            "name": "颜色管理",
+            "code": "color"
+        },
+        {
+            "name": "颜色信息导入",
+            "code": "imp"
+        }
+    ],
+    "pmOverloadManagement": [
+        {
+            "name": "站位编号",
+            "width": "150",
+            "code": "station_code"
+        },
+        {
+            "name": "载具号",
+            "width": "150",
+            "code": "carrier_code",
+            "alignment": "left"
+        },
+        {
+            "name": "条码号",
+            "width": "150",
+            "code": "tagcode",
+            "alignment": "left"
+        },
+        {
+            "name": "作业单号",
+            "width": "150",
+            "code": "workbill_code",
+            "alignment": "left"
+        },
+        {
+            "name": "款号",
+            "width": "150",
+            "code": "style_code",
+            "alignment": "left"
+        },
+        {
+            "name": "颜色",
+            "width": "150",
+            "code": "color_name",
+            "alignment": "left"
+        },
+        {
+            "name": "尺码",
+            "width": "150",
+            "code": "size_name",
+            "alignment": "left"
+        },
+        {
+            "name": "状态",
+            "extend": true,
+            "code": "filtrating"
+        },
+        {
+            "name": "最后完工工序",
+            "width": "150",
+            "code": "last_completeoperation_name",
+            "alignment": "left"
+        },
+        {
+            "name": "超载站分组名称",
+            "width": "150",
+            "code": "name",
+            "noshow": true
+        },
+        {
+            "name": "名称",
+            "width": "150",
+            "code": "blsr_name",
+            "noshow": true
+        },
+        {
+            "name": "值",
+            "code": "value",
+            "noshow": true
+        },
+        {
+            "name": "条件",
+            "code": "blr_key",
+            "noshow": true
+        },
+        {
+            "name": "控制类型",
+            "code": "permit",
+            "noshow": true
+        },
+        {
+            "name": "排序",
+            "code": "sort",
+            "noshow": true
+        },
+        {
+            "name": "组内载具分组",
+            "code": "overload_options",
+            "noshow": true
+        },
+        {
+            "name": "组内载具出站顺序",
+            "code": "overload_order",
+            "noshow": true
+        },
+        {
+            "name": "站位",
+            "code": "key",
+            "noshow": true
+        }
+    ],
+    "pmCutting": [
+        {
+            "name": "站位编号",
+            "code": "station_code"
+        },
+        {
+            "name": "作业单",
+            "Width": "180",
+            "code": "pwb_code"
+        },
+        {
+            "name": "状态",
+            "code": "pwb_state_name"
+        },
+        {
+            "name": "作业单数",
+            "type": "number",
+            "alignment": "center",
+            "code": "qty"
+        },
+        {
+            "name": "批号",
+            "code": "mix_code"
+        },
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "上裁数",
+            "type": "number",
+            "code": "bond_qty"
+        },
+        {
+            "name": "剩余数",
+            "type": "number",
+            "code": "residue_num",
+            "extend": true
+        },
+        {
+            "name": "完工",
+            "type": "number",
+            "alignment": "center",
+            "code": "cpl_qty"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件编号",
+            "code": "bpi_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "bpi_name"
+        },
+        {
+            "name": "状态",
+            "code": "state_name",
+            "noshow": true
+        },
+        {
+            "name": "上裁站",
+            "code": "layout",
+            "noshow": true
+        },
+        {
+            "name": "上裁模式",
+            "code": "client",
+            "noshow": true
+        },
+        {
+            "name": "是否启用",
+            "code": "enable",
+            "type": "boolean",
+            "alignment": "center"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "创建时间",
+            "type": "time",
+            "alignment": "center",
+            "code": "createtime"
+        },
+        {
+            "name": "更新时间",
+            "type": "time",
+            "alignment": "center",
+            "code": "updatetime"
+        }
+    ],
+    "pmSpecialCoatHangerMark": [
+        {
+            "name": "衣架编号",
+            "code": "hangerid"
+        },
+        {
+            "name": "标签号",
+            "code": "tagcode"
+        },
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "款式名称",
+            "code": "psi_name"
+        },
+        {
+            "name": "款式编号",
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "是否异常",
+            "code": "isabnormal"
+        },
+        {
+            "name": "目的位置",
+            "code": "destinationlocation_code"
+        },
+        {
+            "name": "当前位置",
+            "code": "currentlocation_code"
+        },
+        {
+            "name": "当前位置类型",
+            "code": "currenttype_str"
+        }
+    ],
+    "pmTags": [
+        {
+            "code": "printnum",
+            "type": "number",
+            "width": "96",
+            "name": "打印次数"
+        },
+        {
+            "name": "顺序号",
+            "code": "pwd_sort"
+        },
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "作业单号",
+            "width": "180",
+            "code": "pwb_code"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb"
+        },
+        {
+            "name": "套数",
+            "code": "skoc_harness_num"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code2"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "类型",
+            "code": "style_name"
+        },
+        {
+            "name": "数量",
+            "code": "binding_quantity"
+        },
+        {
+            "name": "部件码",
+            "code": "bpi_code"
+        },
+        {
+            "name": "部件",
+            "code": "bpi_name"
+        },
+        {
+            "name": "载具编号",
+            "code": "rfid"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "成品码",
+            "width": "120",
+            "code": "parent_tagcode"
+        },
+        {
+            "name": "条码",
+            "code": "tagcode",
+            "width": "180",
+            "open": "true"
+        },
+        {
+            "name": "自定义编号",
+            "code": "customcode"
+        },
+        {
+            "name": "主部件",
+            "code": "bpi_ismain",
+            "width": "85",
+            "alignment": "center",
+            "type": "boolean"
+        },
+        {
+            "name": "规格名称",
+            "code": "pte_specname"
+        },
+        {
+            "name": "规格值",
+            "code": "pte_specvalue"
+        },
+        {
+            "name": "规格",
+            "code": "pte_spec"
+        },
+        {
+            "name": "标签",
+            "code": "pti_code"
+        },
+        {
+            "name": "件数",
+            "code": "counnum"
+        },
+        {
+            "name": "流水号",
+            "code": "serialcode"
+        },
+        {
+            "name": "流水号",
+            "code": "packageinsidecode"
+        },
+        {
+            "name": "批号",
+            "code": "mixcode"
+        },
+        {
+            "code": "currentlocationname",
+            "name": "当前位置"
+        },
+        {
+            "code": "destinationlocationname",
+            "name": "目标位置"
+        },
+        {
+            "code": "id",
+            "open": "true",
+            "name": "载具编号"
+        },
+        {
+            "code": "plandate",
+            "name": "计划时间",
+            "format": "yyyy-MM-dd",
+            "type": "time"
+        },
+        {
+            "code": "poi_code",
+            "name": "工序编号"
+        },
+        {
+            "code": "poi_name",
+            "name": "工序名称"
+        },
+        {
+            "code": "bwi_name",
+            "name": "工段"
+        },
+        {
+            "code": "hei_name",
+            "name": "员工"
+        },
+        {
+            "code": "bls_code",
+            "name": "位置"
+        },
+        {
+            "code": "happen_time",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "name": "发生时间"
+        },
+        {
+            "code": "iscompleted",
+            "name": "计完工"
+        },
+        {
+            "code": "isrecordoutput",
+            "name": "计产量"
+        },
+        {
+            "code": "loadout_time",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "name": "交货日期"
+        },
+        {
+            "code": "printnum",
+            "name": "打印次数"
+        }
+    ],
+    "pmLayingcloth": [
+        {
+            "name": "铺布记录号",
+            "code": "code",
+            "alignment": "left"
+        },
+        {
+            "name": "布号",
+            "code": "cloth_no"
+        },
+        {
+            "name": "床次",
+            "code": "bed_sequence"
+        },
+        {
+            "name": "床号",
+            "code": "bed_no"
+        },
+        {
+            "name": "布封宽",
+            "code": "cloth_width"
+        },
+        {
+            "code": "cloth_length",
+            "name": "布封长"
+        },
+        {
+            "code": "maker_code",
+            "name": "唛架号"
+        },
+        {
+            "code": "maker_length",
+            "name": "唛架长"
+        },
+        {
+            "code": "request_quantity",
+            "name": "制单用量"
+        },
+        {
+            "code": "real_quantity",
+            "name": "实际用量"
+        },
+        {
+            "code": "bli_name",
+            "noshow": true,
+            "name": "生产线名称"
+        },
+        {
+            "code": "bli_key",
+            "noshow": true,
+            "name": "生产线"
+        },
+        {
+            "name": "款式名称",
+            "noshow": true,
+            "code": "psi_name"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款号",
+            "noshow": true,
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色名称",
+            "noshow": true,
+            "code": "pci_name"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci_key"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "尺码名称",
+            "noshow": true,
+            "code": "psz_name"
+        },
+        {
+            "name": "尺寸",
+            "noshow": true,
+            "code": "dimensions"
+        },
+        {
+            "name": "作业量",
+            "noshow": true,
+            "code": "quantity"
+        },
+        {
+            "name": "每层比例",
+            "noshow": true,
+            "code": "percent"
+        },
+        {
+            "name": "层数",
+            "noshow": true,
+            "code": "layer_quantity"
+        },
+        {
+            "name": "状态",
+            "noshow": true,
+            "code": "state_name"
+        },
+        {
+            "name": "生产作业单",
+            "noshow": true,
+            "code": "pwb_key"
+        },
+        {
+            "name": "匹号",
+            "noshow": true,
+            "code": "piece_no"
+        },
+        {
+            "name": "缸号",
+            "noshow": true,
+            "code": "cylinder_no"
+        },
+        {
+            "name": "备注",
+            "noshow": true,
+            "code": "remark"
+        },
+        {
+            "name": "余布A品",
+            "noshow": true,
+            "code": "a"
+        },
+        {
+            "noshow": true,
+            "name": "余布B品",
+            "code": "b"
+        },
+        {
+            "name": "余布C品",
+            "noshow": true,
+            "code": "c"
+        },
+        {
+            "name": "余布D品",
+            "noshow": true,
+            "code": "d"
+        },
+        {
+            "noshow": true,
+            "name": "实裁数量",
+            "code": "Actualcutting"
+        },
+        {
+            "name": "已生产数量",
+            "noshow": true,
+            "code": "generate_quantity"
+        },
+        {
+            "name": "用料",
+            "noshow": true,
+            "code": "pfsur_list"
+        },
+        {
+            "name": "创建日期",
+            "type": "time",
+            "code": "create_time"
+        },
+        {
+            "name": "创建人",
+            "code": "create_name"
+        }
+    ],
+    "pmWork": [
+        {
+            "name": "作业单号",
+            "code": "code",
+            "width": "180",
+            "alignment": "left"
+        },
+        {
+            "name": "批号",
+            "code": "mixcode",
+            "alignment": "left"
+        },
+        {
+            "name": "销售订单号",
+            "code": "som_code",
+            "alignment": "left"
+        },
+        {
+            "name": "款号",
+            "alignment": "left",
+            "code": "psi_code"
+        },
+        {
+            "name": "款式名称",
+            "code": "psi_name",
+            "alignment": "left"
+        },
+        {
+            "name": "颜色名称",
+            "width": "120",
+            "code": "pci_name"
+        },
+        {
+            "name": "颜色编号",
+            "width": "120",
+            "code": "pci_code"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名称",
+            "width": "120",
+            "code": "psz_name"
+        },
+        {
+            "name": "作业数量",
+            "type": "number",
+            "width": "100",
+            "code": "quantity"
+        },
+        {
+            "name": "完成数量",
+            "type": "number",
+            "width": "100",
+            "code": "complete_quantity"
+        },
+        {
+            "name": "预计开始时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "width": "120",
+            "code": "start_time"
+        },
+        {
+            "name": "实际开始时间",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "width": "120",
+            "code": "production_start_time"
+        },
+        {
+            "name": "实际完成时间",
+            "type": "time",
+            "width": "120",
+            "code": "complete_time"
+        },
+        {
+            "name": "交货时间",
+            "type": "time",
+            "width": "120",
+            "format": "yyyy-MM-dd",
+            "code": "requestdeliverydate"
+        },
+        {
+            "name": "状态",
+            "type": "schedule",
+            "width": "120",
+            "StandardLine": "requestdeliverydate",
+            "code": "state"
+        },
+        {
+            "name": "用于传输",
+            "type": "boolean",
+            "code": "istransport",
+            "noshow": true
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "工序流模式",
+            "code": "opp_type",
+            "noshow": true
+        },
+        {
+            "name": "级别",
+            "noshow": true,
+            "code": "level"
+        },
+        {
+            "name": "创建日期",
+            "type": "time",
+            "width": "120",
+            "code": "create_time"
+        },
+        {
+            "name": "创建人",
+            "code": "create_name"
+        },
+        {
+            "name": "最后更新人",
+            "noshow": true,
+            "code": "update_name"
+        },
+        {
+            "name": "最后更新时间",
+            "type": "time",
+            "noshow": true,
+            "width": "120",
+            "code": "update_datetime"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci_key"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "工序流路线图",
+            "noshow": true,
+            "code": "pwrm_key"
+        },
+        {
+            "name": "作业单工序流",
+            "noshow": true,
+            "code": "pwom_key"
+        },
+        {
+            "name": "已选工序流",
+            "noshow": true,
+            "code": "popm_key"
+        },
+        {
+            "name": "目标站位",
+            "noshow": true,
+            "code": "bls_code"
+        },
+        {
+            "name": "标签号",
+            "noshow": true,
+            "code": "tagcode"
+        },
+        {
+            "name": "作业单信息",
+            "noshow": true,
+            "code": "workin"
+        },
+        {
+            "name": "组织架构",
+            "noshow": true,
+            "code": "hoi_key"
+        },
+        {
+            "noshow": true,
+            "name": "已生成数量",
+            "type": "number",
+            "width": "100",
+            "code": "taginfonum"
+        },
+        {
+            "noshow": true,
+            "name": "在制数量",
+            "type": "number",
+            "width": "100",
+            "code": "doing_quantity"
+        },
+        {
+            "name": "作业单百分比超量",
+            "noshow": true,
+            "code": "workbillquantityexcesspercentage"
+        },
+        {
+            "name": "可生成数量",
+            "noshow": true,
+            "code": "cangeneratedquantity"
+        },
+        {
+            "name": "生成数量",
+            "noshow": true,
+            "code": "generatedquantity"
+        },
+        {
+            "name": "部件包内数量",
+            "noshow": true,
+            "code": "packagenumber"
+        },
+        {
+            "name": "单包数量设置",
+            "noshow": true,
+            "code": "packagenumber2"
+        },
+        {
+            "name": "生成包数",
+            "noshow": true,
+            "code": "singlepackagenumber"
+        },
+        {
+            "name": "衣架上裁件数",
+            "noshow": true,
+            "code": "istag"
+        },
+        {
+            "name": "件数/衣架",
+            "noshow": true,
+            "code": "tagnumber"
+        },
+        {
+            "name": "生成标签（个）",
+            "noshow": true,
+            "code": "singletagnumber"
+        },
+        {
+            "name": "工序流选择",
+            "noshow": true,
+            "code": "psopm"
+        },
+        {
+            "name": "工单",
+            "noshow": true,
+            "code": "ispww"
+        },
+        {
+            "name": "客户",
+            "noshow": true,
+            "code": "sci_key"
+        },
+        {
+            "name": "工序流版本",
+            "noshow": true,
+            "code": "operationprocess_version"
+        },
+        {
+            "name": "路线图版本号",
+            "noshow": true,
+            "code": "route_version"
+        },
+        {
+            "name": "工序流更新",
+            "noshow": true,
+            "type": "time",
+            "code": "operationprocess_update_time"
+        },
+        {
+            "name": "路线图更新",
+            "noshow": true,
+            "type": "time",
+            "code": "route_update_time"
+        },
+        {
+            "name": "作业单",
+            "noshow": true,
+            "code": "pwb_key"
+        },
+        {
+            "name": "编号",
+            "noshow": true,
+            "code": "product_number"
+        },
+        {
+            "name": "名称",
+            "noshow": true,
+            "code": "product_fullname"
+        },
+        {
+            "name": "部件名称",
+            "noshow": true,
+            "code": "bpi_name"
+        },
+        {
+            "name": "部件编号",
+            "noshow": true,
+            "code": "bpi_code"
+        },
+        {
+            "name": "生产部件",
+            "noshow": true,
+            "code": "part_key"
+        },
+        {
+            "name": "自定义编号",
+            "noshow": true,
+            "code": "custom_code"
+        },
+        {
+            "code": "basein",
+            "noshow": true,
+            "name": "基础信息"
+        },
+        {
+            "code": "Example",
+            "noshow": true,
+            "name": "扩展信息"
+        },
+        {
+            "code": "flow",
+            "noshow": true,
+            "name": "工序流"
+        },
+        {
+            "code": "map",
+            "noshow": true,
+            "name": "路线图"
+        },
+        {
+            "code": "Excipients",
+            "noshow": true,
+            "name": "辅料"
+        },
+        {
+            "code": "pwb_key",
+            "noshow": true,
+            "name": "作业单号"
+        },
+        {
+            "code": "pwb_code",
+            "noshow": true,
+            "name": "作业单号"
+        },
+        {
+            "code": "date",
+            "noshow": true,
+            "type": "time",
+            "name": "计划时间"
+        },
+        {
+            "code": "plannum",
+            "type": "number",
+            "noshow": true,
+            "name": "计划数量"
+        },
+        {
+            "name": "员工",
+            "noshow": true,
+            "code": "hei_name"
+        },
+        {
+            "name": "员工编号",
+            "noshow": true,
+            "code": "hei_code"
+        },
+        {
+            "name": "启用时间",
+            "noshow": true,
+            "type": "time",
+            "code": "createtime"
+        },
+        {
+            "name": "当前启用时间",
+            "type": "time",
+            "noshow": true,
+            "code": "currenttime"
+        }
+    ],
+    "saleCustomer": [
+        {
+            "name": "编号",
+            "width": "150",
+            "code": "code",
+            "alignment": "left"
+        },
+        {
+            "name": "客户姓名",
+            "code": "name",
+            "width": "150",
+            "alignment": "left"
+        },
+        {
+            "name": "公司名称",
+            "code": "companyname",
+            "alignment": "left"
+        },
+        {
+            "name": "状态",
+            "noshow": true,
+            "code": "state_name"
+        },
+        {
+            "code": "pyname",
+            "noshow": true,
+            "name": "拼音首字母"
+        },
+        {
+            "code": "class",
+            "name": "分类"
+        },
+        {
+            "code": "area",
+            "name": "所在区域",
+            "alignment": "left"
+        },
+        {
+            "code": "country",
+            "noshow": true,
+            "name": "所在国家"
+        },
+        {
+            "code": "province",
+            "noshow": true,
+            "name": "所在省份"
+        },
+        {
+            "code": "city",
+            "noshow": true,
+            "name": "所在城市"
+        },
+        {
+            "code": "phone",
+            "name": "电话"
+        },
+        {
+            "code": "moblile",
+            "name": "手机"
+        },
+        {
+            "code": "address",
+            "name": "详细地址",
+            "alignment": "left"
+        },
+        {
+            "code": "email",
+            "name": "邮箱",
+            "alignment": "left"
+        },
+        {
+            "code": "postcode",
+            "name": "邮编",
+            "alignment": "left"
+        },
+        {
+            "code": "fax",
+            "name": "传真",
+            "alignment": "left"
+        },
+        {
+            "code": "contactername",
+            "name": "联系人"
+        },
+        {
+            "name": "创建日期",
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "noshow": true,
+            "code": "createTime"
+        },
+        {
+            "name": "创建人",
+            "noshow": true,
+            "code": "create_name"
+        }
+    ],
+    "saleOrder": [
+        {
+            "code": "code",
+            "name": "订单编号"
+        },
+        {
+            "code": "sci_name",
+            "name": "客户"
+        },
+        {
+            "code": "total",
+            "name": "数量"
+        },
+        {
+            "code": "taking_time",
+            "name": "交货日期"
+        },
+        {
+            "code": "sale_channel",
+            "name": "销售渠道"
+        },
+        {
+            "code": "salername",
+            "name": "销售人员"
+        },
+        {
+            "code": "state",
+            "name": "状态"
+        },
+        {
+            "code": "create_time",
+            "name": "创建日期"
+        },
+        {
+            "code": "creat_name",
+            "name": "创建人姓名"
+        }
+    ],
+    "User": [
+        {
+            "code": "info",
+            "name": "账号信息"
+        },
+        {
+            "code": "username",
+            "name": "用户名"
+        },
+        {
+            "code": "password",
+            "name": "密码"
+        },
+        {
+            "code": "notification",
+            "name": "消息通知"
+        },
+        {
+            "code": "loginIp",
+            "name": "最后登录IP"
+        },
+        {
+            "code": "loginTime",
+            "name": "最后登录时间"
+        },
+        {
+            "code": "create_time",
+            "name": "创建时间"
+        },
+        {
+            "code": "isAdmin",
+            "name": "管理员"
+        },
+        {
+            "name": "旧密码",
+            "code": "older_password"
+        },
+        {
+            "name": "新密码",
+            "code": "newPassword"
+        },
+        {
+            "name": "确认密码",
+            "code": "confirmPassword"
+        },
+        {
+            "code": "update_pword",
+            "name": "密码修改"
+        },
+        {
+            "code": "password",
+            "name": "修改密码"
+        },
+        {
+            "code": "expiredate",
+            "name": "到期时间"
+        },
+        {
+            "code": "logout",
+            "name": "退出登录"
+        },
+        {
+            "code": "currentPassword",
+            "name": "当前密码"
+        },
+        {
+            "code": "confirmPasswordError",
+            "name": "确认密码错误"
+        }
+    ],
+    "sysMenu": [
+        {
+            "code": "commonNode",
+            "name": "常用节点"
+        },
+        {
+            "code": "parent",
+            "name": "父级"
+        },
+        {
+            "code": "node",
+            "name": "按钮"
+        },
+        {
+            "code": "sonnode",
+            "name": "子节点"
+        },
+        {
+            "code": "list",
+            "name": "列表"
+        },
+        {
+            "code": "extend",
+            "name": "折叠"
+        },
+        {
+            "name": "窗口",
+            "code": "ismenu"
+        },
+        {
+            "code": "url",
+            "name": "路由地址"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "图标",
+            "code": "icon"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "动作",
+            "code": "action"
+        },
+        {
+            "name": "类型",
+            "code": "isradio"
+        },
+        {
+            "name": "位置",
+            "code": "isextend"
+        },
+        {
+            "name": "权限类型",
+            "code": "speciallimits"
+        }
+    ],
+    "sysDictionary": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "父级",
+            "code": "pkey"
+        },
+        {
+            "name": "排序号",
+            "code": "sort"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        }
+    ],
+    "sysLogrun": [
+        {
+            "name": "信息类型",
+            "alignment": "center",
+            "width": "120",
+            "code": "type"
+        },
+        {
+            "name": "错误级别",
+            "alignment": "center",
+            "width": "100",
+            "code": "level"
+        },
+        {
+            "name": "产生时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "type": "time",
+            "code": "time"
+        },
+        {
+            "name": "产生日期",
+            "type": "time",
+            "code": "date"
+        },
+        {
+            "name": "日志内容详细",
+            "code": "content"
+        },
+        {
+            "name": "错误来源",
+            "alignment": "left",
+            "code": "source"
+        },
+        {
+            "name": "运行日志",
+            "code": "systemlog"
+        },
+        {
+            "name": "平板日志",
+            "code": "flatlog"
+        },
+        {
+            "name": "设备",
+            "code": "bls_Key"
+        },
+        {
+            "name": "页码",
+            "code": "page"
+        },
+        {
+            "name": "每页数量",
+            "code": "pagesize"
+        },
+        {
+            "name": "开始条数",
+            "code": "start"
+        },
+        {
+            "name": "结束条数",
+            "code": "end"
+        }
+    ],
+    "sysParameters": [
+        {
+            "name": "名称",
+            "alignment": "left",
+            "width": "180",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "alignment": "left",
+            "width": "180",
+            "code": "code"
+        },
+        {
+            "name": "类型",
+            "code": "type"
+        },
+        {
+            "name": "类型名",
+            "width": "120",
+            "code": "typename"
+        },
+        {
+            "name": "权限类型",
+            "code": "permissionstype"
+        },
+        {
+            "name": "参数值类型",
+            "code": "alternativetype"
+        },
+        {
+            "name": "参数值待选值",
+            "code": "alternativevalues"
+        },
+        {
+            "name": "参数值",
+            "alignment": "left",
+            "width": "200",
+            "code": "value"
+        },
+        {
+            "name": "排序号",
+            "code": "sort"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        }
+    ],
+    "sysLanguage": [
+        {
+            "code": "language",
+            "name": "语言标识"
+        },
+        {
+            "code": "languagename",
+            "name": "语言名称"
+        },
+        {
+            "code": "default",
+            "alignment": "left",
+            "name": "默认"
+        }
+    ],
+    "sysRole": [
+        {
+            "name": "名称",
+            "Width": "200",
+            "code": "name",
+            "alignment": "left"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "code": "haveoperationprocess",
+            "name": "工序流权限"
+        },
+        {
+            "code": "haveoperationprocessroute",
+            "name": "路线图权限"
+        },
+        {
+            "code": "havewages",
+            "name": "工价权限"
+        },
+        {
+            "code": "menus",
+            "name": "菜单选项"
+        },
+        {
+            "code": "power",
+            "name": "权限选项"
+        }
+    ],
+    "sysClassify": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "父级",
+            "code": "pkey"
+        },
+        {
+            "name": "排序号",
+            "code": "sort"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        }
+    ],
+    "sysLogoperation": [
+        {
+            "name": "访问地址",
+            "alignment": "left",
+            "code": "url"
+        },
+        {
+            "name": "动作",
+            "alignment": "center",
+            "Width": "120",
+            "code": "action"
+        },
+        {
+            "name": "员工",
+            "code": "hei_key"
+        },
+        {
+            "name": "用户",
+            "alignment": "center",
+            "Width": "120",
+            "code": "sui_username"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_key"
+        },
+        {
+            "name": "时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "type": "time",
+            "code": "time"
+        },
+        {
+            "code": "elapsedtotlalseconds",
+            "Width": "120",
+            "name": "总耗时"
+        },
+        {
+            "name": "请求数据",
+            "code": "requestdata"
+        },
+        {
+            "name": "返回数据",
+            "code": "responsedata"
+        }
+    ],
+    "sysSoftwareUpdate": [
+        {
+            "code": "vercode",
+            "name": "版本号"
+        },
+        {
+            "code": "info",
+            "name": "更新内容"
+        },
+        {
+            "code": "create_time",
+            "name": "创建时间"
+        }
+    ],
+    "whWarehousing": [
+        {
+            "name": "仓库名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "仓库编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "仓库",
+            "noshow": true,
+            "code": "bls_key"
+        },
+        {
+            "name": "仓位编号",
+            "code": "blsson_code"
+        },
+        {
+            "name": "仓位名称",
+            "code": "blsson_name"
+        },
+        {
+            "name": "登记人",
+            "noshow": true,
+            "code": "hei_key"
+        },
+        {
+            "name": "登记人姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "入库单号",
+            "code": "code"
+        },
+        {
+            "name": "入库单号",
+            "noshow": true,
+            "code": "wwim_code"
+        },
+        {
+            "name": "入库方式",
+            "noshow": true,
+            "alignment": "center",
+            "code": "type_name"
+        },
+        {
+            "name": "创建人",
+            "noshow": true,
+            "code": "create_hei_key"
+        },
+        {
+            "name": "创建人姓名",
+            "code": "create_hei_name"
+        },
+        {
+            "name": "创建人编号",
+            "code": "create_hei_code"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "code": "create_time"
+        },
+        {
+            "name": "状态",
+            "alignment": "center",
+            "code": "state_name"
+        },
+        {
+            "name": "入库时间",
+            "noshow": true,
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "type": "time",
+            "code": "indate"
+        },
+        {
+            "name": "作业单号",
+            "noshow": true,
+            "code": "pwb_code"
+        },
+        {
+            "name": "销售订单",
+            "noshow": true,
+            "code": "som_code"
+        },
+        {
+            "name": "标签条码",
+            "noshow": true,
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "标签自定义条码",
+            "noshow": true,
+            "code": "pti_tagcustomcode"
+        },
+        {
+            "name": "数量",
+            "noshow": true,
+            "type": "number",
+            "code": "quantity"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款式名称",
+            "noshow": true,
+            "code": "psi_name"
+        },
+        {
+            "name": "款式编号",
+            "noshow": true,
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci_key"
+        },
+        {
+            "name": "颜色名字",
+            "noshow": true,
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "尺码名称",
+            "noshow": true,
+            "code": "psz_name"
+        },
+        {
+            "name": "部件名称",
+            "noshow": true,
+            "code": "bpi_name"
+        },
+        {
+            "name": "部件编号",
+            "noshow": true,
+            "code": "bpi_code"
+        },
+        {
+            "code": "rfid",
+            "noshow": true,
+            "name": "载具编号"
+        }
+    ],
+    "whInventory": [
+        {
+            "name": "仓库",
+            "noshow": true,
+            "code": "bls_key"
+        },
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "作业单",
+            "noshow": true,
+            "code": "pwb_key"
+        },
+        {
+            "name": "条码",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "标签自定义条码",
+            "code": "pti_tagcustomcode"
+        },
+        {
+            "name": "是否被冻结",
+            "code": "isfrozen",
+            "type": "boolean",
+            "alignment": "center"
+        },
+        {
+            "name": "数量",
+            "type": "number",
+            "code": "quantity",
+            "alignment": "center"
+        },
+        {
+            "name": "仓位",
+            "code": "bls_code"
+        },
+        {
+            "name": "仓位名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "创建人",
+            "noshow": true,
+            "code": "create_hei_key"
+        },
+        {
+            "name": "创建人姓名",
+            "code": "create_hei_name"
+        },
+        {
+            "name": "创建人编号",
+            "code": "create_hei_code"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "code": "create_time"
+        },
+        {
+            "name": "状态",
+            "noshow": true,
+            "code": "state"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "订单",
+            "noshow": true,
+            "code": "som_key"
+        },
+        {
+            "name": "订单编号",
+            "code": "som_code"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款式名称",
+            "code": "psi_name"
+        },
+        {
+            "name": "款式编号",
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci_key"
+        },
+        {
+            "name": "颜色名字",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件名称",
+            "code": "bpi_name"
+        },
+        {
+            "code": "bpi_key",
+            "noshow": true,
+            "name": "部件"
+        },
+        {
+            "name": "部件编号",
+            "code": "part_code"
+        },
+        {
+            "code": "rfid",
+            "name": "载具编号"
+        }
+    ],
+    "whOutofstock": [
+        {
+            "name": "仓库名称",
+            "noshow": true,
+            "code": "bls_name"
+        },
+        {
+            "name": "仓库",
+            "noshow": true,
+            "code": "bls_key"
+        },
+        {
+            "name": "登记人",
+            "noshow": true,
+            "code": "hei_key"
+        },
+        {
+            "name": "发送时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "type": "time",
+            "code": "sendtime"
+        },
+        {
+            "name": "登记人姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "出库单号",
+            "code": "code"
+        },
+        {
+            "name": "出库单号",
+            "noshow": true,
+            "code": "wwom_code"
+        },
+        {
+            "name": "出库方式",
+            "code": "type_name"
+        },
+        {
+            "name": "创建人",
+            "noshow": true,
+            "code": "create_hei_key"
+        },
+        {
+            "name": "创建人姓名",
+            "code": "create_hei_name"
+        },
+        {
+            "name": "创建人编号",
+            "code": "create_hei_code"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "code": "create_time"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "noshow": true,
+            "code": "wwom_create_time"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "出库时间",
+            "type": "time",
+            "noshow": true,
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "code": "outdate"
+        },
+        {
+            "name": "作业单号",
+            "noshow": true,
+            "code": "pwb_code"
+        },
+        {
+            "name": "销售订单",
+            "noshow": true,
+            "code": "som_code"
+        },
+        {
+            "name": "标签条码",
+            "noshow": true,
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "标签自定义条码",
+            "noshow": true,
+            "code": "tagcustomcode"
+        },
+        {
+            "name": "数量",
+            "noshow": true,
+            "code": "quantity"
+        },
+        {
+            "name": "仓位编号",
+            "noshow": true,
+            "code": "bls_code"
+        },
+        {
+            "name": "仓位名称",
+            "noshow": true,
+            "code": "bls_name"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款式名称",
+            "noshow": true,
+            "code": "psi_name"
+        },
+        {
+            "name": "款式编号",
+            "noshow": true,
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci_key"
+        },
+        {
+            "name": "颜色名字",
+            "noshow": true,
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "尺码名称",
+            "noshow": true,
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "noshow": true,
+            "code": "bpi_key"
+        },
+        {
+            "name": "部件名称",
+            "noshow": true,
+            "code": "bpi_name"
+        },
+        {
+            "name": "部件编号",
+            "noshow": true,
+            "code": "bpi_code"
+        },
+        {
+            "code": "rfid",
+            "noshow": true,
+            "name": "载具编号"
+        },
+        {
+            "code": "out_bls_key",
+            "noshow": true,
+            "name": "出货口"
+        },
+        {
+            "code": "out_bls_code",
+            "noshow": true,
+            "name": "出货口"
+        }
+    ],
+    "whOutboundMonitoring": [
+        {
+            "name": "出库单号",
+            "code": "code"
+        },
+        {
+            "name": "出库时间",
+            "type": "time",
+            "code": "outdate"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "MM-dd HH:mm:ss",
+            "code": "create_time"
+        },
+        {
+            "name": "出货口",
+            "code": "outshow"
+        },
+        {
+            "code": "out_bls_code",
+            "open": true,
+            "name": "出货口编号"
+        },
+        {
+            "code": "out_bls_name",
+            "name": "出货口名称"
+        },
+        {
+            "code": "rfid",
+            "name": "载具编号"
+        },
+        {
+            "code": "time",
+            "type": "time",
+            "name": "呼叫时间"
+        },
+        {
+            "code": "pti_tagcode",
+            "name": "标签号"
+        },
+        {
+            "name": "执行时间",
+            "type": "time",
+            "format": "MM-dd HH:mm:ss",
+            "code": "sendtime"
+        },
+        {
+            "name": "存储位置",
+            "code": "bls_code"
+        },
+        {
+            "name": "是否手动关闭",
+            "code": "isclose",
+            "type": "boolean",
+            "alignment": "center"
+        },
+        {
+            "name": "状态",
+            "width": "90",
+            "code": "state_name"
+        },
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_code"
+        },
+        {
+            "name": "款式",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "code": "bpi_name"
+        }
+    ],
+    "whTaskOut": [
+        {
+            "name": "发送时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "type": "time",
+            "code": "sendtime"
+        },
+        {
+            "name": "出库时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "Width": "190",
+            "code": "outdate"
+        },
+        {
+            "name": "数量",
+            "code": "quantity"
+        },
+        {
+            "code": "out_bls_code",
+            "name": "出货口"
+        },
+        {
+            "code": "rfid",
+            "name": "载具编号"
+        },
+        {
+            "name": "仓位编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "标签条码",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "出库单号",
+            "code": "wwom_code"
+        },
+        {
+            "name": "销售单号",
+            "code": "som_code"
+        },
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi_key"
+        },
+        {
+            "name": "款式编号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款式名称",
+            "code": "psi_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz_key"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "noshow": true,
+            "name": "颜色",
+            "code": "pci_key"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "noshow": true,
+            "name": "部件",
+            "code": "bpi_key"
+        },
+        {
+            "name": "部件编号",
+            "code": "bpi_code"
+        },
+        {
+            "name": "数量",
+            "alignment": "center",
+            "code": "num"
+        },
+        {
+            "name": "设置数量",
+            "code": "setnum"
+        },
+        {
+            "name": "库存类型",
+            "code": "inventory_type"
+        },
+        {
+            "name": "库存类型",
+            "code": "inventory_type_name"
+        },
+        {
+            "name": "出仓口",
+            "noshow": true,
+            "code": "out_infeed_key"
+        },
+        {
+            "name": "出仓口编号",
+            "code": "out_infeed_code"
+        },
+        {
+            "name": "出仓口名称",
+            "code": "out_infeed_name"
+        },
+        {
+            "name": "状态",
+            "alignment": "center",
+            "code": "state_name"
+        },
+        {
+            "name": "创建人",
+            "alignment": "center",
+            "noshow": true,
+            "code": "create_hei_key"
+        },
+        {
+            "name": "创建人姓名",
+            "alignment": "center",
+            "code": "create_hei_name"
+        },
+        {
+            "name": "创建人编号",
+            "alignment": "center",
+            "code": "create_hei_code"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "alignment": "center",
+            "format": "yyyy-MM-dd hh:mm:ss",
+            "code": "create_time"
+        }
+    ],
+    "wmsStockin": [
+        {
+            "code": "code",
+            "name": "入库单号"
+        },
+        {
+            "code": "type_name",
+            "name": "入库方式"
+        },
+        {
+            "code": "indate",
+            "name": "入库时间"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "code": "createtime"
+        },
+        {
+            "name": "状态",
+            "alignment": "center",
+            "code": "state_name"
+        },
+        {
+            "name": "仓位名称",
+            "noshow": true,
+            "code": "bls_name"
+        },
+        {
+            "name": "仓位编号",
+            "noshow": true,
+            "code": "bls_code"
+        },
+        {
+            "code": "carrierid",
+            "noshow": true,
+            "name": "载具编号"
+        },
+        {
+            "name": "标签条码",
+            "noshow": true,
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "工序编号",
+            "noshow": true,
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "noshow": true,
+            "code": "poi_name"
+        },
+        {
+            "name": "备注",
+            "noshow": true,
+            "code": "remark"
+        },
+        {
+            "name": "标签自定义编号",
+            "noshow": true,
+            "code": "customcode"
+        }
+    ],
+    "wmsStockout": [
+        {
+            "name": "出库单号",
+            "code": "code"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "code": "createtime"
+        },
+        {
+            "name": "仓位线名称",
+            "noshow": true,
+            "code": "lineName"
+        },
+        {
+            "name": "仓位名称",
+            "noshow": true,
+            "code": "bls_name"
+        },
+        {
+            "name": "仓位编号",
+            "noshow": true,
+            "code": "bls_code"
+        },
+        {
+            "code": "carrierid",
+            "noshow": true,
+            "name": "载具编号"
+        },
+        {
+            "name": "标签条码",
+            "noshow": true,
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "标签自定义编号",
+            "noshow": true,
+            "code": "customcode"
+        },
+        {
+            "name": "目的站编号",
+            "noshow": true,
+            "code": "out_bls_code"
+        },
+        {
+            "name": "目的站名称",
+            "noshow": true,
+            "code": "out_bls_name"
+        },
+        {
+            "name": "对应工序编号",
+            "noshow": true,
+            "code": "poi_code"
+        },
+        {
+            "name": "对应工序名称",
+            "noshow": true,
+            "code": "poi_name"
+        },
+        {
+            "name": "备注",
+            "noshow": true,
+            "code": "remark"
+        },
+        {
+            "name": "排序",
+            "noshow": true,
+            "code": "sort"
+        },
+        {
+            "name": "出仓时间",
+            "noshow": true,
+            "code": "outdate"
+        },
+        {
+            "name": "是否进站",
+            "noshow": true,
+            "code": "is_in"
+        },
+        {
+            "name": "订单编号",
+            "noshow": true,
+            "code": "pti_ordercode"
+        }
+    ],
+    "wmsStock": [
+        {
+            "name": "订单编号",
+            "code": "pti_ordercode"
+        },
+        {
+            "name": "仓位线名称",
+            "code": "bls_pname"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "标签号",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "载具编号",
+            "code": "carrierid"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "是否冻结",
+            "type": "boolean",
+            "code": "isfrozen"
+        },
+        {
+            "type": "time",
+            "name": "入库时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "code": "createtime"
+        },
+        {
+            "name": "计算隧道机时间",
+            "noshow": true,
+            "code": "caltime"
+        },
+        {
+            "name": "手动出库",
+            "noshow": true,
+            "code": "handleOut"
+        },
+        {
+            "code": "emptyData",
+            "noshow": true,
+            "name": "没有可出库的数据"
+        },
+        {
+            "code": "area",
+            "noshow": true,
+            "name": "库区"
+        },
+        {
+            "code": "maxDataNum",
+            "noshow": true,
+            "name": "当前最多可出库数量"
+        },
+        {
+            "code": "stockintime",
+            "noshow": true,
+            "name": "入库时间"
+        },
+        {
+            "code": "outTitle",
+            "noshow": true,
+            "name": "出库单"
+        },
+        {
+            "code": "blsInfo",
+            "noshow": true,
+            "name": "站位信息"
+        },
+        {
+            "code": "autoSelectPort",
+            "noshow": true,
+            "name": "自动选择出货口"
+        },
+        {
+            "code": "batchSelectPort",
+            "noshow": true,
+            "name": "批量选择出货口"
+        },
+        {
+            "code": "outPort",
+            "noshow": true,
+            "name": "出货口"
+        },
+        {
+            "code": "frozenWarn",
+            "noshow": true,
+            "name": "已冻结记录不允许再次出库"
+        },
+        {
+            "code": "inStartTime",
+            "noshow": true,
+            "name": "入库开始时间"
+        },
+        {
+            "code": "inEndTime",
+            "noshow": true,
+            "name": "入库结束时间"
+        },
+        {
+            "code": "quantity",
+            "noshow": true,
+            "name": "数量"
+        },
+        {
+            "code": "calresult",
+            "noshow": true,
+            "name": "计算结果"
+        },
+        {
+            "code": "pci_name",
+            "name": "颜色名称"
+        },
+        {
+            "code": "pci_code",
+            "name": "颜色编号"
+        },
+        {
+            "code": "psi_code",
+            "name": "款号"
+        },
+        {
+            "code": "psi_name",
+            "name": "款名"
+        },
+        {
+            "code": "psi_key",
+            "noshow": true,
+            "name": "款式"
+        },
+        {
+            "code": "psz_name",
+            "name": "尺码名称"
+        },
+        {
+            "code": "psz_code",
+            "name": "尺码编号"
+        },
+        {
+            "code": "updatetime",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "name": "更新时间"
+        },
+        {
+            "code": "currenttypename",
+            "name": "载具位置"
+        }
+    ],
+    "wmsInventorySummary": [
+        {
+            "code": "area",
+            "noshow": true,
+            "name": "库区"
+        },
+        {
+            "code": "pci_key",
+            "name": "颜色"
+        },
+        {
+            "code": "psi_key",
+            "name": "款式"
+        },
+        {
+            "code": "psz_name",
+            "name": "尺码"
+        }
+    ],
+    "wmsAutooutscheme": [
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "是否整箱出",
+            "type": "boolean",
+            "code": "isbox"
+        },
+        {
+            "name": "每箱数量",
+            "code": "box_number"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "name": "描述",
+            "code": "description",
+            "alignment": "left"
+        },
+        {
+            "type": "time",
+            "name": "创建日期",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "code": "createtime"
+        },
+        {
+            "name": "条件",
+            "code": "condition",
+            "noshow": true,
+            "alignment": "left"
+        },
+        {
+            "code": "targetStation",
+            "noshow": true,
+            "name": "目的站位"
+        },
+        {
+            "code": "blsName",
+            "noshow": true,
+            "name": "站位名称"
+        },
+        {
+            "code": "blsCode",
+            "noshow": true,
+            "name": "站位编号"
+        }
+    ],
+    "wmsOutcontrol": [
+        {
+            "name": "站位线",
+            "code": "lineCode"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "出仓任务订单号",
+            "code": "ordercode"
+        },
+        {
+            "name": "出库单",
+            "code": "outorder"
+        },
+        {
+            "name": "领料单号",
+            "code": "pickingordercode"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "创建时间",
+            "code": "createtime"
+        },
+        {
+            "name": "调入仓库",
+            "code": "whincode"
+        },
+        {
+            "name": "调出仓库",
+            "code": "whoutcode"
+        },
+        {
+            "name": "条码",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "出货口编号",
+            "code": "out_bls_code"
+        },
+        {
+            "name": "出货口名称",
+            "code": "out_bls_name"
+        },
+        {
+            "name": "站位编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "code": "quantity",
+            "name": "数量"
+        },
+        {
+            "code": "outControl",
+            "name": "出库控制"
+        },
+        {
+            "name": "方案",
+            "code": "scheme"
+        },
+        {
+            "name": "手动出库",
+            "code": "handleOut"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "预计出库时间",
+            "code": "outtime"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "出库方案",
+            "code": "wwor_name"
+        },
+        {
+            "code": "statusChangePs",
+            "noshow": true,
+            "name": "可点击下方状态修改，处于[关闭、完成]状态则不再允许修改。 "
+        },
+        {
+            "code": "statusChangeWarn",
+            "noshow": true,
+            "name": "处于[关闭、完成]状态不允许修改"
+        },
+        {
+            "code": "bls_code",
+            "noshow": true,
+            "name": "站位编号"
+        },
+        {
+            "code": "bls_name",
+            "noshow": true,
+            "name": "站位名称"
+        }
+    ],
+    "wmsOuttask": [
+        {
+            "name": "站位线",
+            "code": "lineCode"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "类型",
+            "code": "type_name"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "出仓任务订单号",
+            "code": "ordercode"
+        },
+        {
+            "name": "出库单",
+            "code": "outorder"
+        },
+        {
+            "name": "领料单号",
+            "code": "pickingordercode"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "创建时间",
+            "code": "createtime"
+        },
+        {
+            "name": "调入仓库",
+            "code": "whincode"
+        },
+        {
+            "name": "调出仓库",
+            "code": "whoutcode"
+        },
+        {
+            "name": "条码",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "出货口编号",
+            "code": "out_bls_code"
+        },
+        {
+            "name": "出货口名称",
+            "code": "out_bls_name"
+        },
+        {
+            "name": "站位编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "code": "quantity",
+            "name": "数量"
+        },
+        {
+            "code": "outControl",
+            "name": "出库控制"
+        },
+        {
+            "name": "方案",
+            "code": "scheme"
+        },
+        {
+            "name": "手动出库",
+            "code": "handleOut"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "预计出库时间",
+            "code": "outtime"
+        },
+        {
+            "code": "inboundtime",
+            "name": "入库时间间隔(m)"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "code": "statusChangePs",
+            "noshow": true,
+            "name": "可点击下方状态修改，处于[关闭、完成]状态则不再允许修改。 "
+        },
+        {
+            "code": "statusChangeWarn",
+            "noshow": true,
+            "name": "处于[关闭、完成]状态不允许修改"
+        }
+    ],
+    "wmsOutboundplan": [
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "类型",
+            "code": "type_name"
+        },
+        {
+            "name": "数量",
+            "code": "quantity"
+        },
+        {
+            "name": "计划开始时间",
+            "type": "time",
+            "alignment": "center",
+            "format": "yyyy-MM-dd",
+            "code": "start_time"
+        },
+        {
+            "name": "实际开始时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "code": "production_start_time"
+        },
+        {
+            "code": "inboundtime",
+            "name": "入库时间间隔(m)"
+        },
+        {
+            "name": "实际完成时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "code": "complete_time"
+        },
+        {
+            "name": "计划完成时间",
+            "type": "time",
+            "alignment": "center",
+            "format": "yyyy-MM-dd",
+            "code": "requestdeliverydate"
+        },
+        {
+            "name": "修改时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "code": "updatetime"
+        },
+        {
+            "name": "创建人姓名",
+            "code": "create_hei_name"
+        },
+        {
+            "name": "创建日期",
+            "code": "createtime"
+        },
+        {
+            "name": "级别",
+            "code": "level_name"
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "出库方案",
+            "noshow": true,
+            "code": "plan"
+        },
+        {
+            "name": "出库目的站编号",
+            "noshow": true,
+            "code": "out_infeed_code"
+        },
+        {
+            "name": "出库目的站名称",
+            "noshow": true,
+            "code": "out_infeed_name"
+        }
+    ],
+    "wmsPackingsolution": [
+        {
+            "name": "包装方案编号",
+            "code": "key",
+            "width": "160",
+            "extend": true
+        },
+        {
+            "name": "总件数",
+            "code": "quantity"
+        },
+        {
+            "name": "入库数",
+            "code": "store_quantity"
+        },
+        {
+            "name": "上裁进度",
+            "code": "online_quantity",
+            "width": "140",
+            "extend": true
+        },
+        {
+            "name": "已齐箱数/总箱数",
+            "code": "box_quantity",
+            "width": "180",
+            "extend": true
+        },
+        {
+            "name": "已核箱数",
+            "code": "packaging_box_quantity"
+        },
+        {
+            "name": "包装交期",
+            "code": "baozhuangjieshu",
+            "type": "time",
+            "format": "yyyy-MM-dd",
+            "width": "160"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "半成品套体",
+            "code": "banchengpintaoti"
+        },
+        {
+            "name": "创建时间",
+            "code": "create_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "首件上线时间",
+            "code": "first_online_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "已全部上线时间",
+            "code": "all_online_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "分拣开始时间",
+            "code": "sorting_start_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "包装开始时间",
+            "code": "check_start_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "完成时间",
+            "code": "complete_time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "width": "180"
+        },
+        {
+            "name": "状态",
+            "code": "state_name",
+            "extend": true
+        },
+        {
+            "name": "是否手动出库",
+            "code": "is_make_out",
+            "type": "boolean"
+        },
+        {
+            "name": "是否可出",
+            "code": "is_can_out",
+            "type": "boolean"
+        },
+        {
+            "name": "级别",
+            "code": "level_name",
+            "extend": true
+        },
+        {
+            "name": "衣服条码",
+            "code": "tiaoma",
+            "noshow": true
+        },
+        {
+            "name": "当前位置编号",
+            "code": "current_bls_code",
+            "noshow": true
+        },
+        {
+            "name": "目的站位编号",
+            "code": "destination_bls_code",
+            "noshow": true
+        },
+        {
+            "name": "载具号",
+            "code": "carrierid",
+            "noshow": true
+        },
+        {
+            "name": "标签号",
+            "code": "pti_tagcode",
+            "noshow": true
+        },
+        {
+            "name": "箱号",
+            "code": "expr1",
+            "noshow": true
+        },
+        {
+            "name": "套号",
+            "code": "taohao",
+            "noshow": true
+        },
+        {
+            "name": "包装方案编号",
+            "code": "zhuangxinfenzu",
+            "noshow": true
+        },
+        {
+            "name": "订单编号",
+            "code": "htbn",
+            "noshow": true
+        },
+        {
+            "name": "单位",
+            "code": "zzkh",
+            "noshow": true
+        },
+        {
+            "name": "订单明细",
+            "code": "dingdanmingxiid",
+            "noshow": true
+        },
+        {
+            "name": "品名",
+            "code": "pinming",
+            "noshow": true
+        },
+        {
+            "name": "规格",
+            "code": "guige",
+            "noshow": true
+        },
+        {
+            "name": "批号",
+            "code": "pihao",
+            "noshow": true
+        },
+        {
+            "name": "编号",
+            "code": "bianhao",
+            "noshow": true
+        },
+        {
+            "name": "姓名",
+            "code": "xingming",
+            "noshow": true
+        },
+        {
+            "name": "部门名称",
+            "code": "bumenquancheng",
+            "noshow": true
+        },
+        {
+            "name": "箱型",
+            "code": "xiangxing",
+            "noshow": true
+        },
+        {
+            "name": "型号",
+            "code": "xianghao",
+            "noshow": true
+        },
+        {
+            "name": "包装线号",
+            "code": "autobaozhuangline",
+            "noshow": true
+        },
+        {
+            "name": "号型",
+            "code": "haoxing",
+            "noshow": true
+        },
+        {
+            "name": "成品货号",
+            "code": "chengpinhuohao",
+            "noshow": true
+        },
+        {
+            "name": "上线时间",
+            "code": "online_time",
+            "noshow": true
+        },
+        {
+            "name": "分拣结束时间",
+            "code": "sorting_end_time",
+            "noshow": true
+        },
+        {
+            "name": "包装核对时间",
+            "code": "check_time",
+            "type": "time",
+            "format": "yyyy-MM-dd",
+            "noshow": true
+        },
+        {
+            "name": "打印时间",
+            "code": "print_time",
+            "noshow": true
+        },
+        {
+            "name": "操作",
+            "code": "operate",
+            "noshow": true
+        }
+    ],
+    "wmsPriceinfo": [
+        {
+            "name": "品名",
+            "code": "pinming"
+        },
+        {
+            "name": "箱型",
+            "code": "xiangxing"
+        },
+        {
+            "name": "标准工价",
+            "code": "wages",
+            "extend": true
+        },
+        {
+            "name": "创建时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "code": "create_time"
+        }
+    ],
+    "wmsSkuprocess": [
+        {
+            "name": "字段值",
+            "code": "blsd_name"
+        },
+        {
+            "name": "工序流",
+            "code": "popm_name"
+        },
+        {
+            "name": "创建时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "code": "create_time"
+        }
+    ],
+    "wmsAbnormaleventreport": [
+        {
+            "name": "载具编号",
+            "code": "rfid",
+            "width": "160"
+        },
+        {
+            "name": "标签号",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "标签自定义条码",
+            "code": "pti_tagcustomcode"
+        },
+        {
+            "name": "事件代码",
+            "code": "ste_code",
+            "width": "140"
+        },
+        {
+            "name": "事件名称",
+            "code": "ste_name",
+            "width": "140"
+        },
+        {
+            "name": "站位",
+            "code": "bls_code"
+        },
+        {
+            "name": "备注",
+            "code": "remark",
+            "width": "120"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_code"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "pci_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "时间",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "code": "createdate"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        }
+    ],
+    "wmsInventoryclearancemanagement": [
+        {
+            "name": "订单编号",
+            "code": "pti_ordercode"
+        },
+        {
+            "name": "仓位线名称",
+            "code": "bls_pname"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "标签号",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "载具编号",
+            "code": "carrierid"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "是否冻结",
+            "type": "boolean",
+            "code": "isfrozen"
+        },
+        {
+            "type": "time",
+            "name": "入库时间",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "alignment": "center",
+            "width": "190",
+            "code": "createtime"
+        },
+        {
+            "name": "计算隧道机时间",
+            "noshow": true,
+            "code": "caltime"
+        },
+        {
+            "name": "手动出库",
+            "noshow": true,
+            "code": "handleOut"
+        },
+        {
+            "code": "emptyData",
+            "noshow": true,
+            "name": "没有可出库的数据"
+        },
+        {
+            "code": "area",
+            "noshow": true,
+            "name": "库区"
+        },
+        {
+            "code": "maxDataNum",
+            "noshow": true,
+            "name": "当前最多可出库数量"
+        },
+        {
+            "code": "stockintime",
+            "noshow": true,
+            "name": "入库时间"
+        },
+        {
+            "code": "outTitle",
+            "noshow": true,
+            "name": "出库单"
+        },
+        {
+            "code": "blsInfo",
+            "noshow": true,
+            "name": "站位信息"
+        },
+        {
+            "code": "autoSelectPort",
+            "noshow": true,
+            "name": "自动选择出货口"
+        },
+        {
+            "code": "batchSelectPort",
+            "noshow": true,
+            "name": "批量选择出货口"
+        },
+        {
+            "code": "outPort",
+            "noshow": true,
+            "name": "出货口"
+        },
+        {
+            "code": "frozenWarn",
+            "noshow": true,
+            "name": "已冻结记录不允许再次出库"
+        },
+        {
+            "code": "inStartTime",
+            "noshow": true,
+            "name": "入库开始时间"
+        },
+        {
+            "code": "inEndTime",
+            "noshow": true,
+            "name": "入库结束时间"
+        },
+        {
+            "code": "quantity",
+            "noshow": true,
+            "name": "数量"
+        },
+        {
+            "code": "calresult",
+            "noshow": true,
+            "name": "计算结果"
+        },
+        {
+            "code": "pci_name",
+            "name": "颜色名称"
+        },
+        {
+            "code": "pci_code",
+            "name": "颜色编号"
+        },
+        {
+            "code": "psi_code",
+            "name": "款号"
+        },
+        {
+            "code": "psi_name",
+            "name": "款名"
+        },
+        {
+            "code": "psi_key",
+            "noshow": true,
+            "name": "款式"
+        },
+        {
+            "code": "psz_name",
+            "name": "尺码名称"
+        },
+        {
+            "code": "psz_code",
+            "name": "尺码编号"
+        },
+        {
+            "code": "updatetime",
+            "type": "time",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "name": "更新时间"
+        },
+        {
+            "code": "currenttypename",
+            "name": "载具位置"
+        }
+    ],
+    "capacity": [
+        {
+            "name": "站位编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "库区容量",
+            "code": "title"
+        },
+        {
+            "name": "库区容量监控",
+            "code": "look"
+        },
+        {
+            "name": "当前线",
+            "code": "currentLine"
+        },
+        {
+            "name": "总容量",
+            "code": "total"
+        },
+        {
+            "name": "已占用容量",
+            "code": "used"
+        },
+        {
+            "name": "剩余容量",
+            "code": "surplus"
+        },
+        {
+            "name": "占用率",
+            "code": "usedRate"
+        }
+    ],
+    "statisticsIn": [
+        {
+            "name": "订单编号",
+            "code": "pti_ordercode"
+        },
+        {
+            "code": "carrierid",
+            "name": "载具编号"
+        },
+        {
+            "name": "标签自定义编号",
+            "code": "pti_customcode"
+        },
+        {
+            "name": "载具最后更新时间",
+            "code": "pcr_updatetime"
+        },
+        {
+            "name": "载具入库时间",
+            "code": "indate"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "站位编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "站位名称",
+            "code": "bls_name"
+        },
+        {
+            "name": "站位线",
+            "code": "lineCode"
+        },
+        {
+            "name": "条码",
+            "code": "pti_tagcode"
+        },
+        {
+            "code": "dateRange",
+            "name": "起止日期"
+        }
+    ],
+    "statisticsOut": [
+        {
+            "name": "标签自定义编号",
+            "code": "labelCustomNo"
+        },
+        {
+            "name": "载具最后更新时间",
+            "code": "carrierUpdateTime"
+        },
+        {
+            "name": "载具出库时间",
+            "code": "carrierOutTime"
+        }
+    ],
+    "Inoutsummaryreport": [
+        {
+            "name": "库存数量",
+            "code": "onnum"
+        },
+        {
+            "name": "入仓数量",
+            "code": "innum"
+        },
+        {
+            "name": "出仓数量",
+            "code": "outnum"
+        },
+        {
+            "name": "当前统计",
+            "code": "currentstatistics"
+        },
+        {
+            "name": "日统计",
+            "code": "daystatistics"
+        },
+        {
+            "name": "月统计",
+            "code": "monthstatistics"
+        }
+    ],
+    "structureRuleScheme": [
+        {
+            "name": "方案编号",
+            "width": "200",
+            "code": "code"
+        },
+        {
+            "name": "方案名称",
+            "width": "200",
+            "code": "name"
+        },
+        {
+            "name": "值",
+            "noshow": true,
+            "code": "value"
+        },
+        {
+            "name": "规则",
+            "noshow": true,
+            "code": "blr_key"
+        },
+        {
+            "name": "条件",
+            "noshow": true,
+            "code": "blr_key"
+        },
+        {
+            "name": "条件限制",
+            "noshow": true,
+            "code": "comparetype"
+        },
+        {
+            "name": "布局结构编号",
+            "noshow": true,
+            "code": "bls_code"
+        },
+        {
+            "name": "布局结构名称",
+            "noshow": true,
+            "code": "bls_name"
+        },
+        {
+            "name": "站位",
+            "noshow": true,
+            "code": "station"
+        },
+        {
+            "name": "进轨",
+            "noshow": true,
+            "code": "Railentry"
+        }
+    ],
+    "layoutFactory": [
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "描述",
+            "code": "description"
+        }
+    ],
+    "layoutProgramme": [
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "实体的字段",
+            "code": "field"
+        },
+        {
+            "name": "分类",
+            "code": "group"
+        },
+        {
+            "name": "禁用",
+            "code": "isdisabled",
+            "align": "center",
+            "width": "100px",
+            "tpl": "forbid"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "align": "center",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "virtualLayoutManagement": [
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "docLibrary": [
+        {
+            "code": "checked"
+        },
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "原始文件名",
+            "code": "originalname"
+        },
+        {
+            "name": "文件大小（b）",
+            "code": "size",
+            "width": "200px"
+        },
+        {
+            "name": "创建人",
+            "code": "create_hei_name",
+            "width": "200px"
+        },
+        {
+            "name": "创建时间",
+            "code": "create_time",
+            "width": "200px"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "processDifficulty": [
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "难度系数",
+            "code": "coefficient"
+        }
+    ],
+    "fabricDifficulty": [
+        {
+            "code": "checked"
+        },
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "难度等级",
+            "code": "level"
+        },
+        {
+            "name": "难度系数",
+            "code": "coefficient",
+            "tpl": "degreeTpl"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "sectionManagement": [
+        {
+            "code": "checked"
+        },
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "排序",
+            "code": "sort"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "productionEquipment": [
+        {
+            "code": "checked"
+        },
+        {
+            "name": "序号",
+            "code": "no",
+            "width": "70px",
+            "align": "center",
+            "left": true,
+            "tpl": "noTpl"
+        },
+        {
+            "name": "编号",
+            "code": "code"
+        },
+        {
+            "name": "名称",
+            "code": "name"
+        },
+        {
+            "name": "品牌",
+            "code": "brand"
+        },
+        {
+            "name": "规格",
+            "code": "specification"
+        },
+        {
+            "name": "维修次数",
+            "code": "repaircount",
+            "width": "120px"
+        },
+        {
+            "name": "状态",
+            "code": "state_name"
+        },
+        {
+            "name": "购入日期",
+            "code": "purchasedate",
+            "tpl": "timeTpl"
+        },
+        {
+            "name": "报废日期",
+            "code": "planretirementdate",
+            "tpl": "timeTpl2"
+        },
+        {
+            "name": "厂家",
+            "code": "suppliername"
+        },
+        {
+            "name": "描述",
+            "code": "description"
+        },
+        {
+            "name": "操作",
+            "code": "operation",
+            "width": "150px",
+            "right": true,
+            "tpl": "operationTpl"
+        }
+    ],
+    "reportHangersrecord": [
+        {
+            "name": "标签条码",
+            "Width": "135",
+            "code": "pti_tagcode"
+        },
+        {
+            "name": "部件",
+            "code": "bpi",
+            "delimiter": "(_)",
+            "field": [
+                "bpi_name",
+                "bpi_code"
+            ]
+        },
+        {
+            "name": "载具编号",
+            "code": "rfid"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_code"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "员工姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "位置编号",
+            "code": "bls_code"
+        },
+        {
+            "name": "结构类型",
+            "code": "bls_blst_name"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name",
+            "Width": "300",
+            "delimiter": "(_)",
+            "field": [
+                "poi_code",
+                "poi_name"
+            ]
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "事件名称",
+            "code": "ste_name"
+        },
+        {
+            "name": "记产量",
+            "code": "isrecordoutput",
+            "type": "defaultboolean"
+        },
+        {
+            "name": "记完工",
+            "code": "iscompleted",
+            "type": "defaultboolean"
+        },
+        {
+            "name": "创建日期",
+            "code": "createdate",
+            "width": "120",
+            "format": "yyyy-MM-dd HH:mm:ss",
+            "type": "time"
+        },
+        {
+            "name": "开始日期",
+            "code": "createdate_start",
+            "noshow": true
+        },
+        {
+            "name": "结束日期",
+            "code": "createdate_end",
+            "noshow": true
+        }
+    ],
+    "reportOperationdetails": [
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_code"
+        },
+        {
+            "name": "员工工号",
+            "code": "hei_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "所属部门",
+            "code": "hoi_name"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name",
+            "alignment": "left"
+        },
+        {
+            "name": "工序",
+            "code": "poi",
+            "alignment": "left"
+        },
+        {
+            "name": "日期",
+            "code": "date",
+            "type": "time",
+            "format": "yyyy-MM-dd"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "code": "bpi",
+            "delimiter": "(_)",
+            "field": [
+                "bpi_name",
+                "bpi_code"
+            ]
+        },
+        {
+            "name": "备注",
+            "code": "remark"
+        },
+        {
+            "name": "开始时间",
+            "noshow": true,
+            "type": "time",
+            "code": "start_date"
+        },
+        {
+            "name": "结束时间",
+            "noshow": true,
+            "type": "time",
+            "code": "end_date"
+        },
+        {
+            "name": "产量",
+            "disabled": true,
+            "code": "quantity"
+        }
+    ],
+    "reportQualitytracking": [
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "标签条码",
+            "code": "tagcode"
+        },
+        {
+            "name": "衣架号",
+            "noshow": true,
+            "code": "pcr_id"
+        },
+        {
+            "name": "发起员工(工号)",
+            "code": "hei_back",
+            "noshow": true,
+            "delimiter": "(_)",
+            "field": [
+                "hei_name_back",
+                "hei_code_back"
+            ]
+        },
+        {
+            "name": "发起员工姓名",
+            "code": "hei_name_back"
+        },
+        {
+            "name": "发起员工编号",
+            "code": "hei_code_back"
+        },
+        {
+            "name": "发起工序",
+            "code": "poi_name_back"
+        },
+        {
+            "name": "发起日期",
+            "code": "date_back",
+            "type": "time"
+        },
+        {
+            "name": "发起生产线",
+            "noshow": true,
+            "code": "line_Back"
+        },
+        {
+            "name": "发起生产线名称",
+            "code": "bli_name_back"
+        },
+        {
+            "name": "发起生产线编号",
+            "code": "bli_code_Back"
+        },
+        {
+            "name": "发起站位名称",
+            "code": "bsm_name_Back"
+        },
+        {
+            "name": "发起站位编号",
+            "code": "bsm_code_Back"
+        },
+        {
+            "name": "责任员工(工号)",
+            "code": "hei_receive",
+            "delimiter": "(_)",
+            "noshow": true,
+            "field": [
+                "hei_name_receive",
+                "hei_code_receive"
+            ]
+        },
+        {
+            "name": "责任员工姓名",
+            "code": "hei_name_receive"
+        },
+        {
+            "name": "责任员工编号",
+            "code": "hei_code_receive"
+        },
+        {
+            "name": "责任工序",
+            "code": "poi_name_receive"
+        },
+        {
+            "name": "责任生产线",
+            "noshow": true,
+            "code": "line_Receive"
+        },
+        {
+            "name": "责任生产线名称",
+            "code": "bli_name_Receive"
+        },
+        {
+            "name": "责任生产线编号",
+            "code": "bli_code_Receive"
+        },
+        {
+            "name": "责任站位名称",
+            "code": "bsm_name_Receive"
+        },
+        {
+            "name": "责任站位编号",
+            "code": "bsm_code_Receive"
+        },
+        {
+            "name": "维修员工(工号)",
+            "code": "hei_repair",
+            "delimiter": "(_)",
+            "noshow": true,
+            "field": [
+                "hei_name_repair",
+                "hei_code_repair"
+            ]
+        },
+        {
+            "name": "维修员工姓名",
+            "code": "hei_name_repair"
+        },
+        {
+            "name": "维修员工编号",
+            "code": "hei_code_repair"
+        },
+        {
+            "name": "维修工序",
+            "code": "poi_name_repair"
+        },
+        {
+            "name": "维修生产线",
+            "noshow": true,
+            "code": "line_repair"
+        },
+        {
+            "name": "维修生产线名称",
+            "code": "bli_name_repair"
+        },
+        {
+            "name": "维修生产线编号",
+            "code": "bli_code_repair"
+        },
+        {
+            "name": "维修站位名称",
+            "code": "bsm_name_repair"
+        },
+        {
+            "name": "维修站位编号",
+            "code": "bsm_code_repair"
+        },
+        {
+            "name": "维修完成时间",
+            "code": "poi_key_repair_time",
+            "type": "time"
+        },
+        {
+            "name": "复检员工(工号)",
+            "code": "hei_recheck",
+            "delimiter": "(_)",
+            "noshow": true,
+            "field": [
+                "hei_name_recheck",
+                "hei_code_recheck"
+            ]
+        },
+        {
+            "name": "复检员工姓名",
+            "code": "hei_name_recheck"
+        },
+        {
+            "name": "复检员工编号",
+            "code": "hei_code_recheck"
+        },
+        {
+            "name": "复检工序",
+            "code": "poi_name_recheck"
+        },
+        {
+            "name": "复检时间",
+            "code": "poi_key_recheck_time",
+            "type": "time"
+        },
+        {
+            "name": "复检生产线",
+            "noshow": true,
+            "code": "line_recheck"
+        },
+        {
+            "name": "复检生产线名称",
+            "code": "bli_name_recheck"
+        },
+        {
+            "name": "复检生产线编号",
+            "code": "bli_code_recheck"
+        },
+        {
+            "name": "复检站位名称",
+            "code": "bsm_name_recheck"
+        },
+        {
+            "name": "复检站位编号",
+            "code": "bsm_code_recheck"
+        },
+        {
+            "name": "数量",
+            "alignment": "center",
+            "disabled": true,
+            "code": "bindquantity"
+        },
+        {
+            "name": "质检原因项",
+            "code": "bqci_name"
+        },
+        {
+            "name": "最终处理方法",
+            "alignment": "center",
+            "noshow": true,
+            "code": "handlemethodname"
+        },
+        {
+            "name": "质检人",
+            "noshow": true,
+            "code": "back"
+        },
+        {
+            "name": "责任人",
+            "noshow": true,
+            "code": "receive"
+        },
+        {
+            "name": "维修人",
+            "noshow": true,
+            "code": "repair"
+        },
+        {
+            "name": "复检人",
+            "noshow": true,
+            "code": "recheck"
+        },
+        {
+            "name": "开始时间",
+            "noshow": true,
+            "code": "date_back_start"
+        },
+        {
+            "name": "结束时间",
+            "noshow": true,
+            "code": "date_back_end"
+        }
+    ],
+    "reportSalaryschedule": [
+        {
+            "name": "员工工号",
+            "code": "hei_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "员工所属部门",
+            "code": "hoi_name"
+        },
+        {
+            "name": "销售单号",
+            "code": "som_code"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "机器类型号",
+            "code": "dmdi_name"
+        },
+        {
+            "name": "销售订单",
+            "code": "som_key"
+        },
+        {
+            "name": "作业单号",
+            "noshow": true,
+            "code": "pwb_key"
+        },
+        {
+            "name": "开始时间",
+            "code": "start_date"
+        },
+        {
+            "name": "结束时间",
+            "code": "end_date"
+        },
+        {
+            "name": "标准工价",
+            "type": "number",
+            "code": "poi_standard_wages"
+        },
+        {
+            "name": "计件工资",
+            "type": "number",
+            "code": "piecerate"
+        },
+        {
+            "name": "产量",
+            "type": "number",
+            "disabled": true,
+            "code": "quantity"
+        }
+    ],
+    "reportStyledata": [
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "部件",
+            "code": "bpi_name",
+            "delimiter": "[_]",
+            "field": [
+                "bpi_name",
+                "bpi_code"
+            ]
+        },
+        {
+            "name": "日期",
+            "code": "date",
+            "type": "time",
+            "format": "yyyy-MM-dd"
+        },
+        {
+            "name": "开始时间",
+            "noshow": true,
+            "code": "start_date"
+        },
+        {
+            "name": "结束时间",
+            "noshow": true,
+            "code": "end_date"
+        },
+        {
+            "name": "产量",
+            "disabled": true,
+            "code": "quantity"
+        }
+    ],
+    "reportYield": [
+        {
+            "name": "员工部门",
+            "code": "hoi_name"
+        },
+        {
+            "name": "员工编号",
+            "code": "hei_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "生产线",
+            "code": "bli_name"
+        },
+        {
+            "name": "站位",
+            "code": "bsm_code"
+        },
+        {
+            "name": "作业单",
+            "code": "pwb_code"
+        },
+        {
+            "name": "订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "code": "bpi_name"
+        },
+        {
+            "name": "工序",
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "标准工时(s)",
+            "code": "standardtime"
+        },
+        {
+            "name": "标准工价(￥)",
+            "code": "poi_standard_wages"
+        },
+        {
+            "name": "实际工时(s)",
+            "code": "tvwh"
+        },
+        {
+            "name": "实际总耗时(s)",
+            "code": "totaltimeconsuming"
+        },
+        {
+            "name": "效率(%)",
+            "code": "efficiency"
+        },
+        {
+            "name": "日期",
+            "code": "date",
+            "type": "time"
+        },
+        {
+            "name": "员工所属部门",
+            "noshow": true,
+            "code": "org"
+        },
+        {
+            "name": "开始时间",
+            "noshow": true,
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "start_date"
+        },
+        {
+            "name": "结束时间",
+            "noshow": true,
+            "format": "yyyy-MM-dd",
+            "type": "time",
+            "code": "end_date"
+        },
+        {
+            "name": "计件工资",
+            "type": "number",
+            "code": "pieceworkwage"
+        },
+        {
+            "name": "产量(件)",
+            "disabled": true,
+            "code": "quantity"
+        }
+    ],
+    "reportInventoryStatistics": [
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "noshow": true,
+            "code": "bpi"
+        },
+        {
+            "name": "部件编号",
+            "code": "bpi_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "bpi_name"
+        },
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "销售订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "库存类型",
+            "code": "type_name"
+        },
+        {
+            "name": "开始日期",
+            "code": "start_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "结束日期",
+            "code": "end_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "库存数量",
+            "disabled": true,
+            "code": "quantity"
+        }
+    ],
+    "reportReworkStatistics": [
+        {
+            "name": "组别",
+            "code": "hoi_name"
+        },
+        {
+            "name": "员工(工号)",
+            "code": "hei_repair",
+            "noshow": true,
+            "delimiter": "(_)",
+            "field": [
+                "hei_name",
+                "hei_code"
+            ]
+        },
+        {
+            "name": "员工编号",
+            "code": "hei_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "hei_name"
+        },
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色",
+            "code": "pci_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "尺码",
+            "code": "psz_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "工序",
+            "noshow": true,
+            "code": "poi"
+        },
+        {
+            "name": "工序编号",
+            "code": "poi_code"
+        },
+        {
+            "name": "工序名称",
+            "code": "poi_name"
+        },
+        {
+            "name": "开始日期",
+            "code": "start_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "结束日期",
+            "code": "end_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "返工数量",
+            "disabled": true,
+            "code": "num"
+        }
+    ],
+    "wmsCountingdemand": [
+        {
+            "name": "日期",
+            "type": "time",
+            "format": "yyyy-MM-dd",
+            "code": "date"
+        },
+        {
+            "name": "款式名",
+            "code": "psi_name"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色名",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名",
+            "code": "psz_name"
+        },
+        {
+            "name": "数量",
+            "code": "count"
+        },
+        {
+            "name": "开始时间",
+            "noshow": true,
+            "code": "starttime"
+        },
+        {
+            "name": "结束时间",
+            "noshow": true,
+            "code": "endtime"
+        },
+        {
+            "name": "作业单号",
+            "noshow": true,
+            "code": "pwb_code"
+        }        
+    ]
+}

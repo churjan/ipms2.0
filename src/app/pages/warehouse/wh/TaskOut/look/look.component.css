@@ -1,0 +1,25 @@
+.cont_title {
+  /* width: calc(100% - 20px); */
+  /* margin: 0 auto; */
+  /* height: 16px; */
+  color: #1890ff;
+  /* font-size: 16px; */
+}
+.see_cont {
+  width: calc(100% - 20px);
+  margin: 20px auto 0 auto;
+  font-size: 15px;
+}
+.see_cont_left {
+  float: left;
+  width: calc(100% - 6px);
+  height: 545px;
+  transition: all 0.5s;
+}
+
+.see_cont_text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #777;
+}

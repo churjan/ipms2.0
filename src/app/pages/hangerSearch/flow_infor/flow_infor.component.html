@@ -1,0 +1,24 @@
+
+<nz-table #colSpanTable [nzData]="historylist" nzBordered nzTableLayout="fixed"
+  [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small"
+  [nzScroll]="{ x:'100%', y: 'calc(100% - 40px)' }">
+  <thead>
+    <tr>
+      <th *ngFor="let columns of modular.historylist;let i=index;"
+        [nzAlign]="columns.nzAlign?columns.nzAlign:'left'"
+        [nzEllipsis]="true" nz-tooltip
+        [nzWidth]="columns.width?columns.width:'auto'"
+        nzTooltipTitle="{{('hanger.'+columns.coums)|i18n}}">{{('hanger.'+columns.coums)|i18n}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of colSpanTable.data; index as i">
+      <td *ngFor="let columns of modular.historylist;let i=index;" nz-tooltip
+        nzTooltipTitle="{{data[print(columns.coums)]}}"
+        [nzWidth]="columns.width?columns.width:'auto'"
+        [nzAlign]="columns.nzAlign?columns.nzAlign:'left'" [nzEllipsis]="true">
+        {{columns.format?(
+        toString(data[print(columns.coums)],data,columns)|date:columns.format):toString(data[print(columns.coums)],data,columns)}}</td>
+    </tr>
+  </tbody>
+</nz-table>

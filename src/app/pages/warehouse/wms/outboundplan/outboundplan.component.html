@@ -1,0 +1,18 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="wmsOutboundplan.name" [columns]="columns" [modular]="modular" [fields]="field"
+    [lastColumnTpl]="operationTpl"></crud2>
+<!-- 行内操作按钮 -->
+<ng-template #operationTpl let-item="record">
+    <!-- <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="item.state" name="class"
+        DataFiled="code" [other]="{pcode:'WarehouseOutboundPlanRelationStateEnum'}" datatype="getlist" url="classdata"
+        [isshow]="false">
+    </ina-common-select> -->
+    <nz-select [nzDisabled]="item.state == 2 || item.state == 99" [ngStyle]="{width: '100px'}" [(ngModel)]="item.state"
+        (ngModelChange)="changeStatus(item)" nzPlaceHolder="{{'checkdata.check'|i18n}}">
+        <nz-option [nzValue]="data.value" *ngFor="let data of statelist" nzLabel="{{ data.description}}"
+            [nzDisabled]="data.value == -1 ||data.value==99"></nz-option>
+    </nz-select>
+    <nz-divider nzType="vertical"></nz-divider>
+</ng-template>
+<planedit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></planedit>
+<planlook #look [modular]="modular"></planlook>

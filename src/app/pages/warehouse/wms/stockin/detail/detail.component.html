@@ -1,0 +1,21 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" height="99%" headerHeight="48px" bodyPadding="10px 20px 0" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <crud
+            #crud
+            [columns] = "tableColumns"
+            [tpls] = "{timeTpl:timeTpl}"
+            [showSelection] ="false"
+            [service]="stockInService"
+            listFun="detail"
+            [extraQueryParams]="queryParams"
+            [showInPageContainer]="false"
+            [showTableTop]="false"
+            [maskAlert]="true"
+        >
+        </crud>
+    </ng-template>
+</idrawer>
+
+<ng-template #timeTpl let-text="text">
+    {{text|time}}
+</ng-template>

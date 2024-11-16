@@ -1,0 +1,57 @@
+:host ::ng-deep .ant-tree-switcher {
+    line-height: 48px;
+}
+
+:host ::ng-deep .ant-tree-switcher-leaf-line::after {
+    height: 25px;
+}
+
+:host ::ng-deep .ant-tree-treenode-leaf-last .ant-tree-switcher-leaf-line::before {
+    height: 25px !important;
+}
+
+@import "mixin";
+
+.themeMixin( {
+        :host {
+            .container {
+                height:100%;
+
+                nz-sider {
+                    padding      : 10px;
+                    padding-right: 0;
+                }
+
+                nz-layout {
+                    padding         : 10px;
+                    // background-color: #fff;
+                }
+            }
+        }
+    }
+
+);
+
+.box {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    // background     : #eee;
+    border         : 1px solid #ddd;
+}
+
+.right-wrap {
+    height         : 100%;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+}
+
+.right {
+    // background : #fff;
+    border     : 1px solid #ddd;
+    text-align : center;
+    font-size  : 12px;
+    height     : 20px;
+    line-height: 20px;
+}

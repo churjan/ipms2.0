@@ -1,0 +1,48 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [nzLayout]="'horizontal'" [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basPart.code" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input_xx2' | i18n:('basPart.code' | i18n) }}">
+                    <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basPart.name" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="8" nzErrorTip="{{ 'inputdata.input_xx2' | i18n:('basPart.name' | i18n)}}">
+                    <input nz-input formControlName="name" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{ "basPart.class" | i18n }}</nz-form-label>
+                <nz-form-control nzSpan="8"
+                    nzErrorTip="{{ 'checkdata.check_xx' | i18n :('basPart.class' | i18n)}}">
+                    <app-single-select formControlName="class" [label]="'description'" [valueKey]="'value'"
+                        [valueFields]="'value'" [width]="'100%'" [path]="'/admin/Enum/?method=partclass'">
+                    </app-single-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{"basPart.sort" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="8">
+                    <nz-input-number [nzMin]="0" formControlName="sort"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzSpan="6" [nzNoColon]="true"></nz-form-label>
+                <nz-form-control nzSpan="8">
+                    <label nz-checkbox formControlName="ismain">{{'basPart.ismain' | i18n}}</label>
+                </nz-form-control>
+            </nz-form-item>
+
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

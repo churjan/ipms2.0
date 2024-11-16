@@ -1,0 +1,134 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [inputVal]="menuData"
+  keyword_placeholder="pmWork.code" [isKeyQuery]="true" [KeyQuery]="KeyQuery" [columns]="columns" [modular]="modular"
+  [statusnode]="{all:'quantity',current:'complete_quantity'}" [seniorModel]="{ hoi_key: hoi_key }" [fields]="field"
+  [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+  <form nz-form>
+    <nz-form-item *ngIf="isseach('code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="code" placeholder="{{ 'inputdata.input'|i18n }}" [(ngModel)]="crud.seniorModel.code"
+          (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('som_code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.som_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.som_key"
+          name="som_code" url="OrderMaster" DataTxt="code" [isshow]="false">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('mixcode')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.mixcode'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="mixcode" placeholder="{{ 'inputdata.input'|i18n }}" [(ngModel)]="crud.seniorModel.mixcode"
+          (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.psi_key'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.psi_key"
+          name="psi_key" url="styleinfo">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('pci_code')==true||isseach('pci_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.pci_key'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.pci_key"
+          name="pci_key" url="colorinfo">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('psz_code')==true||isseach('psz_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.psz_name'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.psz_key"
+          name="psz_key" url="sizeinfo">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'pmWork.state'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title=""
+                    [(ngModel)]="crud.seniorModel.state" name="state"
+                    DataFiled="value" DataTxt="description" urltype="enum"
+                    url="workstatus"
+                    [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item> -->
+    <nz-form-item *ngIf="isseach('hoi_code')==true||isseach('hoi_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.hoi_key'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-ztree-select [setting]="setting" class="select" name="hoi_key" [(ngModel)]="crud.seniorModel.hoi_key"
+          datatype="getlist/"></ina-ztree-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('start_time')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.start_time'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <date-select [isRange]="true" class="select" widthClass="width100"
+          [sdate]="{start:crud.seniorModel.start_time_start,end:crud.seniorModel.start_time_end}"
+          (onSelect)="crud.seniorModel.start_time_start=$event.start;crud.seniorModel.start_time_end=$event.end">
+        </date-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('create_time')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmWork.create_time'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <date-select [isRange]="true" class="select" widthClass="width100"
+          [sdate]="{start:crud.seniorModel.create_time_start,end:crud.seniorModel.create_time_end}"
+          (onSelect)="crud.seniorModel.create_time_start=$event.start;crud.seniorModel.create_time_end=$event.end">
+        </date-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record">
+  <!-- <ina-table-select style="width: 100px;" jsonname="pmWork" name="som_code" url="WorkBill" DataTxt="code"></ina-table-select> -->
+  <nz-radio-group [(ngModel)]="crud.seniorModel.state" (ngModelChange)="crud.Search()">
+    <label nz-radio [nzValue]="o.value" *ngFor="let o of options">
+      {{ o.description}}
+    </label>
+  </nz-radio-group>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event);crud.setOfCheckedId=[]"></edit>
+<flow #flow [modular]="modular" (editDone)="crud.reloadData($event)"></flow>
+<!-- <flow-old #flow [modular]="modular" (editDone)="crud.reloadData($event)"></flow-old> -->
+<flow-new #newflow style="text-align: left;" (editDone)="crud.reloadData($event)" (onOut)="btnEvent($event)"></flow-new>
+<setTags #setTags [modular]="modular" (editDone)="crud.reloadData($event)"></setTags>
+<setTags2 #setTags2 [modular]="modular" (editDone)="crud.reloadData($event)"></setTags2>
+<pm-hanginfo #hanginfo [modular]="modular" (editDone)="crud.reloadData($event)"></pm-hanginfo>
+<History-flow #History [modular]="modular" [Component]="true" [url]="'pmWork'" (editDone)="crud.reloadData($event)">
+</History-flow>
+<History #History2 [modular]="modular" [Component]="true" [url]="'pmWork'" (editDone)="crud.reloadData($event)">
+</History>
+<work-look #worklook [modular]="modular"></work-look>
+<flowLamination #flowLamination (editDone)="btnEvent($event)"></flowLamination>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (onReturn)="btnEvent($event)"
+  (editDone)="crud.reloadData($event)" (onOut)="btnEvent($event)"></flow3>
+<idrawer *ngIf="isVisible" [title]="'placard.tagtypeselect'|i18n" [width]="'350px'" height="30%" justifyContent="center"
+  (onClose)="isVisible=false" [content]="contentTpl">
+  <ng-template #contentTpl>
+    <div style="overflow: auto;">
+      <p style="margin:5px auto;width: 50%;">
+        <button nz-button nzType="primary" style="width: 100%;height: 40px;"
+          (click)="handleOk(0)">{{'placard.Bundlelabel'|i18n}}</button>
+      </p>
+      <p style="margin: auto;width: 50%;">
+        <button nz-button style="width: 100%;height: 40px;"
+          (click)="handleOk(1)">{{'placard.Commonlabel'|i18n}}</button>
+      </p>
+    </div>
+  </ng-template>
+</idrawer>
+<!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="标签类型选择" [nzFooter]="null" [nzWidth]="350">
+    <ng-container *nzModalContent>
+        <p><button nz-button nzType="primary" (click)="handleOk(0)">扎包标签</button></p>
+        <p><button nz-button (click)="handleOk(1)">普通标签</button></p>
+    </ng-container>
+</nz-modal> -->

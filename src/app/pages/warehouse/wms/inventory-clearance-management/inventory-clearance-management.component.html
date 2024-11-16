@@ -1,0 +1,187 @@
+<crud2
+    #crud
+    [router]="url"
+    [jsonname]="fieldcode"
+    showLayout="side-top-left"
+    [list]="list"
+    (actionClick)="btnEvent($event)"
+    [Lwidth]="'22%'"
+    [sideColumnTpl]="sideColumnTpl"
+    [columns]="columns"
+    [modular]="modular"
+    [fields]="field"
+    [searchActionsBody]="searchActionsBody"
+></crud2>
+
+<ng-template #sideColumnTpl let-item="record">
+    <class-ztree
+        #Menu
+        class="tree"
+        commUrl="w_LayoutStructure/extend"
+        [modular]="modular"
+        title="{{'placard.bls_key'|i18n}}"
+        Datadaty="NewGetListBy"
+        [params]="{ maketree: true, BLST_Group: 'Station', TypeDetail: 2 }"
+        (onclick)="selectCategory($event)"
+    >
+    </class-ztree>
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.area" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select
+                    class="select"
+                    title="{{ 'checkdata.check' | i18n }}"
+                    name="control_key"
+                    [(ngModel)]="crud.seniorModel.control_key"
+                    url="w_WarehouseOutControl"
+                    [isshow]="false"
+                >
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.pti_ordercode" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input
+                    nz-input
+                    name="pti_ordercode"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    [(ngModel)]="crud.seniorModel.pti_ordercode"
+                    (keydown)="crud.Search($event)"
+                />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.carrierid" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input
+                    nz-input
+                    name="carrierid"
+                    [(ngModel)]="crud.seniorModel.carrierid"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    (keydown)="crud.Search($event)"
+                />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.isfrozen" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select
+                    name="isfrozen"
+                    [(ngModel)]="crud.seniorModel.isfrozen"
+                    nzPlaceHolder="{{ 'checkdata.check' | i18n }}"
+                    nzAllowClear
+                >
+                    <nz-option
+                        [nzLabel]="'placard.yes' | i18n"
+                        [nzValue]="true"
+                    ></nz-option>
+                    <nz-option
+                        [nzLabel]="'placard.no' | i18n"
+                        [nzValue]="false"
+                    ></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.createtime" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <date-select
+                    [isRange]="true"
+                    class="select"
+                    widthClass="width100"
+                    dateFormat="yyyy-MM-dd HH:mm:ss"
+                    [ShowTime]="true"
+                    [sdate]="{
+                        start: crud.seniorModel.start_createtime,
+                        end: crud.seniorModel.end_createtime
+                    }"
+                    (onSelect)="
+                        crud.seniorModel.start_createtime = $event.start;
+                        crud.seniorModel.end_createtime = $event.end
+                    "
+                >
+                </date-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.currenttypename" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select
+                    class="select"
+                    [(ngModel)]="crud.seniorModel.currenttype"
+                    name="currenttype"
+                    nzPlaceHolder="{{ 'checkdata.check' | i18n }}"
+                >
+                    <nz-option
+                        *ngFor="let item of Locationtype"
+                        [nzValue]="item.value"
+                        [nzLabel]="item.label | i18n"
+                    >
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.psi_key" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select
+                    class="select"
+                    title="{{ 'checkdata.check' | i18n }}"
+                    name="psi_key"
+                    [(ngModel)]="crud.seniorModel.psi_key"
+                    url="styleinfo"
+                    [isshow]="true"
+                >
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.pci_name" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select
+                    class="select"
+                    title="{{ 'checkdata.check' | i18n }}"
+                    name="pci_key"
+                    [(ngModel)]="crud.seniorModel.pci_key"
+                    url="colorinfo"
+                >
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">
+                {{ "wmsStock.psz_name" | i18n }}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select
+                    class="select"
+                    title="{{ 'checkdata.check' | i18n }}"
+                    name="psz_key"
+                    [(ngModel)]="crud.seniorModel.psz_key"
+                    url="sizeinfo"
+                >
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>

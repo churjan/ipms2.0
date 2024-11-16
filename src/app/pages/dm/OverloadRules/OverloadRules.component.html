@@ -1,0 +1,23 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="basOverloadRules.psi_key" [columns]="columns" [modular]="modular" [fields]="field"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basOverloadRules.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psi_key" name="psi_key" url="styleinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('station_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basOverloadRules.station_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [(ngModel)]="crud.seniorModel.station_key"
+                    [params]="{maketree: true, moduletype: 101 ,blst_group:'Station'}" name="station_key"
+                    datatype="NewGetList/"></ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>

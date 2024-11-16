@@ -1,0 +1,52 @@
+<nz-transfer
+    [nzDataSource]="list"
+    nzShowSearch
+    [nzRenderList]="[renderList, renderList]"
+    [nzFilterOption]="filterOption"
+    [nzShowSelectAll]="false"
+    [nzTitles]="[
+        '(' + ('canSelect' | i18n) + ')',
+        '(' + ('selected' | i18n) + ')'
+    ]"
+    [nzListStyle]="{ 'width.%': 100}"
+    (nzChange)="change($event)"
+></nz-transfer>
+
+<ng-template
+    #renderList
+    let-items
+    let-stat="stat"
+    let-onItemSelectAll="onItemSelectAll"
+    let-onItemSelect="onItemSelect"
+>
+    <nz-table
+        #table
+        [nzData]="$asTransferItems(items)"
+        [nzBordered]="true"
+        nzSize="small"
+    >
+        <thead>
+            <tr>
+                <th
+                    nzAlign="center"
+                    [nzChecked]="stat.checkAll"
+                    [nzIndeterminate]="stat.checkHalf"
+                    (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th nzAlign="center">{{ "blsName" | i18n }}</th>
+                <th nzAlign="center">{{ "blsCode" | i18n }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                <td
+                    nzAlign="center"
+                    [nzChecked]="!!data.checked"
+                    (nzCheckedChange)="onItemSelect(data)"
+                ></td>
+                <td nzAlign="center">{{ data.title }}</td>
+                <td nzAlign="center">{{ data.code }}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</ng-template>

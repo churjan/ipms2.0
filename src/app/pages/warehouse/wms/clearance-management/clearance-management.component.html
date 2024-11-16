@@ -1,0 +1,202 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [list]="list"
+    (actionClick)="btnEvent($event)" [Lwidth]="'22%'" [sideColumnTpl]="sideColumnTpl" [columns]="columns"
+    [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #sideColumnTpl let-item="record">
+    <class-ztree #Menu class="tree" commUrl="layoutstructure/extend" [modular]="modular"
+        title="{{'placard.bls_key'|i18n}}" Datadaty="NewGetList"
+        [params]="{ maketree: true, moduletype: 1005,removein:true }" (onclick)="selectCategory($event)">
+    </class-ztree>
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.area'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" name="control_key"
+                    [(ngModel)]="crud.seniorModel.control_key" url="w_WarehouseOutControl" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.pti_ordercode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="pti_ordercode" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pti_ordercode" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.carrierid'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="carrierid" [(ngModel)]="crud.seniorModel.carrierid"
+                    placeholder="{{'inputdata.input'|i18n }}" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.isfrozen'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select name="isfrozen" [(ngModel)]="crud.seniorModel.isfrozen"
+                    nzPlaceHolder="{{ 'checkdata.check'|i18n}}" nzAllowClear>
+                    <nz-option [nzLabel]="'placard.yes'|i18n" [nzValue]="true"></nz-option>
+                    <nz-option [nzLabel]="'placard.no'|i18n" [nzValue]="false"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.createtime'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <date-select [isRange]="true" class="select" widthClass="width100" dateFormat="yyyy-MM-dd HH:mm:ss"
+                    [ShowTime]="true"
+                    [sdate]="{start:crud.seniorModel.start_createtime,end:crud.seniorModel.end_createtime}"
+                    (onSelect)="crud.seniorModel.start_createtime=$event.start;crud.seniorModel.end_createtime=$event.end">
+                </date-select>
+                <!-- <nz-date-picker name="start_createtime" [(ngModel)]="crud.seniorModel.start_createtime" nzShowTime
+                    nzFormat="yyyy-MM-dd HH:mm:ss">
+                </nz-date-picker> -->
+            </nz-form-control>
+        </nz-form-item>
+        <!-- <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.inEndTime'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-date-picker name="end_createtime" [(ngModel)]="crud.seniorModel.end_createtime" nzShowTime
+                    nzFormat="yyyy-MM-dd HH:mm:ss">
+                </nz-date-picker>
+            </nz-form-control>
+        </nz-form-item> -->
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.currenttypename'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select class="select" [(ngModel)]="crud.seniorModel.currenttype" name="currenttype"
+                    nzPlaceHolder="{{ 'checkdata.check'|i18n}}">
+                    <nz-option *ngFor="let item of Locationtype" [nzValue]="item.value" [nzLabel]="item.label|i18n">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="psi_key"
+                    [(ngModel)]="crud.seniorModel.psi_key" url="styleinfo" [isshow]="true">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.pci_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="pci_key"
+                    [(ngModel)]="crud.seniorModel.pci_key" url="colorinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsStock.psz_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="psz_key"
+                    [(ngModel)]="crud.seniorModel.psz_key" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <!-- <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'attribute'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <attrfilter [(data)]="tagAttributes" [fieldOptions]="fieldOptions" [valueOptions]="valueOptions" [multiple]="true"></attrfilter>
+            </nz-form-control>
+        </nz-form-item> -->
+    </form>
+    <!-- <filter #filter (editDone)="crud.advancedSearch($event)" (onClose)="crud.filterOpen= false"></filter> -->
+</ng-template>
+<!-- <div class="page beauty-scroll">
+    <nz-card class="page-container">
+        <div class="wrapper beauty-scroll">
+            <div class="wrapper-container">
+             <div class="left beauty-scroll">
+                    <class-ztree #Menu class="tree" commUrl="layoutstructure/extend" [modular]="modular" title="仓库"
+                        Datadaty="NewGetList" [params]="{ maketree: true, moduletype: 22 }"
+                        (onclick)="selectCategory($event)"></class-ztree>
+                     <div class="search">
+                        <nz-input-group [nzSuffix]="suffixIcon"
+                            class="w-100-pc">
+                            <input type="text" nz-input placeholder="{{
+                                'btn.search'|i18n }}/{{ 'placard.category'|i18n
+                                }}" ngModel
+                                (ngModelChange)="searchValue$.next($event)" />
+                        </nz-input-group>
+                        <ng-template #suffixIcon>
+                            <i nz-icon nzType="search" class="pointer"></i>
+                        </ng-template>
+                    </div>
+
+                    <div class="empty" *ngIf="treeData?.length <= 0">
+                        <nz-empty nzNotFoundContent="{{ 'btn.empty'|i18n }}"></nz-empty>
+                    </div>
+                    <nz-tree-view [nzTreeControl]="treeControl"
+                        [nzDataSource]="dataSource">
+                        <nz-tree-node *nzTreeNodeDef="let node"
+                            nzTreeNodeIndentLine>
+                            <div class="item">
+                                <span (click)="selectCategory($event,node)"
+                                    [ngClass]="{active: node.key ==
+                                    queryParams.bls_key}"> {{ node.name }}
+                                </span>
+                            </div>
+                        </nz-tree-node>
+                        <nz-tree-node *nzTreeNodeDef="let node; when: hasChild"
+                            nzTreeNodeIndentLine>
+                            <div class="item">
+                                <div>
+                                    <nz-tree-node-toggle>
+                                        <i nz-icon nzType="caret-down"
+                                            nzTreeNodeToggleRotateIcon></i>
+                                    </nz-tree-node-toggle>
+                                    <span (click)="selectCategory($event,node)"
+                                        [ngClass]="{active: node.key ==
+                                        queryParams.bls_key}"> {{ node.name }}
+                                    </span>
+                                </div>
+                            </div>
+                        </nz-tree-node>
+                    </nz-tree-view> -->
+<!-- </div>
+                <div class="right">
+                   <crud #crud [topRightActionsTpl]="topRightActionsTpl"
+                        [columns]="tableColumns" [service]="stockService"
+                        [tpls]="{statusTpl: statusTpl,timeTpl: timeTpl}"
+                        [xScroll]="'1800px'" [showAdvancedSearch]="true"
+                        (onFilterOpen)="filter.open($event)"
+                        (onReset)="filter.reset()"
+                        [keywordPlaceholder]="'placard.keyword_xx'|i18n:('stock.pti_ordercode'|i18n)"
+                        [showInPageContainer]="false" [ready]="ready"
+                        [exceptResetParams]="['bls_key']">
+                    </crud>
+            </div> 
+            </div>
+        </div>
+    </nz-card>
+</div>-->
+
+<ng-template #topRightActionsTpl let-setOfCheckedId="setOfCheckedId">
+    <!-- <button nz-button nzType="primary" (click)="openCaltime()"
+        *hasPermission="['wms_stock_caltime']">
+        <i nz-icon nzType="calculator"></i> {{ 'stock.caltime'|i18n }}
+    </button>
+    &nbsp;&nbsp;
+    <button nz-button nzType="primary" (click)="doOutStock(setOfCheckedId)"
+        *hasPermission="['wms_stock_out']">
+        <i nz-icon nzType="export"></i> {{ 'stock.handleOut'|i18n }}
+    </button> -->
+</ng-template>
+
+<!-- 
+<ng-template #statusTpl let-text="text">
+    <nz-badge *ngIf="text" nzStatus="warning" nzText="{{ 'placard.yes'|i18n }}"></nz-badge>
+    <nz-badge *ngIf="!text" nzStatus="success" nzText="{{ 'placard.no'|i18n }}"></nz-badge>
+</ng-template>
+
+<ng-template #timeTpl let-text="text">
+    {{text|time}}
+</ng-template> -->
+
+<caltime-stock #caltime (editDone)="crud.reloadData(false)"></caltime-stock>
+<num-stock #numStock (editDone)="openOutStock($event)"></num-stock>
+<!-- <filter #filter (editDone)="crud.advancedSearch($event)" (onClose)="crud.filterOpen= false"></filter> -->
+<out-stock #outStock (editDone)="crud.reloadData(false)"></out-stock>

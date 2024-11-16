@@ -1,0 +1,156 @@
+@import "mixin";
+@import "var";
+
+.themeMixin( {
+        :host {
+            .file-context-ps {
+                margin-bottom: 0;
+                padding      : 0 15px;
+                font-size    : 13px;
+                color        : red;
+            }
+
+            .wrapper {
+                display  : flex;
+                flex-wrap: wrap;
+                padding  : 15px;
+
+                .item-wrapper {
+                    margin: 0 15px 15px 0;
+                    width : 166px;
+
+                    .title {
+                        width        : 100%;
+                        height       : 28px;
+                        line-height  : 28px;
+                        color        : @font-color;
+                        font-size    : 13px;
+                        overflow     : hidden;
+                        text-overflow: ellipsis;
+                        white-space  : nowrap;
+                        text-align   : center;
+                        box-sizing   : border-box;
+                    }
+
+                    .item {
+                        width          : 100%;
+                        height         : 116px;
+                        background-size: 100% 100%;
+                        position       : relative;
+                        border         : 1px solid @border-color;
+                        background     : #F3F3F3;
+
+                        .default {
+                            width                     : 50px;
+                            height                    : 20px;
+                            text-align                : center;
+                            line-height               : 20px;
+                            position                  : absolute;
+                            left                      : 0;
+                            top                       : 0;
+                            background-color          : @color;
+                            color                     : #FFFFFF;
+                            font-size                 : 12px;
+                            border-bottom-right-radius: 4px;
+                        }
+
+                        &.upload-btn {
+                            position  : relative;
+                            background: #F8F8F8;
+                            border    : 1px dashed @border-color;
+
+                            .cont {
+                                height         : 100%;
+                                display        : flex;
+                                align-items    : center;
+                                justify-content: center;
+                                flex-direction : column;
+
+                                i {
+                                    color    : #999999;
+                                    font-size: 36px;
+                                }
+
+                                .text {
+                                    color    : #999999;
+                                    font-size: 12px;
+                                }
+                            }
+
+                            input {
+                                width   : 100%;
+                                height  : 100%;
+                                position: absolute;
+                                left    : 0;
+                                top     : 0;
+                                opacity : 0;
+                                cursor  : pointer;
+                            }
+                        }
+
+                        video, img {
+                            cursor : pointer;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+);
+
+.tabset {
+    height: calc(100% - 156px);
+
+    &>::ng-deep .ant-tabs-content-holder .ant-tabs-content {
+        height: calc(100%);
+    }
+}
+
+.transfer {
+    height: calc(100% - 40px);
+
+    &>::ng-deep {
+        .ant-tabs-content {
+            height: 100%;
+        }
+    }
+}
+
+.transfer ::ng-deep>.ant-transfer-list .ant-transfer-list-body {
+    height: calc(100% - 55px);
+
+    .ant-transfer-list-body-customize-wrapper {
+        height  : calc(100% - 55px);
+        overflow: hidden;
+
+        .transfer-table-wrapper {
+            height: 100%;
+
+            &>nz-table {
+                height: calc(100%);
+
+                .ant-spin-nested-loading {
+                    height: calc(100%);
+
+                    .ant-spin-container {
+                        height: calc(100%);
+
+                        .ant-table {
+                            height: calc(100%);
+
+                            .ant-table-container {
+                                height: calc(100%);
+
+                                .ant-table-body {
+                                    height: calc(100%);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,95 @@
+<idrawer *ngIf="visible" title="{{ 'sysMenu.node'|i18n }}/{{ 'btn.edit'|i18n }}" width="500px" height="70%"
+    justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div class="common-node">
+            {{ 'sysMenu.commonNode'|i18n }}
+            <button nz-button type="button" nzType="default" nzShape="round" (click)="quickSetButton('Add')">
+                {{ 'btn.plus'|i18n }}
+            </button>
+            <button nz-button type="button" nzType="default" nzShape="round" (click)="quickSetButton('Update')">
+                {{ 'btn.update'|i18n }}
+            </button>
+            <button nz-button type="button" nzType="default" nzShape="round" (click)="quickSetButton('Del')">
+                {{ 'btn.delete'|i18n }}
+            </button>
+        </div>
+
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">
+                    {{ 'sysMenu.speciallimits'|i18n }}</nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20"
+                    nzErrorTip="{{ 'inputdata.input'|i18n }}/{{'sysMenu.speciallimits'|i18n }}">
+                    <nz-radio-group formControlName="speciallimits">
+                        <label nz-radio [nzValue]="0">{{'placard.speciallimits0'|i18n}}</label>
+                        <label nz-radio [nzValue]="1">{{'placard.speciallimits1'|i18n}}</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item [hidden]="validateForm.value.speciallimits!=0">
+                <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{ 'sysMenu.isradio'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.isradio'|i18n }}">
+                    <nz-radio-group formControlName="isradio">
+                        <label nz-radio [nzValue]="true">{{'placard.Singlebtn'|i18n}}</label>
+                        <label nz-radio [nzValue]="false">{{'placard.commbtn'|i18n}}</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item [hidden]="validateForm.value.speciallimits!=0||validateForm.value.isradio!=true">
+                <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{ 'sysMenu.isextend'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.isextend'|i18n }}">
+                    <nz-radio-group formControlName="isextend">
+                        <label nz-radio [nzValue]="false">{{'sysMenu.list'|i18n}}</label>
+                        <label nz-radio [nzValue]="true">{{'sysMenu.extend'|i18n}}</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4" nzRequired>
+                    {{ 'sysMenu.name'|i18n }}</nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.name'|i18n }}">
+                    <input nz-input formControlName="name" placeholder="{{
+                        'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4" nzRequired>
+                    {{ 'sysMenu.action'|i18n }}</nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.action'|i18n }}">
+                    <input nz-input formControlName="action" placeholder="{{
+                        'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [[nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{'sysMenu.icon'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.icon'|i18n }}">
+                    <input nz-input formControlName="icon" placeholder="{{'inputdata.input'|i18n
+                        }}/{{'sysMenu.icon'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [[nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{'sysMenu.sort'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+                    'sysMenu.icon'|i18n }}">
+                    <input nz-input formControlName="sort" type="number" placeholder="{{'inputdata.input'|i18n
+                        }}/{{'sysMenu.sort'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.Confirmed'|i18n }}</button>
+    </ng-template>
+</idrawer>

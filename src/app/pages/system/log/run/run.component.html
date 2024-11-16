@@ -1,0 +1,58 @@
+
+<div class="page">
+    <nz-card class="page-container p-b-15" [nzExtra]="extraTemplate"
+        [nzTitle]="Cardtitle">
+        <!-- <div class="top">
+            <nz-breadcrumb>
+                <nz-breadcrumb-item class="pointer" (click)="fileSelect()">{{
+                    'placard.rootDir'|i18n }}</nz-breadcrumb-item>
+                <nz-breadcrumb-item class="pointer" *ngFor="let item of paths"
+                    (click)="fileSelect(item)">{{item.filename}}</nz-breadcrumb-item>
+            </nz-breadcrumb>
+        </div> -->
+        <div class="list beauty-scroll">
+            <ul *ngIf="data?.length> 0">
+                <li *ngFor="let item of data" (click)="fileSelect(item)"
+                    (dblclick)="openFile(item)">
+                    <div class="icon">
+                        <i *ngIf="item.extensionname == 'folder'" nz-icon
+                            nzType="folder" nzTheme="fill"></i>
+                        <i *ngIf="item.extensionname != 'folder'" nz-icon
+                            nzType="file-text" nzTheme="outline"></i>
+                    </div>
+                    <div class="name" nz-tooltip
+                        nzTooltipTitle="{{item.filename}}">{{item.filename}}</div>
+                </li>
+            </ul>
+            <nz-empty *ngIf="!data || data.length <= 0" nzNotFoundContent="{{
+                'btn.empty'|i18n }}"></nz-empty>
+        </div>
+        <nz-divider></nz-divider>
+        <nz-card-meta [nzAvatar]="avatarTemplate"
+            [nzTitle]="selectdata.filename?selectdata.filename:('placard.rootDir'|i18n)"
+            [nzDescription]="selectdata.data?('placard.objects'|i18n:selectdata.data):Filemeta"></nz-card-meta>
+    </nz-card>
+    <ng-template #Filemeta>
+        <a href="javascript:void(0)" (click)="mouseup(selectdata)">{{'btn.Down'|i18n}}</a>
+    </ng-template>
+    <ng-template #avatarTemplate>
+        <i nz-icon nzTheme="outline" class="avatar"
+            [nzType]="selectdata.extensionname=='folder'?'folder-open':'file-text'"></i>
+    </ng-template>
+    <ng-template #Cardtitle>
+        <nz-breadcrumb>
+            <nz-breadcrumb-item class="pointer" (click)="fileSelect()">{{
+                'placard.rootDir'|i18n }}</nz-breadcrumb-item>
+            <nz-breadcrumb-item class="pointer" *ngFor="let item of paths"
+                (click)="fileSelect(item)">{{item.filename}}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </ng-template>
+    <ng-template #extraTemplate>
+        <a (click)="filter.open({title:'Tabletlog',LogType:true})">{{'btn.Tabletlog'|i18n}}</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="filter.open({title:'Executionlog',LogType:false})">{{'btn.Executionlog'|i18n}}</a>
+    </ng-template>
+</div>
+
+<filter #filter [modular]="modular" (editDone)="fetch()"></filter>
+<filelook #filelook [modular]="modular"></filelook>

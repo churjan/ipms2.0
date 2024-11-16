@@ -1,0 +1,98 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [nzLayout]="'horizontal'" [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basMachinedevice.code" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'inputdata.input_xx2' | i18n:('basMachinedevice.code' | i18n) }}">
+                    <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basMachinedevice.name" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'inputdata.input_xx2' | i18n :('basMachinedevice.name' | i18n)}}">
+                    <input nz-input formControlName="name" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" >{{"basMachinedevice.brand" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'inputdata.input_xx2' | i18n:( 'basMachinedevice.brand' | i18n) }}">
+                    <input nz-input formControlName="brand" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" >{{"basMachinedevice.specification" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'inputdata.input_xx2' | i18n :('basMachinedevice.specification' | i18n)}}">
+                    <input nz-input formControlName="specification" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" >{{"basMachinedevice.purchasedate" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'checkdata.check_xx' | i18n:( 'basMachinedevice.purchasedate' | i18n) }}">
+                    <nz-date-picker formControlName="purchasedate"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6" >{{"basMachinedevice.planretirementdate" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18"
+                    nzErrorTip="{{ 'checkdata.check_xx' | i18n :('basMachinedevice.planretirementdate' | i18n)}}">
+                    <nz-date-picker formControlName="planretirementdate"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{ "basMachinedevice.state_name" | i18n }}</nz-form-label>
+                <nz-form-control nzSpan="18">
+                    <app-single-select formControlName="state" [label]="'description'" [valueKey]="'value'"
+                        [valueFields]="'value'" [path]="'/admin/Enum/?method=machinestatus'">
+                    </app-single-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <!-- <nz-form-item>
+                <nz-form-label nzSpan="6">{{ "basMachinedevice.nature" | i18n }}</nz-form-label>
+                <nz-form-control nzSpan="18">
+                    <app-single-select formControlName="nature" [label]="'description'" [valueKey]="'value'"
+                        [valueFields]="'value'" [path]="'/admin/Enum/?method=equipmentnature'">
+                    </app-single-select>
+                </nz-form-control>
+            </nz-form-item> -->
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{"basMachinedevice.repaircount" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18">
+                    <input nz-input formControlName="repaircount" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{"basMachinedevice.suppliername" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18">
+                    <input nz-input formControlName="suppliername" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{"basMachinedevice.description" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="18">
+                    <input nz-input formControlName="description" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="onSubmit()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

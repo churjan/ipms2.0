@@ -1,0 +1,44 @@
+<nz-table nzBordered [nzData]="tableList" [nzShowPagination]="false">
+    <thead>
+        <tr>
+            <th nzWidth="150px">{{'layoutTacticalRules.name'|i18n}}</th>
+            <th nzWidth="150px">{{'layoutTacticalRules.value'|i18n}}</th>
+            <th nzWidth="100px">
+                <button nz-button nzType="primary" nzShape="circle" nzSize="small" (click)="onAddRow()">
+                    <i nz-icon nzType="plus"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableList; let i = index">
+            <ng-container *ngIf="!editCache[i].edit; else editTemplate">
+                <td>{{ data.name }}</td>
+                <td>{{ data.value }}</td>
+                <td>
+                    <button nz-button nzType="primary" nzShape="circle" nzSize="small" (click)="onStartEdit(i)">
+                        <i nz-icon nzType="edit"></i>
+                    </button>
+                    <button nz-button nzType="primary" nzDanger nzShape="circle" nzSize="small" class="ml8"
+                        (click)="onDeleteRow(i)">
+                        <i nz-icon nzType="minus"></i>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-template #editTemplate>
+                <td><input type="text" nz-input [(ngModel)]="editCache[i].data.name" /></td>
+                <td><input type="text" nz-input [(ngModel)]="editCache[i].data.value" /></td>
+                <td>
+                    <button nz-button nzType="primary" nzShape="circle" nzSize="small" (click)="onSaveEdit(i)">
+                        <i nz-icon nzType="check"></i>
+                    </button>
+                    <button nz-button nzType="primary" nzDanger nzShape="circle" nzSize="small" class="ml8"
+                        (click)="onCancelEdit(i)">
+                        <i nz-icon nzType="close"></i>
+                    </button>
+                </td>
+            </ng-template>
+
+        </tr>
+    </tbody>
+</nz-table>

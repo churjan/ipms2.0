@@ -1,0 +1,30 @@
+:host ::ng-deep{
+    td .ant-form-item{
+        margin-bottom:0;
+    }
+}
+.footer-view{
+    display:flex;
+    justify-content:flex-end;
+}
+.tabset{
+    height: 100%;
+    &>::ng-deep .ant-tabs-content-holder .ant-tabs-content{
+        height: 100%;
+    }
+}
+.page-view {
+    display: flex;
+    height: 100%;
+    .left-view {
+        width: 200px;
+    }
+
+    .middle-view {
+        flex: 1;
+    }
+
+    .right-view {
+        flex: 1;
+    }
+}

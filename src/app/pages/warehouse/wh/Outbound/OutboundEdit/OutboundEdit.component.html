@@ -1,0 +1,18 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl" height="99%">
+    <ng-template #contentTpl>
+        <crud2 #crud [router]="url" [list]="list" (actionClick)="btnEvent($event)" [getBody]="body" [checkbox]="false"
+            [jsonname]="'whOutofstock'" listFun="detaildurl" showLayout="Container" [columns]="modular.displayedColumns"
+            asktype='getlist' [modular]="modular" [fields]="field" [lastColumnTpl]="operationTpl">
+        </crud2>
+        <!-- 行内操作按钮 -->
+        <ng-template #operationTpl let-item="record">
+            <a nz-tooltip nzTooltipTitle="{{'btn.close'|i18n }}" (click)="play(item)">
+                <i nz-icon [nzType]="'stop'" [class]="'red'" nzTheme="fill"></i>
+            </a>
+        </ng-template>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    </ng-template>
+</idrawer>

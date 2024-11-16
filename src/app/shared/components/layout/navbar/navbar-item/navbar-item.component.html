@@ -1,0 +1,17 @@
+<ng-container *ngFor="let item of data">
+    <li nz-menu-item [routerLink]="item?.routerLink || null" *ngIf="item.show && item.title && !item?.children?.length" [nzSelected]="paths?.includes(item?.routerLink)">
+        <span title="{{ item.title }}" class="menuTitle">
+            <i nz-icon nzType="{{ item.icon }}" *ngIf="item.icon"></i>
+            <span class="nav-text">{{ item.title }}</span>
+        </span>
+    </li>
+    <li nz-submenu *ngIf="item.show && item.title && item.children?.length" [nzOpen]="item.open && !inlineCollapsed">
+        <span title="{{ item.title }}" [ngClass]="{active: paths?.includes(item.routerLink)}" class="menuTitle">
+            <i nz-icon nzType="{{ item.icon }}" *ngIf="item.icon"></i>
+            <span class="nav-text" >{{ item.title }}</span>
+        </span>
+        <ul navbar-item [data]="item.children" [paths]="paths" [inlineCollapsed]="inlineCollapsed"></ul>
+    </li>
+</ng-container>
+
+    

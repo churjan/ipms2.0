@@ -1,0 +1,14 @@
+<div class="zpopup2" [style]="'opacity:'+bjOpacity+';'"></div>
+<div class="zpopup_cont2" [style]="'width:400px;height:190px;left:calc((100% - 400px)/2);top:100px;opacity:'+opacity+';'">
+    <div class="zpopup_confirm_cont_top">
+        <div class="zpopup_cont_top_close" (click)="closePopup()"><i nz-icon nzType="close" nzTheme="outline"></i></div>
+    </div>
+    <div class="zpopup_confirm_cont_in">
+        <div class="zpopup_confirm_cont_in_icon"><i nz-icon nzType="question-circle" style="font-size: 28px; color: #faad14;"></i></div>
+        <div class="zpopup_confirm_cont_in_text">{{type==0?('placard.zpopup_confirm_tip'|i18n| covertTranslation: delDataNum):text}}</div>
+    </div>
+    <div class="zpopup_confirm_foot">
+        <button nz-button nzType="default" style="margin-right: 10px;" (click)="closePopup()">{{ 'btn.cancel'|i18n }}</button>
+        <ng-container *ngTemplateOutlet="zpopupConfirmFoot"></ng-container>
+    </div>
+</div>

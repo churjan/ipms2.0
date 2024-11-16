@@ -1,0 +1,49 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [list]="list"
+  (actionClick)="btnEvent($event)" [Lwidth]="'20%'" [sideColumnTpl]="sideColumnTpl" [columns]="columns"
+  [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmStyle.brand'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="brand" placeholder="{{ 'inputdata.input'|i18n }}" [(ngModel)]="crud.seniorModel.brand"
+          (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmStyle.year'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="year" placeholder="{{ 'inputdata.input'|i18n }}" [(ngModel)]="crud.seniorModel.year"
+          (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{'pdmStyle.sex'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="sex" [(ngModel)]="crud.seniorModel.sex" placeholder="{{ 'inputdata.input'|i18n }}"
+          (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmStyle.designer'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="designer" placeholder="{{ 'inputdata.input'|i18n }}"
+          [(ngModel)]="crud.seniorModel.designer" (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #sideColumnTpl let-item="record">
+  <class-ztree #Menu class="tree" commUrl="styleclass" [modular]="modular" title="{{'pdmStyle.psc_key'|i18n}}"
+    [action]="modular.btnClass" (onclick)="onclick($event)" (onAction)="onAction($event)"></class-ztree>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>
+<classEdit #classEdit [modular]="modular" Nickname="class" (editDone)="succsave($event)"></classEdit>
+<files #files [modular]="modular" (editDone)="crud.reloadData($event)"></files>
+<stylelook #stylelook [modular]="modular" (editDone)="crud.reloadData($event)"></stylelook>
+<app-styleFlow #flow [modular]="modular" (editDone)="crud.reloadData($event)"></app-styleFlow>
+<styleFlow-new #flownew [modular]="modular" [isRenew]="isRenew" (editDone)="crud.reloadData($event);isRenew=false">
+</styleFlow-new>
+<!-- 单款导入 -->
+<imp #StyleWorkbill [modular]="modular" impurl="StyleWorkimpurl" xlsurl="StyleWorkurl"
+  (editDone)="crud.reloadData($event);renew()"></imp>

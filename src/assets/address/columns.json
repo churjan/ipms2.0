@@ -1,0 +1,565 @@
+{
+    "basFabric-difficulty": [
+        "code",
+        "name",
+        "level",
+        "coefficient"
+    ],
+    "basMachinedevice": [
+        "code",
+        "name",
+        "brand",
+        "specification",
+        "repaircount",
+        "state_name",
+        "purchasedate",
+        "planretirementdate",
+        "suppliername",
+        "description"
+    ],
+    "basPart": [
+        "code",
+        "name",
+        "class_name",
+        "ismain"
+    ],
+    "basQuality": [
+        "code",
+        "name",
+        "handlemethod_name",
+        "sort"
+    ],
+    "basWorksection": [
+        "code",
+        "name",
+        "isdefault",
+        "sort"
+    ],
+    "basPartsingleton": [
+        "multiple_bpi_code",
+        "multiple_bpi_name",
+        "singleton_bpi_code",
+        "singleton_bpi_name"
+    ],
+    "basOverloadRules": [
+        "popm_name",
+        "station_code",
+        "poi_code"
+    ],
+    "basAttribute": [
+        "code",
+        "name",
+        "value",
+        "value_name",
+        "remark"
+    ],
+    "factory": [
+        "code",
+        "name",
+        "describe"
+    ],
+    "dmQuarterly": [
+        "code",
+        "name",
+        "sort"
+    ],
+    "layoutVirtual": [
+        "code",
+        "name"
+    ],
+    "layoutHandStation": [
+        "matching_bls_key",
+        "pair_bls_key"
+    ],
+    "layoutStationSupervisoryControl": [
+        "station_code",
+        "station_name",
+        "station_type_name",
+        "station_state_name",
+        "pad_mac",
+        "employee_code",
+        "employee_name",
+        "workbill_code",
+        "style_code",
+        "style_name",
+        "color_code",
+        "size_code",
+        "size_name",
+        "part_code",
+        "part_name",
+        "current_operation_code",
+        "current_operation_name",
+        "operation_output",
+        "operation_worktime",
+        "operation_sam",
+        "operation_efficiency",
+        "total_output",
+        "total_worktime",
+        "total_sam",
+        "total_efficiency",
+        "repair_quantity",
+        "last_doing_carrier_code",
+        "last_out_carrier_code",
+        "infeeds"
+    ],
+    "structureRuleScheme": [
+        "No",
+        "code",
+        "name"
+    ],
+    "layoutProgramme": [
+        "No",
+        "name",
+        "field",
+        "group",
+        "isdisabled",
+        "operation"
+    ],
+    "pdmOperation": [
+        "code",
+        "name",
+        "poc_name",
+        "style_name",
+        "standard_time",
+        "standard_wages"
+    ],
+    "pdmPartoperation": [
+        "bpi_code",
+        "bpi_name",
+        "poi_code",
+        "poi_name"
+    ],
+    "pdmStyle": [
+        "code",
+        "name",
+        "description"
+    ],
+    "pmOverloadManagement": [
+        "station_code",
+        "carrier_code",
+        "tagcode",
+        "workbill_code",
+        "style_code",
+        "color_name",
+        "size_name",
+        "filtrating",
+        "last_completeoperation_name"
+    ],
+    "pmCutting": [
+        "station_code",
+        "pwb_code",
+        "pwb_state_name",
+        "qty",
+        "bond_qty",
+        "residue_num",
+        "cpl_qty",
+        "psi_code",
+        "psi_name",
+        "pci_code",
+        "psz_code",
+        "bpi_code",
+        "bpi_name",
+        "updatetime",
+        "createtime"
+    ],
+    "pmLayingcloth": [
+        "code",
+        "bed_no",
+        "cloth_width",
+        "cloth_length",
+        "maker_code",
+        "request_quantity",
+        "real_quantity"
+    ],
+    "pmWork": [
+        "code",
+        "som_code",
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "state",
+        "quantity",
+        "complete_quantity",
+        "start_time",
+        "production_start_time",
+        "complete_time",
+        "remark"
+    ],
+    "saleCustomer": [
+        "code",
+        "name",
+        "companyname"
+    ],
+    "reportHangersrecord": [
+        "pti_tagcode",
+        "rfid",
+        "bpi",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "hei_name",
+        "bls_code",
+        "poi_name",
+        "ste_name",
+        "isrecordoutput",
+        "iscompleted",
+        "createdate"
+    ],
+    "reportOperationdetails": [
+        "poi_name",
+        "pwb_code",
+        "psi_code",
+        "psi_name",
+        "psz_name",
+        "pci_name",
+        "bpi",
+        "quantity",
+        "date",
+        "hoi_name",
+        "hei_code",
+        "hei_name"
+    ],
+    "reportQualitytracking": [
+        "tagcode",
+        "hei_back",
+        "poi_name_back",
+        "date_back",
+        "hei_receive",
+        "poi_name_receive",
+        "hei_repair",
+        "poi_name_repair",
+        "poi_key_repair_time",
+        "hei_recheck",
+        "poi_name_recheck",
+        "poi_key_recheck_time",
+        "bindquantity",
+        "bqci_name"
+    ],
+    "reportSalaryschedule": [
+        "hei_code",
+        "hei_name",
+        "hoi_name",
+        "poi_code",
+        "poi_name",
+        "quantity"
+    ],
+    "reportStyledata": [
+        "psi_code",
+        "psi_name",
+        "bpi_name",
+        "quantity",
+        "date"
+    ],
+    "reportYield": [
+        "hoi_name",
+        "hei_code",
+        "hei_name",
+        "bli_name",
+        "bsm_code",
+        "pwb_code",
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "bpi_name",
+        "poi_code",
+        "poi_name",
+        "quantity",
+        "standardtime",
+        "tvwh",
+        "date"
+    ],
+    "reportInventoryStatistics": [
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "quantity"
+    ],
+    "reportReworkStatistics": [
+        "hoi_name",
+        "hei_repair",
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "poi_code",
+        "poi_name",
+        "num"
+    ],
+    "menu": [],
+    "sysLogrun": [
+        "source",
+        "type",
+        "level",
+        "time"
+    ],
+    "sysParameters": [
+        "name",
+        "code",
+        "typename",
+        "value"
+    ],
+    "sysRole": [
+        "name",
+        "description"
+    ],
+    "sysLogoperation": [
+        "url",
+        "action",
+        "sui_username",
+        "elapsedtotlalseconds",
+        "time"
+    ],
+    "sysLanguage": [
+        "default"
+    ],
+    "whWarehousing": [
+        "code",
+        "bls_code",
+        "bls_name",
+        "type_name",
+        "state_name",
+        "remark",
+        "hei_name",
+        "create_hei_name",
+        "create_time"
+    ],
+    "whInventory": [
+        "bls_code",
+        "som_code",
+        "pwb_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "bpi_name",
+        "quantity",
+        "pti_tagcode",
+        "rfid",
+        "isfrozen"
+    ],
+    "whOutofstock": [
+        "code",
+        "type_name",
+        "sendtime",
+        "state_name",
+        "remark",
+        "hei_name",
+        "create_hei_name",
+        "create_time"
+    ],
+    "whOutboundMonitoring": [
+        "out_bls_code",
+        "state_name",
+        "sendtime",
+        "create_time"
+    ],
+    "whTaskOut": [
+        "som_code",
+        "pwb_code",
+        "psi_code",
+        "psi_name",
+        "psz_code",
+        "pci_code",
+        "bpi_code",
+        "inventory_type_name",
+        "num",
+        "state_name",
+        "create_hei_code",
+        "create_hei_name",
+        "create_time"
+    ],
+    "wmsStock": [
+        "bls_pname",
+        "bls_name",
+        "pti_ordercode",
+        "pti_tagcode",
+        "carrierid",
+        "isfrozen",
+        "createtime",
+        "updatetime",
+        "currenttypename",
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name"
+    ],
+    "wmsInventorySummary": [],
+    "wmsStockin": [
+        "code",
+        "state_name",
+        "createtime"
+    ],
+    "wmsStockout": [
+        "code",
+        "state_name",
+        "createtime"
+    ],
+    "wmsInventoryclearancemanagement": [
+        "bls_pname",
+        "bls_name",
+        "pti_ordercode",
+        "pti_tagcode",
+        "carrierid",
+        "isfrozen",
+        "createtime",
+        "updatetime",
+        "currenttypename",
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name"
+    ],
+    "layoutFactory": [
+        "no",
+        "code",
+        "name",
+        "description"
+    ],
+    "virtualLayoutManagement": [
+        "no",
+        "code",
+        "name",
+        "operation"
+    ],
+    "docLibrary": [
+        "checked",
+        "no",
+        "originalname",
+        "size",
+        "create_hei_name",
+        "create_time",
+        "operation"
+    ],
+    "processDifficulty": [
+        "checked",
+        "no",
+        "code",
+        "name",
+        "coefficient",
+        "operation"
+    ],
+    "fabricDifficulty": [
+        "checked",
+        "no",
+        "code",
+        "name",
+        "level",
+        "coefficient",
+        "operation"
+    ],
+    "productionParts": [
+        "checked",
+        "no",
+        "code",
+        "name",
+        "class_name",
+        "sort",
+        "operation"
+    ],
+    "sectionManagement": [
+        "checked",
+        "no",
+        "code",
+        "name",
+        "sort",
+        "operation"
+    ],
+    "productionEquipment": [
+        "checked",
+        "no",
+        "code",
+        "name",
+        "brand",
+        "specification",
+        "repaircount",
+        "state_name",
+        "purchasedate",
+        "planretirementdate",
+        "suppliername",
+        "description",
+        "operation"
+    ],
+    "wmsOutcontrol": [
+        "name",
+        "state_name",
+        "poi_name",
+        "poi_code",
+        "createtime"
+    ],
+    "wmsOutboundplan": [
+        "code",
+        "name",
+        "state_name",
+        "type_name",
+        "level_name",
+        "quantity",
+        "start_time",
+        "production_start_time",
+        "requestdeliverydate",
+        "complete_time",
+        "remark"
+    ],
+    "wmsPackingsolution": [
+        "key",
+        "quantity",
+        "store_quantity",
+        "online_quantity",
+        "box_quantity",
+        "packaging_box_quantity",
+        "baozhuangjieshu",
+        "sort",
+        "banchengpintaoti",
+        "create_time",
+        "first_online_time",
+        "all_online_time",
+        "sorting_start_time",
+        "check_start_time",
+        "complete_time",
+        "state_name",
+        "is_make_out",
+        "is_can_out",
+        "level_name"
+    ],
+    "wmsPriceinfo": [
+        "pinming",
+        "xiangxing",
+        "wages",
+        "create_time"
+    ],
+    "wmsSkuprocess": [
+        "blsd_name",
+        "popm_name",
+        "create_time"
+    ],
+    "wmsAbnormaleventreport": [
+        "rfid",
+        "pti_tagcode",
+        "pti_tagcustomcode",
+        "ste_code",
+        "ste_name",
+        "bls_code",
+        "remark",
+        "pwb_code",
+        "psi_code",
+        "psi_name",
+        "pci_code",
+        "pci_name",
+        "poi_code",
+        "poi_name",
+        "createdate",
+        "psz_code",
+        "psz_name"
+    ],
+    "wmsCountingdemand": [
+        "date",
+        "psi_name",
+        "psi_code",
+        "pci_code",
+        "pci_name",
+        "psz_code",
+        "psz_name",
+        "count"     
+    ]
+}

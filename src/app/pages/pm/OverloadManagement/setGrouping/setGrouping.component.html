@@ -1,0 +1,52 @@
+<idrawer *ngIf="visible" [title]="title" justifyContent="center" nzSize="small" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <!--   <div class="station-view">
+            <div class="tree-view mr16">
+                <nz-tree [nzData]="treeList" (nzClick)="nzEvent($event)"></nz-tree>
+            </div>
+            <div class="table-view">
+                <nz-table [nzData]="node.pos_list" [nzBordered]="true" [nzShowPagination]="false" nzSize="small"
+                    [nzScroll]="{y}">
+                    <thead>
+                        <tr>
+
+                            <th>{{ "placard.layoutStructureCode" | i18n }}</th>
+                            <th>{{ "placard.layoutStructureName" | i18n }}</th>
+                            <th nzWidth="80px" nzAlign="center">
+                                {{ "btn.operation" | i18n }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of node.pos_list;let i = index">
+                            <td>{{ data.code }}</td>
+                            <td>{{ data.name }}</td>
+                            <td nzAlign="center">
+                                <i nz-icon nzType="minus" nzTheme="outline" style="color: red; font-size: 16px"
+                                    class="pointer" (click)="onDelete(i)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div> -->
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="5" nzRequired>{{ 'pmOverloadManagement.key'|i18n }}
+                </nz-form-label>
+                <nz-form-control [nzSpan]="19">
+                    <ina-common-select class="select" title="" [(ngModel)]="node.key" Datatyle="NewGetList" name="key"
+                        url="LayoutStructure/extend" DataTxt="code" secondary="name"
+                        [other]="{ moduletype: 106, BLST_Group: 'Station' }">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [nzLoading]="submiting"
+            class="m-l-6">{{'btn.save'|i18n}}</button>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

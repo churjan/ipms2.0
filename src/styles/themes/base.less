@@ -1,0 +1,411 @@
+@import 'var';
+@import 'zmodel';
+
+.beauty-scroll {
+    -ms-overflow-style: none;
+    scrollbar-color   : rgba(144, 146, 152, .3) transparent;
+    scrollbar-width   : thin;
+
+    &::-webkit-scrollbar {
+        width : 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background   : rgba(144, 146, 152, .3);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+.beauty-scroll1 {
+    -ms-overflow-style: none;
+    scrollbar-color   : rgba(144, 146, 152, 0.3) transparent;
+    scrollbar-width   : thin;
+
+    &::-webkit-scrollbar {
+        width : 4px;
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background   : rgba(144, 146, 152, 0.3);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+ul,
+li,
+dl,
+dd,
+dt {
+    padding: 0;
+    margin : 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+
+/* 表格上方有边的新增删除等按钮 */
+.topRightActions {
+    text-align: right;
+
+    button {
+        margin-bottom: 15px;
+        margin-left  : 10px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
+
+
+.w-100-pc {
+    width: 100%;
+}
+
+.w-240-px {
+    width: 240px;
+}
+
+.w-156-px {
+    width: 156px;
+}
+
+.m-t--20 {
+    margin-top: -20px;
+}
+
+.m-t-20 {
+    margin-top: 20px;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-b-15 {
+    margin-bottom: 15px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.m-b-6 {
+    margin-bottom: 6px;
+}
+
+.m-b-0 {
+    margin-bottom: 0;
+}
+
+.m-l-10 {
+    margin-left: 10px;
+}
+
+.m-l-6 {
+    margin-left: 6px;
+}
+
+.p-b-15 {
+    padding-bottom: 15px;
+}
+
+
+.page {
+    width   : 100%;
+    height  : 100%;
+    overflow: auto;
+    display : block;
+
+    .page-container {
+        border: none;
+
+        .ant-card-body {
+            padding       : 10px 14px;
+            padding-bottom: 0;
+        }
+    }
+}
+
+// .ant-form-item {
+// margin-bottom: 15px;
+// }
+
+.ant-form-item-label {
+    white-space: normal;
+}
+
+.ant-btn-primary,
+.ant-btn-primary:focus,
+.ant-btn-primary:hover {
+    color       : #fff;
+    background  : @color;
+    border-color: @color;
+}
+
+//树外壳
+.tree-box {
+    height: 100%;
+}
+
+//表格滚动条
+.ant-table-header,
+.ant-table-body {
+    -ms-overflow-style: none;
+    scrollbar-color   : rgba(144, 146, 152, .3) transparent;
+    scrollbar-width   : thin;
+
+    &::-webkit-scrollbar {
+        width : 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background   : rgba(144, 146, 152, .3);
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.ant-descriptions-item-label {
+    font-weight: bold;
+}
+
+.ant-table-thead>tr>th {
+    font-weight: bold;
+}
+
+.blank {
+    height: 15px;
+}
+
+.loop(@counter) when (@counter > 0) {
+    .p@{counter} {
+        padding: (1px * @counter);
+    }
+
+    .pt@{counter} {
+        padding-top: (1px * @counter);
+    }
+
+    .pr-@{counter} {
+        padding-right: (1px * @counter);
+    }
+
+    .pb@{counter} {
+        padding-bottom: (1px * @counter);
+    }
+
+    .pl@{counter} {
+        padding-left: (1px * @counter);
+    }
+
+    .m@{counter} {
+        margin: (1px * @counter);
+    }
+
+    .mt@{counter} {
+        margin-top: (1px * @counter);
+    }
+
+    .mr@{counter} {
+        margin-right: (1px * @counter);
+    }
+
+    .mb@{counter} {
+        margin-bottom: (1px * @counter);
+    }
+
+    .ml@{counter} {
+        margin-left: (1px * @counter);
+    }
+
+    .fz@{counter} {
+        font-size: (1px * @counter);
+    }
+
+    .loop((@counter - 1));
+}
+
+.loop(100);
+
+.bold {
+    font-weight: bold;
+}
+
+.flex-1 {
+    flex: 1 !important;
+}
+
+.flex-2 {
+    flex: 2 !important;
+}
+
+.flex-3 {
+    flex: 3 !important;
+}
+
+.flex-4 {
+    flex: 4 !important;
+}
+
+.flex-view {
+    display: flex;
+}
+
+.flex-h-view {
+    display        : flex;
+    justify-content: center;
+}
+
+.flex-v-view {
+    display    : flex;
+    align-items: center;
+}
+
+.flex-center-view {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.columnsdropdown {
+    ul {
+        max-height: 500px;
+        overflow  : auto;
+
+        li {
+            margin-left: 6px;
+        }
+    }
+}
+
+.zcolumnsdropdown {
+    ul {
+        max-height: 500px;
+        overflow  : auto;
+    }
+}
+
+.see_title {
+    width    : calc(100% - 20px);
+    margin   : 0 auto;
+    height   : 16px;
+    color    : #1890ff;
+    font-size: 16px;
+}
+
+.see_cont {
+    width    : calc(100% - 20px);
+    margin   : 20px auto 0 auto;
+    font-size: 15px;
+}
+
+.see_cont_left {
+    float     : left;
+    width     : calc(100% - 6px);
+    height    : 370px;
+    transition: all 0.5s;
+}
+
+.see_cont_text {
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    color        : #777;
+}
+
+.body-tabset {
+    height: 100%;
+
+    .ant-tabs-content {
+        height: 100%;
+    }
+}
+
+.fullscreen-modal {
+    max-width     : 100vw;
+    max-height    : 100vh;
+    top           : 0;
+    padding-bottom: 0;
+
+    .ant-modal-body {
+        padding   : 0;
+        height    : calc(100vh - 55px);
+        overflow-y: auto;
+    }
+}
+
+// 从动画的位置到最终把它放在列表的位置上时的动画
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// 拖动元素时，看到的预览元素
+.cdk-drag-preview {
+    background      : white;
+    // width        : 10rem;
+    // height       : 72px;
+    // opacity      : 0.5;
+    box-sizing      : border-box;
+    border-radius   : 4px;
+    box-shadow      : 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+// 拖动元素时，其他元素改变位置看到的动画
+.list-group.cdk-drop-list-dragging .list-group-item:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// tr.cdk-drag-preview {
+//     display : none;
+//     position: absolute !important;
+// }
+// tr.cdk-drag-placeholder {
+//     position  : absolute !important;
+//     box-sizing: border-box;
+//     z-index   : 99999;
+//     cursor    : all-scroll;
+//     display   :inline-flex;
+//     transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+// }
+
+// .exmple-custom-placeholder {
+//     opacity   : 0;
+//     height    : 28px;
+//     width     : 100px;
+//     padding   : 5px;
+//     background: #ccc;
+//     border    : dotted 1px #999;
+//     display   : none;
+//     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }

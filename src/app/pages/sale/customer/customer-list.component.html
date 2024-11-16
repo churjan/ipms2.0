@@ -1,0 +1,54 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="saleCustomer.code" [columns]="columns" [modular]="modular" [fields]="field"
+    [searchActionsBody]="searchActionsBody">
+</crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="code" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.code" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.name" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('class')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.class'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.class" name="class"
+                    DataFiled="code" [other]="{pcode:'customerclass'}" datatype="getlist" url="classdata"
+                    [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('moblile')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.moblile'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="moblile" placeholder="{{ 'inputdata.input'|i18n }}" type="tel"
+                    [(ngModel)]="crud.seniorModel.moblile" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('phone')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.phone'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="phone" placeholder="{{ 'inputdata.input'|i18n }}" type="tel"
+                    [(ngModel)]="crud.seniorModel.phone" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('companyname')==true">
+            <nz-form-label [nzSpan]="24">{{ 'saleCustomer.companyname'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="companyname" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.companyname" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>
+<customer-look #look [modular]="modular"></customer-look>

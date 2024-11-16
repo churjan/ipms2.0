@@ -1,0 +1,41 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" [isSetList]="false" [isReport]="true"
+    [isStatistics]="true" [isAction]="false" [checkbox]="false" [isdynamic]="true" (actionClick)="btnEvent($event)"
+    dynamishow="decompose" dynamicfield="title" detail="content" [Lwidth]="'22%'" [columns]="columns"
+    [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody">
+</crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsInventorySummary.area'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" name="control_key"
+                    [(ngModel)]="crud.seniorModel.control_key" url="w_WarehouseOutControl" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsInventorySummary.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="psi_key"
+                    [(ngModel)]="crud.seniorModel.psi_key" url="styleinfo" [isshow]="true">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsInventorySummary.pci_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="pci_key"
+                    [(ngModel)]="crud.seniorModel.pci_key" url="colorinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'wmsInventorySummary.psz_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n}}" name="psz_key"
+                    [(ngModel)]="crud.seniorModel.psz_key" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>

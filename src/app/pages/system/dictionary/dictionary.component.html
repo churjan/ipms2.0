@@ -1,0 +1,14 @@
+<nz-layout class="container">
+    <nz-sider [nzWidth]="width" nz-resizable [nzMinWidth]="150" [nzMaxWidth]="800" (nzResize)="onSideResize($event)">
+        <class-ztree #Menu class="tree" commUrl="classdata" title="{{'placard.Commoncodes'|i18n}}" [modular]="modular" [allAxpand]="false"
+            [action]="modular.btnClass" (onclick)="onclick($event)" (onAction)="onAction($event)"></class-ztree>
+        <nz-resize-handle nzDirection="right">
+            <div class="right-wrap">
+                <i class="right" nz-icon nzType="more" nzTheme="outline"></i>
+            </div>
+        </nz-resize-handle>
+    </nz-sider>
+    <nz-layout>
+        <edit #editEle [_model]="model" [modular]="modular" (onUpdate)="Menu.refreshTree($event)"></edit>
+    </nz-layout>
+</nz-layout>

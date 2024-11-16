@@ -1,0 +1,133 @@
+.DataDisplay {
+    height: calc(100%);
+
+    nz-header.ant-layout-header {
+        height        : 32px;
+        line-height   : 52px;
+        margin        : 10px auto;
+        width         : 100%;
+        // background : #fff;
+        display       : flex;
+        align-items   : center;
+
+        nz-input-group {
+            max-width: 185px;
+        }
+
+        .keyWords {
+            // display: block;
+            display        : flex;
+            align-items    : center;
+            justify-content: flex-end;
+
+            &>form {
+                height: 100%;
+
+                &>div {
+                    margin: 0 !important;
+                    height: 100%;
+
+                    &>div {
+                        height: 100%;
+
+                        &>nz-form-item {
+                            line-height: 2.9;
+                            margin     : 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-divider-horizontal {
+            margin: 0;
+        }
+    }
+
+    .Container {
+        height: 100%;
+    }
+}
+
+.top-side-left {
+    flex-direction: row;
+    background    : transparent;
+    height        : 100%;
+}
+
+.content {
+    height        : calc(100% - 53px);
+    flex-direction: row;
+    background    : transparent;
+}
+
+/**输入框类型*/
+.inputline {
+    border             : none;
+    border-bottom      : 1px solid;
+    height             : 31px;
+    margin             : 5px 0;
+    // background-color: #fafafa;
+}
+
+.inputline,
+.inputline:focus {
+    box-shadow: unset;
+}
+
+/**查询*/
+.search {
+    top   : 142px;
+    height: calc(100% - 142px);
+}
+
+/**提示*/
+.alert {
+    min-width: 400px;
+    max-width: 500px;
+    font-size: 12px;
+    padding  : 10px 20px;
+
+    .ant-alert {
+        border-radius: 30px;
+        padding      : 10px 15px 10px 20px;
+    }
+}
+
+/**表单容器*/
+.modal-body {
+    height  : calc(100% - 50px);
+    padding : 10px;
+    overflow: auto;
+
+    nz-form-control {
+        .ant-picker {
+            width: 100%;
+        }
+    }
+}
+
+/**底部操作栏*/
+.modal-footer {
+    height    : 53px;
+    padding   : 8px;
+    text-align: right;
+    border-top: 1px solid #ccc;
+
+    &>button {
+        margin-right: 5px;
+    }
+}
+
+/**间距调整*/
+.spacer {
+    flex: 1 1 auto;
+}
+
+.default {
+    background-color: #fff;
+}
+
+.dark {
+    background-color: #000;
+}

@@ -1,0 +1,37 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{ "basQuality.pkey" | i18n }}</nz-form-label>
+                <nz-form-control nzSpan="12">
+                    <nz-tree-select style="width: 100%" [nzNodes]="qualityClassList" nzShowSearch
+                        nzPlaceHolder="{{ 'checkdata.check' | i18n }}" formControlName="pkey"></nz-tree-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basQuality.bqci_code" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="12" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'basQuality.bqci_code' | i18n}}">
+                    <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzSpan="6" nzRequired>{{"basQuality.bqci_name" | i18n}}</nz-form-label>
+                <nz-form-control nzSpan="12" nzErrorTip="{{ 'inputdata.input' | i18n }}{{'placard.bqci_name' | i18n}}">
+                    <input nz-input formControlName="name" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzSpan="6">{{ "basQuality.description" | i18n }}</nz-form-label>
+                <nz-form-control nzSpan="12">
+                    <input nz-input formControlName="description" placeholder="{{ 'inputdata.input' | i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

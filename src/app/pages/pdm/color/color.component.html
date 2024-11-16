@@ -1,0 +1,148 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch"
+[isTablePage]="isTablePage"
+[tablePage]="tablePage"
+[tableData]="tableData"
+[pageSize]="queryParams.pageSize"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[format]="format"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+(getBtnGroup)="getBtnGroup($event)"
+>
+</zpage>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword_xx'|i18n:('placard.codename'|i18n)" [(ngModel)]="queryParams.keywords" (keyup.enter)="toSearch(1)"/>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" (click)="resetSearch()"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index">
+
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 弹窗 -------------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopup" 
+[width]="540" 
+[height]="350" 
+(getClosePopup)="closePopup()" 
+[isLoading]="isLoading"
+[zpopupCont]="zpopupCont"
+[zpopupFoot]="zpopupFoot"
+></zpopup>
+<!-- 弹窗 内容 -->
+<ng-template #zpopupCont>
+    <form nz-form [formGroup]="validateForm">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'color.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'color.codeTip'|i18n">
+                <input nz-input formControlName="code" [placeholder]="'inputdata.input'|i18n"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'color.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="'color.nameTip'|i18n">
+                <input nz-input formControlName="name" [placeholder]="'inputdata.input'|i18n"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="customcode">{{ 'color.customcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <input nz-input formControlName="customcode" [placeholder]="'inputdata.input'|i18n"/>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{ 'color.description'|i18n }}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" >
+                <input nz-input formControlName="description" [placeholder]="'inputdata.input'|i18n"/>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupFoot>
+    <button *ngIf="popupType=='add'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+    <button *ngIf="popupType=='update'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 删除---------------------------------------------------->
+<zpopup-confirm
+*ngIf="isPopupConfirm" 
+[delDataNum]="delDataNum"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 导入 ---------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopupImport" 
+[width]="700" 
+[height]="400" 
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupImportCont"
+[zpopupFoot]="zpopupImportFoot">
+</zpopup>
+<!-- 导入 内容 -->
+<ng-template #zpopupImportCont>
+    <div class="down"><button nz-button nzType="dashed" (click)="toExcelModel()">{{ 'btn.downmodel'|i18n }}</button> <span style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span></div>
+    <div class="import">
+        <nz-upload
+        nzType="drag"
+        [nzMultiple]="true"
+        [nzAction]="upExcel()"
+        [nzHeaders]="uploadingHeader()"
+        (nzChange)="importChange($event)"
+        [nzBeforeUpload]="beforeUpload"
+        [nzMultiple]="false"
+        [nzDisabled]="isUpload"
+        [nzFileList]="fileList"
+        >
+        <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+        <p class="ant-upload-hint">
+            {{ 'warning.importTip2'|i18n }}
+        </p>
+        </nz-upload>
+    </div>
+</ng-template>
+<!-- 导入 底部 -->
+<ng-template #zpopupImportFoot>
+    
+</ng-template>

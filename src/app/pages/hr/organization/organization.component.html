@@ -1,0 +1,248 @@
+<div class="cont">
+    <!-- 头部搜索 和 按钮 -->
+    <div class="top_in">
+        <div class="top_in_btn">
+            <ng-container *ngFor="let item of btnJurisdiction.top ,let i = index">
+                <ng-container *ngIf="i<4">
+                    <button nz-button [nzType]="item.action=='add'?'primary':'default'" class="ztop_in_select_btn" (click)="getTopBtn(item.action)">
+                        <i nz-icon [nzType]="item.icon"></i> {{ item.name }}
+                    </button>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="btnJurisdiction.top.length>4">
+                <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+                    {{ 'btn.extended'|i18n }}
+                    <i nz-icon nzType="down"></i>
+                </button>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <ng-container *ngFor="let item of btnJurisdiction.top ,let i = index" >
+                            <ng-container *ngIf="i>=4">
+                                <li nz-menu-item>
+                                    <a (click)="getTopBtn(item.action)"><i nz-icon [nzType]="item.icon"></i> {{ item.name }}</a>
+                                </li>
+                            </ng-container>
+                        </ng-container>
+                    </ul>
+                </nz-dropdown-menu>
+            </ng-container>
+        </div>
+        <div class="top_in_select">
+            <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+                <input type="text" nz-input [placeholder]="'placard.keyword_xx'|i18n:('placard.codename'|i18n)" [(ngModel)]="queryName" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+            </ng-template>
+            <ng-template #suffixButton>
+                <button nz-button nzType="primary" nzSearch (click)="toSearch()">{{ 'btn.search'|i18n }}</button>
+            </ng-template>
+            <button nz-button nzType="default" style="margin-left: -2px;" (click)="resetSearch()"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+        </div>
+    </div>
+    <!-- 表格 -->
+    <div class="orgtable" #divTable>
+        <nz-table 
+        #expandTable 
+        nzShowSizeChanger
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+        [nzData]="listOfMapData" 
+        nzTableLayout="fixed" 
+        [nzShowPagination]="false" 
+        [nzBordered]="true" 
+        nzSize="small"
+        [nzLoadingDelay]="1"
+        [nzScroll]="tableWidthHeight"
+        [nzLoading]="listLoading"
+        [nzPageSize]="999999"
+        >
+            <thead>
+            <tr>
+                <!-- [(nzChecked)]="checked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="onAllChecked($event)" 注释全选效果 -->
+                <th nzWidth="39px" ></th>
+                <!-- 名称 -->
+                <th>{{ 'placard.name'|i18n }}</th>
+                <!-- 编号 -->
+                <th>{{ 'placard.code'|i18n }}</th>
+                <!-- 部门类型 -->
+                <!-- <th>{{ 'popupField.organizationType'|i18n }}</th> -->
+                <!-- 描述 -->
+                <th>{{ 'popupField.organizationDescription'|i18n }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let data of expandTable.data">
+                <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+                <tr class="ztable_slh" *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                    <td [nzChecked]="setOfCheckedId.has(item.key)" (nzCheckedChange)="onItemChecked(item.key, $event)"></td>
+                    <td
+                    [nzIndentSize]="item.level! * 20"
+                    [nzShowExpand]="!!item.children"
+                    [(nzExpand)]="item.expand"
+                    (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                    >
+                        <span nz-tooltip [nzTooltipTitle]="item.name" [innerHTML]="item.name | highlight:queryName"></span>
+                    </td>
+                    <td><span nz-tooltip [nzTooltipTitle]="item.code" [innerHTML]="item.code | highlight:queryName"></span></td>
+                    <!-- <td><span nz-tooltip [nzTooltipTitle]="item.type_name">{{ item.type_name }}</span></td> -->
+                    <td><span nz-tooltip [nzTooltipTitle]="item.description">{{ item.description }}</span></td>
+                </tr>
+                </ng-container>
+            </ng-container>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+    
+<!-- 新增 -->
+<zpopup 
+[popupTitle]="modalTitle" 
+*ngIf="isAddVisible" 
+[isLoading]="isAddOkLoading"
+[width]="500" 
+[height]="420" 
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupCont"
+[zpopupFoot]="zpopupFoot"
+></zpopup>
+<ng-template #zpopupCont>
+    <form nz-form [formGroup]="addValidateForm">
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <!-- 组织父级 -->
+                    <nz-form-label style="width: 84px;">{{'popupField.organizationParent'|i18n}}</nz-form-label>
+                    <nz-form-control >
+                        <nz-tree-select
+                            style="width: 100%"
+                            [nzExpandedKeys]="treeSelectExpandKeys"
+                            [nzNodes]="treeSelectNodes"
+                            nzShowSearch
+                            [nzPlaceHolder]="'placard.parent'|i18n"
+                            [nzDropdownStyle]="{ 'max-height': '300px' }"
+                            formControlName="pkey"
+                            [nzDisabled]="popupType=='update'"
+                            (ngModelChange)="treeSelectOnChange($event)"
+                        ></nz-tree-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <!-- 组织名称 -->
+                    <nz-form-label style="width: 84px;" nzRequired nzFor="name">{{'popupField.organizationName'|i18n}}</nz-form-label>
+                    <nz-form-control  [nzErrorTip]="('inputdata.input'|i18n)+ ('popupField.organizationName'|i18n)">
+                        <input type="text" nz-input formControlName="name" [placeholder]="'inputdata.input'|i18n" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <!-- 组织编号 -->
+                    <nz-form-label style="width: 84px;" nzRequired nzFor="code">{{'popupField.organizationCode'|i18n}}</nz-form-label>
+                    <nz-form-control  [nzErrorTip]="('inputdata.input'|i18n)+ ('popupField.organizationCode'|i18n)">
+                        <input type="text" nz-input formControlName="code" [placeholder]="'inputdata.input'|i18n" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <!-- <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    部门类型
+                    <nz-form-label style="width: 84px;" nzFor="type">{{'popupField.organizationType'|i18n}}</nz-form-label>
+                    <nz-form-control  [nzErrorTip]="('checkdata.check'|i18n)+ ('popupField.organizationType'|i18n)">
+                        <nz-select formControlName="type" [nzLoading]="isType" (ngModelChange)="typeSelectOnChange($event)" [nzPlaceHolder]="'checkdata.check'|i18n">
+                            <nz-option *ngFor="let item of typeList" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div> -->
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <!-- 描述 -->
+                    <nz-form-label style="width: 84px;">{{'popupField.organizationDescription'|i18n}}</nz-form-label>
+                    <nz-form-control >
+                        <input type="text" nz-input formControlName="description" [placeholder]="'inputdata.input'|i18n" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </form>
+</ng-template>
+<ng-template #zpopupFoot>
+    <button nz-button nzType="primary" [nzLoading]="isRoleLoading" (click)="handleOk()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+
+<!-- 删除 ---------------------------------------------------->
+<zpopup-confirm
+*ngIf="isPopupConfirm" 
+[delDataNum]="delDataNum"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="handleOk()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 与款式分类关系 ---------------------------------------------------->
+<zpopup 
+[popupTitle]="modalTitle" 
+*ngIf="isSetupVisible" 
+[isLoading]="isSetupLoading"
+[width]="1200"
+[height]="700"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupSetupCont"
+[zpopupFoot]="zpopupSetupFoot"
+></zpopup>
+<ng-template #zpopupSetupCont>
+    <div class="setup_left">
+        <div class="setup_left_top">
+            <div class="setup_left_top_title">{{ 'btn.style'|i18n }}</div>
+            <div class="setup_left_top_a">
+                <a nz-dropdown nzTrigger="click" class="zleft_top_right_a">
+                    <i nz-icon nzTheme="outline" nzType="reload" nz-tooltip [nzTooltipTitle]="'btn.refresh'|i18n"></i>
+                </a>
+            </div>
+        </div>
+        <div class="setup_left_cont">
+            <nz-tree style="margin: 10px;" [nzData]="setupNodes" (nzClick)="nzSetupEvent($event)"></nz-tree>
+        </div>
+    </div>
+    <div class="setup_right">
+        <nz-table #setupTable [nzData]="setupData" [nzLoading]="setupTableLoading" [nzBordered]="true" nzSize="small" [nzScroll]="{x:auto,y:'489px'}">
+            <thead>
+              <tr>
+                <!-- 分类编号 -->
+                <th>{{ 'placard.categoryCode'|i18n }}</th>
+                <!-- 分类名称 -->
+                <th>{{ 'placard.categoryName'|i18n }}</th>
+                <!-- 操作 -->
+                <th>{{ 'btn.operation'|i18n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of setupTable.data">
+                <td>{{data.name}}</td>
+                <td>{{data.age}}</td>
+                <td>
+                  <a>Action 一 {{data.name}}</a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <a>Delete</a>
+                </td>
+              </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</ng-template>
+<ng-template #zpopupSetupFoot></ng-template>

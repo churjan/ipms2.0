@@ -1,0 +1,23 @@
+<nz-radio-group [(ngModel)]="Index" (ngModelChange)="btnEvent($event)">
+    <label nz-radio-button [nzValue]="item.style" *ngFor="let item of siblist"> {{item.style_name}}</label>
+</nz-radio-group>
+<nz-table #colSpanTable [nzData]="siblings" nzBordered nzTableLayout="fixed" [nzFrontPagination]="false"
+    [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x:'100%', y: 'calc(100% - 40px)' }">
+    <thead>
+        <tr>
+            <th *ngFor="let columns of modular.siblings;let i=index;" [nzEllipsis]="true" nz-tooltip
+                nzTooltipTitle="{{('hanger.'+columns.coums)|i18n}}">{{('hanger.'+columns.coums)|i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of colSpanTable.data; index as i">
+            <td *ngFor="let columns of modular.siblings;let i=index;" [nzEllipsis]="true" nz-tooltip
+                (click)="columns.open==true?open($event,columns,data):null"
+                nzTooltipTitle="{{data[print(columns.coums)]}}" [class.decoration]="columns.open"
+                [class.pointer]="columns.open" [nzAlign]="columns.nzAlign?columns.nzAlign:'left'">
+                {{columns.format?(
+        toString(data[print(columns.coums)],data,columns)|date:columns.format):toString(data[print(columns.coums)],data,columns)}}
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

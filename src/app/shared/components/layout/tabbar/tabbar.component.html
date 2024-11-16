@@ -1,0 +1,36 @@
+<div class="tabs">
+    <nz-tabset nzType="editable-card" nzHideAdd [nzTabBarGutter] = "0"  [(nzSelectedIndex)]="tagSelectedIndex" [nzTabBarExtraContent]="extraTemplate">
+        <nz-tab  [nzTitle]="titleTemplate" *ngFor="let tab of tagsList; let i = index" (nzClick)="tabChange(i)" (nzContextmenu)="contextMenu($event, tabMenu)">
+            <ng-template #titleTemplate>
+                <ng-container *ngIf="tab.isSelected">
+                    <i class="reload" nz-icon nzType="sync" (click)="reloadTag($event,i)"></i>
+                    <span class="title">{{tab.title}}</span>
+                    <i *ngIf="tab.path != '/home'" class="close" nz-icon nzType="close" (click)="closeTag($event,i)"></i>
+                </ng-container>
+                <ng-container *ngIf="!tab.isSelected">
+                    <span class="title" (click)="tabChange(i)">{{tab.title}}</span>
+                    <i *ngIf="tab.path != '/home'" class="close" nz-icon nzType="close" (click)="closeTag($event,i)"></i>
+                </ng-container>
+            </ng-template>
+            <nz-dropdown-menu #tabMenu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item (click)="closeRightTags(i)">{{ 'btn.closeRightTabs'|i18n }}</li>
+                </ul>
+            </nz-dropdown-menu>
+        </nz-tab>
+    </nz-tabset>
+</div>
+
+<ng-template #extraTemplate>
+    <span nz-dropdown [nzDropdownMenu]="closeMenu">
+        <i class="clear-other" nz-icon nzType="issues-close" nzTheme="outline"></i>
+    </span>
+</ng-template>
+
+<nz-dropdown-menu #closeMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item (click)="closeAllTags()">{{ 'btn.closeAllTabs'|i18n }}</li>
+        <li nz-menu-item (click)="closeOtherTags()">{{ 'btn.closeOtherTabs'|i18n }}</li>
+    </ul>
+</nz-dropdown-menu>
+

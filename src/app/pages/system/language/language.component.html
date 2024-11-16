@@ -1,0 +1,94 @@
+<crud2 #crud class="crud" [router]="url" [jsonname]="fieldcode" [isdynamic]="true" dynamicfield="title" [dynamisort]="1"
+    dynamishow="languagename" (actionClick)="btnEvent($event)" [columns]="columns" [isdynamic]="true"
+    [showAdvanced]="false" [modular]="modular" [fields]="field" [isTest]="true" [tableTest]="tableTest" [isSetList]="false"
+    [impoutTest]="impoutTest" delkey="slo_key" (transform)="transform($event)"></crud2>
+<ng-template #tableTest>
+    <nz-table #fixedTable [nzData]="list" nzSize="small" nzBordered nzOuterBordered nzOuterBorderedn class="listshow"
+        [nzScroll]="{ x:'100%',y:'calc(100% - 40px)' }" [nzFrontPagination]="false" [nzLoading]="loading"
+        nzShowSizeChanger nzShowQuickJumper [nzPageIndex]="pageMap.page" [nzPageSize]="pageMap.pagesize"
+        [nzTotal]="crud.options.total" [nzPageSizeOptions]="crud.options.pageList" [nzShowTotal]="totalTemplate"
+        (nzPageSizeChange)="PageSizeChange($event)" (nzPageIndexChange)="PageIndexChange($event)">
+        <thead>
+            <tr>
+                <th nzLeft nzWidth="40px" nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
+                    (nzCheckedChange)="checkAll($event)"></th>
+                <ng-container *ngFor="let column of dynamicColumns;let i=index">
+                    <th [id]="column.coums" [nzShowSort]="isSort" [nzEllipsis]="true" [nzLeft]="'40px'" nz-resizable
+                        [nzWidth]="column.width" (nzResizeEnd)="onResize($event, column.coums)"
+                        [nzAlign]="column.alignment?column.alignment:'left'">
+                        {{column.name?column.name:('sysLanguage.'+column.coums) |i18n}}
+                        <i nz-icon nzType="setting" nzTheme="twotone" nz-dropdown [nzDropdownMenu]="dynamicmenu"
+                            nzPlacement="bottom" *ngIf="column.name"></i>
+                        <nz-resize-handle nzDirection="right">
+                            <div class="resize-trigger"></div>
+                        </nz-resize-handle>
+                        <nz-dropdown-menu #dynamicmenu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item (click)="version(column.data)"><i nz-icon nzType="edit"
+                                        nzTheme="twotone"></i>{{'btn.update'|i18n}}</li>
+                                <li nz-menu-item (click)="delver(column.data)"><i nz-icon nzType="delete"
+                                        nzTheme="twotone"></i>{{'btn.delete'|i18n}}</li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </th>
+                </ng-container>
+                <th nzRight [nzWidth]="btnGroupW()+'px'" nzAlign="center" (click)="version()">
+                    <i nz-icon nzType="plus" nzTheme="outline"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of fixedTable.data;let f=index" class="editable-row">
+                <td nzWidth="40px" nzLeft nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="selectRow()">
+                </td>
+                <td [nzLeft]="i==0" *ngFor="let column of dynamicColumns;let i=index"
+                    [nzWidth]="column.width?(column.width+'px'):'150px'"
+                    [nzAlign]="column.alignment?column.alignment:'left'" nzEllipsis
+                    (click)="startEdit(column.coums+'-'+f+'-'+i)">
+                    <div class="editable-cell Tooltip" nz-tooltip [hidden]="editId === (column.coums+'-'+f+'-'+i)"
+                        nzTooltipTitle="{{data[column.coums]}}" (click)="startEdit(column.coums+'-'+f+'-'+i)">
+                        {{data[column.coums]}}
+                    </div>
+                    <input [hidden]="editId !== (column.coums+'-'+f+'-'+i)" type="text" nz-input
+                        [(ngModel)]="data[column.coums]" (keydown)="stopEdit($event,data,f,column.coums)"
+                        (blur)="stopEdit($event,data,f,column.coums)" />
+                </td>
+                <td nzRight nzAlign="center">
+                    <ng-container *ngFor="let btnsin of btnGroup.single;let
+                        bi=index">
+                        <a nz-tooltip nzTooltipTitle="{{btnsin.name }}" (click)="operation(btnsin.action,data)">
+                            <i nz-icon [nzType]="btnsin.icon" *ngIf="btnsin.icon"></i>
+                            <span *ngIf="!btnsin.icon">{{btnsin.name}}</span>
+                        </a>
+                        <nz-divider nzType="vertical"
+                            [hidden]="(!btnGroup.extend||btnGroup.extend.length==0)&&btnGroup.single.length-1==bi">
+                        </nz-divider>
+                    </ng-container>
+                    <a *ngIf="btnGroup.extend&&btnGroup.extend.length>0" nz-dropdown [nzDropdownMenu]="menu"
+                        nzPlacement="bottomRight">
+                        <i nz-icon nzType="more"></i>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <ng-container *ngFor="let btnex of btnGroup.extend">
+                                <li nz-menu-item (click)="operation(btnex['action'],data)">
+                                    <a>{{btnex.name}}</a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </nz-dropdown-menu>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <ng-template #totalTemplate let-total>
+        {{ 'placard.totalnum'|i18n| covertTranslation: total }}
+    </ng-template>
+</ng-template>
+<ng-template #impoutTest>
+    <nz-list nzBordered nzSize="small">
+        <nz-list-item *ngFor="let item of Otherlanguag" (click)="crud.clang(null,item.language)">{{item.languagename}}
+        </nz-list-item>
+    </nz-list>
+</ng-template>
+<edit #edit (editDone)="crud.reloadData($event)"></edit>

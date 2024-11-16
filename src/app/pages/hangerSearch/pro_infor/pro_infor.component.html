@@ -1,0 +1,35 @@
+
+<nz-table #colSpanTable [nzData]="oplist" nzBordered nzTableLayout="fixed"
+  [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small"
+  [nzScroll]="{ x:'100%', y: 'calc(100% - 40px)' }">
+  <thead>
+    <tr>
+      <th *ngFor="let columns of modular.oplist;let i=index;"
+        [nzAlign]="columns.nzAlign?columns.nzAlign:'left'" [nzEllipsis]="true"
+        [nzWidth]="columns.width?columns.width:'auto'"
+        nz-tooltip
+        nzTooltipTitle="{{('hanger.'+columns.coums)|i18n}}">{{('hanger.'+columns.coums)|i18n}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of colSpanTable.data; index as i">
+      <td *ngFor="let columns of modular.oplist;let i=index;"
+        [nzWidth]="columns.width?columns.width:'auto'" [nzEllipsis]="true"
+        [nzAlign]="columns.nzAlign?columns.nzAlign:'left'">
+        <span *ngIf="columns.coums=='pwrd_list'&&data[columns.coums]">
+          <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzSpan]="10" *ngFor="let item of
+              data[columns.coums]" [class.red]="item.percentage==0">{{item.bls_code}}({{item.percent}})</div>
+          </div>
+        </span>
+        <span
+          *ngIf="columns.coums!='pwrd_list'"
+          nz-tooltip
+          nzTooltipTitle="{{data.ptpr_entity&&data.ptpr_entity[columns.coums]}}">
+          {{columns.format?(
+          toString(data[print(columns.coums)],data,columns)|date:columns.format):toString(data[print(columns.coums)],data,columns)}}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -1,0 +1,97 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="80%" justifyContent="center" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div class="m-t--20 tabset-wrapper">
+            <nz-tabset>
+                <nz-tab nzTitle="{{ 'placard.basein'|i18n }}">
+                    <form nz-form [formGroup]="validateForm">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4" nzRequired>{{
+                                'wmsAutooutscheme.name'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="8" nzErrorTip="{{
+                                'inputdata.input'|i18n }}/{{
+                                'wmsAutooutscheme.name'|i18n }}">
+                                <input nz-input formControlName="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                                    (keydown)="submitForm($event)" />
+                            </nz-form-control>
+                            <nz-form-label [nzSpan]="4">{{'wmsAutooutscheme.isbox'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="8"
+                                nzErrorTip="{{'inputdata.input'|i18n }}/{{'wmsAutooutscheme.isbox'|i18n }}">
+                                <nz-switch nz-tooltip nzTooltipTitle="{{'wmsAutooutscheme.isbox'|i18n }}"
+                                    formControlName="isbox" nzCheckedChildren="{{'placard.yes'|i18n}}"
+                                    nzUnCheckedChildren="{{'placard.no'|i18n}}" (ngModelChange)="ModelChange($event)">
+                                </nz-switch>
+                                <!-- <input nz-input formControlName="isbox" placeholder="{{ 'inputdata.input'|i18n }}"
+                                    (keydown)="submitForm($event)" /> -->
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4" [nzRequired]="validateForm.value.isbox">
+                                {{'wmsAutooutscheme.box_number'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="8" nzErrorTip="{{'warning.total'|i18n }}">
+                                <input nz-input type="number" formControlName="box_number" min="0"
+                                    placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                            </nz-form-control>
+                            <nz-form-label [nzSpan]="4">{{
+                                'wmsAutooutscheme.description'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="8" nzErrorTip="{{
+                                'warning.descriptionLengthWarn'|i18n }}">
+                                <textarea nz-input formControlName="description"
+                                    placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)"
+                                    nzAutosize></textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">{{
+                                'wmsAutooutscheme.condition'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="20">
+                                <conditions #conditions [(data)]="conditionsData" [canDeleteAll]="true"></conditions>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </nz-tab>
+                <nz-tab nzTitle="{{ 'autoOutScheme.targetStation'|i18n }}" *ngIf="isOutTimerOrderlyForScheme">
+                    <nz-transfer nzShowSearch [nzDataSource]="transferData" [nzRenderList]="[renderList, renderList]"
+                        [nzTitles]="['('+('canSelect'|i18n)+')',
+                        '('+('selected'|i18n)+')']" [nzShowSelectAll]="false" [nzFilterOption]="filterOption"
+                        (nzChange)="transferChange($event)">
+
+                        <ng-template #renderList let-items let-stat="stat" let-onItemSelectAll="onItemSelectAll"
+                            let-onItemSelect="onItemSelect">
+                            <div class="transfer-table-wrapper">
+                                <nz-table #table [nzData]="$asTransferItems(items)" [nzBordered]="true" nzSize="small">
+                                    <thead>
+                                        <tr>
+                                            <th nzAlign="center" [nzChecked]="stat.checkAll"
+                                                [nzIndeterminate]="stat.checkHalf"
+                                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                            <th nzAlign="center">{{
+                                                'wmsAutooutscheme.blsName'|i18n }}</th>
+                                            <th nzAlign="center">{{
+                                                'wmsAutooutscheme.blsCode'|i18n }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                            <td nzAlign="center" [nzChecked]="!!data.checked"
+                                                (nzCheckedChange)="onItemSelect(data)"></td>
+                                            <td nzAlign="center">{{ data.title
+                                                }}</td>
+                                            <td nzAlign="center">{{ data.code }}</td>
+                                        </tr>
+                                    </tbody>
+                                </nz-table>
+                            </div>
+                        </ng-template>
+                    </nz-transfer>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

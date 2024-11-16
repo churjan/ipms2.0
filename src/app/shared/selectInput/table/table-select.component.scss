@@ -1,0 +1,49 @@
+.drop-down {
+    width: 100% !important;
+    min-width: 80px;
+    height: 100%;
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        height: 100%;
+        background-color: inherit;
+    }
+}
+nz-input-group {
+    .close {
+        display: none;
+    }
+}
+nz-input-group:hover {
+    .point {
+        display: none;
+    }
+    .close {
+        display: block;
+    }
+}
+nz-input-group[ngModel*=""]:hover {
+    .point {
+        display: block;
+    }
+    .close {
+        display: none;
+    }
+}
+.table {
+    height: 260px;
+}
+.search-box {
+    padding: 8px;
+}
+
+.search-box input {
+    width: 160px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.search-box button {
+    width: 76px;
+}
+.search-button {
+    margin-right: 8px;
+}

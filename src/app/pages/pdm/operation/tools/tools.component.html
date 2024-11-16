@@ -1,0 +1,83 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center"
+    nzSize="small" height="99%"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-transfer
+            [nzDataSource]="list"
+            nzShowSearch
+            [nzShowSelectAll]="false"
+            [nzRenderList]="[leftList, rightList]"
+            (nzSelectChange)="select($event)"
+            (nzChange)="change($event)">
+            <ng-template #leftList
+                let-items
+                let-direction="direction"
+                let-stat="stat"
+                let-onItemSelectAll="onItemSelectAll"
+                let-onItemSelect="onItemSelect">
+                <nz-table #l [nzData]="$asTransferItems(items)" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th
+                                [nzChecked]="stat.checkAll"
+                                [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                            <th>{{'placard.No'|i18n}}</th>
+                            <th *ngIf="direction === 'left'">{{'pdmOperation.code'|i18n}}</th>
+                            <th>{{'pdmOperation.tool'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of l.data;let i= index"
+                            (click)="onItemSelect(data)">
+                            <td
+                                [nzChecked]="!!data.checked"
+                                [nzDisabled]="data.disabled"
+                                (nzCheckedChange)="onItemSelect(data)"></td>
+                            <td>{{ i+1 }}</td>
+                            <td *ngIf="direction === 'left'">
+                                <nz-tag>{{ data.code }}</nz-tag>
+                            </td>
+                            <td>{{ data.name }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+            <ng-template
+                #rightList
+                let-items
+                let-direction="direction"
+                let-stat="stat"
+                let-onItemSelectAll="onItemSelectAll"
+                let-onItemSelect="onItemSelect">
+                <nz-table #r [nzData]="$asTransferItems(items)" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th
+                                [nzChecked]="stat.checkAll"
+                                [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                            <th>{{'placard.No'|i18n}}</th>
+                            <th *ngIf="direction === 'right'">{{'pdmOperation.code'|i18n}}</th>
+                            <th>{{'pdmOperation.tool'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of r.data;let i= index"
+                            (click)="onItemSelect(data)">
+                            <td
+                                [nzChecked]="!!data.checked"
+                                [nzDisabled]="data.disabled"
+                                (nzCheckedChange)="onItemSelect(data)"></td>
+                            <td>{{ i+1 }}</td>
+                            <td *ngIf="direction === 'right'">
+                                <nz-tag>{{ data.dmdi_code }}</nz-tag>
+                            </td>
+                            <td>{{ data.dmdi_name }}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+        </nz-transfer>
+    </ng-template>
+</idrawer>

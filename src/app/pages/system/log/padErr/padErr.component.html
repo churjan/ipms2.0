@@ -1,0 +1,6 @@
+
+<crud2 #crud [router]="url" [jsonname]="fieldcode"
+    keyword_placeholder="sysLogrun.source"
+    [list]="list" (actionClick)="btnEvent($event)" [showAdvanced]="false"
+    [columns]="columns" [modular]="modular" [fields]="field"></crud2>
+<app-padErr-info #edit (editDone)="crud.reloadData($event)"></app-padErr-info>

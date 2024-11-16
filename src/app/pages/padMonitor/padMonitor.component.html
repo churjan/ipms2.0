@@ -1,0 +1,33 @@
+<crud2 #crud [router]="'padMonitor'" [isDataOnInit]="false" [getBody]="getBody" [jsonname]="fieldcode" [isCache]="true"
+    (actionClick)="btnEvent($event)" [columns]="columns" [ExtendColumnTpl]="ExtendTpl" [modular]="modular"
+    [isAction]="false" [fields]="field" [btnGroup]="modular.btn" [isKeyword]="false" [showAdvanced]="false"
+    [position]="false" [FooterTpl]="FooterTpl"></crud2>
+<!-- 扩展列 -->
+<ng-template #ExtendTpl let-item="record" let-column="column">
+    <p class="p" *ngFor="let value of item[column.coums],let i = index">
+        <a class="p_a" (click)="toInfeedDetails(value.infeed_code,item.station_code)" nz-tooltip
+            [nzTooltipTitle]="value.infeed_code">{{value.infeed_code}}</a>
+        <a class="p_sku">
+            <span
+                *ngIf="value.sku_composition||value.sku_maximum">SKU：{{value.sku_composition_name}}&nbsp;({{value.sku_maximum}})</span>
+        </a>
+        <span style="float: left;">
+            <span
+                [style]="(value.carrier_count>=value.volume || value.hardware_overload)?'color:#f00;':'color:#1890ff;'">{{'popupField.carrier'|i18n}}：{{value.carrier_count}}
+                / </span>
+            <a [style]="(value.carrier_count>=value.volume || value.hardware_overload)?'color:#f00':''">
+                <span class="editable-cell">{{value.volume}}</span>
+            </a>
+        </span>
+    </p>
+</ng-template>
+<ng-template #FooterTpl>
+    <span>{{'placard.Nmrtr'|i18n}}={{Footer.rodnum?Footer.rodnum:0}}({{(Footer.notemptyrodratio?Footer.notemptyrodratio:0)*100}}%)</span>
+    <nz-divider nzType="vertical"></nz-divider>
+    <span>{{'placard.allnum'|i18n}}：{{Footer.allnum?Footer.allnum:0}}</span>
+    <nz-divider nzType="vertical"></nz-divider>
+    <span>{{'placard.login_num'|i18n}}：{{Footer.login_num?Footer.login_num:0}}</span>
+    <nz-divider nzType="vertical"></nz-divider>
+    <span>{{'placard.per_capita'|i18n}}：{{Footer.per_capita?Footer.per_capita:0}}</span>
+</ng-template>
+<InfeedDetails #InfeedDetails [modular]="modular" (editDone)="crud.reloadData($event);"></InfeedDetails>

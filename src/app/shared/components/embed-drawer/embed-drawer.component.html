@@ -1,0 +1,9 @@
+<div class="drawer" [class.show]="isVisible">
+    <div
+        class="drawer-background-view"
+        (click)="maskClosable && onClose()"
+    ></div>
+    <div class="drawer-view">
+        <ng-content [select]="componentName"></ng-content>
+    </div>
+</div>

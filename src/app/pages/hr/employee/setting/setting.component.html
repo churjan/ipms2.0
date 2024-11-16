@@ -1,0 +1,49 @@
+<idrawer *ngIf="visible" [title]="'btn.set'|i18n" [width]="width" justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{ 'username'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'username'|i18n }}">
+                    <input nz-input formControlName="username" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{ 'password'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'password'|i18n }}">
+                    <nz-input-group [nzSuffix]="suffixTemplate">
+                        <input nz-input type="password" formControlName="password" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{ 'isDisabled'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{  'checkdata.check'|i18n}}/{{ 'status'|i18n }}">
+                    <nz-radio-group formControlName="disable">
+                        <label nz-radio [nzValue]="1">{{ 'yes'|i18n }}</label>
+                        <label nz-radio [nzValue]="0">{{ 'no'|i18n }}</label>
+                        </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="roles && roles.length > 0">
+                <nz-form-label [nzSpan]="6">{{ 'hrEmployee.role'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18">
+                    <nz-transfer
+                        [nzDataSource]="roles"
+                        [nzTitles]="['('+('canSelect'|i18n)+')', '('+('selected'|i18n)+')']"
+                        (nzChange)="roleChange($event)"
+                    ></nz-transfer>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>
+
+
+<ng-template #suffixTemplate>
+    <small class="ps">{{ 'hrEmployee.defaultPassword'|i18n }}(888888)</small>
+</ng-template>

@@ -1,0 +1,10 @@
+<crud #crud [columns]="tableColumns" [showSelection]="false" [service]="inoutsummaryreportService" [topRightActionsTpl]="topRightActionsTpl" [showAdvancedSearch]="true" (onFilterOpen)="filter.open(filterFilds,$event)" (onReset)="reset()">
+</crud>
+
+<filter #filter (editDone)="advancedSearch($event)" (onClose)="crud.filterOpen = false"></filter>
+
+<ng-template #topRightActionsTpl>
+    <button nz-button nzType="primary" (click)="crud.download()" *hasPermission="['wms_inoutsummaryreport_exp']">
+        <i nz-icon nzType="export"></i> {{ 'btn.export'|i18n }}
+    </button>
+</ng-template>

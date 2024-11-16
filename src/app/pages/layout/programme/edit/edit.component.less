@@ -1,0 +1,26 @@
+.form-control{
+    margin-bottom: 20px;
+    .form-label{
+        text-align: right;
+        height: 32px;
+        line-height: 32px;
+        &.required::before{
+            display: inline-block;
+            margin-right: 4px;
+            color: #ff4d4f;
+            font-size: 14px;
+            font-family: SimSun,sans-serif;
+            line-height: 1;
+            content: '*';
+        }
+        &::after{
+            content: ':';
+            position: relative;
+            top: -.5px;
+            margin: 0 8px 0 2px;
+        }
+    }
+    nz-select{
+        width: 100%;
+    }
+}

@@ -1,0 +1,75 @@
+<idrawer *ngIf="visible" title="{{title}}" [width]="width"
+    height="100%" (onClose)="close()" [content]="contentTpl"
+    [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.bls_Key'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <ina-ztree-select class="select" title=""
+                        [setting]="setting"
+                        datatype="NewGetList" [params]="layout"
+                        formControlName="bls_key"></ina-ztree-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.pagesize'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input
+                        nz-input
+                        placeholder="{{ 'inputdata.input'|i18n }}"
+                        formControlName="pagesize"
+                        (keydown)="submitForm($event)"
+                        />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.page'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input type="number"
+                        nz-input
+                        placeholder="{{ 'inputdata.input'|i18n }}"
+                        formControlName="page"
+                        (keydown)="submitForm($event)"
+                        />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="LogType!=true">
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.date'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <nz-date-picker [nzFormat]="'yyyy-MM-dd'" class="select"
+                        formControlName="date"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="LogType!=true">
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.start'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input type="number"
+                        nz-input
+                        placeholder="{{ 'inputdata.input'|i18n }}"
+                        formControlName="start"
+                        (keydown)="submitForm($event)"
+                        />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="LogType!=true">
+                <nz-form-label [nzSpan]="24">{{ 'sysLogrun.end'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input type="number"
+                        nz-input
+                        placeholder="{{ 'inputdata.input'|i18n }}"
+                        formControlName="end"
+                        (keydown)="submitForm($event)"
+                        />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="reset()">{{ 'btn.reset'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()"
+            (keydown)="submitForm($event)" class="m-l-6">{{ 'placard.pull'|i18n
+            }}</button>
+    </ng-template>
+</idrawer>

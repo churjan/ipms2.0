@@ -1,0 +1,38 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3" >{{ 'parent'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="21">
+            <nz-tree-select
+                formControlName="pkey"
+                [nzNodes]="parents"
+                nzShowSearch
+                nzPlaceHolder="{{  'checkdata.check'|i18n}}"
+                nzVirtualHeight="260px"
+                ></nz-tree-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3"  nzRequired>{{ 'name'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="21" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'name'|i18n }}">
+            <input nz-input formControlName="name" placeholder="{{ 'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3" nzRequired>{{ 'code'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="21" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'code'|i18n }}">
+            <input nz-input formControlName="code" placeholder="{{ 'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3" >{{ 'description'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="21" nzErrorTip="{{ 'descriptionLengthWarn'|i18n }}">
+            <textarea nz-input formControlName="description" placeholder="{{ 'inputdata.input'|i18n }}" nzAutosize></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-divider></nz-divider>
+    <div class="btn">
+        <button [hidden]="key" nz-button nzType="primary" [disabled]="submiting" type="submit" [nzLoading]="submiting" *hasPermission="['hr_org_add']">{{  'btn.save'|i18n}}</button>
+        <button [hidden]="!key" nz-button nzType="primary" [disabled]="submiting" type="submit" [nzLoading]="submiting" *hasPermission="['hr_org_update']">{{  'btn.save'|i18n}}</button>
+        <button nz-button nzType="default" (click)="reset()" type="button" >{{ 'reset'|i18n }}</button>
+    </div>
+</form>

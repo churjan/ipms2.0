@@ -1,0 +1,46 @@
+<nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+    <input
+        type="text"
+        nz-input
+        placeholder="{{ 'btn.search' | i18n }}"
+        [ngModel]="keywords"
+        (keyup.enter)="onKeyUp($event)"
+    />
+</nz-input-group>
+<ng-template #suffixIconSearch>
+    <i nz-icon nzType="search"></i>
+</ng-template>
+<nz-table
+    [nzData]="tableFilterList"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+    [nzScroll]="{y}"
+>
+    <thead>
+        <tr>
+            <th nzWidth="80px" nzAlign="center">{{ "placard.No" | i18n }}</th>
+            <th>{{ "placard.station" | i18n }}</th>
+            <th>{{ "placard.track" | i18n }}</th>
+            <th nzWidth="80px" nzAlign="center">
+                {{ "btn.operation" | i18n }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableFilterList; let i = index">
+            <td nzAlign="center">{{ i + 1 }}</td>
+            <td>{{ "[" + data.pcode + "]" + data.pname }}</td>
+            <td>{{ "[" + data.code + "]" + data.name }}</td>
+            <td nzAlign="center">
+                <i
+                    nz-icon
+                    nzType="plus"
+                    nzTheme="outline"
+                    style="color: red; font-size: 16px"
+                    class="pointer"
+                    (click)="onAdd(data)"
+                ></i>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

@@ -1,0 +1,66 @@
+<crud2
+    #crud
+    [router]="url"
+    [jsonname]="fieldcode"
+    [list]="list"
+    (actionClick)="btnEvent($event)"
+    [columns]="columns"
+    [modular]="modular"
+    [fields]="field"
+    [showAdvanced]="false"
+    [ExtendColumnTpl]="ExtendColumnTpl"
+></crud2>
+<ng-template #ExtendColumnTpl let-record="record" let-column="column">
+    <ng-container *ngIf="column.coums === 'wages'">
+        {{ record.wages }}元
+    </ng-container>
+</ng-template>
+
+<!-- <ng-template #searchActionsBody>
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{
+                "hanger.tagcode" | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input
+                    nz-input
+                    name="tag_code"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    [(ngModel)]="crud.seniorModel.tag_code"
+                    (keydown)="crud.Search($event)"
+                />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{
+                "pmTags.tagcode" | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input
+                    nz-input
+                    name="tiaoma"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    [(ngModel)]="crud.seniorModel.tiaoma"
+                    (keydown)="crud.Search($event)"
+                />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{
+                "wmsPackingsolution.key" | i18n
+            }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input
+                    nz-input
+                    name="key"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    [(ngModel)]="crud.seniorModel.key"
+                    (keydown)="crud.Search($event)"
+                />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template> -->
+
+<app-edit-price-info #edit (editDone)="crud.reloadData($event)"></app-edit-price-info>

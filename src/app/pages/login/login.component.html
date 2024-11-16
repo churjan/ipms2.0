@@ -1,0 +1,46 @@
+<div class="login-page">
+    <div class="login-module">
+        <div class="login-img"></div>
+        <div class="login-view">
+            <div class="login-icon-view">
+                <img src="assets/images/icon.png" alt="" />
+            </div>
+            <div class="login-title">{{sysName}}</div>
+            <app-account-login
+                *ngIf="toggleType === 0"
+                [toggleType]="toggleType"
+                (toggleTypeChange)="
+                    prevToggleType = toggleType; toggleType = $event
+                "
+            >
+            </app-account-login>
+            <app-install
+                *ngIf="toggleType === 1"
+                [toggleType]="toggleType"
+                [prevToggleType]="prevToggleType"
+                (toggleTypeChange)="
+                    prevToggleType = toggleType; toggleType = $event
+                "
+            >
+            </app-install>
+            <app-register
+                *ngIf="toggleType === 2"
+                [toggleType]="toggleType"
+                (toggleTypeChange)="
+                    prevToggleType = toggleType; toggleType = $event
+                "
+            >
+            </app-register>
+            <app-register-success
+                *ngIf="toggleType === 3"
+                [toggleType]="toggleType"
+                (toggleTypeChange)="
+                    prevToggleType = toggleType; toggleType = $event
+                "
+            >
+            </app-register-success>
+            <p class="version">V{{version}}</p>
+        </div>
+    </div>
+    <copyright [Copyright]="Copyright"></copyright>
+</div>

@@ -1,0 +1,17 @@
+<idrawer *ngIf="visible" title="{{ 'wmsStock.quantity'|i18n }}" [width]="width" justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{ 'wmsStock.quantity'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'wmsStock.quantity'|i18n }}">
+                    <input nz-input formControlName="quantity" type="number" min="1" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{  'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" class="m-l-6">{{ 'btn.Confirmed'|i18n }}</button>
+    </ng-template>
+</idrawer>

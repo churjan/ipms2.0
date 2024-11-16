@@ -1,0 +1,126 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="4">{{'pdmOperation.poc_name'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="20">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                formControlName="poc_key" url="OperationClass" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzRequired>{{'pdmOperation.code'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'pdmOperation.code'|i18n }}">
+                            <input nz-input formControlName="code" placeholder="{{ 'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzRequired>{{'pdmOperation.name'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16" nzErrorTip="{{
+                            'inputdata.input'|i18n }}/{{
+                            'pdmOperation.name'|i18n }}">
+                            <input nz-input formControlName="name" placeholder="{{ 'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8">{{'pdmOperation.custom_code'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <input nz-input formControlName="custom_code" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzRequired>{{'pdmOperation.style_name'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                formControlName="style" DataFiled="value" urltype="enum" url="operationenum"
+                                DataTxt="description" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8">{{'pdmOperation.standard_time'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <input nz-input formControlName="standard_time" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8">{{
+                            'pdmOperation.standard_wages'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16" nzErrorTip="{{
+                            'inputdata.input'|i18n }}/{{
+                            'pdmOperation.standard_wages'|i18n }}">
+                            <input nz-input formControlName="standard_wages" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8">{{
+                            'pdmOperation.notspectaculars'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <label nz-checkbox formControlName="notspectaculars"></label>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="4">{{
+                            'pdmOperation.requrement'|i18n
+                            }}</nz-form-label>
+                        <nz-form-control [nzSpan]="20">
+                            <textarea nz-input formControlName="requrement" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" nzAutosize></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="4">{{
+                            'pdmOperation.qc_requrement'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="20">
+                            <textarea nz-input formControlName="qc_requrement" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" nzAutosize></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="4">{{
+                            'pdmOperation.description'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="20">
+                            <textarea nz-input formControlName="description" placeholder="{{ 'inputdata.input'|i18n
+                                }}" (keydown)="submitForm($event)" nzAutosize></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

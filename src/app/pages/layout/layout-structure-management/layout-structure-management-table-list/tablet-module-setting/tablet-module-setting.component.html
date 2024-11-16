@@ -1,0 +1,10 @@
+<ng-container>
+<!-- <ng-container *ngIf="blst_key === '1010'"> -->
+    <label
+        nz-checkbox
+        [(ngModel)]="item.checked"
+        (ngModelChange)="onCheckChange(item)"
+        *ngFor="let item of tabletList; let i = index"
+        >{{ item.name }}</label
+    >
+</ng-container>

@@ -1,0 +1,214 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'70%'" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="see_title">
+            {{'placard.basein'|i18n}}
+        </div>
+        <div class="see_cont">
+            <div nz-row class="fontSize">
+                <!-- 作业单号 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.code || ''">{{model.code || ''}}</span>
+                </div>
+                <!-- 作业单状态 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.state'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text"
+                    [style]="(toTimeComparison(model.requestdeliverydate)?'':'color:#f00;')">
+                    {{model.state_name}}{{toTimeComparison(model.requestdeliverydate)?'':'（'+('placard.Overdue'|i18n)+'）'}}
+                </div>
+                <!-- 创建人名 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.create_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.create_name || ''">{{model.create_name || ''}}</span>
+                </div>
+                <!-- 创建日期 -->
+                <div nz-col nzSpan="3">
+                    {{'pmWork.create_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.create_time?model.create_time.substring(0,10):''">{{model.create_time?model.create_time.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 销售订单 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.som_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.som_code || ''">{{model.som_code || ''}}</span>
+                </div>
+                <!-- 客户 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.sci_key'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.sci_name || ''">{{model.sci_name || ''}}</span>
+                </div>
+                <!-- 批号 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.mixcode'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.mixcode?model.mixcode:''">{{model.mixcode?model.mixcode:''}}</span>
+                </div>
+                <!-- 交货时间 -->
+                <div nz-col nzSpan="3">
+                    {{'pmWork.requestdeliverydate'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.requestdeliverydate?model.requestdeliverydate.substring(0,10):''">{{model.requestdeliverydate?model.requestdeliverydate.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 款名 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.psi_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psi_name || ''">{{model.psi_name || ''}}</span>
+                </div>
+                <!-- 款号 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.psi_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psi_code || ''">{{model.psi_code || ''}}</span>
+                </div>
+                <!-- 作业数量 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.quantity'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.quantity|| ''">{{model.quantity|| ''}}</span>
+                </div>
+                <!-- 预计开始时间 -->
+                <div nz-col nzSpan="3">
+                    {{'pmWork.start_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.start_time?model.start_time.substring(0,10):''">{{model.start_time?model.start_time.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 颜色 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.pci_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.pci_code || ''">{{model.pci_code || ''}}</span>
+                </div>
+                <!-- 颜色 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.pci_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.pci_name || ''">{{model.pci_name || ''}}</span>
+                </div>
+                <!-- 完成数量 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.complete_quantity'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.complete_quantity|| ''">{{model.complete_quantity|| ''}}</span>
+                </div>
+                <!-- 实际开始时间 -->
+                <div nz-col nzSpan="3">
+                    {{'pmWork.production_start_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.production_start_time?model.production_start_time.substring(0,10):''">{{model.production_start_time?model.production_start_time.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 尺码 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.psz_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psz_code || ''">{{model.psz_code || ''}}</span>
+                </div>
+                <!-- 尺码 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.psz_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psz_name || ''">{{model.psz_name || ''}}</span>
+                </div>
+                <!-- 级别 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.level'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.level_name || ''">{{model.level_name || ''}}</span>
+                </div>
+                <!-- 实际完成时间 -->
+                <div nz-col nzSpan="3">
+                    {{'pmWork.complete_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.complete_time?model.complete_time.substring(0,10):''">{{model.complete_time?model.complete_time.substring(0,10):''}}</span>
+                </div>
+                <!-- 工序流版本 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.operationprocess_version'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.operationprocess_version|| ''">{{model.operationprocess_version|| ''}}</span>
+                </div>
+                <!-- 工序流更新 -->
+                <div nz-col nzSpan="2">
+                    {{'pmWork.operationprocess_update_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.operationprocess_update_time?model.operationprocess_update_time.substring(0,10):''">{{model.operationprocess_update_time?model.operationprocess_update_time.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 备注 -->
+                <div nz-col nzSpan="2">
+                    {{'popupField.remarks'|i18n}}：
+                </div>
+                <div nz-col nzSpan="16" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.remark || ''">{{model.remark || ''}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="see_title" *ngIf="model.attributes&&model.attributes.length>0">
+            {{'placard.customizeSet'|i18n}}
+        </div>
+        <div class="see_cont" *ngIf="model.attributes&&model.attributes.length>0">
+            <div nz-row class="fontSize">
+                <div nz-col nzSpan="6" *ngFor="let item of model.attributes">
+                    <div nz-row>
+                        <div nz-col nzSpan="8">
+                            {{item.name}}：
+                        </div>
+                        <div nz-col nzSpan="16" class="see_cont_text">
+                            <span nz-tooltip [nzTooltipTitle]="item.value_name || ''">{{item.value_name || ''}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.close'|i18n}}</button>
+        <!-- <flow #flow style="text-align: left;" [modular]="modular"></flow> -->
+    </ng-template>
+</idrawer>

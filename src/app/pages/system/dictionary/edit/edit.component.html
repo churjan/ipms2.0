@@ -1,0 +1,58 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3">{{
+            'sysDictionary.pkey'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="21">
+            <ina-ztree-select [setting]="setting" class="select"
+                formControlName="pkey" datatype="getlist/"
+                (onSelect)="upset($event)"></ina-ztree-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3"
+            nzRequired>{{ 'sysDictionary.name'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="21" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'name'|i18n
+            }}">
+            <input nz-input formControlName="name" placeholder="{{
+                'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3"
+            nzRequired>{{ 'sysDictionary.code'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="21" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'code'|i18n
+            }}">
+            <input nz-input formControlName="code" placeholder="{{
+                'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3">{{
+            'sysDictionary.sort'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="21">
+            <input nz-input formControlName="sort" placeholder="{{
+                'inputdata.input'|i18n }}" type="number" min="0" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="3">{{
+            'sysDictionary.description'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="21">
+            <textarea nz-input formControlName="description" rows="4"
+                cols="31" style="width: auto;"
+                placeholder="{{'inputdata.input'|i18n }}"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-divider></nz-divider>
+    <div class="btn">
+        <button nz-button nzType="primary" [disabled]="submiting" type="submit">{{
+            'btn.save'|i18n}}</button>
+        <button nz-button nzType="default" (click)="reset()" type="button">{{
+            'btn.reset'|i18n }}</button>
+    </div>
+</form>

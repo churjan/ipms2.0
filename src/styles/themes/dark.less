@@ -1,0 +1,69 @@
+@import (multiple) '../../../node_modules/ng-zorro-antd/src/style/themes/dark';
+@import 'base';
+@import 'Listpage';
+@layout-sider-background  : @dark-color;
+@layout-trigger-background: @dark-color;
+@layout-header-background : @dark-deep-color;
+@layout-sider-box-shadow  : 2px 0 6px @dark-deep-color;
+@layout-tabbar-background : @dark-color;
+@layout-tabbar-box-shadow : 0 2px 6px @dark-deep-color;
+@account-menu-font-color  : @dark-font-color-85;
+@border-color             : rgba(255, 255, 255, 0.12);
+@modal-mask-background    : rgba(255, 255, 255, 0.2);
+@modal-background         : @dark-color;
+@modal-border-color       : rgba(255, 255, 255, 0.2);
+@modal-title-color        : @dark-font-color-85;
+@font-color               : @dark-font-color-85;
+@deeper-background        : @dark-deep-color;
+@sticky-background        : #141414;
+
+@dragula-background     : @dark-deep-color;
+@dragula-item-background: @dark-color;
+@dragula-font-color     : @dark-font-color-85;
+
+@hanger-search-position-bg         : rgba(255, 255, 255, 0.04);
+@hanger-search-position-bs         : @dark-deep-color;
+@advanced-search-label             : #fff;
+@advanced-search                   : rgba(255, 255, 255, 0.85);
+@advanced-search-font-color:#FFF;
+@advanced-search-background        : rgba(0, 0, 0, 0.65);
+@advanced-search-background-right  : #000;
+@advanced-search-background-right-x: #0f0f0f;
+@advanced-search-background-right-t: #3082ff;
+@advanced-search-background-active : #333;
+@drawer-search-background:#000;
+@left-tree-top                     : #3082ff;
+@left-tree-loading                 : rgba(0, 0, 0, 0.589);
+@left-tree-top-title               : #fff;
+@left-tree-scrollbar               : #000;
+@popup-background                  : rgba(0, 0, 0, 0.3);
+@popup-cont-background             : #000;
+@popup-cont-top-x                  : #0f0f0f;
+@popup-cont-top-color              : rgba(255, 255, 255, 0.85);
+@popup-cont-top-close              : rgba(255, 255, 255, 0.5);
+@order-arrange-right-timeline-background: #1d1d1d;
+@order-arrange-right-timeline-x:#303030;
+
+.home-color() {
+    background-color: @dark-color;
+    color           : @dark-font-color-65;
+}
+
+.ant-menu {
+    background-color: @dark-color;
+}
+
+//操作菜单栏选中项背景色
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: @color;
+}
+
+//操作菜单栏选中项字体色
+.ant-menu-item-selected,
+.ant-menu-item-selected:hover {
+    color: #FFFFFF;
+}
+
+.sticky {
+    background-color: #141414;
+}

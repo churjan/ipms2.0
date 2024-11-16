@@ -1,0 +1,89 @@
+<div class="page beauty-scroll" *ngIf="showInPageContainer">
+    <nz-card class="page-container">
+        <ng-container *ngTemplateOutlet="searchActions"></ng-container>
+        <ng-container *ngTemplateOutlet="table"></ng-container>
+    </nz-card>
+</div>
+<ng-container *ngIf="!showInPageContainer">
+    <ng-container *ngTemplateOutlet="searchActions"></ng-container>
+    <ng-container *ngTemplateOutlet="table"></ng-container>
+</ng-container>
+
+<ng-template #searchActions>
+    <div nz-row [nzGutter]="16" #searchActionsBody *ngIf="showTableTop">
+        <div nz-col>
+            <ng-container *ngTemplateOutlet="topRightActionsTpl; context: {
+                setOfCheckedId: setOfCheckedId
+                }"></ng-container>
+        </div>
+        <span class="spacer"></span>
+        <div nz-col [nzSpan]="14" class="topRightActions">
+            <form nz-form [formGroup]="validateForm"
+                (ngSubmit)="keywordSearch()">
+                <div nz-row [nzGutter]="6" style="height: 100%;justify-content: flex-end;flex-wrap: nowrap;">
+                    <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="18" [nzLg]="16"
+                        [nzXl]="12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <input
+                                    nz-input
+                                    placeholder="{{ keywordPlaceholder }}"
+                                    [formControlName]="keywordKey"
+                                    />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col >
+                        <nz-form-item>
+                            <nz-form-control>
+                                <button nz-button nzType="primary"class="m-l-6">{{
+                                    'btn.search'|i18n }}</button>
+                                <button nz-button type="button"
+                                    (click)="reset()" class="m-l-6">{{
+                                    'btn.reset'|i18n }}</button>
+                                <ng-container *ngIf="showAdvancedSearch">
+                                    <a class="advancedSearch"
+                                        [ngClass]="{active: advancedActive}"
+                                        (click)="filterOpen= true;
+                                        onFilterOpen.emit(queryParams)">
+                                        {{ 'btn.advancedSearch'|i18n }}
+                                        <i nz-icon nzType="down"
+                                            *ngIf="!filterOpen"></i>
+                                        <i nz-icon nzType="up"
+                                            *ngIf="filterOpen"></i>
+                                    </a>
+                                </ng-container>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #table>
+    <itable
+        *ngIf="ready"
+        [lastColumnTpl]="lastColumnTpl"
+        [lastColumnWidth]="lastColumnWidth"
+        [lastColumnTitle]="lastColumnTitle"
+        [columns]="columns"
+        [tpls]="tpls"
+        [loading]="loading"
+        [xScroll]="xScroll"
+        [yScroll]="yScroll"
+        [total]="total"
+        [data]="data"
+        [frontPagination]="frontPagination"
+        [pageIndex]="queryParams.page"
+        [pageSize]="queryParams.pageSize"
+        [(setOfCheckedId)]="setOfCheckedId"
+        [showSelection]="showSelection"
+        [showIndex]="showIndex"
+        [top]="top"
+        [drawerTitleHeight]="drawerTitleHeight"
+        [maskAlert]="maskAlert"
+        (onPaginationParamsChange)="onQueryParamsChange($event)">
+    </itable>
+</ng-template>

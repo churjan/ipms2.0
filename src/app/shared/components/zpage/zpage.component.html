@@ -1,0 +1,700 @@
+
+<!-- 左侧树 -->
+<div class="zleft" *ngIf="openLeft">
+    <!-- <nz-spin  [nzSpinning]="isLeftSpinning"> -->
+        <div class="zleft_top">
+            <div class="zleft_top_left">{{leftTreeTitle}} </div>
+            <div class="zleft_top_right"><ng-container *ngTemplateOutlet="leftTreeTool"></ng-container></div>
+        </div>
+        <div class="zleft_tree">
+            <!-- 左侧树 查询框 -->
+            <div class="zleft_tree_input">
+                <ng-container *ngTemplateOutlet="leftTreeInput"></ng-container>
+            </div>
+            <!-- 左侧树 主体 -->
+            <div class="zleft_tree_all">
+                <div class="zleft_tree_in">
+                    <ng-container *ngTemplateOutlet="leftTree"></ng-container>
+                </div>
+            </div>
+        </div>
+    <!-- </nz-spin> -->
+</div>
+<!-- 左侧树 加载覆盖区域 -->
+<div class="zleft_loading" *ngIf="openLeft && isLeftSpinning">
+    <div class="zleft_loading_in"></div>
+    <nz-spin  [nzSpinning]="isLeftSpinning" nzSimple></nz-spin>
+</div>
+
+<div [ngClass]="openLeft?'zright_cont':'zcont'">
+    <!-- 头部搜索 和 按钮 -->
+    <div class="ztop_in">
+        <div class="ztop_in_select">
+            <!-- 按钮 -->
+            <div [ngClass]="openLeft?'ztop_in_btn_in':'ztop_in_btn_in_notree'">
+                <!-- getBtnGroup.top为头部按钮权限信息 -->
+                <nz-button-group>
+                    <ng-container *ngFor="let item of getBtnGroup.top ,let i = index">
+                        <ng-container *ngIf="i<4">
+                            <button nz-button [nzType]="item.action=='add'?'primary':'default'" class="ztop_in_select_btn" (click)="getTopBtn(item.action)">
+                                <i nz-icon [nzType]="item.icon"></i> {{ item.name }}
+                            </button>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="getBtnGroup.top.length>4">
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu">
+                            <i nz-icon nzType="bars"></i>
+                            {{ 'btn.extended'|i18n }}
+                            <i nz-icon nzType="down"></i>
+                        </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <ng-container *ngFor="let item of getBtnGroup.top ,let i = index" >
+                                    <ng-container *ngIf="i>=4">
+                                        <li nz-menu-item>
+                                            <a (click)="getTopBtn(item.action)">
+                                                <!-- <i nz-icon [nzType]="item.icon"></i>  -->
+                                                {{ item.name }}
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                </ng-container>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </ng-container>
+                </nz-button-group>
+                    
+            </div>
+            <!-- 搜索 -->
+            <div class="ztop_in_select_in">
+                <!-- 搜索 -->
+                <ng-container *ngTemplateOutlet="topInput"></ng-container>
+                <!-- 列表控制 -->
+                <ng-container *ngIf="isColumns">
+                    <a style="margin-left: -1px;" nzTrigger="click" nzOverlayClassName="zcolumnsdropdown" [nzClickHide]="false" nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight"><i nz-icon nzType="funnel-plot" nzTheme="outline"></i></a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <ng-container *ngFor="let item of columns,let i = index">
+                                <li nz-menu-item style="width: 100%;"><label style="width: 100%;" [nzDisabled]="item.disabled" nz-checkbox (ngModelChange)="columnsControl($event,item.code,i)" [(ngModel)]="item.show">{{item.name}}</label></li>
+                            </ng-container>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-container>
+                <!-- 高级搜索 -->
+                <a class="m-l-6 zadvancedSearch ztop_in_select_in_color" *ngIf="isAdvancedSearch" [ngClass]="{active: advancedActive}" (click)="openSearch()">
+                    {{ 'btn.advancedSearch'|i18n }}
+                    <i nz-icon nzType="down" *ngIf="!filterOpen"></i>
+                    <i nz-icon nzType="up" *ngIf="filterOpen"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 表格 -->
+    <div [ngClass]="isTablePage?(openLeft?'ztable':'ztable_notree'):(openLeft?'znoPageTable':'znoPageTable_notree')" #divTable>
+        <!-- 无分页 自定义表格 -->
+        <div *ngIf="!isTablePage && !isTableNoCustomize" style="width: 100%; height:100%;">
+            <ng-container  *ngTemplateOutlet="noPageCustomTable"></ng-container>
+        </div>
+        <!-- 分页 自定义表格 -->
+        <div *ngIf="isTablePage && !isTableNoCustomize" style="width: 100%; height:100%;">
+            <ng-container *ngTemplateOutlet="pageCustomTable"></ng-container>
+        </div>
+        
+        <!-- 无分页 非自定义表格 -->
+        <nz-table 
+        *ngIf="!isTablePage && isTableNoCustomize"
+        #basicTable 
+        id="bTable"
+        [nzData]="tableData" 
+        [nzScroll]="tableWidthHeightNo" 
+        [nzShowPagination]="false" 
+        [nzSize]="tableSize" 
+        [nzLoading]="tableLoading"
+        [nzOuterBordered]="true"
+        [nzBordered]="true"
+        [nzPageSize]="99999999"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        >
+            <thead>
+              <tr>
+                <th nzLeft [nzIndeterminate]="indeterminate" *ngIf="isCheck && isCheckAll" nzWidth="39px" [(nzChecked)]="checked" (nzCheckedChange)="onAllChecked($event)"></th>
+                <th nzLeft *ngIf="isCheck==true && isCheckAll != true" nzWidth="39px" ></th>
+                <th nzLeft *ngIf="isNumber" nzWidth="46px" nzAlign="center" class="ztable_slh">
+                    <span nz-tooltip [nzTooltipTitle]="isTableHeadNum? ('popupField.sort_num'|i18n) :''">{{isTableHeadNum? ('popupField.sort_num'|i18n) :''}}</span>
+                </th>
+                <ng-container *ngFor="let item of columns">
+                    <th 
+                    *ngIf="item.show"
+                    [nzColumnKey]="item.code" 
+                    [nzWidth]="item.width" 
+                    [nzAlign]="item.align" 
+                    [nzSortFn]="item.isSort"
+                    nz-resizable
+                    (nzResizeEnd)="onResize($event, item.code)"
+                    [nzLeft]="(item.left?true:false)"
+                    [nzRight]="(item.right?true:false)"
+                    class="ztable_slh"
+                    >
+                        <span nz-tooltip [nzTooltipTitle]="item.name">{{item.name}}</span>
+                        <nz-resize-handle nzDirection="right">
+                            <div class="resize-trigger"></div>
+                        </nz-resize-handle>
+                    </th>
+                </ng-container>
+                <!-- 首先判断全部图标加文字大于宽度50px 否则默认显示50px， noIconNum表示存在几个非符号的按钮 noIconNameWidth表示按钮中全部文字总宽度 noIconNum*18为文字按钮两旁多出空白宽度 getBtnGroup.noFold为需要展示的按钮数据 getBtnGroup.fold为下拉的按钮数据-->
+                <th nzRight *ngIf="isOperation" [nzWidth]="((noIconNum*18+noIconNameWidth+32*(getBtnGroup.noFold.length-noIconNum)+(getBtnGroup.fold.length>0?32:0)))<50?'50px':((noIconNum*18+noIconNameWidth+32*(getBtnGroup.noFold.length-noIconNum)+(getBtnGroup.fold.length>0?32:0))+'px')" nzAlign="center" class="ztable_slh">
+                    <span nz-tooltip [nzTooltipTitle]="'btn.operation'|i18n">{{'btn.operation'|i18n}}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tableData,let i = index">
+                <td nzLeft *ngIf="isCheck" [nzChecked]="setOfCheckedId.has(data.key)" (nzCheckedChange)="onItemChecked(data.key, $event)"></td>
+                <td nzLeft *ngIf="isNumber" nzAlign="center">{{ i+1 }}</td>
+                <ng-container *ngFor="let item of columns,let ii = index">
+                    <td 
+                    *ngIf="item.show"
+                    [nzLeft]="(item.left?true:false)" 
+                    [nzRight]="(item.right?true:false)" 
+                    [ngClass]="item.isOverflow?'ztable_slh':''" 
+                    [nzAlign]="item.align"
+                    nzEllipsis
+                    >
+                        <!-- 默认不写直接输出 -->
+                        <ng-container *ngIf="!item.format">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]">{{data[item.code]}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]}}</span>
+                        </ng-container>
+                        <!-- 自定义 -->
+                        <ng-container *ngTemplateOutlet="format;context:{column: item,value: data[item.code],index: i,data:data}"></ng-container>
+                        <!-- 时间格式化 -->
+                        <ng-container *ngIf="item.format=='date'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | date:item.dateType">{{data[item.code] | date:item.dateType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | date:item.dateType}}</span>
+                        </ng-container>
+                        <!-- 数字格式化 -->
+                        <ng-container *ngIf="item.format=='number'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | number:item.numberType">{{data[item.code] | number:item.numberType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | number:item.numberType}}</span>
+                        </ng-container>
+                        <!-- 大写 -->
+                        <ng-container *ngIf="item.format=='uppercase'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | uppercase">{{data[item.code] | uppercase}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | uppercase}}</span>
+                        </ng-container>
+                        <!-- 小写 -->
+                        <ng-container *ngIf="item.format=='lowercase'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | lowercase">{{data[item.code] | lowercase}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | lowercase}}</span>
+                        </ng-container>
+                        <!-- 截取 -->
+                        <ng-container *ngIf="item.format=='slice'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | slice:item.sliceType">{{data[item.code] | slice:item.sliceType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | slice:item.sliceType}}</span>
+                        </ng-container>
+                        <!-- 是否 -->
+                        <ng-container *ngIf="item.format=='boolean'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]? ('format.yes2'|i18n) :data[item.code]==false?('format.no2'|i18n):''">{{data[item.code]?('format.yes2'|i18n):data[item.code]==false?('format.no2'|i18n):''}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]?('format.yes2'|i18n):data[item.code]==false?('format.no2'|i18n):''}}</span>
+                        </ng-container>
+                        <!-- 性别 -->
+                        <ng-container *ngIf="item.format=='sex'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)">{{data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)}}</span>
+                        </ng-container>
+                    </td>
+                </ng-container>
+                
+                <td nzRight *ngIf="isOperation" nzAlign="center">
+                    <!-- getBtnGroup.noFold 为表格内非折叠的按钮权限信息 -->
+                    <ng-container *ngFor="let btnItem of getBtnGroup.noFold,let btni = index">
+
+                            <!-- 需要区分是否为删除，因为删除的按钮是需要提示的 -->
+                            <ng-container *ngIf="btnItem.action!='clearIndication' && btnItem.action!='cropInstruction' && btnItem.action!='mark' && btnItem.action!='ksArrange'">
+                                <a (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="btnItem.action=='del'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 生产订单中的 清除指令 -->
+                            <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 生产订单中的 确认生产 -->
+                            <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 站内衣架详情 标记异常 -->
+                            <ng-container *ngIf="btnItem.action=='mark'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 销售订单 一键排单 -->
+                            <ng-container *ngIf="btnItem.action=='ksArrange'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <nz-divider nzType="vertical" *ngIf="getBtnGroup.fold.length>0?true:(getBtnGroup.noFold.length-1!=btni?true:false)"></nz-divider>
+                    </ng-container>
+                    <!-- getBtnGroup.fold 为表格内折叠的按钮权限信息 -->
+                    <ng-container *ngIf="getBtnGroup.fold.length>0">
+                        <a nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">
+                            <i nz-icon nzTheme="outline" nzType="more"></i>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <ng-container *ngFor="let btnItem of getBtnGroup.fold,let btni = index">
+                                    
+                                        <ng-container *ngIf="btnItem.action!='clearIndication' && btnItem.action!='cropInstruction' && btnItem.action!='mark' && btnItem.action!='ksArrange'">
+                                            <li  nz-menu-item (click)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <!-- <ng-container *ngIf="btnItem.action=='del'">
+                                            <li nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container> -->
+                                        <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='mark'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='ksArrange'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                    
+                                </ng-container>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="operation;context:{item: data, index: i}"></ng-container> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="tfoot" *ngIf="isStatistics">
+                <tr>
+                    <td nzLeft *ngIf="isCheck" > </td>
+                    <td nzLeft *ngIf="isNumber" nzAlign="center"> </td>
+                    <ng-container *ngFor="let item of columns,let ii = index">
+                        <td 
+                        *ngIf="item.show"
+                        [nzLeft]="(item.left?true:false)" 
+                        [nzRight]="(item.right?true:false)" 
+                        [ngClass]="item.isOverflow?'ztable_slh':''" 
+                        [nzAlign]="item.align">
+                        <span *ngIf="(ii==0 && !isCheck && !isNumber)||(ii==1 && (isCheck || !isNumber) && (!isCheck || isNumber)) || (ii==2 && isCheck && isNumber)">{{'placard.Statistics'|i18n}}</span>
+                        <span *ngIf="(ii>0 && !isCheck && !isNumber)||(ii>1 && (isCheck || !isNumber) && (!isCheck || isNumber)) || (ii>2 && isCheck && isNumber)">
+                        {{sumNode[print(item.code)]?sumNode[print(item.code)]:'-'}}</span>
+                    </td>
+                    </ng-container>
+                </tr>
+            </tfoot>
+        </nz-table>
+        <!-- 有分页 非自定义表格 -->
+        <nz-table 
+        *ngIf="isTablePage && isTableNoCustomize"
+        #basicTable 
+        id="bTable"
+        [nzData]="tableData" 
+        [nzScroll]="tableWidthHeight" 
+        [nzShowPagination]="false" 
+        [nzSize]="tableSize" 
+        [nzPageSize]="pageSize"
+        [nzLoading]="tableLoading"
+        [nzOuterBordered]="true"
+        [nzBordered]="true"
+        (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+        (nzQueryParams)="onQueryParamsChange($event)"
+        >
+            <thead>
+              <tr>
+                <th nzLeft [nzIndeterminate]="indeterminate" *ngIf="isCheck && isCheckAll" nzWidth="39px" [(nzChecked)]="checked" (nzCheckedChange)="onAllChecked($event)"></th>
+                <th nzLeft *ngIf="isCheck==true && isCheckAll != true" nzWidth="39px" ></th>
+                <th nzLeft *ngIf="isNumber" nzWidth="46px" nzAlign="center" class="ztable_slh">
+                    <span nz-tooltip [nzTooltipTitle]="isTableHeadNum? ('popupField.sort_num'|i18n) :''">{{isTableHeadNum? ('popupField.sort_num'|i18n) :''}}</span>
+                </th>
+                <ng-container *ngFor="let item of columns">
+                    <th 
+                    *ngIf="item.show"
+                    [nzColumnKey]="item.code" 
+                    [nzWidth]="item.width" 
+                    [nzAlign]="item.align" 
+                    [nzSortFn]="item.isSort"
+                    nz-resizable
+                    (nzResizeEnd)="onResize($event, item.code)"
+                    [nzLeft]="(item.left?true:false)"
+                    [nzRight]="(item.right?true:false)"
+                    class="ztable_slh"
+                    >
+                        <span nz-tooltip [nzTooltipTitle]="item.name">{{item.name}}</span>
+                        <nz-resize-handle nzDirection="right">
+                            <div class="resize-trigger"></div>
+                        </nz-resize-handle>
+                    </th>
+                </ng-container>
+                <!-- 首先判断全部图标加文字大于宽度50px 否则默认显示50px， noIconNum表示存在几个非符号的按钮 noIconNameWidth表示按钮中全部文字总宽度 noIconNum*18为文字按钮两旁多出空白宽度 getBtnGroup.noFold为需要展示的按钮数据 getBtnGroup.fold为下拉的按钮数据-->
+                <th nzRight *ngIf="isOperation" [nzWidth]="((noIconNum*18+noIconNameWidth+32*(getBtnGroup.noFold.length-noIconNum)+(getBtnGroup.fold.length>0?32:0)))<50?'50px':((noIconNum*18+noIconNameWidth+32*(getBtnGroup.noFold.length-noIconNum)+(getBtnGroup.fold.length>0?32:0))+'px')" nzAlign="center" class="ztable_slh">
+                    <span nz-tooltip [nzTooltipTitle]="'btn.operation'|i18n">{{'btn.operation'|i18n}}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tableData,let i = index">
+                <td nzLeft *ngIf="isCheck" [nzChecked]="setOfCheckedId.has(data.key)" (nzCheckedChange)="onItemChecked(data.key, $event)"></td>
+                <td nzLeft *ngIf="isNumber" nzAlign="center">{{ i+1 }}</td>
+                <ng-container *ngFor="let item of columns,let ii = index">
+                    <td 
+                    *ngIf="item.show"
+                    [nzLeft]="(item.left?true:false)" 
+                    [nzRight]="(item.right?true:false)" 
+                    [ngClass]="item.isOverflow?'ztable_slh':''" 
+                    [nzAlign]="item.align">
+                        <!-- 默认不写直接输出 -->
+                        <ng-container *ngIf="!item.format">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]">{{data[item.code]}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]}}</span>
+                        </ng-container>
+                        <!-- 自定义 -->
+                        <ng-container *ngTemplateOutlet="format;context:{column: item,value: data[item.code],index: i,data:data}"></ng-container>
+                        <!-- 时间格式化 -->
+                        <ng-container *ngIf="item.format=='date'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | date:item.dateType">{{data[item.code] | date:item.dateType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | date:item.dateType}}</span>
+                        </ng-container>
+                        <!-- 数字格式化 -->
+                        <ng-container *ngIf="item.format=='number'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | number:item.numberType">{{data[item.code] | number:item.numberType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | number:item.numberType}}</span>
+                        </ng-container>
+                        <!-- 大写 -->
+                        <ng-container *ngIf="item.format=='uppercase'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | uppercase">{{data[item.code] | uppercase}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | uppercase}}</span>
+                        </ng-container>
+                        <!-- 小写 -->
+                        <ng-container *ngIf="item.format=='lowercase'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | lowercase">{{data[item.code] | lowercase}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | lowercase}}</span>
+                        </ng-container>
+                        <!-- 截取 -->
+                        <ng-container *ngIf="item.format=='slice'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code] | slice:item.sliceType">{{data[item.code] | slice:item.sliceType}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code] | slice:item.sliceType}}</span>
+                        </ng-container>
+                        <!-- 是否 -->
+                        <ng-container *ngIf="item.format=='boolean'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]?('format.yes'|i18n):data[item.code]==false?('format.no'|i18n):''">{{data[item.code]?('format.yes'|i18n):data[item.code]==false?('format.no'|i18n):''}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]?('format.yes'|i18n):data[item.code]==false?('format.no'|i18n):''}}</span>
+                        </ng-container>
+                        <!-- 性别 -->
+                        <ng-container *ngIf="item.format=='sex'">
+                            <span *ngIf="item.tip" nz-tooltip [nzTooltipTitle]="data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)">{{data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)}}</span>
+                            <span *ngIf="!item.tip">{{data[item.code]==1?('format.sex_man'|i18n):('format.sex_woman'|i18n)}}</span>
+                        </ng-container>
+                    </td>
+                </ng-container>
+                <td nzRight *ngIf="isOperation" nzAlign="center">
+                    <!-- getBtnGroup.noFold 为表格内非折叠的按钮权限信息 -->
+                    <ng-container *ngFor="let btnItem of getBtnGroup.noFold,let btni = index">
+
+                            <!-- 需要区分是否为删除，因为删除的按钮是需要提示的 -->
+                            <ng-container *ngIf="btnItem.action!='clearIndication' && btnItem.action!='cropInstruction' && btnItem.action!='mark' && btnItem.action!='ksArrange' && btnItem.action!='orderConfirm' && btnItem.action!='orderUpdate' && btnItem.action!='orderDel'">
+                                <a (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- <ng-container *ngIf="btnItem.action=='del'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 销售订单中的 删除 -->
+                            <ng-container *ngIf="btnItem.action=='orderDel'">
+                                <a *ngIf="data.state==0" (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                                <span style="color: #bbbbbb;" *ngIf="data.state!=0" nz-popconfirm [nzPopconfirmTitle]="btnItem.name">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </span>
+                            </ng-container>
+                            <!-- 销售订单中的 修改-->
+                            <ng-container *ngIf="btnItem.action=='orderUpdate'">
+                                <a *ngIf="data.state==0" (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                                <span style="color: #bbbbbb;" *ngIf="data.state!=0" (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </span>
+                            </ng-container>
+                            <!-- 销售订单中的 确认生产-->
+                            <ng-container *ngIf="btnItem.action=='orderConfirm'">
+                                <a *ngIf="data.state==0" (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                                <span style="color: #bbbbbb;" *ngIf="data.state!=0" (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </span>
+                            </ng-container>
+                            <!-- 生产订单中的 清除指令 -->
+                            <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 生产订单中的 确认生产 -->
+                            <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 站内衣架详情 标记异常 -->
+                            <ng-container *ngIf="btnItem.action=='mark'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <!-- 销售订单 一键排单 -->
+                            <ng-container *ngIf="btnItem.action=='ksArrange'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <nz-divider nzType="vertical" *ngIf="getBtnGroup.fold.length>0?true:(getBtnGroup.noFold.length-1!=btni?true:false)"></nz-divider>
+                        
+                        <!-- 第二个按钮 -->
+                        <!-- <ng-container *ngIf="btni==1">
+                            <ng-container *ngIf="btnItem.action!='del' && btnItem.action!='clearIndication' && btnItem.action!='cropInstruction'">
+                                <a (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="btnItem.action=='del'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 计划生产中的 清除指令 -->
+                            <!-- <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 计划生产中的 确认生产 -->
+                            <!-- <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <nz-divider nzType="vertical" *ngIf="getBtnGroup.table.length>2"></nz-divider>
+                        </ng-container> -->
+                        <!-- 第三个按钮 并且 权限中只有三个按钮 -->
+                        <!-- <ng-container *ngIf="btni==2 && getBtnGroup.table.length==3">
+                            <ng-container *ngIf="btnItem.action!='del' && btnItem.action!='clearIndication' && btnItem.action!='cropInstruction'">
+                                <a (click)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                            <ng-container *ngIf="btnItem.action=='del'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 计划生产中的 清除指令 -->
+                            <!-- <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container> -->
+                            <!-- 计划生产中的 确认生产 -->
+                            <!-- <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                <a nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                    <i *ngIf="btnItem.icon" nz-icon [nzType]="btnItem.icon" nzTheme="outline" nz-tooltip [nzTooltipTitle]="btnItem.name"></i>
+                                    <span>{{ btnItem.icon?'':btnItem.name }}</span>
+                                </a>
+                            </ng-container>
+                        </ng-container> -->
+                    </ng-container>
+                    <!-- getBtnGroup.fold 为表格内折叠的按钮权限信息 -->
+                    <ng-container *ngIf="getBtnGroup.fold.length>0">
+                        <a nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">
+                            <i nz-icon nzTheme="outline" nzType="more"></i>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu>
+                                <ng-container *ngFor="let btnItem of getBtnGroup.fold,let btni = index">
+                                    
+                                        <ng-container *ngIf="btnItem.action!='clearIndication' && btnItem.action!='cropInstruction' && btnItem.action!='mark' && btnItem.action!='ksArrange' && btnItem.action!='orderConfirm' && btnItem.action!='orderUpdate' && btnItem.action!='orderDel'">
+                                            <li  nz-menu-item (click)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <!-- <ng-container *ngIf="btnItem.action=='del'">
+                                            <li nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container> -->
+                                        <ng-container *ngIf="btnItem.action=='orderDel'">
+                                            <li *ngIf="data.state==0" nz-menu-item (click)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                            <li *ngIf="data.state!=0" nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span style="color: #bbb;">{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='orderUpdate'">
+                                            <li *ngIf="data.state==0" nz-menu-item (click)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                            <li *ngIf="data.state!=0" nz-menu-item>
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span style="color: #bbb;">{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='orderConfirm'">
+                                            <li *ngIf="data.state==0" nz-menu-item (click)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                            <li *ngIf="data.state!=0" nz-menu-item>
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span style="color: #bbb;">{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='clearIndication'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='cropInstruction'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='mark'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                        <ng-container *ngIf="btnItem.action=='ksArrange'">
+                                            <li  nz-menu-item nz-popconfirm [nzPopconfirmTitle]="btnItem.name" (nzOnConfirm)="getTableBtn(btnItem.action,data)">
+                                                <!-- <i nz-icon [nzType]="btnItem.icon" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="btnItem.name"></i>  -->
+                                                <span>{{btnItem.name}}</span>
+                                            </li>
+                                        </ng-container>
+                                </ng-container>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="operation;context:{item: data, index: i}"></ng-container> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="tfoot" *ngIf="isStatistics">
+                <tr>
+                    <td nzLeft *ngIf="isCheck" > </td>
+                    <td nzLeft *ngIf="isNumber" nzAlign="center"> </td>
+                    <ng-container *ngFor="let item of columns,let ii = index">
+                        <td 
+                        *ngIf="item.show"
+                        [nzLeft]="(item.left?true:false)" 
+                        [nzRight]="(item.right?true:false)" 
+                        [ngClass]="item.isOverflow?'ztable_slh':''" 
+                        [nzAlign]="item.align">
+                        <span *ngIf="(ii==0 && !isCheck && !isNumber)||(ii==1 && (isCheck || !isNumber) && (!isCheck || isNumber)) || (ii==2 && isCheck && isNumber)">{{'placard.Statistics'|i18n}}</span>
+                        <span *ngIf="(ii>0 && !isCheck && !isNumber)||(ii>1 && (isCheck || !isNumber) && (!isCheck || isNumber)) || (ii>2 && isCheck && isNumber)">
+                        {{sumNode[print(item.code)]?sumNode[print(item.code)]:'-'}}</span>
+                    </td>
+                    </ng-container>
+                </tr>
+            </tfoot>
+        </nz-table>
+    </div>
+    <!-- 分页 -->
+    <div class="zpagination" *ngIf="isTablePage">
+        <div class="zpagination_in">
+            <ng-container *ngTemplateOutlet="tablePage"></ng-container>
+        </div>
+    </div>
+</div>
+
+<!-- 高级搜索 -->
+<div [ngClass]="(openLeft?'zadvanced_search':'zadvanced_search_notree') + (zadvancedSearchActive?' zadvanced_search_active':'')" *ngIf="filterOpen" (click)="openSearch()"></div>
+<div [ngClass]="'zadvanced_search_right' + (zadvancedSearchActive?' zadvanced_search_active':'')" *ngIf="filterOpen">
+    <div class="zadvanced_search_right_top">
+        <div class="zadvanced_search_right_top_left">
+            <a (click)="openSearch()" style="line-height:60px;margin-left:10px;"><span style="color: #000; font-size:16px;" nz-icon nzType="logout" nzTheme="outline"></span></a>
+            <ng-container *ngTemplateOutlet="zadvancedIcon"></ng-container>
+        </div>
+        <div class="zadvanced_search_right_top_right">
+            <ng-container *ngTemplateOutlet="zadvancedSearch"></ng-container>
+        </div>
+    </div>
+    <div class="zadvanced_search_right_top_right_cont">
+        <ng-container *ngTemplateOutlet="zadvancedCont"></ng-container>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,34 @@
+<crud2
+  #crud
+  [router]="url"
+  [jsonname]="fieldcode"
+  [list]="list"
+  (actionClick)="btnEvent($event)"
+  [columns]="columns"
+  [modular]="modular"
+  [fields]="field"
+  [showAdvanced]="false"
+></crud2>
+
+<!-- sku工序流 -->
+<app-edit-sku-process
+  #edit
+  (editDone)="crud.reloadData($event)"
+  (out)="btnEvent($event)"
+></app-edit-sku-process>
+
+<!-- 工序流工段 -->
+<app-section-list
+  #sectionList
+  (editDone)="crud.reloadData($event)"
+  (out)="btnEvent($event)"
+></app-section-list>
+
+<!-- 工序流路线图 -->
+<flow3
+  #flow3
+  [modular]="modular"
+  (onReturn)="btnEvent($event)"
+  (editDone)="crud.reloadData($event)"
+></flow3>
+

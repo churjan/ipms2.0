@@ -1,0 +1,103 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl" height="99%">
+    <ng-template #contentTpl>
+        <div style="display: flex;align-items: center;">
+            <span>{{'placard.basein'|i18n}}</span>
+            <span class="spacer"></span>
+            <span>{{'whOutofstock.create_time'|i18n}}:{{validateForm.value.create_time | date:"yyyy-MM-dd"}}</span>&nbsp;&nbsp;
+            <span>{{'whOutofstock.create_hei_name'|i18n}}:{{validateForm.value.create_hei_name}}</span>&nbsp;&nbsp;
+            <span>{{'whOutofstock.state_name'|i18n}}:{{validateForm.value.state_name}}</span>
+        </div>
+        <nz-divider style="margin-top: 0;"></nz-divider>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'whOutofstock.code'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'whOutofstock.code'|i18n }}">
+                            <input nz-input formControlName="code" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'whOutofstock.hei_key'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="18"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'whOutofstock.hei_key'|i18n }}">
+                            <ina-common-select class="select" title="" formControlName="hei_key" url="EmployeeInfo">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{'whOutofstock.remark'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-textarea-count [nzMaxCharacterCount]="200">
+                                <textarea nz-input formControlName="remark" placeholder="{{ 'inputdata.input'|i18n
+                                    }}" rows="4" (keydown)="submitForm($event)" nzAutosize></textarea>
+                            </nz-textarea-count>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <nz-table #basicTable [nzData]="validateForm.value.wwod_list" nzSize="small" [nzTitle]="addto">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="60px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                    <th>{{'whOutofstock.bls_code'|i18n}}</th>
+                    <th>{{'whOutofstock.som_code'|i18n}}</th>
+                    <th>{{'whOutofstock.pwb_code'|i18n}}</th>
+                    <th>{{'whOutofstock.psi_key'|i18n}}</th>
+                    <th>{{'whOutofstock.pci_key'|i18n}}</th>
+                    <th>{{'whOutofstock.psz_key'|i18n}}</th>
+                    <th>{{'whOutofstock.bpi_key'|i18n}}</th>
+                    <th>{{'whOutofstock.pti_tagcode'|i18n}}</th>
+                    <th>{{'whOutofstock.rfid'|i18n}}</th>
+                    <th nzRigth>{{'whOutofstock.out_bls_key'|i18n}}</th>
+                    <th nzRigth nzWidth="80px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data;let i=index">
+                    <td nzLeft nzAlign="center"> {{i+1}}</td>
+                    <td> {{data.bls_code}}</td>
+                    <td> {{data.som_code}}</td>
+                    <td> {{data.pwb_code}}</td>
+                    <td> {{data.psi_name}}</td>
+                    <td> {{data.pci_name}}</td>
+                    <td> {{data.psz_name}}</td>
+                    <td> {{data.bpi_name}}</td>
+                    <td> {{data.pti_tagcode}}</td>
+                    <td> {{data.rfid}}</td>
+                    <td nzRigth>
+                        <ina-ztree-select [setting]="setting" [params]="body" datatype="NewGetList/" [rawdata]="rawdata"
+                            [(ngModel)]="data.out_bls_key" (onSelect)="selectout_bls($event,data)">
+                        </ina-ztree-select>
+                    </td>
+                    <td nzRigth nzAlign="center">
+                        <a (click)="delDetail(validateForm.value.wwod_list,i)"> <i nz-icon nzType="minus"
+                                nzTheme="outline"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #addto>
+            <span style="display: flex;align-items: center;">
+                <span>{{'placard.detailInfo'|i18n}}</span>
+                <span class="spacer"></span>
+                <ina-ztree-select style="width:15rem" [setting]="setting" title="{{'whOutofstock.out_bls_key'|i18n}}" [params]="body"
+                    datatype="NewGetList/" [rawdata]="rawdata" (onSelect)="allout($event)">
+                </ina-ztree-select>
+            </span>
+        </ng-template>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

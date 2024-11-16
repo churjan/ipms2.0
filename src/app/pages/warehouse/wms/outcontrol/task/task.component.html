@@ -1,0 +1,68 @@
+<idrawer *ngIf="visible" [title]="title" width="100%" justifyContent="center" height="100%" headerHeight="48px"
+    bodyPadding="10px 20px 0" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+
+        <crud #crud [topRightActionsTpl]="topRightActionsTpl" [lastColumnWidth]="'220px'" [lastColumnTpl]="operationTpl"
+            [columns]="tableColumns" [service]="outControlTaskService" [extraQueryParams]="queryParams"
+            [tpls]="{timeTpl:timeTpl,stateTpl:stateTpl,numTpl:numTpl}" [showInPageContainer]="false" [maskAlert]="true">
+        </crud>
+
+        <ng-template #topRightActionsTpl>
+            <button nz-button nzType="primary" (click)="edit.open({control_key:
+                queryParams.control_key})" *hasPermission="['wms_outcontrol_task_add']">
+                <i nz-icon nzType="plus"></i> {{ 'btn.plus'|i18n }}
+            </button>
+            <button nz-button nzType="default" (click)="crud.delete()"
+                *hasPermission="['wms_outcontrol_task_del']">
+                <i nz-icon nzType="delete"></i> {{ 'btn.delete'|i18n }}
+            </button>
+        </ng-template>
+
+        <ng-template #stateTpl let-text="text" let-item="record">
+            <nz-badge *ngIf="item.state == -1" nzStatus="success" [nzText]="text"></nz-badge>
+            <nz-badge *ngIf="item.state == 0" nzStatus="success" [nzText]="text"></nz-badge>
+            <nz-badge *ngIf="item.state == 1" nzStatus="warning" [nzText]="text"></nz-badge>
+            <nz-badge *ngIf="item.state == 2" nzStatus="error" [nzText]="text"></nz-badge>
+            <nz-badge *ngIf="item.state == 99" nzStatus="error" [nzText]="text"></nz-badge>
+        </ng-template>
+
+        <ng-template #timeTpl let-text="text">
+            {{text|time}}
+        </ng-template>
+
+        <ng-template #numTpl let-text="text">
+            <ng-container *ngIf="!text||text==0">{{ 'placard.noLimit'|i18n }}</ng-container>
+            <ng-container *ngIf="text">{{text}}</ng-container>
+        </ng-template>
+
+        <!-- 行内操作按钮 -->
+        <ng-template #operationTpl let-item="record">
+
+            <nz-select [nzDisabled]="item.state == 2 || item.state == 99" [ngStyle]="{width: '100px'}"
+                [(ngModel)]="item.state" *hasPermission="['wms_outcontrol_task_status']"
+                (ngModelChange)="changeStatus(item)" nzPlaceHolder="{{
+                'checkdata.check'|i18n}}">
+                <nz-option [nzValue]="0" nzLabel="{{ 'placard.enable'|i18n }}"></nz-option>
+                <nz-option [nzValue]="1" nzLabel="{{ 'placard.pause'|i18n }}"></nz-option>
+                <nz-option [nzValue]="2" nzLabel="{{ 'placard.close'|i18n }}"></nz-option>
+                <nz-option [nzValue]="99" nzLabel="{{ 'btn.complete'|i18n }}" [nzDisabled]="true"></nz-option>
+            </nz-select>
+
+            <button *hasPermission="['wms_outcontrol_task_update']" nz-button nzType="text" nzSize="small"
+                class="m-l-6" (click)="edit.open(item)" nz-tooltip nzTooltipTitle="{{ 'btn.update'|i18n }}">
+                <i nz-icon nzType="edit"></i>
+            </button>
+            <button *hasPermission="['wms_outcontrol_task_del']" nz-button nzType="text" nzSize="small"
+                (click)="crud.delete(item)" nz-tooltip nzTooltipTitle="{{ 'btn.delete'|i18n }}" class="m-l-6">
+                <i nz-icon nzType="delete"></i>
+            </button>
+            <button *hasPermission="['wms_outcontrol_task_outorder']" nz-button nzType="text" nzSize="small"
+                class="m-l-6" nz-tooltip nzTooltipTitle="{{ 'btn.see'|i18n }}" (click)="detail.open(item)">
+                <i nz-icon nzType="eye"></i>
+            </button>
+        </ng-template>
+    </ng-template>
+</idrawer>
+
+<task-edit #edit (editDone)="crud.reloadData($event)"></task-edit>
+<detail #detail></detail>

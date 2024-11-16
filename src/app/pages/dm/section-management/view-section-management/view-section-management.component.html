@@ -1,0 +1,28 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basWorksection.name" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.name }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basWorksection.code" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.code }}</div>
+        </div>
+
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basWorksection.isdefault" | i18n }}</div>
+            <div class="value-txt">
+                {{ detailInfo.isdefault ? ("placard.yes" | i18n) : ("placard.no" | i18n) }}
+            </div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basWorksection.sort" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.sort }}</div>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+    </ng-template>
+</idrawer>

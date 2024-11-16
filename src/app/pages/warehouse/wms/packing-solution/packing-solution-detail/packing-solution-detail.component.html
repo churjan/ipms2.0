@@ -1,0 +1,172 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" nzSize="small" (onClose)="close()"
+    [content]="contentTpl" height="99%">
+    <ng-template #contentTpl>
+        <div class="page-view">
+            <div class="list-view">
+                <div class="list-header-view">
+                    <span>箱列表</span>
+                    <span nz-icon nzType="reload" nzTheme="outline" class="mt4" nz-tooltip nzTooltipTitle="{{'btn.reset'|i18n}}"
+                        (click)="onReset()"></span>
+                </div>
+                <div class="list-search-view">
+                    <nz-input-group [nzSuffix]="suffixIcon">
+                        <input type="text" nz-input placeholder="搜索" [(ngModel)]="searchValue" />
+                    </nz-input-group>
+                    <ng-template #suffixIcon>
+                        <i nz-icon nzType="search"></i>
+                    </ng-template>
+                </div>
+                <div class="tree-view">
+                    <nz-tree #treeRef [nzData]="boxList" nzBlockNode [nzSearchValue]="searchValue"
+                        [nzTreeTemplate]="nzTreeTemplate" (nzClick)="nzItemClick($event)"></nz-tree>
+                    <ng-template #nzTreeTemplate let-node let-origin="origin">
+                        <span>{{ node.title }}</span>
+                        <button nz-button nzType="link" nzSize="small" (click)="onPrintBox($event,origin)"
+                            *hasPermission="['wms_packingsolution_printbox']">
+                            打印箱贴
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="main-view">
+                <crud2 #crud [router]="url" [list]="list" (actionClick)="btnEvent($event)" [checkbox]="false"
+                    [jsonname]="'wmsPackingsolution'" listFun="detaildurl" [columns]="columns" [modular]="modular"
+                    [fields]="field" [isAction]="false" [isSetList]="false" [isDataOnInit]="false"
+                    [getBody]="requiredParams" [ExtendColumnTpl]="ExtendColumnTpl"
+                    [searchActionsBody]="searchActionsBody">
+                </crud2>
+
+                <ng-template #ExtendColumnTpl let-record="record" let-column="column">
+                    <ng-container *ngIf="column.coums === 'state_name'">
+                        <nz-tag nzColor="red" *ngIf="record.state === 2; else elseBlock">
+                            {{ record.state_name }}
+                        </nz-tag>
+                        <ng-template #elseBlock>
+                            <nz-tag>
+                                {{ record.state_name }}
+                            </nz-tag>
+                        </ng-template>
+                    </ng-container>
+                    <ng-container *ngIf="column.coums === 'current_bls_code'">
+                        <span>{{ record.current_bls_code }}</span>
+                        <nz-tag [nzColor]="'orange'" class="ml5" *ngIf="
+                                record.current_bls_code &&
+                                record.currenttype < 1
+                            ">
+                            {{'placard.Within'|i18n}}
+                        </nz-tag>
+                        <nz-tag [nzColor]="'red'" class="ml5" *ngIf="
+                                record.current_bls_code &&
+                                record.currenttype == 1
+                            ">
+                            推杆上{{ record.currentstructurecode }}
+                        </nz-tag>
+                    </ng-container>
+                    <ng-container *ngIf="column.coums === 'operate'">
+                        <ng-container *hasPermission="['wms_packingsolution_confirmmiss']">
+                            <!-- 缺件 2 不显示按钮 -->
+                            <a *ngIf="record.state !== 2" nz-button nzType="link" nz-popconfirm
+                                nzPopconfirmTitle="要确认缺件吗?" nzPopconfirmPlacement="bottom"
+                                (nzOnConfirm)="onConfirm(record)" style="padding: 0 5px">
+                                确认缺件
+                            </a>
+                        </ng-container>
+                        <ng-container *hasPermission="['wms_packingsolution_printsuit']">
+                            <!-- 生产中 1 不显示按钮 -->
+                            <a *ngIf="record.state !== 1" nz-button nzType="link" (click)="onPrintSuit(record)"
+                                style="padding: 0 5px">
+                                打印不干胶
+                            </a>
+                        </ng-container>
+                    </ng-container>
+                </ng-template>
+
+                <ng-template #searchActionsBody let-item="record">
+                    <form nz-form>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.pti_tagcode" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="tag_code" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="crud.seniorModel.tag_code" (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.tiaoma" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="tiaoma" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="crud.seniorModel.tiaoma" (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.state_name" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <ina-common-select title="{{ 'checkdata.check' | i18n }}" name="state_name"
+                                    [(ngModel)]="crud.seniorModel.state" url="pinming/extend/pinming" DataFiled="code"
+                                    datatype="getlist" secondary="" url="classdata" [other]="{
+                                        pcode: 'packingsolutiondetailstatus'
+                                    }">
+                                </ina-common-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.dingdanmingxiid" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="dingdanmingxiid" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="
+                                        crud.seniorModel.dingdanmingxiid
+                                    " (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.pinming" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="pinming" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="crud.seniorModel.pinming" (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.bumenquancheng" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="bumenquancheng" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="
+                                        crud.seniorModel.bumenquancheng
+                                    " (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.xianghao" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="xianghao" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="crud.seniorModel.xianghao" (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24">{{
+                                "wmsPackingsolution.taohao" | i18n
+                            }}</nz-form-label>
+                            <nz-form-control [nzSpan]="24">
+                                <input nz-input name="taohao" placeholder="{{ 'inputdata.input' | i18n }}"
+                                    [(ngModel)]="crud.seniorModel.taohao" (keydown)="crud.Search($event)" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</idrawer>
+<app-print-modal #printModal></app-print-modal>

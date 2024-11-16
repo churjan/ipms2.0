@@ -1,0 +1,46 @@
+<div class="container">
+    <nz-table #basicTable nzBordered nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+       nzTableLayout="fixed" [nzScroll]="{ x:'100%', y:'calc(100% - 50px)'}" [nzData]="dataSet">
+        <thead>
+            <tr>
+                <th nzLeft nzWidth="4rem">款式</th>
+                <th nzAlign="center" nzWidth="4rem">颜色</th>
+                <th nzAlign="center" nzWidth="4rem">尺码</th>
+                <th nzAlign="center" nzWidth="4rem">部件</th>
+                <th nzWidth="4rem">作业单</th>
+                <th nzWidth="4rem">工序</th>
+                <th nzWidth="4rem">站位</th>
+                <th nzRight nzWidth="4rem">产量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td nzLeft>{{data.psi_code}}</td>
+                <td nzAlign="center">{{data.pci_name}}</td>
+                <td nzAlign="center">{{data.psz_name}}</td>
+                <td nzAlign="center">{{data.bpi_name}}</td>
+                <td>{{data.pwb_code}}</td>
+                <td>{{data.poi_code}}</td>
+                <td>{{data.bsm_code}}</td>
+                <td nzRight>{{data.quantity}}</td>
+            </tr>
+        </tbody>
+        <tfoot class="tfoot">
+            <tr>
+                <td nzLeft class="sticky">{{'placard.Statistics'|i18n}}</td>
+                <td nzAlign="center" class="sticky">-</td>
+                <td nzAlign="center" class="sticky">-</td>
+                <td nzAlign="center" class="sticky">-</td>
+                <td class="sticky">-</td>
+                <td class="sticky">-</td>
+                <td class="sticky">-</td>
+                <td nzRight class="sticky" [nzEllipsis]="true">
+                    {{sumNode.quantity?sumNode.quantity:'0'}}
+                </td>
+            </tr>
+        </tfoot>
+    </nz-table>
+    <ng-template #totalTemplate let-total>
+        {{ 'placard.totalnum'|i18n| covertTranslation: total }}
+    </ng-template>
+</div>

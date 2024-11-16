@@ -1,0 +1,31 @@
+<idrawer *ngIf="visible" title="{{ 'import'|i18n }}" [width]="width" height="100%" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <dl>
+            <dd>
+                <nz-select [(ngModel)]="langSelected" nzPlaceHolder="{{ 'language.importPs1'|i18n }}">
+                    <nz-option *ngFor="let item of languages" [nzValue]="item" [nzLabel]="item.languagename"></nz-option>
+                </nz-select>
+            </dd>
+            <dd (click)="downloadTpl()">
+                <div class="download-tpl-img">
+                    <img width="60" src="../../../../../../assets/images/xlsx.png" />
+                </div>
+                <div class="download-tpl-text">{{ 'downloadTpl'|i18n }}</div>
+            </dd>
+            <dd>
+              <button nz-button nzType="primary" nzBlock [disabled]="!langSelected" mat-raised-button color="primary" class="file-select-control">
+                <input *ngIf="langSelected" type="file" #file accept=".xlsx, .csv, .xls" (change)="importExcel()">
+                {{ 'language.importFile'|i18n }}</button>
+            </dd>
+            <dd>
+                <div class="ps">
+                    <p><span>(1)</span>{{ 'language.importPs1'|i18n }}</p>
+                    <p><span>(2)</span>{{ 'language.importPs2'|i18n }}</p>
+                    <p><span>(3)</span>{{ 'language.importPs3'|i18n }}</p>
+                    <p><span>(4)</span>{{ 'language.importPs4'|i18n }}</p>
+                    <p><span>(5)</span>{{ 'language.importPs5'|i18n }}</p>
+                </div>
+            </dd>
+          </dl>
+    </ng-template>
+</idrawer>

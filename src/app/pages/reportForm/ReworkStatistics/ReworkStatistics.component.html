@@ -1,0 +1,65 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [isKeyQuery]="true"
+    [isDataOnInit]="false" [isAction]="false" [columns]="columns" [modular]="modular" [fields]="field"
+    [isKeyword]="false" [KeyQuery]="KeyQuery" [checkbox]="false" [isStatistics]="true" [isRefresh]="false"
+    (onReset)="onReset()" [searchActionsBody]="searchActionsBody" [isSetList]="false"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="QueryInspection('hei_repair')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.hei_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.hei_key" name="hei_key"
+                    url="Employeeinfo" DataTxt="code">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('hoi_name')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.hoi_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [(ngModel)]="crud.seniorModel.hoi_key"
+                    name="hoi_key" datatype="getlist/"></ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('psi_code')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.psi'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.psi_key" name="psi_key"
+                    url="styleinfo" DataTxt="code" secondary="name">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('pci_name')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.pci_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.pci_key" name="pci_key"
+                    url="colorInfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('psz_name')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.psz_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.psz_key" name="psz_key"
+                    url="sizeInfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('poi_code')">
+            <nz-form-label [nzSpan]="24">{{
+                'reportReworkStatistics.poi'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.poi_key" name="poi_key"
+                    [linkage]="true" [linkagedata]="{psi_key:crud.seniorModel.psi_key}" url="OperationInfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record">
+    <date-select [isRange]="true" #dateselect
+        (onSelect)="crud.SearchModel.start_date=$event.start;crud.SearchModel.end_date=$event.end"></date-select>
+</ng-template>

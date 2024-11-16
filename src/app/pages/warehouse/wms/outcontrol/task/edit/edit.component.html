@@ -1,0 +1,287 @@
+<idrawer
+  *ngIf="visible"
+  [title]="title"
+  [width]="width"
+  height="99%"
+  justifyContent="center"
+  (onClose)="close()"
+  [content]="contentTpl"
+  [footer]="footerTpl"
+  [showHeader]="!showFilesUpload"
+>
+  <ng-template #contentTpl>
+    <form nz-form [formGroup]="validateForm">
+      <div nz-row [nzGutter]="12">
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'wmsOutcontrol.name' | i18n }}">
+              <input nz-input formControlName="name" (keydown)="submitForm($event)" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'wmsOutcontrol.code' | i18n }}">
+              <input
+                nz-input
+                formControlName="code"
+                placeholder="{{ 'inputdata.input' | i18n }}"
+                (keydown)="submitForm($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}/{{ 'wmsOutcontrol.outControl' | i18n }}">
+              <!-- 出库控制 -->
+              <app-ina-single-select
+                formControlName="control_key"
+                [apiProps]="{ url: 'admin/w_WarehouseOutControl/option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.scheme" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}/{{ 'wmsOutcontrol.scheme' | i18n }}">
+              <!-- 方案 -->
+              <app-ina-single-select
+                formControlName="relation_key"
+                [apiProps]="{ url: 'admin/w_WarehouseOutRelation/option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOutcontrol.quantity" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                formControlName="quantity"
+                type="number"
+                min="0"
+                placeholder="{{ 'noLimitPlaceholder' | i18n }}"
+                (keydown)="submitForm($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOutcontrol.state_name" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <!-- 状态 -->
+              <app-ina-single-select
+                formControlName="state"
+                [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskStateEnum' } }"
+                [ngZorroProps]="{ value: 'code' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>
+              {{ "wmsOuttask.inboundtime" | i18n }}
+            </nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                formControlName="inboundtime"
+                type="number"
+                min="0"
+                placeholder="{{ 'noLimitPlaceholder' | i18n }}"
+                (keydown)="submitForm($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOuttask.type_name" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <!-- 任务类型 -->
+              <app-ina-single-select
+                formControlName="type"
+                [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskTypeEnum' } }"
+                [ngZorroProps]="{ value: 'code' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- 自定义组件 -->
+        <ng-container *ngFor="let item of customFields">
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label>{{ item.name }}</nz-form-label>
+              <nz-form-control>
+                <!-- 扩展后端下拉 extendselect -->
+                <!-- admin/w_customattributevalue/Option?keywords=&extend=bf91887b-dc06-48bb-8733-25049ed6442b&page=1&pagesize=20 -->
+                <!-- name key -->
+                <ng-container *ngIf="item.optionmode === 'extendselect'">
+                  <app-ina-single-select
+                    #customComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/' + item.optionvalue + '/Option',
+                      extraParams: { extend: item.key }
+                    }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 枚举下拉 enumselect -->
+                <!-- admin/Enum/?method=operationenum -->
+                <!-- description value -->
+                <ng-container *ngIf="item.optionmode === 'enumselect'">
+                  <app-ina-single-select
+                    #customComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/Enum',
+                      extraParams: { method: item.optionvalue },
+                      isPaging: false
+                    }"
+                    [ngZorroProps]="{ label: 'description', value: 'value' }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 输入:input  判断输入:judgment-input-->
+                <ng-container *ngIf="['input', 'judgment-input'].includes(item.optionmode)">
+                  <input
+                    *ngIf="['', undefined, null, 'String'].includes(item.inputtype)"
+                    #customComponent
+                    nz-input
+                    formControlName="{{ item.field }}"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    style="width: 100%"
+                  />
+                  <nz-input-number
+                    *ngIf="['Int', 'Decimal'].includes(item.inputtype)"
+                    #customComponent
+                    nz-input
+                    formControlName="{{ item.field }}"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    style="width: 100%"
+                  ></nz-input-number>
+                  <nz-switch
+                    *ngIf="['Bool'].includes(item.inputtype)"
+                    #customComponent
+                    formControlName="{{ item.field }}"
+                  ></nz-switch>
+                </ng-container>
+                <!-- 自定义下拉 customselect -->
+                <!-- name value -->
+                <ng-container *ngIf="item.optionmode === 'customselect'">
+                  <app-ina-single-select
+                    #customComponent
+                    formControlName="{{ item.field }}"
+                    [ngZorroProps]="{ value: 'value', customOptionList: item.optionvalue }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 后端下拉 select -->
+                <!-- admin/partinfo/Option?keywords=&page=1&pagesize=20 -->
+                <!-- name key -->
+                <ng-container *ngIf="item.optionmode === 'select'">
+                  <app-ina-single-select
+                    #customComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/' + item.optionvalue + '/Option'
+                    }"
+                  ></app-ina-single-select>
+                </ng-container>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
+      </div>
+    </form>
+    <nz-divider nzText="{{ 'placard.station' | i18n }}"></nz-divider>
+    <div class="mb8">
+      <ina-ztree-select
+        [setting]="setting"
+        [params]="stationRailtree"
+        datatype="NewGetList/"
+        (onSelect)="onSelectStation($event)"
+      ></ina-ztree-select>
+    </div>
+    <nz-transfer
+      nzShowSearch
+      [nzDataSource]="transferData"
+      class="transfer"
+      [nzRenderList]="[renderList, renderList]"
+      [nzTitles]="['(' + ('placard.canSelect' | i18n) + ')', '(' + ('placard.selected' | i18n) + ')']"
+      [nzListStyle]="{ height: 'calc(100%)' }"
+      [nzShowSelectAll]="false"
+      [nzFilterOption]="filterOption"
+    >
+      <ng-template
+        #renderList
+        let-items
+        let-stat="stat"
+        let-onItemSelectAll="onItemSelectAll"
+        let-onItemSelect="onItemSelect"
+      >
+        <div class="transfer-table-wrapper">
+          <nz-table
+            #table
+            [nzData]="$asTransferItems(items)"
+            [nzFrontPagination]="false"
+            nzSize="small"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }"
+            [nzBordered]="true"
+            nzSize="small"
+          >
+            <thead>
+              <tr>
+                <th
+                  nzAlign="center"
+                  nzWidth="40px"
+                  [nzChecked]="stat.checkAll"
+                  [nzIndeterminate]="stat.checkHalf"
+                  (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th nzAlign="center">{{ "wmsOutcontrol.lineCode" | i18n }}</th>
+                <th nzAlign="center">{{ "wmsOutcontrol.bls_name" | i18n }}</th>
+                <th nzAlign="center">{{ "wmsOutcontrol.bls_code" | i18n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                <td
+                  nzAlign="center"
+                  nzWidth="40px"
+                  [nzChecked]="!!data.checked"
+                  (nzCheckedChange)="onItemSelect(data)"
+                ></td>
+                <td nzAlign="center">{{ data.station_name }}</td>
+                <td nzAlign="center">{{ data.bls_name }}</td>
+                <td nzAlign="center">{{ data.bls_code }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </ng-template>
+    </nz-transfer>
+  </ng-template>
+
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ "btn.cancel" | i18n }}</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="submitForm()"
+      (keydown)="submitForm($event)"
+      [disabled]="submiting"
+      [nzLoading]="submiting"
+      class="m-l-6"
+    >
+      {{ "btn.save" | i18n }}
+    </button>
+  </ng-template>
+</idrawer>

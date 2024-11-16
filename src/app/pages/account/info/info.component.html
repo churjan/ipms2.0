@@ -1,0 +1,35 @@
+<account-layout>
+    <div nz-row [nzGutter]="16">
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="20">
+            <nz-descriptions nzBordered [ngStyle]="{marginBottom: '15px'}">
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.name'|i18n }}">{{current.hei_name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.hoi_name'|i18n }}">{{current.hoi_name}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.code'|i18n }}">{{current.hei_code}}</nz-descriptions-item>
+                
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.attendanceid'|i18n }}">{{current.attendanceid}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.idnumber'|i18n }}">{{current.idnumber}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.phone'|i18n }}">{{current.phone}}</nz-descriptions-item>
+    
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.birthday'|i18n }}">
+                <ng-container *ngIf="current.birthday">{{current.birthday|time:"YYYY-MM-DD"}}</ng-container>
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.address'|i18n }}" [nzSpan]="2">{{current.address}}</nz-descriptions-item>
+                
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.sex'|i18n }}">{{current.sex}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.height'|i18n }}">{{current.height}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'hrEmployee.weight'|i18n }}">{{current.weight}}</nz-descriptions-item>
+    
+                <nz-descriptions-item nzTitle="{{ 'account.loginIp'|i18n }}">{{current.loginip}}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="{{ 'account.loginTime'|i18n }}" [nzSpan]="2">{{current.lastlogintime|time}}</nz-descriptions-item>
+            </nz-descriptions>
+        </div>
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="4" class="picture">
+            <img *ngIf="current.picture" width="120"  [src]="current.picture" />
+            <div *ngIf="!current.picture" class="avatar">
+                <div class="avatar-icon">
+                    <nz-avatar [nzSize]="64" nzIcon="user"></nz-avatar>
+                </div>
+            </div>
+        </div>
+    </div>
+</account-layout>

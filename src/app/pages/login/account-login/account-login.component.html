@@ -1,0 +1,43 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label nzRequired>{{ "login.userName" | i18n }}</nz-form-label>
+        <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'login.userName' |
+            i18n }}">
+            <nz-input-group nzSize="large" nzPrefixIcon="user">
+                <input type="text" nz-input (keydown)="submitForm($event)" formControlName="username"
+                    placeholder="{{ 'login.userName' | i18n }}" />
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label nzRequired>{{ "login.password" | i18n }}</nz-form-label>
+        <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'login.password' |
+            i18n }}">
+            <nz-input-group nzSize="large" nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
+                <input [type]="passwordVisible ? 'text' : 'password'" nz-input (keydown)="submitForm($event)"
+                    formControlName="password" placeholder="{{ 'login.password' | i18n }}" />
+                <ng-template #suffixTemplate>
+                    <i class="pointer" nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                        (click)="passwordVisible= !passwordVisible"></i>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <div class="registered-txt-view">
+        {{title?title:''}}
+        <a nz-button nzType="link" (click)="onNavigateTo(3)">
+            {{"login.registered" | i18n}}
+        </a>
+    </div>
+    <nz-form-item>
+        <nz-form-control>
+            <button nz-button nzBlock nzSize="large" nzType="primary" [disabled]="submiting" [nzLoading]="submiting">
+                {{ "login.Signin" | i18n }}
+            </button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+<div class="expire-txt-view" *ngIf="loginService.deadline <= 15">
+    {{"placard.expireTimeMsg" | i18n | covertTranslation: loginService.deadline}}
+    <a nz-button nzType="link" (click)="onNavigateTo(1)">{{"btn.register" | i18n}}</a>
+</div>

@@ -1,0 +1,43 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [list]="list"
+  (actionClick)="btnEvent($event)" [Lwidth]="'18%'" [sideColumnTpl]="sideColumnTpl" [columns]="columns"
+  [modular]="modular" [fields]="field" [contentTest]="contentTest"></crud2>
+<ng-template #contentTest let-item="record">
+  <div nz-row [nzGutter]="8" style="height: 100%;">
+    <div nz-col [nzSpan]="10">
+      <nz-card nzTitle="{{'placard.Running_out'|i18n}}" nzSize="small" style="height: calc(100% - 27px);">
+        <crud2 #Running_out [router]="url" [jsonname]="fieldcode" showLayout="Container" [NegStatus]="11"
+          [isDataOnInit]="false" [checkbox]="false" (actionClick)="btnEvent($event)" [position]="false"
+          [columns]="columns" [modular]="modular" [fields]="field" [lastColumnTpl]="RunoperationTpl"
+          [lastColumnWidth]="1" (turnclick)="erfid($event)" (lineClick)="erfid($event,true)">
+        </crud2>
+      </nz-card>
+      <!-- 行内操作按钮 -->
+      <ng-template #RunoperationTpl let-item="record">
+        <a nz-tooltip nzTooltipTitle="{{'btn.close'|i18n }}" (click)="play(item)">
+          <i nz-icon [nzType]="'stop'" [class]="'red'" nzTheme="fill"></i>
+        </a>
+      </ng-template>
+    </div>
+    <div nz-col [nzSpan]="14">
+      <nz-card nzTitle="{{'placard.out_deyail'|i18n}}" nzSize="small" style="height: calc(100% - 27px);">
+        <crud2 #out_deyail [router]="url" [jsonname]="fieldcode" showLayout="Container" [isDataOnInit]="false"
+          [checkbox]="false" (actionClick)="btnEvent($event)" listFun="detaildurl" [position]="false" [NegStatus]="11"
+          [columns]="modular.detailcolumns" [modular]="modular" [fields]="field" [lastColumnTpl]="outoperationTpl"
+          [lastColumnWidth]="1" (turnclick)="goHanger($event)"></crud2>
+      </nz-card>
+      <!-- 行内操作按钮 -->
+      <ng-template #outoperationTpl let-item="record">
+        <a nz-tooltip nzTooltipTitle="{{'btn.close'|i18n }}" (click)="playdetail(item)" *ngIf="item.state==1">
+          <i nz-icon [nzType]="'stop'" [class]="'red'" nzTheme="fill"></i>
+        </a>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>
+<ng-template #sideColumnTpl let-item="record">
+  <class-ztree #Menu class="tree" commUrl="UnloadingStation" [modular]="modular" DataTxt="bls_code" DataFiled="bls_key"
+    secondary="bls_name" pKey="bls_pkey" title="{{'whOutboundMonitoring.outshow'|i18n}}" [action]="modular.action"
+    (onclick)="onclick($event)" (onAction)="onAction($event)">
+  </class-ztree>
+</ng-template>
+<Monitoringedit #edit (editDone)="_Menu.ResetTree();crud.reloadData($event);crud.setOfCheckedId=[]"></Monitoringedit>

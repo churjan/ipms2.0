@@ -1,0 +1,10 @@
+<crud #crud [columns]="tableColumns" [topRightActionsTpl]="topRightActionsTpl" [showSelection]="false" [xScroll]="'1800px'" [service]="statisticsinService" [showAdvancedSearch]="true" (onFilterOpen)="filter.open($event)" (onReset)="filter.reset()">
+</crud>
+<ng-template #topRightActionsTpl>
+    <button nz-button nzType="primary" (click)="openInSync()" *hasPermission="['wms_statisticsin_sync']">
+        <i nz-icon nzType="export"></i> {{ 'btn.Synchronous'|i18n }}
+    </button>
+</ng-template>
+
+<filter #filter (editDone)="crud.advancedSearch($event)" (onClose)="crud.filterOpen = false"></filter>
+<statisticsin-sync #statisticsinsync (editDone)="openInSync()"></statisticsin-sync>

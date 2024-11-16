@@ -1,0 +1,68 @@
+<div class="page beauty-scroll">
+    <nz-card class="page-container">
+        <div id="innerTop" #innerTop>
+            <form nz-form [formGroup]="validateForm" (ngSubmit)="search()">
+                <div nz-row [nzGutter]="16">
+                    <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="8" [nzXXl]="6">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6">{{ 'capacity.currentLine'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="18">
+                                <nz-select formControlName="code" nzPlaceHolder="{{  'checkdata.check'|i18n}}">
+                                    <nz-option *ngFor="let item of lines" [nzValue]="item.code" [nzLabel]="item.name"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="8" [nzXXl]="6">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6">{{ 'placard.keyword'|i18n }}</nz-form-label>
+                            <nz-form-control [nzSpan]="18">
+                                <input
+                                    nz-input
+                                    placeholder="{{ 'inputdata.input_xx2' | i18n:('placard.keyword' | i18n) }}"
+                                    formControlName="keywords"
+                                />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="8" [nzXXl]="6">
+                        <nz-form-item>
+                            <nz-form-control [nzSpan]="18" [nzOffset]="6">
+                                <button nz-button nzType="primary">{{ 'btn.search'|i18n }}</button>
+                                <button nz-button type="button" (click)="resetSearch()" class="m-l-6">{{ 'btn.reset'|i18n }}</button>
+                                <span>
+                                    {{ 'placard.inTimeControl'|i18n }}
+                                    <nz-switch 
+                                        formControlName="inTimeControl"
+                                        nzCheckedChildren="{{ 'placard.open'|i18n }}" 
+                                        nzUnCheckedChildren="{{ 'placard.close'|i18n }}"
+                                        [nzDisabled]="lines?.length <= 0"
+                                        (ngModelChange)="inTimeControlChange($event)"
+                                        >
+                                    </nz-switch>
+                                </span>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+        <itable 
+            [data]="data" 
+            [total]="total" 
+            [pageSize]="pageSize" 
+            [pageIndex]="page" 
+            [loading]="loading" 
+            [columns] = "tableColumns"
+            [tpls] = "{progressTpl:progressTpl}"
+            [frontPagination] = "true"
+            [showSelection] ="false"
+            [top]="top"
+            >
+            <ng-template #progressTpl let-text="text">
+                <nz-progress [nzPercent]="text" nzSize="small"></nz-progress>
+            </ng-template>
+        </itable>
+    </nz-card>
+</div>

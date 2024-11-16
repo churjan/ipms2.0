@@ -1,0 +1,137 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'99%'" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="see_title">{{'placard.TaskInfor'|i18n}}</div>
+        <div class="see_cont">
+            <div nz-row class="fontSize">
+                <!-- 库存类型 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.inventory_type'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="showModel.inventory_type_name || ''">{{showModel.inventory_type_name || ''}}</span>
+                </div>
+                <!-- 状态 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.state_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.state_name || ''">{{showModel.state_name || ''}}</span>
+                </div>
+                <!-- 创建人名 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.create_hei_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="showModel.create_hei_name || ''">{{showModel.create_hei_name || ''}}</span>
+                </div>
+                <!-- 创建日期 -->
+                <div nz-col nzSpan="3">
+                    {{'whTaskOut.create_time'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="showModel.create_time?showModel.create_time.substring(0,10):''">{{showModel.create_time?showModel.create_time.substring(0,10):''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 作业单号 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.pwb_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.pwb_code || ''">{{showModel.pwb_code || ''}}</span>
+                </div>
+                <!-- 销售单号 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.som_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.som_code || ''">{{showModel.som_code || ''}}</span>
+                </div>
+                <!-- 款号 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.psi_code'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.psi_code || ''">{{showModel.psi_code || ''}}</span>
+                </div>
+                <!-- 款名 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.psi_name'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.psi_name || ''">{{showModel.psi_name || ''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 颜色 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.pci_key'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.pci_name || ''">{{showModel.pci_name || ''}}</span>
+                </div>
+                <!-- 部件 -->
+                <div nz-col nzSpan="3">
+                    {{'whTaskOut.bpi_key'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.bpi_code || ''">{{showModel.bpi_code || ''}}</span>
+                </div>
+                <!-- 尺码 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.psz_key'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.psz_code || ''">{{showModel.psz_code || ''}}</span>
+                </div>
+                <!-- 数量 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.num'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.num|| ''">{{showModel.num|| ''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 出仓口 -->
+                <div nz-col nzSpan="2">
+                    {{'whTaskOut.out_infeed_key'|i18n}}：
+                </div>
+                <div nz-col nzSpan="16" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="showModel.out_infeed_code || ''"
+                        *ngFor="let item of showModel.wwti_list"
+                        style="margin-right:10px;">[{{item.out_infeed_code}}]{{item.out_infeed_name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="see_title" style="margin-top: 20px;">{{'placard.OutInfor'|i18n}}</div>
+        <div class="see_cont">
+            <div class="see_cont_left" [style]="isSeeArrange?'width:70%;':''">
+                <nz-table #finishedTable [nzData]="list" nzSize="small" [nzBordered]="true"
+                    nzTitle="{{'placard.outHengerNum'|i18n}}（{{list.length}}）" [nzShowPagination]="false"
+                    [nzPageSize]="999999" [nzScroll]="{y:'470px'}">
+                    <thead>
+                        <tr>
+                            <th nzWidth="140px" *ngFor="let column of modular.detail;let i=index" [nzLeft]="i==0"
+                                [nzRight]="i==modular.detail.length-1">{{'whTaskOut.'+column|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of finishedTable.data">
+                            <td *ngFor="let column of modular.detail;let i=index" [nzLeft]="i==0"
+                                [nzRight]="i==modular.detail.length-1">{{data[column]}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>

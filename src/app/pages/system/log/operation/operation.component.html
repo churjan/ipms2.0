@@ -1,0 +1,85 @@
+<!-- 
+<crud
+    #crud
+    [columns] = "tableColumns"
+    [topRightActionsTpl]="topRightActionsTpl"
+    [lastColumnTpl] = "operationTpl"
+    [service]="operationLogService"
+    [tpls]="{timeTpl: timeTpl}"
+>
+</crud>
+
+<ng-template #topRightActionsTpl>
+    <button nz-button nzType="default" (click)="crud.delete()" *hasPermission="['system_log_operation_del']">
+        <i nz-icon nzType="delete"></i> {{ 'btn.delete'|i18n }}
+    </button>
+</ng-template>
+
+<ng-template #timeTpl let-text="text">
+    {{text|time}}
+</ng-template> -->
+
+<!-- 行内操作按钮 -->
+<!-- <ng-template #operationTpl let-item="record">
+    <button 
+        *hasPermission="['system_log_operation_view']"
+        nz-button 
+        nzType="text" 
+        nzSize="small" 
+        (click)="detail.open(item)" 
+        nz-tooltip 
+        nzTooltipTitle="{{ 'view'|i18n }}">
+        <i nz-icon nzType="eye"></i>
+    </button>
+    <button 
+        *hasPermission="['system_log_operation_del']"
+        nz-button 
+        nzType="text" 
+        nzSize="small" 
+        (click)="crud.delete(item)" 
+        nz-tooltip 
+        nzTooltipTitle="{{ 'btn.delete'|i18n }}" 
+        class="m-l-6">
+        <i nz-icon nzType="delete"></i>
+    </button>
+</ng-template> -->
+
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [columns]="columns"
+    [modular]="modular" [fields]="field" keyword_placeholder="sysLogoperation.url"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'sysLogoperation.hei_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.hei_key" name="hei_key" url="EmployeeInfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'sysLogoperation.pwb_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pwb_key" name="pwb_key" url="WorkBill" DataTxt="code"
+                    [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'sysLogoperation.url'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="url" placeholder="{{ 'inputdata.input'|i18n }}" [(ngModel)]="crud.seniorModel.url"
+                    (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'sysLogoperation.action'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="action" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.action" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<detail #detail></detail>

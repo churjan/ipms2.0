@@ -1,0 +1,59 @@
+@import 'mixin';
+
+.themeMixin({
+    :host {
+        .tabs{
+            height: @tabbar-height;
+            padding-right: 12px;
+            background-color: @layout-tabbar-background;
+            box-shadow: @layout-tabbar-box-shadow;
+            position: relative;
+            z-index: 4;
+            ::ng-deep nz-tabs-nav{
+                margin-bottom: 0;
+                &::before{
+                    border-bottom: none;
+                }
+                ::ng-deep .ant-tabs-tab{
+                    padding: 0 16px;
+                    line-height: @tabbar-height;
+                    height: @tabbar-height;
+                    border-top: none;
+                    border-bottom: none;
+                    border-left: none;
+                    cursor: pointer;
+                    ::ng-deep .anticon{
+                        margin-right: 0;
+                    }
+                    .title{
+                        font-size: 14px;
+                        color: #666666;
+                    }
+                    .close{
+                        font-size: 12px;
+                        padding-left: 6px;
+                        color: #666666;
+                    }
+                    &.ant-tabs-tab-active{
+                        .reload{
+                            color: @color;
+                            padding-right: 6px;
+                        }
+                        .title{
+                            color: @color;
+                        }
+                    }
+                }
+            }
+            ::ng-deep .ant-tabs-extra-content{
+                font-size: 16px;
+                cursor: pointer;
+                color: @color;
+                opacity: 0.6;
+                &:hover{
+                    opacity: 1;
+                }
+            }
+        }
+    }
+});

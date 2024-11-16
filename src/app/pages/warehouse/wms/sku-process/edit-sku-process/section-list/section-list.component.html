@@ -1,0 +1,97 @@
+<idrawer
+  *ngIf="isVisible"
+  [title]="title"
+  width="800px"
+  height="600px"
+  bodyPadding="12px 20px"
+  justifyContent="center"
+  nzSize="small"
+  [content]="contentTpl"
+  [footer]="footerTpl"
+  (onClose)="onClose()"
+>
+  <ng-template #contentTpl>
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-form-label class="fz18">工序流名称</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="请输入"
+            [(ngModel)]="popm_name"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div class="fz18 mt16 mb16">款式部件信息</div>
+    <nz-table
+      [nzData]="partList"
+      [nzShowPagination]="false"
+      [nzBordered]="true"
+    >
+      <thead>
+        <tr>
+          <th width="70px">序号</th>
+          <th>部件名称</th>
+          <th>部件类型</th>
+          <th>主部件</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of partList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.bpi_name }}</td>
+          <td>{{ data.bpi_class_name }}</td>
+          <td>{{ data.bpi_ismain ? "是" : "否" }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <nz-alert
+      nzType="error"
+      *ngIf="!partList.length"
+      nzMessage="暂无数据，请去系统参数管理页面设置"
+    ></nz-alert>
+
+    <div class="fz18 mt16 mb16">款式工段工序流</div>
+    <nz-table
+      [nzData]="workSectionList"
+      [nzShowPagination]="false"
+      [nzBordered]="true"
+    >
+      <thead>
+        <tr>
+          <th width="70px">序号</th>
+          <th>工段</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of workSectionList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.bwi_name }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <nz-alert
+      nzType="error"
+      *ngIf="!workSectionList.length"
+      nzMessage="暂无数据，请去系统参数管理页面设置"
+    ></nz-alert>
+  </ng-template>
+
+  <ng-template #footerTpl>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="onSubmit()"
+      [disabled]="!partList.length || !workSectionList.length || isBtnLoading"
+      [nzLoading]="isBtnLoading"
+      class="mr6"
+    >
+      {{ "btn.save" | i18n }}
+    </button>
+    <button nz-button (click)="onClose()" *ngIf="record.fromPage!=='flow3'">{{ "btn.cancel" | i18n }}</button>
+    <button nz-button (click)="onBack()" *ngIf="record.fromPage==='flow3'">返回工序流</button>
+
+  </ng-template>
+</idrawer>

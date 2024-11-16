@@ -1,0 +1,114 @@
+<div nz-row class="tree-head">
+    <h4 *ngIf="title" nz-col nzSpan="24" class="title">{{title}}</h4>
+    <span class="spacer"></span>
+    <nz-button-group class="btnGroup">
+        <button nz-button nzType="primary" nzSize="small" *ngFor="let item of
+            action" nz-tooltip nzTooltipTitle="{{'btn.'+item.action|i18n}}" [hidden]="!item.iscomm"
+            (click)="Action(item.action,item)">
+            <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+        </button>
+        <button nz-button nzType="primary" nzSize="small" nz-tooltip nzTooltipTitle="{{'btn.reset'|i18n}}"
+            (click)="ResetTree()">
+            <i nz-icon nzType="reload" nzTheme="outline"></i>
+        </button>
+    </nz-button-group>
+    <!-- <span class="spacer"></span> -->
+    <!-- <a nz-dropdown [nzDropdownMenu]="more"><i nz-icon nzType="more"
+            nzTheme="outline"></i></a>
+    <nz-dropdown-menu #more="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+            <li nz-menu-item *ngFor="let item of action" class="c-pointer"
+                (click)="Action(item.action,item)">
+                <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>{{item.name}}
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="refreshTree()">
+                <i nz-icon nzType="reload" nzTheme="outline"></i>
+            </li>
+        </ul>
+    </nz-dropdown-menu> -->
+</div>
+<div class="tree-main">
+    <nz-input-group [nzSuffix]="suffixIcon" class="tree-search">
+        <input type="text" nz-input placeholder="{{'placard.search'|i18n}}" [(ngModel)]="searchValue"
+            (keydown)="search($event)" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search" (click)="search()"></i>
+    </ng-template>
+    <div class="treeview">
+        <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="node">
+            <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
+                <nz-tree-node-option [nzDisabled]="node.disabled">
+                    <div class="item">
+                        <span (click)="nzEvent(node)" [nzTooltipTrigger]="TooltipVisible!=true?'hover':null" nz-tooltip
+                            nzTooltipTitle="{{ node.name}}" class="treenodetitle"
+                            [class.tree-node-selected]="selectNode&&node.disabled==false?selectNode.key==node.node.key:false">
+                            {{node.name }}
+                        </span>
+                        <span class="spacer"></span>
+                        <div class="btn-group">
+                            <nz-button-group>
+                                <ng-container *ngFor="let item of action">
+                                    <button nz-button nzType="text" nzSize="small"
+                                        *ngIf="item.isconfirm!=true&&item.noson!=true" nz-tooltip
+                                        nzTooltipTitle="{{'btn.'+item.action|i18n}}" (click)="Action(item.action,node)">
+                                        <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+                                    </button>
+                                    <button nz-button nzType="text" nzSize="small" nz-popconfirm
+                                        *ngIf="item.isconfirm==true" nzPopconfirmTitle="{{item.confieTile|i18n}}{{
+                                        node.name}}" nz-tooltip nzTooltipTitle="{{'btn.'+item.icon|i18n}}"
+                                        nzPopconfirmPlacement="bottomLeft" (nzOnConfirm)="Action('del',node)"
+                                        (nzOnCancel)="Action()">
+                                        <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+                                    </button>
+                                </ng-container>
+                            </nz-button-group>
+                        </div>
+                    </div>
+                </nz-tree-node-option>
+            </nz-tree-node>
+
+            <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
+                <div class="item">
+                    <nz-tree-node-toggle>
+                        <i nz-icon [nzType]="treeControl.isExpanded(node) ?
+                            'minus-square' : 'plus-square'" nzTheme="outline"></i>
+                    </nz-tree-node-toggle>
+                    <nz-tree-node-option [nzDisabled]="node.disabled">
+                        <div class="item">
+                            <span class="pointer treenodetitle" (click)="nzEvent(node)"
+                                [class.tree-node-selected]="selectNode&&node.disabled==false?selectNode.key==node.node.key:false"
+                                nz-tooltip nzTooltipTitle="{{ node.name}}" [nzTooltipTrigger]="TooltipVisible!=true?'hover':null" >
+                                {{ node.name}}
+                            </span>
+                            <span class="spacer"></span>
+                            <div class="btn-group">
+                                <nz-button-group>
+                                    <ng-container *ngFor="let item of action">
+                                        <button nz-button nzType="text" nzSize="small"
+                                            *ngIf="item.isconfirm!=true&&item.noson!=true" nz-tooltip
+                                            nzTooltipTitle="{{'btn.'+item.action|i18n}}"
+                                            (click)="Action(item.action,node)">
+                                            <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+                                        </button>
+                                        <button nz-button nzType="text" nz-tooltip
+                                            nzTooltipTitle="{{'btn.delete'|i18n}}" nzSize="small" nz-popconfirm
+                                            *ngIf="item.isconfirm==true"
+                                            nzPopconfirmTitle="{{item.confieTile|i18n}}{{node.name}}"
+                                            nzPopconfirmPlacement="bottomLeft" (nzOnConfirm)="Action('del',node)"
+                                            (nzOnCancel)="Action()">
+                                            <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+                                        </button>
+                                    </ng-container>
+                                </nz-button-group>
+                            </div>
+                        </div>
+                    </nz-tree-node-option>
+                </div>
+            </nz-tree-node>
+        </nz-tree-view>
+        <!-- <nz-tree [nzData]="node" nzShowLine [nzSearchValue]="searchValue"
+        (nzClick)="nzEvent($event)"> </nz-tree> -->
+    </div>
+</div>

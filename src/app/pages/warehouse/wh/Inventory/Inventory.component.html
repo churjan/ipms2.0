@@ -1,0 +1,86 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [list]="list"
+    (actionClick)="btnEvent($event)" [Lwidth]="'25%'" [sideColumnTpl]="sideColumnTpl" [columns]="columns"
+    [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #sideColumnTpl let-item="record">
+    <class-ztree #Menu class="tree" commUrl="layoutstructure/extend" [modular]="modular"
+        title="{{'whInventory.bls_key'|i18n}}" Datadaty="NewGetList" [params]="{ maketree: true, moduletype: 22 }"
+        (onclick)="onclick($event)">
+    </class-ztree>
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('som_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.som_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.som_code" name="som_code" url="OrderMaster" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pwb_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pwb_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pwb_code" name="pwb_code" url="WorkBill" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psi_key" name="psi_code"
+                    [DataTxt]="isseach('psi_name')==true?'name':'code'" url="styleinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psz_code')==true||isseach('psz_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.psz_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psz_key" name="psz_code" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pci_code')==true||isseach('pci_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pci_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pci_key" name="psz_code" url="colorinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('bpi_code')==true||isseach('bpi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.bpi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.bpi_key" name="bpi_code" url="partinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('rfid')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.rfid'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="rfid" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.rfid" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pti_tagcode')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pti_tagcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="pti_tagcode" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pti_tagcode" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('isfrozen')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.isfrozen'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select [(ngModel)]="crud.seniorModel.isfrozen" name="isfrozen">
+                    <nz-option [nzValue]="true" nzLabel="{{'placard.yes'|i18n}}"></nz-option>
+                    <nz-option [nzValue]="false" nzLabel="{{'placard.no'|i18n}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<InventoryEdit #edit (editDone)="crud.reloadData($event);crud.setOfCheckedId=[]"></InventoryEdit>

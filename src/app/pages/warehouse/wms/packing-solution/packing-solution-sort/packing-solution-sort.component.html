@@ -1,0 +1,122 @@
+<div class="body-view">
+  <div class="left-view">
+    <div class="mb8">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input [(ngModel)]="searchText" placeholder="请输入搜索内容" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+      </ng-template>
+    </div>
+    <nz-table
+      [nzData]="unsortedList"
+      [nzSize]="'small'"
+      [nzBordered]="true"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{ x: 'auto', y: '300px' }"
+    >
+      <thead>
+        <tr>
+          <th
+            [nzChecked]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+            nzWidth="60px"
+          ></th>
+          <th nzWidth="120px">包装编号</th>
+          <th nzWidth="120px">包装交期</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of unsortedList | filter: searchText : 'key'; let i = index">
+          <td
+            [nzChecked]="setOfCheckedKey.has(data.key)"
+            (nzCheckedChange)="onItemChecked(data.key, $event)"
+          ></td>
+          <td>{{ data.key }}</td>
+          <td>{{ data.baozhuangjieshu | date : "yyyy-MM-dd" }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="middle-view">
+    <div>
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="setOfCheckedKey2.size === 0"
+        (click)="onTransferToLeft()"
+      >
+        <i nz-icon nzType="caret-left"></i>
+      </button>
+    </div>
+    <div class="mt8">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="setOfCheckedKey.size === 0"
+        (click)="onTransferToRight()"
+      >
+        <i nz-icon nzType="caret-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class="right-view">
+    <div class="mb8">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input [(ngModel)]="searchText2" placeholder="请输入搜索内容" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+      </ng-template>
+    </div>
+    <nz-table
+      [nzData]="sortedList"
+      [nzSize]="'small'"
+      [nzBordered]="true"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{ x: 'auto', y: '300px' }"
+    >
+      <thead>
+        <tr>
+          <th
+            [nzChecked]="checked2"
+            [nzIndeterminate]="indeterminate2"
+            (nzCheckedChange)="onAllChecked2($event)"
+            nzWidth="60px"
+          ></th>
+          <th nzWidth="120px">包装编号</th>
+          <th nzWidth="120px">包装交期</th>
+          <th nzWidth="160px">操作</th>
+        </tr>
+      </thead>
+      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <tr *ngFor="let data of sortedList| filter: searchText2 : 'key'; let i = index" cdkDrag>
+          <td
+            [nzChecked]="setOfCheckedKey2.has(data.key)"
+            (nzCheckedChange)="onItemChecked2(data.key, $event)"
+          ></td>
+          <td>{{ data.key }}</td>
+          <td>{{ data.baozhuangjieshu | date : "yyyy-MM-dd" }}</td>
+          <td>
+            <a nz-button nzType="link" (click)="onMoveUp(data)">
+              <span nz-icon nzType="arrow-up" nzTheme="outline"></span>
+            </a>
+            <a nz-button nzType="link" (click)="onMoveDown(data)">
+              <span nz-icon nzType="arrow-down" nzTheme="outline"></span>
+            </a>
+            <a nz-button nzType="link" (click)="onTopUp(data)">置顶</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<div class="footer-view">
+  <button nz-button nzType="primary" (click)="onSure()">
+    {{ "btn.sort" | i18n }}
+  </button>
+  <button nz-button class="ml8" (click)="onClose()">{{ "btn.cancel" | i18n }}</button>
+</div>

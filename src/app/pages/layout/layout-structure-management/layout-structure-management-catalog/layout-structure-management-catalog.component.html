@@ -1,0 +1,87 @@
+<div class="catalog-view">
+    <div class="tree-head-view">
+        <div class="flex-1 pl5">{{'placard.layoutStructure' | i18n}}</div>
+        <nz-button-group>
+            <button
+                nz-button
+                nzType="primary"
+                nzSize="small"
+                nz-tooltip
+                [nzTooltipTitle]="'btn.Synchronous' | i18n"
+                (click)="onReload()"
+            >
+                <i nz-icon nzType="cloud-sync"></i>
+            </button>
+            <button
+                nz-button
+                nzType="primary"
+                nzSize="small"
+                nz-tooltip
+                [nzTooltipTitle]="'placard.tabletBatchSetting' | i18n"
+                (click)="onEdit()"
+            >
+                <i nz-icon nzType="setting"></i>
+            </button>
+            <!-- <button
+                nz-button
+                nzType="primary"
+                nzSize="small"
+                nz-tooltip
+                [nzTooltipTitle]="'placard.capacity' | i18n"
+                (click)="onCapacity()"
+            >
+                <i nz-icon nzType="funnel-plot"></i>
+            </button> -->
+        </nz-button-group>
+    </div>
+    <div class="search-view">
+        <nz-input-group [nzSuffix]="suffixIcon">
+            <input
+                type="text"
+                nz-input
+                placeholder="{{ 'inputPlaceholder' | i18n }}{{
+                    'keyword' | i18n
+                }}"
+                [(ngModel)]="searchValue"
+            />
+        </nz-input-group>
+        <ng-template #suffixIcon>
+            <i nz-icon nzType="search"></i>
+        </ng-template>
+    </div>
+
+    <div class="tree-body-view">
+        <div class="empty-view" *ngIf="!nodes.length">
+            <nz-spin nzSimple></nz-spin>
+        </div>
+        <ng-container *ngIf="nodes.length">
+            <nz-tree
+                [nzData]="nodes"
+                [nzSearchValue]="searchValue"
+                (nzClick)="nzEvent($event)"
+            ></nz-tree>
+        </ng-container>
+    </div>
+</div>
+<app-embed-modal
+    [title]="appService.translate('placard.tabletBatchSetting')"
+    [marginTop]="'50px'"
+    [width]="'1200px'"
+    [bodyHeight]="'600px'"
+    [(isVisible)]="isShowEditModal"
+    [componentName]="'app-edit-layout-structure-management-catalog'"
+>
+    <app-edit-layout-structure-management-catalog
+        *ngIf="isShowEditModal"
+    ></app-edit-layout-structure-management-catalog>
+</app-embed-modal>
+<app-embed-modal
+    [title]="appService.translate('placard.capacity')"
+    [marginTop]="'50px'"
+    [width]="'1600px'"
+    [bodyHeight]="'700px'"
+    [(isVisible)]="isShowCapacityEditModal"
+    [componentName]="'app-edit-layout-structure-management-capacity'"
+>
+    <app-edit-layout-structure-management-capacity *ngIf="isShowCapacityEditModal"></app-edit-layout-structure-management-capacity>
+</app-embed-modal>

@@ -1,0 +1,23 @@
+<idrawer *ngIf="visible" title="{{ 'tag'|i18n }}/{{ 'view'|i18n }}" width="1100px" justifyContent="center" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-descriptions nzBordered nzTitle="{{ 'baseInfo'|i18n }}" nzSize="small">
+            <nz-descriptions-item nzTitle="{{ 'tags.tagCode'|i18n }}">{{data.tagcode}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'orderNo'|i18n }}">{{data.ordercode}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'tags.salesOrderId'|i18n }}">{{data.salesorderid}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'tags.customCode'|i18n }}">{{data.customcode}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'createTime'|i18n }}">{{data.create_time|time}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'status'|i18n }}">
+                <nz-badge *ngIf="data.state == -1" nzStatus="error" nzText="{{ 'tags.statusDisabled'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 0"  nzStatus="default" nzText="{{ 'tags.statusNew'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 1"  nzStatus="processing" nzText="{{ 'tags.statusProduction'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 2"  nzStatus="default" nzText="{{ 'tags.statusStock'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 3"  nzStatus="default" nzText="{{ 'tags.statusOutStock'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 4"  nzStatus="warning" nzText="{{ 'tags.statusRepair'|i18n }}"></nz-badge>
+                <nz-badge *ngIf="data.state == 99" nzStatus="success" nzText="{{ 'tags.statusComplete'|i18n }}"></nz-badge>
+            </nz-descriptions-item>
+            
+            <nz-descriptions-item *ngFor="let item of data.tagattrs" nzTitle="{{ item.pca_chinaname }}">{{item.attribute_name}}</nz-descriptions-item>
+        </nz-descriptions>
+        <tag-process [data]="data.tagprocesslist"></tag-process>
+    </ng-template>
+</idrawer>

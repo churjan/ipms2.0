@@ -1,0 +1,340 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="isPreview!=true?contentTpl:Preview" height="99%">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'pmLayingcloth.code'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'pmLayingcloth.code'|i18n }}">
+                            <input nz-input formControlName="code" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'pmLayingcloth.bed_no'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="18"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'pmLayingcloth.bed_no'|i18n }}">
+                            <input nz-input formControlName="bed_no" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'pmLayingcloth.cloth_width'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="18"
+                            nzErrorTip="{{'inputdata.input'|i18n }}/{{'pmLayingcloth.cloth_width'|i18n }}">
+                            <input nz-input type="number" min="0" formControlName="cloth_width"
+                                placeholder="{{'inputdata.input'|i18n}}" (keydown)="submitForm($event)" />
+                            <!-- <ina-common-select class="select" title="" formControlName="bpi_code" DataFiled="code"
+                                DataTxt="name" url="partinfo/extend" [linkage]="true" Datatyle="GetByWorbbillCode"
+                                [linkagedata]="{pwb_code:validateForm.value.pwb_code,station_code:model.station_code}">
+                            </ina-common-select> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'pmLayingcloth.cloth_length'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="cloth_length"
+                                placeholder="{{ 'inputdata.input'|i18n}}/{{'pmLayingcloth.cloth_length'|i18n }}"
+                                type="number" min="0" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{'pmLayingcloth.maker_code'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="maker_code"
+                                placeholder="{{ 'inputdata.input'|i18n}}/{{'pmLayingcloth.maker_code'|i18n }}"
+                                type="number" min="0" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{'pmLayingcloth.maker_length'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="maker_length"
+                                placeholder="{{ 'inputdata.input'|i18n}}/{{'pmLayingcloth.maker_length'|i18n }}"
+                                type="number" min="0" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{'pmLayingcloth.request_quantity'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="request_quantity"
+                                placeholder="{{ 'inputdata.input'|i18n}}/{{'pmLayingcloth.request_quantity'|i18n }}"
+                                type="number" min="0" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{'pmLayingcloth.real_quantity'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="real_quantity"
+                                placeholder="{{ 'inputdata.input'|i18n}}/{{'pmLayingcloth.real_quantity'|i18n }}"
+                                type="number" min="0" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <nz-table #basicTable [nzData]="pfsrd_list" nzSize="small" [nzTitle]="addto" *ngIf="tab==0">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="60px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                    <th>{{'pmLayingcloth.pwb_key'|i18n}}</th>
+                    <th>{{'pmLayingcloth.psi_key'|i18n}}</th>
+                    <th>{{'pmLayingcloth.pci_key'|i18n}}</th>
+                    <th>{{'pmLayingcloth.psz_key'|i18n}}</th>
+                    <th>{{'pmLayingcloth.quantity'|i18n}}</th>
+                    <th nzRigth nzWidth="80px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data;let i=index">
+                    <td nzLeft nzAlign="center"> {{i+1}}</td>
+                    <td>
+                        <ina-common-select class="select" title="" [(ngModel)]="data.pwb_key" DataTxt="code"
+                            url="WorkBill" (onSelect)="onSelect($event,data)">
+                        </ina-common-select>
+                    </td>
+                    <td> {{data.psi_name}}</td>
+                    <td> {{data.pci_name}}</td>
+                    <td> {{data.psz_name}}</td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="data.quantity" name="quantity"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td nzRigth nzAlign="center">
+                        <a (click)="del(pfsrd_list,i)"> <i nz-icon nzType="minus" nzTheme="outline"></i></a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a (click)="openExt(data,$event,i)">{{'btn.Materials_used'|i18n}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #addto>
+            <span style="display: flex;align-items: center;">
+                <span>{{'placard.detailInfo'|i18n}}</span>
+                <span class="spacer"></span>
+                <a (click)="adddetail()">{{'btn.addition'|i18n}}</a>
+            </span>
+        </ng-template>
+        <nz-table #basicTable [nzData]="pfsrd_list[editId].pfsur_list" nzSize="small" [nzTitle]="return" *ngIf="tab==99"
+            [nzScroll]="{x:'100%', y: '90%' }">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="60px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                    <th>{{'pmLayingcloth.cloth_no'|i18n}}</th>
+                    <th>{{'pmLayingcloth.piece_no'|i18n}}</th>
+                    <th>{{'pmLayingcloth.cylinder_no'|i18n}}</th>
+                    <th>{{'pmLayingcloth.percent'|i18n}}</th>
+                    <th>{{'pmLayingcloth.layer_quantity'|i18n}}</th>
+                    <th>{{'pmLayingcloth.real_quantity'|i18n}}</th>
+                    <th>{{'pmLayingcloth.remark'|i18n}}</th>
+                    <th>{{'pmLayingcloth.a'|i18n}}</th>
+                    <th>{{'pmLayingcloth.b'|i18n}}</th>
+                    <th>{{'pmLayingcloth.c'|i18n}}</th>
+                    <th>{{'pmLayingcloth.d'|i18n}}</th>
+                    <th nzRigth nzWidth="60px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let used of basicTable.data;let i=index">
+                    <td nzLeft nzAlign="center"> {{i+1}}</td>
+                    <td>
+                        <input nz-input [(ngModel)]="used.cloth_no" name="cloth_no"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td>
+                        <input nz-input [(ngModel)]="used.piece_no" name="piece_no"
+                            placeholder="{{'inputdata.input'|i18n}}" /></td>
+                    <td>
+                        <input nz-input [(ngModel)]="used.cylinder_no" name="cylinder_no"
+                            placeholder="{{'inputdata.input'|i18n}}" /></td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.percent" name="percent"
+                            placeholder="{{'inputdata.input'|i18n}}" /></td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.layer_quantity" name="layer_quantity"
+                            placeholder="{{'inputdata.input'|i18n}}" /></td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.real_quantity" name="real_quantity"
+                            placeholder="{{'inputdata.input'|i18n}}" (change)="totalc(pfsrd_list[editId].pfsur_list)" />
+                    </td>
+                    <td><input nz-input [(ngModel)]="used.remark" name="remark"
+                            placeholder="{{'inputdata.input'|i18n}}" /></td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.a" name="a"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.b" name="b"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.c" name="c"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td>
+                        <input nz-input type="number" [(ngModel)]="used.d" name="d"
+                            placeholder="{{'inputdata.input'|i18n}}" />
+                    </td>
+                    <td nzRigth nzAlign="center">
+                        <a (click)="del(pfsrd_list[editId].pfsur_list,i,'use')"> <i nz-icon nzType="minus"
+                                nzTheme="outline"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #return>
+            <span style="display: flex;align-items: center;">
+                <a (click)="returnup()">{{'btn.return'|i18n}}</a>
+                <span class="spacer"></span>
+                <a (click)="adddetail(pfsrd_list[editId].pfsur_list,'use')">{{'btn.addition'|i18n}}</a>
+            </span>
+        </ng-template>
+    </ng-template>
+    <ng-template #Preview>
+        <button nz-button (click)="isPreview=false">{{'btn.return'|i18n}}</button>
+        <nz-descriptions [nzTitle]="nzTitle" [nzColumn]="5" nzSize="small">
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.bed_no'|i18n}}">{{model.bed_no}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.cloth_width'|i18n}}">{{model.cloth_width}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.cloth_length'|i18n}}">{{model.cloth_length}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.maker_code'|i18n}}">{{model.maker_code}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.maker_length'|i18n}}">{{model.maker_length}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.request_quantity'|i18n}}">{{model.request_quantity}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{'pmLayingcloth.real_quantity'|i18n}}">{{model.real_quantity}}
+            </nz-descriptions-item>
+        </nz-descriptions>
+        <ng-template #nzTitle>
+            <span style="display: flex;align-items: center;">
+                <span>{{'placard.basein'|i18n}}</span>
+                <span class="spacer"></span>
+                <span>{{'pmLayingcloth.create_time'|i18n}}:{{model.create_time | date:"yyyy-MM-dd"}}</span>
+                <span>{{'pmLayingcloth.create_name'|i18n}}:{{model.create_name | date:"yyyy-MM-dd"}}</span>
+            </span>
+        </ng-template>
+        <div nz-row [nzGutter]="[16,8]">
+            <nz-table nz-col nzSpan="12" #pfsrd nzBordered nzTitle="{{'placard.details'|i18n}}"
+                [nzData]="model.pfsrd_list" [nzFrontPagination]="false" [nzShowPagination]="false"
+                [nzScroll]="{x:'100%', y: '90%' }">
+                <thead>
+                    <tr>
+                        <th>{{'pmLayingcloth.pwb_key'|i18n}}</th>
+                        <th>{{'pmLayingcloth.psi_key'|i18n}}</th>
+                        <th>{{'pmLayingcloth.pci_key'|i18n}}</th>
+                        <th>{{'pmLayingcloth.psz_key'|i18n}}</th>
+                        <th>{{'pmLayingcloth.quantity'|i18n}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of pfsrd.data">
+                        <td> <a href="javascript:void(0)" (click)="Track(item,i)">{{item.pwb_code}}</a></td>
+                        <td>{{item.psi_name}}</td>
+                        <td>{{item.pci_name}}</td>
+                        <td>{{item.psz_name}}</td>
+                        <td>{{item.quantity}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <div nz-col nzSpan="12">
+                <nz-table #listcloth nzBordered nzTitle="{{'placard.Fabric_usage'|i18n}}" [nzData]="list_cloth"
+                    [nzFrontPagination]="false" [nzShowPagination]="false" [nzScroll]="{x:'100%', y: '90%' }">
+                    <thead>
+                        <tr>
+                            <th>{{'pmLayingcloth.cloth_no'|i18n}}</th>
+                            <th>{{'pmLayingcloth.piece_no'|i18n}}</th>
+                            <th>{{'pmLayingcloth.cylinder_no'|i18n}}</th>
+                            <th>{{'pmLayingcloth.layer_quantity'|i18n}}</th>
+                            <th>{{'pmLayingcloth.percent'|i18n}}</th>
+                            <th>{{'pmLayingcloth.real_quantity'|i18n}}</th>
+                            <th>{{'pmLayingcloth.a'|i18n}}</th>
+                            <th>{{'pmLayingcloth.b'|i18n}}</th>
+                            <th>{{'pmLayingcloth.c'|i18n}}</th>
+                            <th>{{'pmLayingcloth.d'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cloth of listcloth.data">
+                            <td>{{cloth.cloth_no}}</td>
+                            <td>{{cloth.piece_no}}</td>
+                            <td>{{cloth.cylinder_no}}</td>
+                            <td>{{cloth.layer_quantity}}</td>
+                            <td>{{cloth.percent}}</td>
+                            <td>{{cloth.real_quantity}}</td>
+                            <td>{{cloth.remark}}</td>
+                            <td>{{cloth.a}}</td>
+                            <td>{{cloth.b}}</td>
+                            <td>{{cloth.c}}</td>
+                            <td>{{cloth.d}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <nz-table #listcutting nzBordered nzTitle="{{'placard.cut_in'|i18n}}" [nzData]="[list_cutting]"
+                    [nzFrontPagination]="false" [nzShowPagination]="false" *ngIf="list_cutting&&list_cutting.length>0">
+                    <thead>
+                        <tr>
+                            <th>{{'pmLayingcloth.psi_code'|i18n}}</th>
+                            <th>{{'pmLayingcloth.bed_no'|i18n}}</th>
+                            <th>{{'pmLayingcloth.create_name'|i18n}}</th>
+                            <th>{{'pmLayingcloth.create_time'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listcutting.data">
+                            <td>{{item.psi_code}}</td>
+                            <td>{{item.bedno}}</td>
+                            <td>{{item.create_hei_name}}</td>
+                            <td>{{item.create_time |date:'yyyy-MM-dd'}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <nz-table #cutting nzBordered nzTitle="{{'placard.cut_detail'|i18n}}" [nzData]="detail_cutting"
+                    [nzFrontPagination]="false" [nzShowPagination]="false"
+                    *ngIf="detail_cutting&&detail_cutting.length>0">
+                    <thead>
+                        <tr>
+                            <th>{{'pmLayingcloth.psi_code'|i18n}}</th>
+                            <th>{{'pmLayingcloth.psi_key'|i18n}}</th>
+                            <th>{{'pmLayingcloth.dimensions'|i18n}}</th>
+                            <th>{{'pmLayingcloth.Actualcutting'|i18n}}</th>
+                            <th>{{'pmLayingcloth.generate_quantity'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of cutting.data">
+                            <td>{{detail.psi_code}}</td>
+                            <td>{{detail.pcl_name}}</td>
+                            <td>{{detail.psz_name}}</td>
+                            <td>{{detail.quantity}}</td>
+                            <td>{{detail.generate_quantity}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button *ngIf="isPreview!=true" (click)="preview()">{{'btn.preview'|i18n}}</button>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

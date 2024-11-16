@@ -1,0 +1,198 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="36rem" justifyContent="center" nzSize="small"
+  [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+  <ng-template #contentTpl>
+    <!-- <nz-tabset style="height: 100%;"
+            nzTabPosition="left"
+            [(nzSelectedIndex)]="selectedIndex"
+            (nzSelectChange)="log([$event])">
+            <nz-tab
+                *ngFor="let tab of tabs;let i=index"
+                [nzTitle]="('placard.'+tab.name)|i18n"
+                [nzDisabled]="key||i==0?false:true"
+                (nzClick)="i==1?flow.open(workFlow):''">
+                <div *ngIf="i==0"><ng-container *ngTemplateOutlet="formTpl"></ng-container></div>
+                <div *ngIf="i==1">
+                    <flow #flow [modular]="modular"></flow>
+                </div>
+            </nz-tab>
+        </nz-tabset> -->
+    <form nz-form [formGroup]="validateForm">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="12">
+          <nz-form-item style="margin-bottom: 8px;">
+            <nz-form-label [nzSpan]="8">{{
+                            'pmWork.code'|i18n}}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzExtra="{{'placard.notfilled_default'|i18n}}">
+              <input nz-input formControlName="code" placeholder="{{'inputdata.input'|i18n}}"
+                (keydown)="submitForm($event)" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{
+                            'pmWork.mixcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <input nz-input formControlName="mixcode" placeholder="{{'inputdata.input'|i18n}}"
+                (keydown)="submitForm($event)" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col [nzSpan]="12">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">{{
+                        'pmWork.sci_key'|i18n
+                        }}</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <ina-common-select class="select" title=""
+                            formControlName="sci_key" url="customerinfo"
+                            [isshow]="false">
+                        </ina-common-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div> -->
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzErrorTip="{{'checkdata.check_xx'|i18n:('pmWork.psi_key'|i18n ) }}">
+              <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="psi_key"
+                url="styleinfo" [isdisabled]="Disable">
+              </ina-common-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.pci_key'|i18n}}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzErrorTip="{{'checkdata.check_xx'|i18n:( 'pmWork.pci_key'|i18n) }}">
+              <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="pci_key"
+                url="colorinfo" [isdisabled]="Disable">
+              </ina-common-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.psz_key'|i18n}}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzErrorTip="{{'checkdata.check_xx'|i18n:('pmWork.psz_key'|i18n ) }}">
+              <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="psz_key"
+                url="sizeinfo" [isdisabled]="Disable">
+              </ina-common-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.quantity'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzErrorTip="{{'inputdata.input'|i18n }}/{{'pmWork.quantity'|i18n }}">
+              <input nz-input formControlName="quantity" placeholder="{{ 'inputdata.input'|i18n
+                                }}" type="number" min="0" (keydown)="submitForm($event)" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.requestdeliverydate'|i18n}}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-date-picker formControlName="requestdeliverydate" [nzDisabledDate]="disabledDate"
+                [nzFormat]="'yyyy-MM-dd'"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{'pmWork.level'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16" nzErrorTip="{{'pmWork.negativeNumberLimit'|i18n }}">
+              <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="level"
+                DataFiled="value" DataTxt="description" urltype="enum" url="worklevelenum">
+              </ina-common-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzRequired>{{'pmWork.start_time'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <nz-date-picker formControlName="start_time" [nzDisabledDate]="disabledDate2">
+              </nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8">{{
+                            'pmWork.istransport'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <nz-switch [nzDisabled]="Disable"
+                                formControlName="istransport"
+                                [nzCheckedChildren]="checkedTemplate"
+                                [nzUnCheckedChildren]="unCheckedTemplate"></nz-switch>
+                            <ng-template #checkedTemplate><i nz-icon
+                                    nzType="check"></i></ng-template>
+                            <ng-template #unCheckedTemplate><i nz-icon
+                                    nzType="close"></i></ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+        <div nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="4">{{
+                            'pmWork.remark'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="20" nzErrorTip="{{'pmWork.addressLengthLimit'|i18n }}">
+              <textarea nz-input formControlName="remark" placeholder="{{'inputdata.input'|i18n}}"
+                (keydown)="submitForm($event)" nzAutosize></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-control [nzOffset]="18" [nzSpan]="24">
+                            <button nz-button nzType="primary" (click)="flow.open(workFlow)" *ngIf="key">工序流设置</button>
+                            <button nz-button nzType="primary"
+                                (click)="submitForm()"
+                                (keydown)="submitForm($event)"
+                                [disabled]="submiting"
+                                [nzLoading]="submiting" class="m-l-6">{{
+                                'btn.save'|i18n }}</button>
+                            <button nz-button (click)="close()">{{
+                                'btn.cancel'|i18n
+                                }}</button>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+      </div>
+    </form>
+    <div class="see_title" *ngIf="attribute&&attribute.length>0">
+      {{'placard.customizeSet'|i18n}}
+    </div>
+    <div class="see_cont" *ngIf="attribute&&attribute.length>0">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="12" *ngFor="let item of attribute">
+          <nz-form-item style="margin-bottom: 8px;">
+            <nz-form-label [nzSpan]="8">{{item.name}}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" name="{{item.code}}"
+                [other]="{code:item.code}" [(ngModel)]="item.value" url="w_customattribute" DataFiled="value"
+                DataTxt="value_name" (onSelect)="item.value_name=$event.value_name;item.remark=$event.remark">
+              </ina-common-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button nzType="primary"
+      (click)="disflowLamin==true?flowLamination.open(newworkFlow):flow3.open(newworkFlow)"
+      *ngIf="key&&isflowLamin">{{'placard.flowset'|i18n}}</button>
+    <button nz-button nzType="primary" class="m-l-6" (click)="flow.open(workFlow)"
+      *ngIf="key&&isFlow">{{'placard.flowset'|i18n}}</button>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+      [nzLoading]="submiting" class="m-l-6">{{'btn.save'|i18n}}</button>
+    <button nz-button (click)="close()" class="m-l-6">{{'btn.cancel'|i18n}}</button>
+    <flow #flow style="text-align: left;" [modular]="modular"></flow>
+    <flow3 #flow3 style="text-align: left;" [modular]="modular" (onReturn)="btnEvent($event)"
+      (onOut)="btnEvent($event)"></flow3>
+    <flowLamination #flowLamination style="text-align: left;" (editDone)="btnEvent($event)"></flowLamination>
+  </ng-template>
+</idrawer>

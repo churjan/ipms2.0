@@ -1,0 +1,26 @@
+<nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" [nzAccept]="'.xlsx, .csv, .xls'"
+    [nzHeaders]="uploadingHeader()">
+    <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        {{ "btn.impfile" | i18n }}
+    </button>
+</nz-upload>
+<div class="operate-view">
+    <div>
+        <div>{{'placard'.operateCircuit'|i18n}}：</div>
+        <div>{{'import.frist'|i18n}}</div>
+        <div>{{'import.second'|i18n}}</div>
+        <div>{{'import.third'|i18n}}</div>
+        <div>{{'import.fourth'|i18n}}</div>
+    </div>
+    <div class="ml64">
+        <div>
+            <img src="/assets/images/xlsx.png" style="width: 100px" alt="" />
+        </div>
+        <a nz-button nzType="link" (click)="onDownloadTpl()">{{"btn.downmodel" | i18n}}</a>
+    </div>
+</div>
+
+<button nz-button nzType="primary" (click)="onUpload()" [nzLoading]="isLoading" [disabled]="!fileList.length">
+    {{ "btn.upload" | i18n }}
+</button>

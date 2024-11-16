@@ -1,0 +1,15 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'89%'" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <crud2 #crud [router]="url" [list]="list" (actionClick)="btnEvent($event)" [getBody]="body" [checkbox]="false"
+            [jsonname]="'pmWork'" listFun="hanger" showLayout="Container" [columns]="modular.Hanger" [modular]="modular"
+            [getBody]="{pwb_key:model.key}" [FooterTpl]="tableFooterTpl" [fields]="field" [isAction]="false">
+        </crud2>
+        <ng-template #tableFooterTpl let-item="record">
+            {{'placard.sochip'|i18n}}{{crud.node?crud.node.data.statisticsnum:0}}
+        </ng-template>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

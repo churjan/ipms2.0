@@ -1,0 +1,7 @@
+
+<crud2 #crud [router]="url" [jsonname]="fieldcode"
+    [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="layoutVirtual.code" [showAdvanced]="false"
+    [columns]="columns" [modular]="modular" [fields]="field"></crud2>
+<edit #edit [modular]="modular"
+    (editDone)="crud.reloadData($event);crud.setOfCheckedId=[]"></edit>

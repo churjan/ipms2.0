@@ -1,0 +1,45 @@
+<button nz-button nz-dropdown [nzDropdownMenu]="renderTemplate">
+    {{'btn.Setparam'|i18n}}
+    <span nz-icon nzType="down"></span>
+</button>
+<nz-dropdown-menu #renderTemplate="nzDropdownMenu">
+    <div (click)="$event.stopPropagation()">
+        <nz-table #editRowTable nzBordered style="width:
+            500px;" [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small"
+            [nzData]="optionList?optionList:[]" nzTableLayout="fixed">
+            <thead>
+                <tr>
+                    <th nzWidth="64px" nzAlign="center">{{'placard.No'|i18n}}</th>
+                    <th>{{'placard.name'|i18n}}</th>
+                    <th>{{'placard.value'|i18n}}</th>
+                    <th [nzAlign]="'center'">
+                        <i nz-icon nzType="plus" nzTheme="outline" (click)="addItem()"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of editRowTable.data" class="editable-row">
+                    <td nzAlign="center">{{ data.id }}</td>
+                    <td (click)="startEdit(data.id)">
+                        <div class="editable-cell" [hidden]="editId === data.id">
+                            {{ data.name }}
+                        </div>
+                        <input [hidden]="editId !== data.id" type="text" nz-input id="name{{data.id}}"
+                            [(ngModel)]="data.name" (blur)="stopEdit()" />
+                    </td>
+                    <td (click)="startEdit(data.id)">
+                        <div class="editable-cell" [hidden]="editId === data.id">
+                            {{ data.value }}
+                        </div>
+                        <input [hidden]="editId !== data.id" type="text" nz-input id="value{{data.id}}"
+                            [(ngModel)]="data.value" (blur)="stopEdit()" />
+                    </td>
+                    <td [nzAlign]="center">
+                        <a nz-popconfirm nzPopconfirmTitle="{{'confirm.confirm_del'|i18n}}"
+                            (nzOnConfirm)="deleteRow(data.id)">{{'btn.delete'|i18n}}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</nz-dropdown-menu>

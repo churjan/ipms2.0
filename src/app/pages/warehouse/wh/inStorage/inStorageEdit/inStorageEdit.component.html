@@ -1,0 +1,12 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl" height="99%">
+    <ng-template #contentTpl>
+        <crud2 #crud [router]="url" [list]="list" (actionClick)="btnEvent($event)" [getBody]="body" [checkbox]="false"
+            [jsonname]="'whWarehousing'" listFun="detaildurl" showLayout="Container" [columns]="modular.displayedColumns"
+            [modular]="modular" [fields]="field" [isAction]="false" asktype='getlist'>
+        </crud2>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    </ng-template>
+</idrawer>

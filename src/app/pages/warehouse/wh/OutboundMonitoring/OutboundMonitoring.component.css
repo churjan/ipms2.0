@@ -1,0 +1,10 @@
+.Search mat-form-field,
+.select {
+  width: calc(100% - 20px);
+}
+.red{
+    color: red;
+}
+.green{
+    color: green;
+}

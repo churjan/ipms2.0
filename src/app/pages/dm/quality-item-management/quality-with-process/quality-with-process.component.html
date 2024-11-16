@@ -1,0 +1,95 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="80%" justifyContent="center" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-select nzShowSearch [(ngModel)]="selectedValue" (ngModelChange)="onSelectChange()" style="width:100%;">
+            <nz-option nzCustomContent [nzLabel]="item.name" [nzValue]="item.key" *ngFor="let item of qualityList">
+                <span>{{item.name}}[{{item.code}}]</span>
+            </nz-option>
+        </nz-select>
+        <div class="table-list-view mt16">
+            <div class="left-view">
+                <div class="mr8">
+                    <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                        <input type="text" nz-input placeholder="{{ 'btn.search' | i18n }}" [(ngModel)]="keywords"
+                            (keyup.enter)="onKeyUp()" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                        <i nz-icon nzType="search"></i>
+                    </ng-template>
+                </div>
+                <nz-table [nzData]="tableList" [nzBordered]="true" [nzShowPagination]="false" nzSize="small"
+                    [nzScroll]="{y}">
+                    <thead>
+                        <tr>
+                            <th nzWidth="50px" nzAlign="center">
+                                {{ "placard.No" | i18n }}
+                            </th>
+                            <th>{{ "basQuality.bqci_code" | i18n }}</th>
+                            <th>{{ "basQuality.bqci_name" | i18n }}</th>
+                            <th nzWidth="80px" nzAlign="center">
+                                {{ "btn.operation" | i18n }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of tableList; let i = index">
+                            <td nzAlign="center">{{ i + 1 }}</td>
+                            <td>{{ data.code }}</td>
+                            <td>{{ data.name }}</td>
+                            <td nzAlign="center">
+                                <a nz-button nzType="link" (click)="onAdd(data)" nzSize="small">
+                                    <i nz-icon nzType="plus" nzTheme="outline"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+            <div class="right-view">
+                <div class="mr8">
+                    <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                        <input type="text" nz-input placeholder="{{ 'btn.search' | i18n }}" [ngModel]="keywords2"
+                            (keyup.enter)="onKeyUp2($event)" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                        <i nz-icon nzType="search"></i>
+                    </ng-template>
+                </div>
+                <nz-table [nzData]="tableFilterSelectedList" [nzBordered]="true" [nzShowPagination]="false"
+                    nzSize="small" [nzScroll]="{y}">
+                    <thead>
+                        <tr>
+                            <th nzWidth="50px" nzAlign="center">
+                                {{ "placard.No" | i18n }}
+                            </th>
+                            <th>{{ "basQuality.bqci_code" | i18n }}</th>
+                            <th>{{ "basQuality.bqci_name" | i18n }}</th>
+                            <th nzWidth="80px" nzAlign="center">
+                                {{ "btn.operation" | i18n }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="
+                        let data of tableFilterSelectedList;
+                        let i = index
+                    ">
+                            <td nzAlign="center">{{ i + 1 }}</td>
+                            <td>{{ data.poc_code }}</td>
+                            <td>{{ data.poc_name }}</td>
+                            <td nzAlign="center">
+                                <a nz-button nzType="link" (click)="onDelete(data)" nzSize="small">
+                                    <i nz-icon nzType="minus" nzTheme="outline"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+    </ng-template>
+</idrawer>

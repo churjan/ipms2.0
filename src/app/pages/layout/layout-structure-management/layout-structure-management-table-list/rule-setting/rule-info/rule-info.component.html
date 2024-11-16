@@ -1,0 +1,12 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'70%'" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    height="95%" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-descriptions nzTitle="{{model.blsr_name||model.name}}（{{model.blsr_code||model.code}}）" nzBordered>
+            <nz-descriptions-item nzTitle="{{item.blr_name}}" [nzSpan]="4" *ngFor="let item of model.infolist">{{item.value_name?item.value_name:item.value}}
+            </nz-descriptions-item>
+        </nz-descriptions>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

@@ -1,0 +1,60 @@
+@import "mixin";
+
+.themeMixin({
+    :host {
+        ::ng-deep{
+            .ant-pagination{
+                margin:0;
+            }
+        }
+        .link-text{
+            color: #1890ff;
+            cursor: pointer;
+        }
+        .page-view{
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            padding: 8px;
+            display: flex;
+            .list-view{
+                border: 1px solid #d9d9d9;
+                margin-right: 8px;
+                display: flex;
+                flex-direction: column;
+                
+                .list-header-view{
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    background-color: #3082ff;
+                    color: #fff;
+                    padding: 5px 8px;
+                }
+                .list-search-view{
+                    margin: 8px;
+                }
+                .list-tree-view{
+                    flex:1;
+                    overflow: auto;
+                    .tree-node-view{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                }
+            }
+            
+            .table-view{
+                flex:1;
+                overflow: hidden;
+                .table-header-view{
+                    font-weight: bold;
+                    border-left: 4px solid #1890ff;
+                    padding-left: 12px;
+                }
+            }
+        }
+       
+    }
+});

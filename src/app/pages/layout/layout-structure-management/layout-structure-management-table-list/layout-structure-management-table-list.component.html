@@ -1,0 +1,26 @@
+<app-layout-structure-management-detail [key]="catalogItem.key"></app-layout-structure-management-detail>
+<nz-card class="mt16" nzSize="small">
+    <nz-card-tab>
+        <nz-tabset [(nzSelectedIndex)]="tabIndex">
+            <nz-tab nzTitle="{{ 'placard.structureAttr' | i18n }}"> </nz-tab>
+            <nz-tab nzTitle="{{ 'placard.ruleSetting' | i18n }}"></nz-tab>
+            <nz-tab nzTitle="{{ 'placard.withProductionEquipment' | i18n }}"></nz-tab>
+            <nz-tab nzTitle="{{ 'placard.tabletModuleSetting' | i18n }}"></nz-tab>
+            <nz-tab nzTitle="{{ 'placard.bridgeDisplay' | i18n }}"></nz-tab>
+            <nz-tab *ngIf="sub" nzTitle="{{ 'placard.processStationRelationship' | i18n }}"></nz-tab>
+            <nz-tab *ngIf="sku" nzTitle="{{'placard.infreeattributes'| i18n}}"></nz-tab>
+        </nz-tabset>
+    </nz-card-tab>
+    <ng-container *ngIf="catalogItem.key">
+        <app-structure-property [key]="catalogItem.key" *ngIf="tabIndex === 0"></app-structure-property>
+        <app-rule-setting [key]="catalogItem.key" *ngIf="tabIndex === 1"></app-rule-setting>
+        <!-- *ngIf="tabIndex === 1 && catalogItem.blst_key === '101010'" -->
+        <app-machine-device [key]="catalogItem.key" *ngIf="tabIndex === 2"></app-machine-device>
+        <app-tablet-module-setting [key]="catalogItem.key" [blst_key]="catalogItem.blst_key" *ngIf="tabIndex === 3">
+        </app-tablet-module-setting>
+        <app-bridge-show [key]="catalogItem.key" *ngIf="tabIndex === 4"></app-bridge-show>
+        <app-work-station [key]="catalogItem.key" *ngIf="tabIndex === 5 && catalogItem.group === 'Station'">
+        </app-work-station>
+        <app-sra [key]="catalogItem.key" *ngIf="tabIndex === 5 && catalogItem.group === 'In'"></app-sra>
+    </ng-container>
+</nz-card>

@@ -1,0 +1,360 @@
+.DataDisplay {
+    height: calc(100%);
+
+    .ant-card-body {
+
+        height : calc(100%);
+        padding: 0 !important;
+
+        nz-header.ant-layout-header {
+            height     : 40px;
+            line-height: 40px;
+            padding    : 0 14px;
+            background : transparent;
+            display    : flex;
+            margin     : 10px 0;
+
+            nz-input-group {
+                max-width: 185px;
+            }
+
+            .button-group {
+                max-width: calc(100% - 402px);
+            }
+
+            .keyWords {
+                display  : block;
+                min-width: 401px;
+            }
+        }
+
+        .ant-divider-horizontal {
+            margin: 0;
+        }
+
+        .drawer-container {
+            height                       : calc(100% - 52px);
+            font-size                    : 14px;
+            // background-color          : #ffffff;
+            color                        : rgba(0, 0, 0, 0.87);
+            position                     : relative;
+            z-index                      : 1;
+            box-sizing                   : border-box;
+            -webkit-overflow-scrolling   : touch;
+            display                      : block;
+            overflow                     : hidden;
+            padding-left                 : 14px;
+
+            .drawer-backdrop {
+                top                       : 0;
+                left                      : 0;
+                right                     : 0;
+                bottom                    : 0;
+                position                  : absolute;
+                display                   : block;
+                z-index                   : 3;
+                visibility                : hidden;
+                transition-duration       : 400ms;
+                transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+                transition-property       : background-color, visibility;
+            }
+
+            .drawer-shown {
+                visibility      : visible;
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+
+            .drawer {
+                z-index               : 4;
+                display               : block;
+                position              : absolute;
+                // background-color: #fafafa;
+                // background-color   : #ffffff;
+                background-color      : @drawer-search-background;
+                color                 : @advanced-search;
+                top                   : 0;
+                bottom                : 0;
+                right                 : 0;
+                outline               : 0;
+                box-sizing            : border-box;
+                overflow-y            : auto;
+                transform             : translate3d(100%, 0, 0);
+                box-shadow            : none;
+                visibility            : hidden;
+                width                 : 22rem;
+                height                : 100%;
+                overflow              : auto;
+
+                &>nz-page-header {
+                    padding: 5px 10px;
+                }
+
+                .SearchBtn {
+                    margin: 0 10px;
+
+                    button {
+                        margin: 0 5px;
+                    }
+                }
+
+                .SearchForm {
+                    margin-left  : 10px;
+                    overflow     : auto;
+                    height       : calc(100% - 62px);
+                    padding-right: 10px;
+                }
+            }
+
+            .drawer-open {
+                visibility: visible;
+                transform : none;
+            }
+
+            .drawer-close {
+                transform: translate3d(100%, 0, 0);
+            }
+
+            .drawer:not(.mat-drawer-side) {
+                box-shadow: 0px 8px 10px -5px rgb(0 0 0 / 20%), 0px 16px 24px 2px rgb(0 0 0 / 14%),
+                    0px 6px 30px 5px rgb(0 0 0 / 12%);
+            }
+
+            .drawer-content {
+                position                  : relative;
+                z-index                   : 1;
+                display                   : block;
+                height                    : 100%;
+                overflow                  : hidden;
+                transition-duration       : 400ms;
+                transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+                transition-property       : transform, margin-left, margin-right;
+
+                .listshow {
+                    height: 100%;
+
+                    .listTable {
+                        height: calc(100%);
+
+                        &>nz-spin {
+                            height: calc(100%);
+
+                            &>.ant-spin-container {
+                                position: absolute;
+                                width   : 100%;
+                                height  : 100%;
+                            }
+                        }
+
+                        .ant-table {
+                            height: calc(100% - 55px);
+
+                            .ant-table-container {
+                                height: calc(100%);
+
+                                .ant-table-header {
+                                    &>table {
+                                        th {
+                                            // width: 180px;
+                                        }
+
+                                        // table-layout: auto !important;
+                                        th:first-child {
+                                            min-width: 40px;
+                                        }
+                                    }
+                                }
+
+                                .ant-table-body {
+                                    height: calc(100% - 40px);
+
+                                    &>table {
+
+                                        // table-layout: auto !important;
+                                        td {
+                                            width: 180px;
+                                        }
+
+                                        td:first-child {
+                                            min-width: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .ant-table-pagination.ant-pagination {
+                            margin: 16px 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        .layout-left {
+            overflow     : auto;
+            width        : 20%;
+            padding      : 10px;
+            padding-right: 0;
+
+            .tree {
+                padding: 5px;
+                display: inline-block;
+                width  : 100%;
+                height : 100%;
+            }
+        }
+
+        .layout-right {
+            overflow    : auto;
+            width       : 20%;
+            padding     : 10px;
+            padding-left: 0;
+            background  : transparent;
+        }
+
+        @media screen and (min-width:1080px) and (max-width: 1205px) {
+            // .layout-left {
+            //     width    : 150px !important;
+            //     max-width: 150px !important;
+            // }
+        }
+    }
+}
+
+.default {
+    background-color: #fff;
+}
+
+.dark {
+    background-color: #000;
+}
+
+/**输入框类型*/
+.inputline {
+    border             : none;
+    border-bottom      : 1px solid;
+    height             : 31px;
+    margin             : 5px 0;
+    // background-color: #fafafa;
+}
+
+.inputline,
+.inputline:focus {
+    box-shadow: unset;
+}
+
+/**查询*/
+.search {
+    top   : 142px;
+    height: calc(100% - 142px);
+}
+
+/**提示*/
+.alert {
+    min-width: 400px;
+    max-width: 500px;
+    font-size: 12px;
+    padding  : 10px 20px;
+
+    .ant-alert {
+        border-radius: 30px;
+        padding      : 10px 15px 10px 20px;
+    }
+}
+
+/**表单容器*/
+.modal-body {
+    height  : calc(100% - 50px);
+    padding : 10px;
+    overflow: auto;
+
+    nz-form-control {
+        .ant-picker {
+            width: 100%;
+        }
+    }
+}
+
+/**底部操作栏*/
+.modal-footer {
+    height    : 53px;
+    padding   : 8px;
+    text-align: right;
+    border-top: 1px solid #ccc;
+
+    &>button {
+        margin-right: 5px;
+    }
+}
+
+/*整体部分*/
+::-webkit-scrollbar {
+    width : 8px;
+    height: 6px;
+}
+
+/*滑块*/
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background   : rgba(0, 0, 0, 0.8);
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.15);
+    }
+}
+
+/**间距调整*/
+.spacer {
+    flex: 1 1 auto;
+}
+
+/**卡片侧tab页*/
+.card-tabset {
+    width  : 100%;
+    display: inline-flex;
+
+    .ant-card-head {
+        padding: 0;
+
+        .ant-tabs {
+            height: 100%;
+
+            .ant-tabs-content-holder {
+                width: 0;
+            }
+        }
+    }
+
+    .ant-card-body {
+        padding: 0;
+    }
+}
+
+.modalClass {
+    height: calc(100% - 36px);
+
+    .ant-modal-content {
+        height: 100%;
+    }
+}
+
+// .WrapClass {
+// height: calc(100% - 55px);
+// }
+
+.warning {
+    color: #faad14;
+}
+
+.success {
+    color: #52c41a;
+}
+
+.processing {
+    color: #1890ff;
+}
+
+.progress {
+    // width: 8s0%;
+}

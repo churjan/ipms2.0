@@ -1,0 +1,100 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{'sysMenu.ismenu'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+            'sysMenu.ismenu'|i18n }}">
+            <label nz-checkbox formControlName="ismenu" (ngModelChange)="ismenuChange($event)"></label>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{
+            'sysMenu.parent'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20">
+            <ina-ztree-select [setting]="setting" class="select" formControlName="pkey" datatype="getlist/">
+            </ina-ztree-select>
+            <!-- <nz-tree-select formControlName="pkey" [nzNodes]="parents"
+                nzShowSearch nzPlaceHolder="{{  'checkdata.check'|i18n}}"
+                nzVirtualHeight="260px"></nz-tree-select> -->
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="validateForm.value.ismenu==false">
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4" nzRequired>{{ 'sysMenu.url'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'sysMenu.url'|i18n
+            }}">
+            <input nz-input formControlName="url" placeholder="{{
+                'inputdata.input'|i18n }}" (blur)="urlChange()" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4" nzRequired>{{ 'sysMenu.name'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{
+            'sysMenu.name'|i18n }}">
+            <input nz-input formControlName="name" placeholder="{{
+                'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{'sysMenu.icon'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20">
+            <input nz-input formControlName="icon" placeholder="{{
+                'inputdata.input'|i18n }}" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{
+            'sysMenu.sort'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20">
+            <input nz-input formControlName="sort" placeholder="{{
+                'inputdata.input'|i18n }}" type="number" min="0" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{
+            'sysMenu.node'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18" [nzXl]="20">
+            <button type="button" nz-button nzType="primary" nzShape="round" (click)="nodeEditOpen({isextend:false})">
+                <i nz-icon nzType="plus"></i>
+            </button>
+            <button type="button" class="m-l-6" style="margin-bottom: 8px;" *ngFor="let item of nodes" nz-button nzType="default" nzShape="round"
+                (click)="nodeEditOpen(item)" (contextmenu)="contextMenu($event,
+                menu, item)">
+                {{item.name}}
+            </button>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+        <nz-form-label [nzXs]="24" [nzSm]="6" [nzMd]="6" [nzLg]="6" [nzXl]="4">{{
+            'sysMenu.sonnode'|i18n }}</nz-form-label>
+        <nz-form-control [nzXs]="24" [nzSm]="18" [nzMd]="18" [nzLg]="18"
+            [nzXl]="20">
+            <button type="button" nz-button nzType="primary" nzShape="round"
+                (click)="nodeEditOpen({isextend:true})">
+                <i nz-icon nzType="plus"></i>
+            </button>
+            <button type="button" class="m-l-6" *ngFor="let item of sonnodes"
+                nz-button nzType="default" nzShape="round"
+                (click)="nodeEditOpen(item)" (contextmenu)="contextMenu($event,
+                menu, item)">
+                {{item.name}}
+            </button>
+        </nz-form-control>
+    </nz-form-item> -->
+    <nz-divider></nz-divider>
+    <div class="btn">
+        <button [hidden]="key" nz-button nzType="primary" [disabled]="submiting" type="submit"
+            [nzLoading]="submiting">{{ 'btn.save'|i18n }}</button>
+        <button [hidden]="!key" nz-button nzType="primary" [disabled]="submiting" type="submit"
+            [nzLoading]="submiting">{{ 'btn.save'|i18n }}</button>
+        <button nz-button nzType="default" (click)="reset()" type="button">{{
+            'btn.reset'|i18n }}</button>
+    </div>
+</form>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item (click)="delButton()">{{ 'btn.delete'|i18n }}</li>
+    </ul>
+</nz-dropdown-menu>

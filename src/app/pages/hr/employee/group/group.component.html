@@ -1,0 +1,17 @@
+<idrawer 
+    *ngIf="visible" 
+    [title]="title" 
+    [width]="width" 
+    (onClose)="close()" 
+    justifyContent="center" 
+    [content]="contentTpl" 
+    [footer]="null">
+</idrawer>
+
+<ng-template #contentTpl>
+    <nz-transfer
+        [nzDataSource]="data"
+        [nzTitles]="['('+('canSelect'|i18n)+')', '('+('selected'|i18n)+')']"
+        (nzChange)="change($event)"
+    ></nz-transfer>
+</ng-template>

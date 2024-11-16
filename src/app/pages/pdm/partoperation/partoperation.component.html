@@ -1,0 +1,16 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [columns]="columns"
+    [modular]="modular" [fields]="field" keyword_placeholder="pdmPartoperation.name" asktype="getlist" detail="data"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'pdmPartoperation.pci_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" name="pci_key" url="colorinfo"
+                    [(ngModel)]="crud.seniorModel.pci_key">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>

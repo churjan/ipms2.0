@@ -1,0 +1,27 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [isRefresh]="false" [list]="list" (actionClick)="btnEvent($event)"
+    [isKeyQuery]="true" keyword_placeholder="reportHangersrecord.pti_tagcode" [isDataOnInit]="false" [columns]="columns"
+    [modular]="modular" [fields]="field" [KeyQuery]="KeyQuery" [isSetList]="false" [isKeyword]="false"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'reportHangersrecord.rfid'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="rfid" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.rfid" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record">
+    <date-select [isRange]="true" Mode="month" dateFormat="yyyy-MM"
+        (onSelect)="crud.SearchModel.createdate_start=$event.start;crud.SearchModel.createdate_end=$event.end">
+    </date-select>
+    <nz-input-group [nzSuffix]="suffixIcon">
+        <input nz-input placeholder="{{'placard.keyword_xx'|i18n:('reportHangersrecord.pti_tagcode'|i18n)}}"
+            [(ngModel)]="crud.SearchModel.pti_tagcode" (keyup)="Search($event)" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search" (click)="Search()"></i>
+    </ng-template>
+</ng-template>

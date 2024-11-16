@@ -1,0 +1,182 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'calc(100% - 10px)'" height="calc(100% - 10px)"
+  justifyContent="center" headerHeight="35px" nzSize="small" [content]="contentTpl" [footer]="footerTpl"
+  [bodyPadding]="'0'" (onClose)="close()">
+  <ng-template #contentTpl>
+    <nz-layout class="shell">
+      <!-- <nz-header>
+        <div nz-row [nzGutter]="16">
+          <div nz-col [nzSpan]="6" *ngIf="node.pwb_code">
+            {{(record.file+'.code')|i18n}}：{{node.pwb_code}}
+          </div>
+          <div nz-col [nzSpan]="6" *ngIf="node.psi_code">
+            {{record.file+'.psi_code'|i18n}}：{{node.psi_code}}
+          </div>
+          <div nz-col [nzSpan]="6" *ngIf="node.opp_type_name">
+            {{record.file+'.opp_type'|i18n}}： {{node.opp_type_name}}
+          </div>
+          <div nz-col [nzSpan]="6" *ngIf="node.code">
+            {{record.file+'.code'|i18n}}：{{node.code}}
+          </div>
+          <div nz-col [nzSpan]="6" *ngIf="node.name">
+            {{record.file+'.name'|i18n}}：{{node.name}}
+          </div>
+          <div nz-col [nzSpan]="6" *ngIf="node.version">
+            {{record.file+'.version'|i18n}}：{{node.version}}
+          </div>
+        </div> -->
+        <!-- <nz-descriptions nzSize="small" style="height: 100%;">
+                    <nz-descriptions-item
+                        nzTitle="{{(record.file+'.code')|i18n}}">
+                        {{(record.file+'name')}}
+                    </nz-descriptions-item> -->
+        <!-- <nz-descriptions-item nzTitle="{{(record.file+'.hei_name')|i18n}}">{{node.hei_name}}</nz-descriptions-item> -->
+        <!-- <nz-descriptions-item
+                        nzTitle="{{record.file+'.psi_code'|i18n}}">{{node.psi_code}}</nz-descriptions-item> -->
+        <!-- <nz-descriptions-item nzTitle="{{record.file+'.createtime'|i18n}}">{{node.createtime}}</nz-descriptions-item> -->
+        <!-- <nz-descriptions-item
+                        nzTitle="{{record.file+'.opp_type'|i18n}}">{{node.opp_type_name}}</nz-descriptions-item> -->
+        <!-- <nz-descriptions-item nzTitle="{{record.file+'.name'|i18n}}">{{node.psi_code}}</nz-descriptions-item> -->
+        <!-- </nz-descriptions> -->
+      <!-- </nz-header> -->
+      <!-- 工序流 -->
+      <nz-layout class="flow-box">
+        <!-- 工段选择菜单 -->
+        <ul nz-menu nzMode="vertical" class="shadow">
+          <li nz-menu-item [nzSelected]="nzSelected==''" (click)="preview()">{{'placard.preview'|i18n}}</li>
+          <li nz-menu-item *ngFor="let sec of section;let i=index" title="{{sec.bwi_name}}"
+            (click)="sectionCheck(sec,i)" [nzSelected]="nzSelected==sec.bwi_code">{{sec.bwi_name}}
+          </li>
+        </ul>
+        <div class="inner-layout-right">
+          <nz-tabset nzType="editable-card" nzSize="small" class="tabset" [nzHideAdd]="true"
+            [(nzSelectedIndex)]="selectedIndex">
+            <nz-tab [nzTitle]="titleTemplate" *ngFor="let par of newFlow.partlist; let i= index">
+              <ng-template #titleTemplate>
+                <!-- 主部件设置 -->
+                <i nz-icon nzType="heat-map" nz-tooltip nzTooltipTitle="{{'btn.bpimain'|i18n}}"
+                  [class.mainColor]="par.bpi_ismain" nzTheme="outline"></i>
+                <span style="color: red;">
+                  <i nz-icon nzType="star" nzTheme="outline" *ngIf="par.bpi_class_code=='Package'" class="icon"></i>
+                  ({{par.bpi_class_name?par.bpi_class_name:('placard.Normal'|i18n)}})
+                </span>
+                {{par.bpi_name}}
+                <nz-button-group>
+                  <button nz-button nzType="default" (click)="Fold(par,i)" nz-tooltip
+                    nzTooltipTitle="{{'btn.fold'|i18n}}">
+                    <i nz-icon nzType="sliders" [class.Fold]="par.isfold==true" nzTheme="outline" class="icon"></i>
+                  </button>
+                </nz-button-group>
+              </ng-template>
+              <div class="part-op" nz-row id="{{par.bpi_name}}" [nzGutter]="16">
+                <nz-list nzItemLayout="vertical" nz-col [nzSpan]="12" class="option">
+                  <nz-list-header nz-dropdown nzTrigger="click" [nzDropdownMenu]="historicalMenu">
+                    <span>
+                      <i nz-icon nzType="history" style="margin: 5px;" nzTheme="outline"></i>
+                    </span>
+                    <!-- {{'placard.historicalflow'|i18n}} -->
+                    <span>{{old_pos.hei_name}}:{{old_pos.createtime}}</span>
+                  </nz-list-header>
+                  <nz-dropdown-menu #historicalMenu="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item *ngFor="let
+                                                opera of operation" (click)="oldChange(opera)">
+                        {{opera.hei_code}}--{{opera.createtime}}
+                        <i nz-icon nzType="check-circle" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"
+                          [hidden]="!old_pos||opera.key!=old_pos.key"></i>
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                  <ng-container *ngFor="let OP of
+                                        oldOp[par.bpi_name];let opi=index">
+                    <!-- 工段分割 -->
+                    <div class="Preview-tips" *ngIf="divider&&divider[opi]&&divider[opi]!=''&&nzSelected==''">
+                      <i nz-icon nzType="star-o" style="margin-right:5px;"></i>
+                      {{('commFlow.section'|i18n)+'：'+(divider[opi]?divider[opi]:'')}}
+                    </div>
+                    <nz-list-item [class.yellow]="OP.same!=true">
+                      <div class="OPheader" [class.yellow]="OP.same!=true">
+                        <span> {{opi+1}}-</span>
+                        <span class="scrollWrap" (mouseover)="mouseover($event,OP)" (mouseout)="OP.isscroll=false">
+                          <div [class.scroll]="OP.isscroll" id="{{OP.poi_code}}">
+                            [{{OP.pyso_operationticket?OP.pyso_operationticket:OP.poi_code}}]
+                            {{OP.poi_name}}
+                          </div>
+                        </span>
+                      </div>
+                      <!-- 站位 -->
+                      <nz-card id="routelist" *ngIf="par.isfold == false" [class.yellow]="OP.same!=true"
+                        [class.route-o]="OP.checked==true">
+                        <p [class.yellow]="pr.same!=true" *ngFor="let pr of
+                                                    OP.routelist;let
+                                                    routei=index">
+                          <span>{{pr.bls_code}}</span>
+                          <span class="seal"
+                            *ngIf="!pr.percentage||pr.percentage==0">{{'placard.stopusing'|i18n}}</span>
+                          <span *ngIf="routertype!='2'">
+                            {{'commFlow.percentage'|i18n}}：{{pr.percentage==null?0:pr.percentage}}
+                            （{{pr.percent?pr.percent:'100%'}}）</span>
+                        </p>
+                      </nz-card>
+                    </nz-list-item>
+                  </ng-container>
+                </nz-list>
+
+                <nz-list nzItemLayout="vertical" nz-col [nzSpan]="12" class="option">
+                  <nz-list-header nz-dropdown nzTrigger="click" [nzDropdownMenu]="newMenu">
+                    <span>
+                      <i nz-icon nzType="history" style="margin: 5px;" nzTheme="outline"></i>
+                    </span>
+                    <nz-dropdown-menu #newMenu="nzDropdownMenu">
+                      <ul nz-menu>
+                        <li nz-menu-item *ngFor="let opera of operation" (click)="newChange(opera)">
+                          {{opera.hei_code}}--{{opera.createtime}}
+                          <i nz-icon nzType="check-circle" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"
+                            [hidden]="!pos||opera.key!=pos.key"></i>
+                        </li>
+                      </ul>
+                    </nz-dropdown-menu>
+                    <span>{{!pos?('placard.newflow'|i18n):(pos.hei_name+':'+pos.createtime)}}</span>
+                  </nz-list-header>
+                  <ng-container *ngFor="let OP of
+                                        newOP[par.bpi_name];let opi=index">
+                    <!-- 工段分割 -->
+                    <div class="Preview-tips" *ngIf="divider&&divider[opi]&&divider[opi]!=''&&nzSelected==''">
+                      <i nz-icon nzType="star-o" style="margin-right:5px;"></i>
+                      {{('commFlow.section'|i18n)+'：'+(divider[opi]?divider[opi]:'')}}
+                    </div>
+                    <nz-list-item [class.yellow]="OP.same!=true">
+                      <div class="OPheader" [class.yellow]="OP.same!=true">
+                        <span> {{opi+1}}-</span>
+                        <span class="scrollWrap" (mouseover)="mouseover($event,OP)" (mouseout)="OP.isscroll=false">
+                          <div [class.scroll]="OP.isscroll" id="{{OP.poi_code}}">
+                            [{{OP.pyso_operationticket?OP.pyso_operationticket:OP.poi_code}}]
+                            {{OP.poi_name}}
+                          </div>
+                        </span>
+                      </div>
+                      <!-- 站位 -->
+                      <nz-card id="routelist" *ngIf="par.isfold == false" [class.yellow]="OP.same!=true"
+                        [class.route-o]="OP.checked==true">
+                        <p *ngFor="let pr of OP.routelist;let routei=index" [class.yellow]="pr.same!=true">
+                          <span>{{pr.bls_code}}</span>
+                          <span class="seal"
+                            *ngIf="!pr.percentage||pr.percentage==0">{{'placard.stopusing'|i18n}}</span>
+                          <span *ngIf="routertype!='2'">
+                            {{'commFlow.percentage'|i18n}}：{{pr.percentage==null?0:pr.percentage}}
+                            （{{pr.percent?pr.percent:'100%'}}）</span>
+                        </p>
+                      </nz-card>
+                    </nz-list-item>
+                  </ng-container>
+                </nz-list>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </nz-layout>
+    </nz-layout>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+  </ng-template>
+</idrawer>

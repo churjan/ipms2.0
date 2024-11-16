@@ -1,0 +1,60 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left"
+  [list]="list" (actionClick)="btnEvent($event)" [Lwidth]="'240px'"
+  [sideColumnTpl]="sideColumnTpl" [columns]="columns" [modular]="modular"
+  [fields]="field" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmOperation.code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          placeholder="{{ 'inputdata.input'|i18n }}"
+          [(ngModel)]="crud.seniorModel.code"
+          name="code"
+          (keydown)="crud.Search($event)"
+          />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmOperation.name'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input name="name"
+          placeholder="{{ 'inputdata.input'|i18n }}"
+          [(ngModel)]="crud.seniorModel.name"
+          (keydown)="crud.Search($event)"
+          />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ 'pdmOperation.style_name'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select title="{{field.style_name}}"
+          name="style" DataFiled="value"
+          [(ngModel)]="crud.seniorModel.style"
+          DataTxt="description" class="select" urltype="enum"
+          url="operationenum">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #sideColumnTpl let-item="record">
+  <class-ztree #Menu class="tree" commUrl="OperationClass" class="tree-box"
+    [modular]="modular" title="{{'placard.category'|i18n}}"
+    [action]="modular.btnClass"
+    (onclick)="onclick($event)" (onAction)="onAction($event)"></class-ztree>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>
+<classEdit #classEdit [modular]="modular" Nickname="class"
+  (editDone)="_Menu.ResetTree()"></classEdit>
+<files #files [modular]="modular" Nickname="class"
+  (editDone)="crud.reloadData($event)"></files>
+<tools #tools [modular]="modular"
+  (editDone)="crud.reloadData($event)"></tools>
+<pair #pair [modular]="modular"
+  (editDone)="crud.reloadData($event)"></pair>
+<website #website [modular]="modular"
+  (editDone)="crud.reloadData($event)"></website>
+<operationlook #operationlook [modular]="modular"></operationlook>

@@ -1,0 +1,238 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="99%" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.type'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'checkdata.check'|i18n}}/{{ 'sysParameters.type'|i18n }}">
+                    <ina-common-select class="select" title="" formControlName="type" url="systemparametertype"
+                        DataFiled="value" urltype="enum" DataTxt="description" [isshow]="false"
+                        (onSelect)="model.type=$event.value;model.typename=$event.description">
+                    </ina-common-select>
+                    <!-- <nz-select formControlName="type" nzPlaceHolder="{{
+                        'checkdata.check'|i18n}}">
+                        <nz-option [nzValue]="item.value" [nzLabel]="item.description" *ngFor="let item of
+                            types"></nz-option>
+                    </nz-select> -->
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.name'|i18n }}">
+                    <input nz-input placeholder="{{
+                        'inputdata.input'|i18n }}" formControlName="name" (change)="changConversion('name',$event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.code'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.code'|i18n }}">
+                    <input nz-input formControlName="code" placeholder="{{
+                        'inputdata.input'|i18n }}" (change)="changConversion('code',$event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{'sysParameters.alternativetype'|i18n
+                    }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{
+                    'sysParameters.alternativetype'|i18n }}">
+                    <ina-common-select class="select" title="" DataFiled="code" [other]="{pcode:'alternativetype'}"
+                        formControlName="alternativetype" Datatyle="getlist" url="classdata" [isshow]="false"
+                        [ispaging]="false" (onSelect)="changConversion('alternativevalues',$event);">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 枚举下拉/后端下拉待选值 -->
+            <nz-form-item *ngIf="model.alternativetype=='select'||model.alternativetype=='enumselect'">
+                <nz-form-label [nzSpan]="6" nzRequired>{{'sysParameters.alternativevalues'|i18n
+                    }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{
+                    'sysParameters.alternativevalues'|i18n }}">
+                    <input nz-input formControlName="alternativevalues"
+                        (change)="changConversion('alternativevalues',$event)"
+                        placeholder="{{'inputdata.input'|i18n }}" />
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 自定义下拉待选值 -->
+            <nz-form-item *ngIf="model.alternativetype=='customselect'">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.alternativevalues'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <custom-select [optionList]="model.valueslist" formControlName="valueslist"
+                        (onSelect)="model.valueslist=$event"></custom-select>
+                    <!-- <button nz-button nz-dropdown
+                        [nzDropdownMenu]="renderTemplate">
+                        {{'btn.Setparam'|i18n}}
+                        <span nz-icon nzType="down"></span>
+                    </button>
+                    <nz-dropdown-menu #renderTemplate="nzDropdownMenu">
+                        <div (click)="$event.stopPropagation()">
+                            <nz-table #editRowTable nzBordered style="width:
+                                300px;" [nzFrontPagination]="false"
+                                [nzShowPagination]="false" nzSize="small"
+                                [nzData]="model.valueslist?model.valueslist:[]"
+                                nzTableLayout="fixed">
+                                <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>名称</th>
+                                        <th>值</th>
+                                        <th [nzAlign]="center">
+                                            <i nz-icon nzType="plus"
+                                                nzTheme="outline"
+                                                (click)="addItem()"></i>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of editRowTable.data"
+                                        class="editable-row">
+                                        <td>{{ data.id }}</td>
+                                        <td (click)="startEdit(data.id)">
+                                            <div class="editable-cell"
+                                                [hidden]="editId === data.id">
+                                                {{ data.name }}
+                                            </div>
+                                            <input [hidden]="editId !== data.id"
+                                                type="text" nz-input name="name"
+                                                [(ngModel)]="data.name"
+                                                (blur)="stopEdit()" />
+                                        </td>
+                                        <td (click)="startEdit(data.id)">
+                                            <div class="editable-cell"
+                                                [hidden]="editId === data.id">
+                                                {{ data.value }}
+                                            </div>
+                                            <input [hidden]="editId !== data.id"
+                                                type="text" nz-input
+                                                name="value"
+                                                [(ngModel)]="data.value"
+                                                (blur)="stopEdit()" />
+                                        </td>
+                                        <td [nzAlign]="center">
+                                            <a nz-popconfirm
+                                                nzPopconfirmTitle="是否确认删除?"
+                                                (nzOnConfirm)="deleteRow(data.id)">删除</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </nz-dropdown-menu> -->
+                </nz-form-control>
+            </nz-form-item>
+            <!-- JSON -->
+            <nz-form-item *ngIf="model.alternativetype=='json'">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <nz-button-group>
+                        <button nz-button
+                            (click)="JsonTree.hidden=false;JSON.hidden=true">{{'placard.dataEditing'|i18n}}</button>
+                        <button nz-button
+                            (click)="JsonTree.hidden=true;JSON.hidden=false">{{'placard.JSONEditing'|i18n}}</button>
+                    </nz-button-group>
+                    <div nz-row style="flex-wrap: nowrap;
+                        height:270px;overflow:auto;">
+                        <div #JsonTree nz-col nzspan="24" [hidden]="false">
+                            <JsonTree formControlName="value" (editDone)="changConversion('value')"></JsonTree>
+                        </div>
+                        <textarea #JSON nz-input style="height: -webkit-fill-available;" rows="5"
+                            formControlName="value" (change)="changConversion('value',$event)" hidden></textarea>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 输入框 -->
+            <nz-form-item
+                *ngIf="(!model.alternativetype||model.alternativetype=='input')&&model.alternativetype!='switch'">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18"
+                    nzErrorTip="{{'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <textarea nz-input formControlName="value" placeholder="{{ 'inputdata.input'|i18n }}" rows="4"
+                        (change)="changConversion('value',$event)" nzAutosize></textarea>
+                    <!-- <input nz-input formControlName="value" placeholder="{{
+                        'inputdata.input'|i18n }}" (change)="changConversion('value',$event)" /> -->
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 后端下拉 -->
+            <nz-form-item *ngIf="model.alternativetype=='select'&&model.alternativevalues">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <ina-common-select class="select" title="" formControlName="value" [url]="model.alternativevalues"
+                        (onSelect)="changConversion('value',$event)">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 枚举下拉 -->
+            <nz-form-item *ngIf="model.alternativetype=='enumselect'&&model.alternativevalues">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <ina-common-select class="select" title="" formControlName="value" [url]="model.alternativevalues"
+                        DataFiled="value" urltype="enum" DataTxt="description" [isshow]="false"
+                        (onSelect)="changConversion('value',$event)">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 自定义下拉 -->
+            <nz-form-item *ngIf="model.alternativetype=='customselect'&&model.valueslist">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <ina-common-select class="select" title="" formControlName="value" [isSeach]="false"
+                        [optionList]="model.valueslist" DataFiled="value" (onSelect)="changConversion('value',$event)"
+                        DataTxt="name" [isshow]="false">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <!-- 判断 -->
+            <nz-form-item *ngIf="model.alternativetype=='switch'">
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    'sysParameters.value'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'sysParameters.value'|i18n }}">
+                    <nz-switch name="value" [(ngModel)]="model.value" formControlName="value"
+                        nzCheckedChildren="{{'placard.yes'|i18n}}" nzUnCheckedChildren="{{'placard.no'|i18n}}">
+                    </nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{ 'sysParameters.description'|i18n
+                    }}</nz-form-label>
+                <nz-form-control [nzSpan]="18" nzErrorTip="{{
+                    'descriptionLengthWarn'|i18n }}">
+                    <textarea nz-input formControlName="description" placeholder="{{ 'inputdata.input'|i18n }}" rows="4"
+                        (change)="changConversion('description',$event)" nzAutosize></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{
+                    'sysParameters.sort'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18">
+                    <input nz-input formControlName="sort" placeholder="{{
+                        'inputdata.input'|i18n }}" (change)="changConversion('sort',$event)" type="number" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

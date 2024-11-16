@@ -1,0 +1,84 @@
+<crud2
+  #crud
+  [router]="url"
+  [jsonname]="fieldcode"
+  [list]="list"
+  (actionClick)="btnEvent($event)"
+  [columns]="columns"
+  [modular]="modular"
+  [fields]="field"
+  [searchActionsBody]="searchActionsBody"
+  [KeyQuery]="KeyQuery"
+  [getBody]="requiredParams"
+  [isDataOnInit]="false"
+  [isAddExpParams]="true"
+></crud2>
+<ng-template #KeyQuery>
+  <nz-range-picker
+    class="mr8"
+    [nzAllowClear]="false"
+    [(ngModel)]="date"
+    (ngModelChange)="onChange($event)"
+  ></nz-range-picker>
+</ng-template>
+
+<ng-template #searchActionsBody>
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsAbnormaleventreport.rfid" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="rfid"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.rfid"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsAbnormaleventreport.pti_tagcode" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="pti_tagcode"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.pti_tagcode"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsAbnormaleventreport.ste_code" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="ste_code"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.ste_code"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsAbnormaleventreport.ste_name" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="ste_name"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.ste_name"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>

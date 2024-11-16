@@ -1,0 +1,17 @@
+<nz-select
+  [(ngModel)]="selectedValue"
+  (ngModelChange)="onChange($event)"
+  [nzPlaceHolder]="processedNgZorroProps.placeholder"
+  [nzAllowClear]="processedNgZorroProps.isAllowClear"
+  [nzDisabled]="disabled"
+  nzShowSearch
+  nzServerSearch
+  (nzOnSearch)="onSearch($event)"
+  (nzScrollToBottom)="onLoadMore()"
+>
+  <nz-option
+    *ngFor="let option of optionList"
+    [nzValue]="option[processedNgZorroProps.value]"
+    [nzLabel]="option[processedNgZorroProps.label]"
+  ></nz-option>
+</nz-select>

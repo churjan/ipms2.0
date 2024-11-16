@@ -1,0 +1,146 @@
+<!-- <flow-new #flow style="text-align: left;" [modular]="modular" (editDone)="close()" (onOut)="onOut()"></flow-new>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (editDone)="close()" (onOut)="onOut()"></flow3> -->
+<!-- 导入 -->
+<!-- <imp #imp [modular]="modular" impurl="impurl" xlsurl="xlsurl" (editDone)="setImpData($event)"></imp> -->
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="90%" bodyPadding="0 20px" justifyContent="center"
+  (onClose)="close()" [content]="addTpl" [footer]="footerTpl">
+  <ng-template #addTpl>
+    <form nz-form style="margin-top: 10px;">
+      <div nz-row [nzGutter]="16" class="styFalowinfo">
+        <!-- 款式工序流名称 -->
+        <div nz-col class="gutter-row" [nzSpan]="10">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="psopm_name">{{'pdmStyle.psopm_name'|i18n}}
+              </nz-form-label>
+              <nz-form-control [nzSpan]="14" nzErrorTip="{{'inputdata.input'|i18n }}/{{'pdmStyle.psopm_name'|i18n }}">
+                <input type="text" class="form-control" name="psopm_name" nz-input [(ngModel)]="newmodel.name"
+                  placeholder="{{ 'inputdata.input'|i18n}}" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <!-- 是否回流 -->
+        <div nz-col class="gutter-row" [nzSpan]="8">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="is_back_flow">{{'pdmStyle.isbackflow'|i18n}}
+              </nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <nz-select [(ngModel)]="newmodel.is_back_flow" style="width: 100%;" name="isbackflow"
+                  nzPlaceHolder="{{'warning.noset'|i18n}}">
+                  <nz-option [nzValue]="" nzLabel="{{'warning.noset'|i18n}}"></nz-option>
+                  <nz-option [nzValue]="true" nzLabel="{{'placard.backflow'|i18n}}"></nz-option>
+                  <nz-option [nzValue]="false" nzLabel="{{'placard.nobackflow'|i18n}}"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <!-- 款式工序流版本 -->
+        <div nz-col class="gutter-row" [nzSpan]="6" *ngIf="power.type != 'W'">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="8" nzFor="version">{{'commFlow.tag'|i18n}}</nz-form-label>
+              <nz-form-control [nzSpan]="14">
+                <input type="text" class="form-control" *ngIf="versionPower=='1'" name="version" nz-input
+                  [(ngModel)]="newmodel.tag" />
+                <ina-common-select *ngIf="versionPower=='3'||versionPower=='5'" class="select" url="VirtualLayout"
+                  title="" name="version" DataFiled="code" Datatyle="getlist/" [(ngModel)]="newmodel.tag">
+                </ina-common-select>
+                <ina-common-select class="select" *ngIf="versionPower=='2'||versionPower=='4'"
+                  url="LayoutStructure/extend" title="" Datatyle="getlist/" DataTxt="code" [ispaging]="false"
+                  DataFiled="code" name="version" [other]="{maketree:false,BLST_Group:'Line'}"
+                  [(ngModel)]="newmodel.tag">
+                </ina-common-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </form>
+    <nz-card style="width:100%;margin-top: 10px;" [nzBodyStyle]="{padding:0}" nzTitle="{{'placard.psiPartinfo'|i18n}}"
+      [nzExtra]="addpartTemplate">
+      <nz-table #detailTable nzOuterBordered [nzData]="partlist" [nzFrontPagination]="false" [nzBordered]="true"
+        [nzShowPagination]="false" nzSize="small" [nzScroll]="{ x:'calc(100% - 10px)',y:'300px' }">
+        <thead>
+          <tr>
+            <th nzLeft nzAlign="center" nzWidth="80px">{{'placard.No'|i18n}}</th>
+            <th nzAlign="center">{{'commFlow.bpi_name'|i18n}}</th>
+            <th nzAlign="center">{{'commFlow.bpi_class_code'|i18n}}</th>
+            <th nzAlign="center">{{'commFlow.bpi_ismain'|i18n}}</th>
+            <th nzRight nzAlign="center" nzWidth="120px">{{'btn.operation'|i18n}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of detailTable.data;let i=index">
+            <td nzLeft nzAlign="center">{{data.bpi_sort?data.bpi_sort:i+1}}</td>
+            <td nzAlign="center">
+              <ina-common-select title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="data.bpi_key" name="bpi_key"
+                url="partinfo" (onSelect)="onSelect($event,data,'bpi_code',data.bpi_sort)">
+              </ina-common-select>
+            </td>
+            <td nzAlign="center">
+              <ina-common-select title="{{ 'checkdata.check'|i18n}}" [(ngModel)]="data.bpi_class_code" urltype="enum"
+                name="bpi_class_code" url="partclass" DataFiled="name" DataTxt="description"
+                (onSelect)="onSelect($event,data,'bpi_class_name',data.bpi_sort)">
+              </ina-common-select>
+            </td>
+            <td nzAlign="center">
+              <nz-select [(ngModel)]="data.bpi_ismain" name="bpi_ismain" placeholder="{{ 'checkdata.check'|i18n}}"
+                (ngModelChange)="onSelect($event,data,'bpi_ismain',data.bpi_sort)">
+                <nz-option [nzValue]="true" nzLabel="{{'format.yes'|i18n}}"></nz-option>
+                <nz-option [nzValue]="false" nzLabel="{{'format.no'|i18n}}"></nz-option>
+              </nz-select>
+            </td>
+            <td nzRight nzAlign="center">
+              <a (click)="onAction({action:'del',title:'delete',node:data})">{{'btn.delete'|i18n}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+    <ng-template #addpartTemplate>
+      <a (click)="addpart()">{{'btn.Addpart'|i18n}}</a>
+    </ng-template>
+    <nz-card style="width:100%;margin-top: 10px;" [nzBodyStyle]="{padding:0}" nzTitle="{{'placard.psiBwiinfo'|i18n}}"
+      [nzExtra]="addwTemplate">
+      <nz-table #worksectionTable [nzData]="worksectionlist" [nzFrontPagination]="false" [nzBordered]="true"
+        [nzShowPagination]="false" nzSize="small">
+        <thead>
+          <tr>
+            <th nzLeft nzAlign="center" nzWidth="80px">{{'placard.No'|i18n}}</th>
+            <th>{{'commFlow.section'|i18n}}</th>
+            <th nzRight nzAlign="center">{{'btn.operation'|i18n}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of worksectionTable.data;let i=index">
+            <td nzLeft nzAlign="center">{{data.bwi_sort}}</td>
+            <td *ngIf="decide(data.bwi_key)">
+              <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check'|i18n}}" [(ngModel)]="data.bwi_key"
+                name="bwi_key" [optionList]="bwi_list" (onSelect)="onSelect($event,data,'bwi_code',data.bwi_sort)">
+              </ina-common-select>
+            </td>
+            <td *ngIf="!decide(data.bwi_key)">{{data.bwi_name}}</td>
+            <td nzRight nzAlign="center">
+              <a *ngIf="decide(data.bwi_key)"
+                (click)="onAction({action:'delws',title:'delete',node:data})">{{'btn.delete'|i18n}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+    <ng-template #addwTemplate>
+      <a (click)="addworksection()">{{'btn.Addsection'|i18n}}</a>
+    </ng-template>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()" *ngIf="isreturn!=true">{{ 'btn.cancel'|i18n }}</button>
+    <button nz-button (click)="returmflow()" *ngIf="isreturn==true">{{'btn.returmflow'|i18n}}</button>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+      [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+  </ng-template>
+</idrawer>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (editDone)="close()" (onReturn)="onOutreturn($event)">
+</flow3>

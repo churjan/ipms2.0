@@ -1,0 +1,39 @@
+.catalog-view {
+    border: 1px solid #3082ff;
+    border-radius: 0 0 3px 3px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .tree-head-view {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background-color: #3082ff;
+        height: 32px;
+        color: #fff;
+    }
+    .search-view {
+        padding: 8px 8px 0;
+    }
+    .tree-body-view {
+        padding: 8px;
+        flex: 1;
+        overflow: hidden auto;
+        &::-webkit-scrollbar{
+            width: 6px;
+            height: 6px;
+            cursor: pointer;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #3082ff;
+            border-radius: 2px;
+        }
+        .empty-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

@@ -1,0 +1,627 @@
+//日志检索中的高亮显示颜色
+.ztextred {
+    color: #f00;
+}
+
+.ztextn {
+    white-space: pre-line;
+}
+
+//内容页面的布局------------------
+.zleft {
+    width      : 240px;
+    height     : calc(100% - 32px);
+    overflow   : hidden;
+    margin     : 16px 0px 0px 16px;
+    float      : left;
+    text-align : center;
+    line-height: calc(100% - 32px);
+}
+
+.zleft_loading {
+    position        : absolute;
+    width           : 240px;
+    top             : 16px;
+    left            : 16px;
+    height          : calc(100% - 32px);
+    background-color: @left-tree-loading;
+    text-align      : center;
+}
+
+.zleft_loading_in {
+    width : 100%;
+    height: calc((100% - 30px)/2);
+}
+
+.zleft_top {
+    border-radius   : 2px 2px 0 0;
+    width           : 100%;
+    height          : 32px;
+    background-color: @left-tree-top;
+}
+
+.zleft_top_left {
+    float       : left;
+    width       : auto;
+    padding-left: 10px;
+    height      : 32px;
+    color       : @left-tree-top-title;
+    line-height : 32px;
+}
+
+.zleft_top_right {
+    float      : right;
+    width      : auto;
+    height     : 32px;
+    color      : @left-tree-top-title;
+    line-height: 32px;
+}
+
+.zleft_top_right_in {
+    color      : @left-tree-top-title;
+    font-weight: bold;
+}
+
+.zleft_top_right_a {
+    margin-right: 10px;
+    color       : @left-tree-top-title;
+}
+
+.zleft_tree {
+    width        : 100%;
+    height       : calc(100% - 32px);
+    overflow     : hidden;
+    border       : 1px solid @left-tree-top;
+    border-top   : 0px;
+    border-radius: 0 0 3px 3px;
+}
+
+.zleft_tree_input {
+    width   : calc(100% - 20px);
+    height  : 32px;
+    margin  : 10px;
+    overflow: hidden;
+}
+
+.zleft_tree_all {
+    width   : 100%;
+    height  : calc(100% - 52px);
+    overflow: auto;
+}
+
+.zleft_tree_in {
+    width     : calc(100% - 20px);
+    min-height: 100px;
+    margin    : 0 10px;
+}
+
+.zleft_tree_all::-webkit-scrollbar {
+    width : 6px;
+    height: 6px;
+    cursor: pointer;
+}
+
+.zleft_tree_all::-webkit-scrollbar-track {
+    border-radius: 2px;
+    /* 滚动条背景样式 */
+}
+
+.zleft_tree_all::-webkit-scrollbar-thumb {
+    background   : @left-tree-top;
+    border-radius: 2px;
+    /* 滚动条样式 */
+}
+
+.zleft_tree_all::-webkit-scrollbar-thumb:hover {
+    background: @left-tree-top;
+    /* 鼠标放上滚动条样式 */
+}
+
+.zleft_tree_all::-webkit-scrollbar-corner {
+    background: @left-tree-top;
+}
+
+.zright_cont {
+    width   : calc(100% - 256px);
+    height  : 100%;
+    overflow: hidden;
+    float   : left;
+}
+
+.zcont {
+    width   : 100%;
+    height  : 100%;
+    overflow: hidden;
+}
+
+.ztop_in {
+    width     : 100%;
+    min-height: 32px;
+    margin    : 16px auto 10px auto;
+    overflow  : hidden;
+}
+
+.ztop_in_select {
+    width     : 100%;
+    min-height: 32px;
+}
+
+.ztop_in_select_btn {
+    // margin-right: 10px;
+}
+
+.ztop_in_advanced_search {
+    width : 100%;
+    height: auto;
+}
+
+.ztop_in_advanced_search_in {
+    width : calc(100% - 20px);
+    margin: 0 auto;
+}
+
+.zlabel_input {
+    float : left;
+    width : 230px;
+    height: 32px;
+}
+
+.zlabel_btn {
+    width: 110px;
+    float: right;
+}
+
+.ztop_in_select_in {
+    float       : right;
+    width       : auto;
+    height      : 32px;
+    margin-right: 10px;
+}
+
+.ztop_in_select_in_color {
+    color: @advanced-search-font-color;
+}
+
+.ztop_in_select_in_group {
+    width: 190px;
+}
+
+@media screen and (min-width: 1081px) {
+    .ztop_in_select_in_group {
+        width: 245px;
+    }
+}
+
+@media screen and (min-width: 1281px) {
+    .ztop_in_select_in_group {
+        width: 245px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .ztop_in_select_in_group {
+        width: 245px;
+    }
+}
+
+//高级查询 颜色
+.advancedSearch {
+    font-size   : 13px;
+    color    : @advanced-search;
+    // color       : #000;
+
+    &.active {
+        color: @color;
+    }
+}
+
+//高级查询弹出窗中的标题颜色
+.zlabel {
+    float       : left;
+    width       : 84px;
+    height      : 32px;
+    color       : @advanced-search-label;
+    font-size   : 14px;
+    line-height : 32px;
+    margin-right: 10px;
+}
+
+//高级查询弹出窗
+.zadvanced_search {
+    background-color: @advanced-search-background;
+    position        : absolute;
+    top             : 58px;
+    right           : 0;
+    height          : calc(100vh - 142px);
+    width           : calc(100% - 266px);
+    z-index         : 100;
+    transition      : all 0.5s;
+    opacity         : 0;
+}
+
+.zadvanced_search_notree {
+    background-color: @advanced-search-background;
+    position        : absolute;
+    top             : 58px;
+    height          : calc(100vh - 142px);
+    width           : 100%;
+    z-index         : 100;
+    transition      : all 0.5s;
+    opacity         : 0;
+}
+
+.zadvanced_search_right {
+    background-color: @advanced-search-background-right;
+    position        : absolute;
+    z-index         : 101;
+    top             : 58px;
+    right           : 0;
+    width           : 352px;
+    height          : calc(100vh - 142px);
+    transition      : all 0.5s;
+    border-left     : 0;
+    opacity         : 0;
+}
+
+.zadvanced_search_active {
+    opacity: 1;
+}
+
+.zadvanced_search_right_top {
+    width        : 100%;
+    height       : 60px;
+    border-bottom: 1px solid @advanced-search-background-right-x;
+}
+
+.zadvanced_search_right_top_left {
+    float     : left;
+    width     : auto;
+    height    : 60px;
+    text-align: left;
+}
+
+.zadvanced_search_right_top_left_btn {
+    margin: 10px 10px 10px 0;
+    // width : 103px;
+}
+
+.zadvanced_search_right_top_right {
+    float : right;
+    width : auto;
+    height: 60px;
+}
+
+.zadvanced_search_right_top_right_cont {
+    width     : 100%;
+    height    : calc(100% - 61px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+// .zadvanced_search_right_top_right_cont::-webkit-scrollbar {
+//     width : 6px;
+//     height: 6px;
+//     cursor: pointer;
+// }
+
+// .zadvanced_search_right_top_right_cont::-webkit-scrollbar-track {
+//     border-radius: 2px;
+//     /* 滚动条背景样式 */
+// }
+
+// .zadvanced_search_right_top_right_cont::-webkit-scrollbar-thumb {
+//     background   : @advanced-search-background-right-t;
+//     border-radius: 2px;
+//     /* 滚动条样式 */
+// }
+
+// .zadvanced_search_right_top_right_cont::-webkit-scrollbar-thumb:hover {
+//     background: @advanced-search-background-right-t;
+//     /* 鼠标放上滚动条样式 */
+// }
+
+// .zadvanced_search_right_top_right_cont::-webkit-scrollbar-corner {
+//     background: @advanced-search-background-right-t;
+// }
+
+.zadvanced_search_label {
+    width    : auto;
+    height   : 25px;
+    font-size: 14px;
+    margin   : 10px 0 0 10px;
+}
+
+.zadvanced_search_input {
+    width : 332px;
+    height: 38px;
+}
+
+.zadvanced_search_input_btn {
+    width      : 100%;
+    margin-left: 10px;
+}
+
+.ztop_in_btn_in {
+    float      : left;
+    width      : auto;
+    height     : 32px;
+    margin-left: 10px;
+}
+
+.ztop_in_btn_in_notree {
+    float      : left;
+    width      : auto;
+    height     : 32px;
+    margin-left: 16px;
+}
+
+//表格
+.ztable {
+    width : calc(100% - 20px);
+    height: calc(100vh - 196px);
+    margin: 0 0 10px 10px;
+}
+//表格中内容溢出使用省略号
+.ztable_slh{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ztable_notree {
+    width : calc(100% - 26px);
+    height: calc(100vh - 196px);
+    margin: 0 0 10px 16px;
+}
+
+.znoPageTable {
+    width : calc(100% - 20px);
+    height: calc(100vh - 164px);
+    margin: 0 0 10px 10px;
+}
+
+.znoPageTable_notree {
+    width : calc(100% - 26px);
+    height: calc(100vh - 164px);
+    margin: 0 0 10px 16px;
+}
+
+.zpagination {
+    width : calc(100% - 16px);
+    height: 32px;
+}
+
+.zpagination_in {
+    float: right;
+}
+
+//内容页面的布局 结束
+//弹出窗页面布局 -----------------------------
+.zpopup {
+    position        : absolute;
+    top             : 0;
+    left            : 0;
+    width           : 100%;
+    height          : 100%;
+    background-color: @popup-background;
+    z-index         : 102;
+    transition      : all 0.3s;
+}
+.zpopup2 {
+    position        : absolute;
+    top             : 0;
+    left            : 0;
+    width           : 100%;
+    height          : 100%;
+    background-color: @popup-background;
+    z-index         : 200;
+    transition      : all 0.3s;
+}
+
+.zpopup_cont {
+    position          : absolute;
+    z-index           : 103;
+    background-color  : @popup-cont-background;
+    border-radius     : 2px;
+    transition        : all 0.8s;
+    box-shadow        : 0px 0px 30px 0px @popup-background;
+    -webkit-box-shadow: 0px 0px 30px 0px @popup-background;
+    -moz-box-shadow   : 0px 0px 30px 0px @popup-background;
+}
+
+.zpopup_cont2 {
+    position          : absolute;
+    z-index           : 201;
+    background-color  : @popup-cont-background;
+    border-radius     : 2px;
+    transition        : all 0.8s;
+    box-shadow        : 0px 0px 30px 0px @popup-background;
+    -webkit-box-shadow: 0px 0px 30px 0px @popup-background;
+    -moz-box-shadow   : 0px 0px 30px 0px @popup-background;
+}
+
+.zpopup_cont_top {
+    width        : 100%;
+    height       : 48px;
+    padding      : 12px;
+    color        : @popup-cont-top-color;
+    background   : @popup-cont-background;
+    border-bottom: 1px solid @popup-cont-top-x;
+    border-radius: 2px 2px 0 0;
+    font-size    : 16px;
+}
+
+.zpopup_cont_top_title {
+    float: left;
+}
+
+.zpopup_cont_top_close {
+    float : right;
+    cursor: pointer;
+    color : @popup-cont-top-close;
+}
+
+.zpopup_cont_top_close:hover {
+    color: @popup-cont-top-color;
+}
+
+.zpopup_cont_all {
+    // width     : 100%;
+    height:calc(100% - 48px - 48px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.zpopup_cont_all::-webkit-scrollbar {
+    width : 6px;
+    height: 6px;
+    cursor: pointer;
+}
+
+.zpopup_cont_all::-webkit-scrollbar-track {
+    border-radius: 2px;
+}
+
+.zpopup_cont_all::-webkit-scrollbar-thumb {
+    // background: @left-tree-top;
+    border-radius: 2px;
+}
+
+.zpopup_cont_all::-webkit-scrollbar-thumb:hover {
+    // background: @left-tree-top;
+}
+
+.zpopup_cont_all::-webkit-scrollbar-corner {
+    // background: @left-tree-top;
+}
+
+.zpopup_cont_in {
+    width : calc(100% - 40px);
+    height: calc(100% - 40px);
+    margin: 20px;
+}
+
+.zpopup_cont_foot {
+    width        : 100%;
+    height       : 58px;
+    padding      : 12px;
+    color        : @popup-cont-top-color;
+    background   : @popup-cont-background;
+    border-top   : 1px solid @popup-cont-top-x;
+    border-radius: 0 0 2px 2px;
+    font-size    : 16px;
+    text-align   : right;
+}
+
+//确认窗口样式
+.zpopup_confirm_cont_top {
+    width        : 100%;
+    height       : 48px;
+    padding      : 12px;
+    color        : @popup-cont-top-color;
+    background   : @popup-cont-background;
+    border-radius: 2px 2px 0 0;
+    font-size    : 16px;
+}
+
+.zpopup_confirm_cont_in {
+    width : 100%;
+    height: 72px;
+}
+
+.zpopup_confirm_cont_in_icon {
+    float : left;
+    width : 28px;
+    height: 28px;
+    margin: 22px 15px 0 40px;
+}
+
+.zpopup_confirm_cont_in_text {
+    float      : left;
+    width      : auto;
+    height     : 18px;
+    line-height: 18px;
+    font-size  : 18px;
+    margin-top : 26px;
+    color      : @popup-cont-top-color;
+}
+
+.zpopup_confirm_foot {
+    width     : calc(100% - 40px);
+    height    : 32px;
+    color     : @popup-cont-top-color;
+    background: @popup-cont-background;
+    font-size : 16px;
+    text-align: right;
+    margin    : 20px auto 0 auto;
+}
+
+//弹出窗页面布局 结束-----------------------------
+
+//---------------销售订单 排单详情右弹出中的时间轴样式 -------------
+.see_cont_right{
+    float: right;
+    width: 0px;
+    margin-left: 6px;
+    height: 368px;
+    transition: all 0.5s;
+    border: 0px solid @order-arrange-right-timeline-x;
+}
+.see_cont_right_ac{
+    width: calc(30% - 8px);
+    border: 1px solid @order-arrange-right-timeline-x;
+}
+.see_cont_right_title{
+    width: 100%;
+    height: 38px;
+    background-color: @order-arrange-right-timeline-background;
+    line-height: 38px;
+    padding-left: 8px;
+    border-bottom: 1px solid @order-arrange-right-timeline-x;
+    color: @advanced-search-label;
+    font-weight: bold;
+    font-size: 14px;
+}
+.see_cont_right_title_close{
+    float: right;
+    width: 38px;
+    height: 38px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 22px;
+    cursor: pointer;
+}
+.see_cont_right_title_close:hover{
+    background-color: @order-arrange-right-timeline-x;
+}
+.see_cont_right_twotitle{
+    width: 100%;
+    height: 80px;
+}
+.see_cont_right_twotitle_in{
+    float: left;
+    width: 50%;
+    height: 39px;
+    line-height: 40px;
+    text-align: left;
+    padding-left: 8px;
+    border: 1px solid @order-arrange-right-timeline-background;
+    border-right: 0;
+    margin: -1px 0 0 0px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.see_cont_timeline{
+    width: 100%;
+    height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.see_cont_timeline_in{
+    width: calc(100% - 30px);
+    margin: 15px auto;
+    height: auto;
+}
+//---------------销售订单 排单详情右弹出中的时间轴样式 结束-------------

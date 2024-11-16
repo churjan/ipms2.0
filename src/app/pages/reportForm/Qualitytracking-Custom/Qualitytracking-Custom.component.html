@@ -1,0 +1,95 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [isKeyQuery]="true"
+    listFun="Customurl" [isDataOnInit]="false" [isAction]="false" [isRefresh]="false" [columns]="columns"
+    [modular]="modular" [fields]="field" [isKeyword]="false" [KeyQuery]="KeyQuery" [checkbox]="false"
+    expurl="Customexpurl" [isStatistics]="true" (onReset)="onReset()" detail="datalist"
+    [searchActionsBody]="searchActionsBody" [isReport]="true"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="QueryInspection('tagcode')">
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.tagcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="tagcode" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.tagcode" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('hei_back')">
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.back'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.hei_key_back"
+                    name="hei_key_back" url="Employeeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('hei_receive')">
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.receive'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.hei_key_receive"
+                    name="hei_key_receive" url="Employeeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('hei_repair')">
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.repair'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.hei_key_repair"
+                    name="hei_key_repair" url="Employeeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('hei_recheck')">
+            <nz-form-label [nzSpan]="24">{{ 'reportQualitytracking.recheck'|i18n}}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.hei_key_recheck"
+                    name="hei_key_recheck" url="Employeeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.line_Receive'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [params]="{maketree:true,BLST_Group:'Line'}"
+                    [(ngModel)]="crud.seniorModel.bli_key_Receive" name="bli_key_Receive" datatype="NewGetList/">
+                </ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.line_Back'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [params]="{maketree:true,BLST_Group:'Line'}"
+                    [(ngModel)]="crud.seniorModel.bli_key_Back" name="bli_key_Back" datatype="NewGetList/">
+                </ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.line_repair'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [params]="{maketree:true,BLST_Group:'Line'}"
+                    [(ngModel)]="crud.seniorModel.bli_key_line_repair" name="bli_key_repair" datatype="NewGetList/">
+                </ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{'reportQualitytracking.line_recheck'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-ztree-select [setting]="setting" class="select" [params]="{maketree:true,BLST_Group:'Line'}"
+                    [(ngModel)]="crud.seniorModel.bli_key_line_recheck" name="bli_key_recheck" datatype="NewGetList/">
+                </ina-ztree-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="QueryInspection('bqci_name')">
+            <nz-form-label [nzSpan]="24">
+                {{'reportQualitytracking.bqci_name'|i18n}}
+            </nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="" [(ngModel)]="crud.seniorModel.bqci_key" name="bqci_key"
+                    url="QualityCauseInfo" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record">
+    <date-select [isRange]="true" #dateselect
+        (onSelect)="crud.SearchModel.date_back_start=$event.start;crud.SearchModel.date_back_end=$event.end">
+    </date-select>
+</ng-template>

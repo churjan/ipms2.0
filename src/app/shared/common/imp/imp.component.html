@@ -1,0 +1,25 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="410px" justifyContent="center" nzSize="small"
+    (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div class="down" *ngIf="otherUrl[xlsurl]">
+            <button nz-button nzType="dashed" (click)="toExcelModel()">{{ 'btn.downmodel'|i18n }}</button>
+            <span style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span>
+        </div>
+        <div class="import">
+            <nz-upload nzType="drag" [nzAction]="upExcel()" [nzHeaders]="uploadingHeader()"
+                (nzChange)="importChange($event)" [nzBeforeUpload]="beforeUpload" [nzMultiple]="false"
+                [nzDisabled]="isUpload">
+                <p class="ant-upload-drag-icon">
+                    <i nz-icon nzType="inbox"></i>
+                </p>
+                <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+                <p class="ant-upload-hint">
+                    {{ 'warning.importTip2'|i18n }}
+                </p>
+            </nz-upload>
+        </div>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

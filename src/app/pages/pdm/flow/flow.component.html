@@ -1,0 +1,24 @@
+<crud2 #crud [router]="url" [jsonname]="'commFlow'" *ngIf="list" style="height: 100%;" [getBody]="body"
+    showLayout="Up-Down" [showAdvanced]="false" listFun="opMaster" [list]="list" (actionClick)="btnEvent($event)"
+    [columns]="columns" [modular]="modular" [impurl]="'flowimpurl'" xlsurl="flowxlsurl" [btnGroup]="btnaction"
+    [isSetList]="false" [impNode]="{key:key}" [fields]="field" [ExtendColumnTpl]="ExtendTpl">
+</crud2>
+<!-- 行内数据表现扩展 -->
+<ng-template #ExtendTpl let-item="record" let-column="column">
+    <!-- <nz-select [(ngModel)]="item[column.coums]" style="width: 100%;" nzPlaceHolder="未设置"
+        (ngModelChange)="btnEvent({action:'Reflux',node:item})">
+        <nz-option [nzValue]="" nzLabel="未设置"></nz-option>
+        <nz-option [nzValue]="true" nzLabel="回流"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="不回流"></nz-option>
+    </nz-select> -->
+    <span *ngIf="column.coums=='pwb_list'">
+        <p *ngFor="let data of item[column.coums]">{{data.pwb_code}}</p>
+    </span>
+    <span *ngIf="column.coums=='psi_list'">
+        <p *ngFor="let data of item[column.coums]">{{data.psi_code}}-{{data.psi_name}}</p>
+    </span>
+</ng-template>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (onReturn)="btnEvent($event)"
+    (editDone)="_crud.reloadData($event)"></flow3>
+<Middlepage #Middlepage style="text-align: left;" [modular]="modular" (editDone)="_crud.reloadData($event)">
+</Middlepage>

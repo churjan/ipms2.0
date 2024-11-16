@@ -1,0 +1,16 @@
+<nz-select
+    nzShowSearch
+    [nzAllowClear]="isShowClear"
+    [(ngModel)]="selectItem"
+    (ngModelChange)="onValueUpdate($event)"
+    [compareWith]="compareFn"
+    nzPlaceHolder="{{'checkdata.check' | i18n}}"
+    [nzDisabled]="disabled"
+    [style.width]="width"
+>
+    <nz-option
+        *ngFor="let item of list"
+        [nzLabel]="item[label]"
+        [nzValue]="item"
+    ></nz-option>
+</nz-select>

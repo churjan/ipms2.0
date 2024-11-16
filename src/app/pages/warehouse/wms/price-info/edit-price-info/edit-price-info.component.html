@@ -1,0 +1,89 @@
+<idrawer
+    *ngIf="isVisible"
+    [title]="title"
+    width="600px"
+    height="400px"
+    justifyContent="center"
+    nzSize="small"
+    [footer]="footerTpl"
+    (onClose)="onClose()"
+    [content]="contentTpl"
+>
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    "wmsPriceinfo.pinming" | i18n
+                }}</nz-form-label>
+                <nz-form-control
+                    [nzSpan]="18"
+                    nzErrorTip="{{ 'inputdata.input' | i18n }}{{
+                        'wmsPriceinfo.pinming' | i18n
+                    }}"
+                >
+                    <!-- <input nz-input formControlName="pinming" /> -->
+                    <ina-common-select
+                        title="{{ 'checkdata.check' | i18n }}"
+                        formControlName="pinming"
+                        url="pinming/extend/pinming"
+                        Datatyle=""
+                        secondary=""
+                        DataFiled="code"
+                    >
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    "wmsPriceinfo.xiangxing" | i18n
+                }}</nz-form-label>
+                <nz-form-control
+                    [nzSpan]="18"
+                    nzErrorTip="{{ 'inputdata.input' | i18n }}{{
+                        'wmsPriceinfo.xiangxing' | i18n
+                    }}"
+                >
+                    <!-- <input nz-input formControlName="xiangxing" /> -->
+                    <ina-common-select
+                        title="{{ 'checkdata.check' | i18n }}"
+                        formControlName="xiangxing"
+                        url="xiangxing/extend/xiangxing"
+                        Datatyle=""
+                        secondary=""
+                        DataFiled="code"
+                    >
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{
+                    "wmsPriceinfo.wages" | i18n
+                }}</nz-form-label>
+                <nz-form-control
+                    [nzSpan]="18"
+                    nzErrorTip="{{ 'inputdata.input' | i18n }}{{
+                        'wmsPriceinfo.wages' | i18n
+                    }}"
+                >
+                    <nz-input-number
+                        [nzMin]="0"
+                        formControlName="wages"
+                    ></nz-input-number>
+                    <span>（元）</span>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button
+            nz-button
+            nzType="primary"
+            (click)="onSubmit()"
+            [nzLoading]="isBtnLoading"
+            class="mr6"
+        >
+            {{ "btn.determine" | i18n }}
+        </button>
+        <button nz-button (click)="onClose()">{{ "btn.cancel" | i18n }}</button>
+    </ng-template>
+</idrawer>

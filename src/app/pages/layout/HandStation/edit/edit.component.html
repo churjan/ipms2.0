@@ -1,0 +1,28 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl" height="30%">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{'layoutHandStation.matching_bls_key'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="18"
+                    nzErrorTip="{{'inputdata.input'|i18n }}/{{'layoutHandStation.matching_bls_key'|i18n }}">
+                    <ina-ztree-select [setting]="setting" formControlName="key" datatype="NewGetList/"
+                    [params]="MatchingTree"   (onSelect)="onSelect($event)"></ina-ztree-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzRequired>{{'layoutHandStation.pair_bls_key'|i18n}}</nz-form-label>
+                <nz-form-control [nzSpan]="18"
+                    nzErrorTip="{{'inputdata.input'|i18n }}/{{'layoutHandStation.pair_bls_key'|i18n }}">
+                    <ina-ztree-select [setting]="setting" formControlName="pair_bls_key" datatype="GetList/"
+                    [params]="stationRailtree"  (onSelect)="onSelectpair($event)"></ina-ztree-select>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

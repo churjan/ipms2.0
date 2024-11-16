@@ -1,0 +1,15 @@
+<nz-page-header (nzBack)="onNavigateTo()" nzBackIcon nzTitle="{{'btn.return' | i18n}}" *ngIf="loginService.registerStatus===1"> </nz-page-header>
+<nz-list>
+    <nz-list-header>{{'placard.operateCircuit' | i18n}}：</nz-list-header>
+    <nz-list-item [nzNoFlex]="true">
+        {{'install.registerStepOne' | i18n}}
+        <a nz-button nzType="link" (click)="download(trfil('install.computerData'),computerData)">{{'btn.downloadLink' | i18n}}</a>
+    </nz-list-item>
+    <nz-list-item [nzNoFlex]="true">
+        {{'install.registerStepTwo' | i18n}}
+        <a nz-button nzType="link" (click)="onNavigateTo(2)">{{'install.registerLink' | i18n}}</a>
+    </nz-list-item>
+    <nz-list-item [nzNoFlex]="true">
+        {{'install.registerStepThree' | i18n}}<a nz-button nzType="link" (click)="onReboot()">{{'install.rebootSystem' | i18n}}</a>
+    </nz-list-item>
+</nz-list>

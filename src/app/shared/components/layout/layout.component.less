@@ -1,0 +1,156 @@
+@import "mixin";
+
+.themeMixin( {
+        :host {
+            .wrapper {
+                height: 100vh;
+
+                .head {
+                    padding        : 0 0 0 12px;
+                    width          : 100%;
+                    height         : @head-height;
+                    line-height    : @head-height;
+                    display        : flex;
+                    justify-content: space-between;
+
+                    .left {
+                        height     : 100%;
+                        display    : flex;
+                        align-items: center;
+
+                        &.collapsed {
+                            h1 {
+                                display: none;
+                            }
+                        }
+
+                        .logo {
+                            display: block;
+                            height : 100%;
+                        }
+
+                        h1 {
+                            margin-bottom: 4px;
+                            color        : #FFFFFF;
+                            white-space  : nowrap;
+                            font-size    : 22px;
+                        }
+
+                        i.trigger {
+                            display    : flex;
+                            align-items: center;
+                            font-size  : 20px;
+                            height     : 100%;
+                            cursor     : pointer;
+                            transition : all 0.3s, padding 0s;
+                            padding    : 0 18px;
+                            color      : #FFFFFF;
+                            margin-left: 5px;
+
+                            &:hover {
+                                background-color: @layout-trigger-background;
+                            }
+                        }
+                    }
+
+                    .right {
+                        height     : 100%;
+                        display    : flex;
+                        align-items: center;
+
+                        &.over {
+                            .action {
+                                .avatar {
+                                    margin-right: 0;
+                                }
+
+                                .name {
+                                    display: none;
+                                }
+                            }
+                        }
+
+                        .action {
+                            cursor     : pointer;
+                            display    : flex;
+                            align-items: center;
+                            height     : 100%;
+                            padding    : 0 12px;
+
+                            i {
+                                color: rgba(255, 255, 255, .85);
+                            }
+
+                            nz-badge {
+                                i {
+                                    font-size: 16px;
+                                }
+                            }
+
+                            .avatar {
+                                background: rgba(255, 255, 255, 1);
+                                color     : #BBBBBB;
+                            }
+
+                            .name {
+                                white-space: nowrap;
+                                margin-left: 8px;
+                                font-size  : 13px;
+                                color      : #FFFFFF;
+                            }
+
+                            .down {
+                                padding-left: 6px;
+                                font-size   : 10px;
+                            }
+                        }
+                    }
+                }
+
+                .body {
+                    height : calc(100% - @head-height);
+                    display: flex;
+
+                    .menus {
+                        height    : 100%;
+                        width     : @menu-width;
+                        position  : relative;
+                        z-index   : 4;
+                        box-shadow: @layout-sider-box-shadow;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                    }
+
+                    .main {
+                        width     : calc(100% - @menu-width);
+                        height    : 100%;
+                        overflow-y: auto;
+
+                        &.collapsed {
+                            width: calc(100% - 80px);
+                        }
+
+                        &.over {
+                            width: 100%;
+                        }
+
+                        .window {
+                            height          : calc(100% - @tabbar-height);
+                            width           : 100%;
+                            position        : relative;
+                            background-color: @layout-sider-background;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+);
+
+.menu-mini {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height    : 100%;
+    width     : 100%
+}

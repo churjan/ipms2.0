@@ -1,0 +1,34 @@
+<!-- 
+<crud
+    #crud
+    [lastColumnTpl]="operationTpl"
+    [lastColumnWidth]="'50px'"
+    [columns] = "tableColumns"
+    [tpls] = "{timeTpl:timeTpl}"
+    [showSelection] ="false"
+    [service]="stockOutService"
+    [keywordPlaceholder]="'placard.keyword_xx'|i18n:('wmsStockout.code'|i18n)"
+>
+</crud> -->
+<crud2 #crud [router]="url" [list]="list" [columns]="columns" [fields]="field" [modular]="modular"
+    [jsonname]="fieldcode" [showAdvanced]="false" (actionClick)="btnEvent($event)"
+    [keyword_placeholder]="'wmsStockout.code'" [showSelection]="false">
+</crud2>
+<!-- <ng-template #timeTpl let-text="text">
+    {{text|time}}
+</ng-template> -->
+
+<!-- <ng-template #operationTpl let-item="record">
+    <button 
+        *hasPermission="['wms_stockout_view']"
+        nz-button 
+        nzType="text" 
+        nzSize="small" 
+        (click)="detail.open(item)"
+        nz-tooltip 
+        nzTooltipTitle="{{ 'view'|i18n }}">
+        <i nz-icon nzType="eye"></i>
+    </button>
+</ng-template>-->
+
+<detail #detail [modular]="modular"></detail> 

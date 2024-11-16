@@ -1,0 +1,19 @@
+<idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" height="99%" headerHeight="48px" bodyPadding="10px 20px 0" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <crud
+            #crud
+            [columns] = "tableColumns"
+            [showSelection] ="false"
+            [service]="stockOutService"
+            listFun="detail"
+            [extraQueryParams]="queryParams"
+            [showInPageContainer]="false"
+            [maskAlert]="true"
+            [tpls]="{isOutboundTpl: isOutboundTpl}"
+        ></crud>
+    </ng-template>
+</idrawer>
+
+<ng-template #isOutboundTpl let-text="text">
+    {{text?'是':'否'}}
+</ng-template>

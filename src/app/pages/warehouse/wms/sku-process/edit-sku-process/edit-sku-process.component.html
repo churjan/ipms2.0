@@ -1,0 +1,93 @@
+<idrawer
+  *ngIf="isVisible"
+  [title]="title"
+  width="800px"
+  height="600px"
+  bodyPadding="12px 20px"
+  justifyContent="center"
+  nzSize="small"
+  [footer]="footerTpl"
+  (onClose)="onClose()"
+  [content]="contentTpl"
+>
+  <ng-template #contentTpl>
+    <app-sku-condition [record]="record" #skuCondition></app-sku-condition>
+    <div class="mt8 mb8">选择工序流路线图</div>
+    <div class="mb8">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="onOperateProcessFlow({ operateType: 'add' })"
+      >
+        新增
+      </button>
+    </div>
+    <nz-table
+      [nzData]="skuList"
+      nzSize="small"
+      [nzBordered]="true"
+      [nzScroll]="{ x: 'auto' }"
+      [nzFrontPagination]="false"
+      [nzLoading]="page.loading"
+      [nzTotal]="page.total"
+      [nzPageSize]="page.pageSize"
+      [nzPageIndex]="page.pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="50px" [nzAlign]="'center'" nzLeft></th>
+          <th nzWidth="50px" [nzAlign]="'center'" nzLeft>序号</th>
+          <th>工序流名称</th>
+          <th nzWidth="200px" nzRight nzAlign="center">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of skuList; let i = index">
+          <td [nzAlign]="'center'" nzLeft>
+            <label
+              nz-radio
+              [(ngModel)]="item.checked"
+              [nzValue]="item.popm_key"
+              [nzDisabled]="item.popm_key !== selectedRowKey"
+            ></label>
+          </td>
+          <td [nzAlign]="'center'" nzLeft>
+            {{ page.pageSize * (page.pageIndex - 1) + i + 1 }}
+          </td>
+          <td>{{ item.popm_name }}</td>
+          <td nzRight nzAlign="center">
+            <a
+              nz-button
+              nzType="link"
+              (click)="onOperateProcessFlow({ operateType: 'preview', item })"
+              >预览</a
+            >
+            <a
+              nz-button
+              nzType="link"
+              (click)="onOperateProcessFlow({ operateType: 'copy', item })"
+              >复制</a
+            >
+            <a nz-button nzType="link" (click)="onSelectRow(item.popm_key)"
+              >选择</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="onSubmit()"
+      [nzLoading]="isBtnLoading"
+      class="mr6"
+    >
+      {{ "btn.save" | i18n }}
+    </button>
+    <button nz-button (click)="onClose()">{{ "btn.cancel" | i18n }}</button>
+  </ng-template>
+</idrawer>
+<app-section-list #sectionList (editDone)="onClose($event)" (out)="onOut($event)"></app-section-list>

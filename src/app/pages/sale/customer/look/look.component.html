@@ -1,0 +1,145 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'60%'" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="cont_title">{{'placard.saleCustomer'|i18n}}</div>
+        <div class="cont">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 姓名 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.name'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.name" name="name" nz-input placeholder=""
+                                disabled />
+                            <!-- {{userData.wedded}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 编号 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.code'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" [(ngModel)]="showModel.code" name="code" nz-input placeholder=""
+                                disabled />
+                            <!-- {{userData.nation}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 分类 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.class'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" [(ngModel)]="showModel.class_name" name="class_name" nz-input
+                                placeholder="" disabled />
+                            <!-- {{userData.education}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 状态 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.state_name'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" [(ngModel)]="showModel.state_name" name="state_name" nz-input
+                                placeholder="" disabled />
+                            <!-- {{userData.education}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 公司名称 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.companyname'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" [(ngModel)]="showModel.companyname" name="companyname" nz-input
+                                placeholder="" disabled />
+                            <!-- {{userData.education}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 详细地址 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.address'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <input type="text" [(ngModel)]="showModel.address" name="address" nz-input
+                                placeholder="" disabled />
+                            <!-- {{userData.education}} -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        <div class="cont_title">{{'placard.ContactInfor'|i18n}}</div>
+        <div class="cont">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 电话 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.phone'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.phone" name="phone" nz-input placeholder=""
+                                disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 手机 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.moblile'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.moblile" name="moblile" nz-input placeholder=""
+                                disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 邮箱 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.email'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.email" name="email" nz-input placeholder=""
+                                disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 邮编 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.postcode'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.postcode" name="postcode" nz-input placeholder=""
+                                disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 传真 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.fax'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.fax" name="fax" nz-input placeholder=""
+                                disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <!-- 联系人 -->
+                        <nz-form-label style="width: 70px;">{{'saleCustomer.contactername'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" [(ngModel)]="showModel.contactername" name="contactername" nz-input
+                                placeholder="" disabled />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.close'|i18n}}</button>
+    </ng-template>
+</idrawer>

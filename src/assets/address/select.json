@@ -1,0 +1,18 @@
+{
+    "style":{
+        "url":"/admin/styleinfo/option",
+        "keyUrl":"/admin/styleinfo"
+    },
+    "color":{
+        "url":"/admin/colorinfo/option",
+        "keyUrl":"/admin/colorinfo"
+    },
+    "size":{
+        "url":"/admin/sizeinfo/option",
+        "keyUrl":"/admin/sizeinfo"
+    },
+    "customer":{
+        "url":"/admin/customerinfo/option",
+        "keyUrl":"/admin/customerinfo"
+    }
+}

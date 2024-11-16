@@ -1,0 +1,245 @@
+<crud2
+  #crud
+  [router]="url"
+  [jsonname]="fieldcode"
+  [list]="list"
+  (actionClick)="btnEvent($event)"
+  [isKeyQuery]="true"
+  [KeyQuery]="KeyQuery"
+  [columns]="columns"
+  [modular]="modular"
+  [fields]="field"
+  [ExtendColumnTpl]="ExtendColumnTpl"
+  [searchActionsBody]="searchActionsBody"
+  [lastColumnTpl]="lastColumnTpl"
+  [lastColumnWidth]="120"
+></crud2>
+
+<ng-template #KeyQuery let-item="record">
+  <nz-radio-group
+    [(ngModel)]="crud.seniorModel.state"
+    (ngModelChange)="crud.Search()"
+  >
+    <label nz-radio [nzValue]="item.code" *ngFor="let item of statusList">
+      {{ item.name }}
+    </label>
+  </nz-radio-group>
+</ng-template>
+
+<ng-template #lastColumnTpl let-record="record">
+  <button
+    nz-button
+    nzType="link"
+    (click)="btnEvent({ action: 'Look', node: record, title: '查看' })"
+  >
+    查看
+  </button>
+  <ng-container *ngIf="[0, 1].includes(record.state)">
+    <button
+      *hasPermission="['wms_packingsolution_makeout']"
+      nz-button
+      nzType="link"
+      (click)="btnEvent({ action: 'makeout', node: record, title: '手动出库' })"
+    >
+      手动出库
+    </button>
+  </ng-container>
+</ng-template>
+
+<ng-template #ExtendColumnTpl let-record="record" let-column="column">
+  <ng-container *ngIf="column.coums === 'key'">
+    {{ record.key }}
+    <nz-tag nzColor="red" *ngIf="record.all_filter_quantity">
+      缺件 {{ record.all_filter_quantity }}
+    </nz-tag>
+  </ng-container>
+  <ng-container *ngIf="column.coums === 'online_quantity'">
+    <div
+      style="width: 100px"
+      nz-tooltip
+      [nzTooltipTitle]="progressFormatFn(record, '%')"
+    >
+      <nz-progress
+        [nzPercent]="progressFormatFn(record)"
+        [nzFormat]="formatTemplate"
+        nzSize="small"
+      >
+        <ng-template #formatTemplate>
+          <span>{{ record.online_quantity }}件</span>
+        </ng-template>
+      </nz-progress>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="column.coums === 'box_quantity'">
+    {{ record.all_store_box_quantity }} / {{ record.box_quantity }}
+  </ng-container>
+  <ng-container *ngIf="column.coums === 'state_name'">
+    <ng-container *ngIf="statusAuth !== -1">
+      <nz-select
+        [ngStyle]="{ width: '100px' }"
+        [(ngModel)]="record.state"
+        [nzDisabled]="[20, 30, 99].includes(record.state)"
+        (ngModelChange)="onChangeStatus(record)"
+      >
+        <!-- 新建 -->
+        <ng-container *ngIf="record.state === 0">
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+            [nzDisabled]="![1, 10, 30, 99].includes(item.code)"
+          ></nz-option>
+        </ng-container>
+        <!-- 可出库 -->
+        <ng-container *ngIf="record.state === 1">
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+            [nzDisabled]="![10, 30, 99].includes(item.code)"
+          ></nz-option>
+        </ng-container>
+        <!-- 暂停 -->
+        <ng-container *ngIf="record.state === 10">
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+            [nzDisabled]="![0, 30].includes(item.code)"
+          ></nz-option>
+        </ng-container>
+        <!-- 清库 关闭 完成 -->
+        <ng-container *ngIf="[20, 30, 99].includes(record.state)">
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+          ></nz-option>
+        </ng-container>
+        <!-- 出库中 -->
+        <ng-container *ngIf="record.state === 2">
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+            [nzDisabled]="![30].includes(item.code)"
+          ></nz-option>
+        </ng-container>
+      </nz-select>
+    </ng-container>
+    <ng-container *ngIf="statusAuth === -1">
+      <span>{{ record.state_name }}</span>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="column.coums === 'level_name'">
+    <ng-container *ngIf="levelAuth !== -1">
+      <nz-select
+        [ngStyle]="{ width: '100px' }"
+        [(ngModel)]="record.level"
+        (ngModelChange)="onChangeLevel(record)"
+      >
+        <nz-option
+          *ngFor="let item of levelList"
+          [nzLabel]="item.description"
+          [nzValue]="item.value"
+        ></nz-option>
+      </nz-select>
+    </ng-container>
+    <ng-container *ngIf="levelAuth === -1">
+      <span>{{ record.level_name }}</span>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #searchActionsBody>
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsPackingsolution.key" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="key"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.key"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsPackingsolution.pti_tagcode" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="tag_code"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.tag_code"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsPackingsolution.state_name" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <nz-select
+          [(ngModel)]="crud.seniorModel.state"
+          (ngModelChange)="crud.Search($event)"
+          name="state"
+          nzAllowClear
+          [nzPlaceHolder]="'checkdata.check' | i18n"
+        >
+          <nz-option
+            *ngFor="let item of statusList"
+            [nzLabel]="item.name"
+            [nzValue]="item.code"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsPackingsolution.level_name" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <nz-select
+          [(ngModel)]="crud.seniorModel.level"
+          (ngModelChange)="crud.Search($event)"
+          name="level"
+          nzAllowClear
+          [nzPlaceHolder]="'checkdata.check' | i18n"
+        >
+          <nz-option
+            *ngFor="let item of levelList"
+            [nzLabel]="item.description"
+            [nzValue]="item.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+
+<app-packing-solution-detail
+  #detailComponent
+  [modular]="modular"
+></app-packing-solution-detail>
+
+<app-embed-modal
+  title="包装方案手动排序"
+  [marginTop]="'100px'"
+  [width]="'auto'"
+  [bodyHeight]="'auto'"
+  [(isVisible)]="isVisible"
+  [noPadding]="true"
+  [componentName]="'app-packing-solution-sort'"
+>
+  <app-packing-solution-sort
+    [record]="record"
+    *ngIf="isVisible"
+  ></app-packing-solution-sort>
+</app-embed-modal>

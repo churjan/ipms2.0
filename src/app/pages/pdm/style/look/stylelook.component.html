@@ -1,0 +1,103 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="99%" nzSize="small"
+    bodyPadding="10px" [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="see_title">
+            {{'placard.basein'|i18n}}
+        </div>
+        <div class="see_cont">
+            <div nz-row class="fontSize">
+                <!-- 款式编号 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.code'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.code || ''">{{model.code || ''}}</span>
+                </div>
+                <!-- 款式名称 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.name'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.name || ''">{{model.name || ''}}</span>
+                </div>
+                <!-- 款式分类 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.psc_key'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psc_name || ''">{{model.psc_name || ''}}</span></div>
+                <!-- 客户款号 -->
+                <div nz-col nzSpan="3">{{'pdmStyle.custom_code'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.custom_code || ''">{{model.custom_code || ''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 品牌 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.brand'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.brand || ''">{{model.brand || ''}}</span>
+                </div>
+                <!-- 季节 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.season'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.season || ''">{{model.season || ''}}</span>
+                </div>
+                <!-- 性别 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.sex'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.sex || ''">{{model.sex || ''}}</span>
+                </div>
+                <!-- 发行年份 -->
+                <div nz-col nzSpan="3">{{'pdmStyle.year'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.year?model.year:''">{{model.year?model.year:''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 设计者 -->
+                <div nz-col nzSpan="2">{{'pdmStyle.designer'|i18n}}：</div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.designer || ''">{{model.designer || ''}}</span>
+                </div>
+                <!-- 款式码 -->
+                <div nz-col nzSpan="2">
+                    {{'pdmStyle.barcode'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.barcode || ''">{{model.barcode || ''}}</span>
+                </div>
+                <!-- 生产模式 -->
+                <div nz-col nzSpan="2">
+                    {{'pdmStyle.producemode'|i18n}}：
+                </div>
+                <div nz-col nzSpan="4" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.producemode || ''">{{model.producemode || ''}}</span>
+                </div>
+                <!-- 默认上裁绑定数量 -->
+                <div nz-col nzSpan="3">
+                    {{'pdmStyle.default_binding_qty'|i18n}}：
+                </div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.default_binding_qty || ''">{{model.default_binding_qty || ''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 描述 -->
+                <div nz-col nzSpan="2">
+                    {{'pdmStyle.description'|i18n}}：
+                </div>
+                <div nz-col nzSpan="16" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.description || ''">{{model.description || ''}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="see_title" style="margin-top: 20px;">{{'placard.detailInfo'|i18n}}</div>
+        <nz-tabset nzSize="small" class="see_cont">
+            <nz-tab nzTitle="{{'placard.tuzhi'|i18n}}">
+                <stylefiles-view #files [modular]="modular" [key]="model.key" *ngIf="model.key"></stylefiles-view>
+            </nz-tab>
+            <!-- <nz-tab nzTitle="{{'placard.PWRM'|i18n}}">
+
+            </nz-tab> -->
+        </nz-tabset>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    </ng-template>
+</idrawer>

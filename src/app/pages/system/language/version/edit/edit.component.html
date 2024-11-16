@@ -1,0 +1,23 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24" nzRequired>{{ 'sysLanguage.languagename'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'sysLanguage.languagename'|i18n }}">
+                    <input nz-input formControlName="languagename" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24" nzRequired>{{ 'sysLanguage.language'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'sysLanguage.language'|i18n }}">
+                    <input nz-input formControlName="language" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{  'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting" class="m-l-6">{{  'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

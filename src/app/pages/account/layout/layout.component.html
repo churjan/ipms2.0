@@ -1,0 +1,18 @@
+<div class="page beauty-scroll">
+    <nz-card class="page-container">
+        <div class="account-settings-info-main" [ngClass]="{mobile: isMobile}">
+            <div class="account-settings-info-left" >
+                <ul nz-menu [nzMode]="mode">
+                    <!-- <li [nzDisabled]="true" [nzSelected]="currentUrl == '/account/notification'" nz-menu-item  routerLink="/account/notification">
+                        <nz-badge nzDot><span>{{ 'account.notification'|i18n }}</span></nz-badge>
+                    </li> -->
+                    <li [nzDisabled]="true" [nzSelected]="currentUrl == '/account/info'" nz-menu-item routerLink="/account/info">{{ 'account.info'|i18n }}</li>
+                    <li [nzDisabled]="true" [nzSelected]="currentUrl == '/account/password'" nz-menu-item routerLink="/account/password">{{ 'account.password'|i18n }}</li>
+                </ul>
+            </div>
+            <div class="account-settings-info-right">
+                <ng-content ></ng-content>
+            </div>
+        </div>
+    </nz-card>
+</div>

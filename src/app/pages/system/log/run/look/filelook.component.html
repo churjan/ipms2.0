@@ -1,0 +1,15 @@
+<idrawer *ngIf="visible" title="{{ title }}" [width]="'80%'"
+    justifyContent="center"
+    height="99%" (onClose)="close()" [content]="contentTpl"
+    [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <textarea readonly style="height: 100%;width: 100%;" rows="29" [(ngModel)]="data"></textarea>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="FileDownload()"
+            (keydown)="FileDownload($event)" class="m-l-6">{{
+            'btn.downloadfile'|i18n }}</button>
+    </ng-template>
+</idrawer>

@@ -1,0 +1,215 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label  [nzSpan]="6">{{ 'hrEmployee.organization'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <nz-tree-select
+                                formControlName="hoi_key"
+                                [nzNodes]="organizations"
+                                nzShowSearch
+                                nzPlaceHolder="{{  'checkdata.check'|i18n}}"
+                                nzVirtualHeight="260px"
+                                ></nz-tree-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{ 'hrEmployee.name'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'hrEmployee.name'|i18n }}">
+                            <input nz-input formControlName="name" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzRequired>{{ 'hrEmployee.code'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'inputdata.input'|i18n }}/{{ 'hrEmployee.code'|i18n }}">
+                            <input nz-input formControlName="code" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.attendanceId'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="attendanceid" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.phone'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="phone" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.idNumber'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="idnumber" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.address'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'hrEmployee.addressLengthLimit'|i18n }}">
+                            <textarea nz-input formControlName="address" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" nzAutosize ></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.cardNumber'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <input nz-input formControlName="cardnumber" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.age'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'hrEmployee.negativeNumberLimit'|i18n }}">
+                            <input nz-input formControlName="age" type="number" min="0" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.nation'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <nz-select formControlName="nation" nzPlaceHolder="{{  'checkdata.check'|i18n}}">
+                                <nz-option [nzValue]="null" [nzLabel]="'selectPlaceholder'|i18n"></nz-option>
+                                <nz-option [nzValue]="item.key" [nzLabel]="item.name" *ngFor="let item of nations"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.height'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'hrEmployee.negativeNumberLimit'|i18n }}">
+                            <nz-input-group nzSuffix="cm">
+                                <input nz-input formControlName="height" type="number" min="0"  placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.weight'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18" nzErrorTip="{{ 'hrEmployee.negativeNumberLimit'|i18n }}">
+                            <nz-input-group nzSuffix="kg">
+                                <input nz-input formControlName="weight" type="number" min="0" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.employmentDate'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <nz-date-picker formControlName="employmentdate"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.resignationDate'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <nz-date-picker formControlName="resignationdate"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'hrEmployee.birthday'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <nz-date-picker formControlName="birthday"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="12">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6">{{ 'remark'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="18">
+                            <textarea nz-input formControlName="remark" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" nzAutosize ></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{ 'hrEmployee.education'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-radio-group formControlName="education">
+                                <label *ngFor="let item of educations" nz-radio nzValue="{{ item.key }}">{{ item.name }}</label>
+                              </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{ 'hrEmployee.workType'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-radio-group formControlName="worktype">
+                                <label *ngFor="let item of workTypes" nz-radio nzValue="{{ item.key }}">{{ item.name }}</label>
+                              </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <!-- 数据库没有这个字段 -->
+                <!-- <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{ 'hrEmployee.marriage'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-radio-group formControlName="marriage">
+                                <label *ngFor="let item of marriages" nz-radio nzValue="{{ item.key }}">{{ item.name }}</label>
+                              </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{ 'hrEmployee.sex'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-radio-group formControlName="sex">
+                                <label nz-radio nzValue="{{ 'hrEmployee.man'|i18n }}">{{ 'hrEmployee.man'|i18n }}</label>
+                                <label nz-radio nzValue="{{ 'hrEmployee.woman'|i18n }}">{{ 'hrEmployee.woman'|i18n }}</label>
+                            </nz-radio-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="3">{{ 'hrEmployee.avatar'|i18n }}</nz-form-label>
+                        <nz-form-control [nzSpan]="21">
+                            <nz-upload
+                                nzAccept=".jpeg,.jpg,.png,.gif"
+                                class="avatar-uploader"
+                                nzListType="picture-card"
+                                [nzShowUploadList]="false"
+                                [nzBeforeUpload]="beforeUpload"
+                                [nzHeaders]="uploadingHeader()"
+                                >
+                                <i *ngIf="!avatar" class="upload-icon" nz-icon nzType="plus"></i>
+                                <img *ngIf="avatar" [src]="commonService.baseUrl+avatar" class="picture" />         
+                            </nz-upload>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{  'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting" class="m-l-6">{{  'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

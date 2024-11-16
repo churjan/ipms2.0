@@ -1,0 +1,55 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" nzSize="small" [footer]="footerTpl"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.code" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.code }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.name" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.name }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.brand" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.brand }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.specification" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.specification }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.purchasedate" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.purchasedate | date:"yyyy-MM-dd" }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.planretirementdate" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.planretirementdate | date:"yyyy-MM-dd" }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.suppliername" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.suppliername }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.state_name" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.state_name }}</div>
+        </div>
+
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.repaircount" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.repaircount }}</div>
+        </div>
+        <!-- <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.nature" | i18n }}</div>
+            <div class="value-txt">{{ detailInfo.nature_name }}</div>
+        </div> -->
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "basMachinedevice.description" | i18n }}</div>
+            <div class="value-txt" style="height: 80px;">{{ detailInfo.description }}</div>
+        </div>
+
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+    </ng-template>
+</idrawer>

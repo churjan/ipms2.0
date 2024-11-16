@@ -1,0 +1,336 @@
+<nz-tabset nzType="card" class="tabset">
+  <nz-tab nzTitle="超载配置">
+    <crud2 [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [Lwidth]="'30%'"
+      [sideColumnTpl]="sideColumnTpl" [isDataOnInit]="false" [contentTest]="contentTest"></crud2>
+    <ng-template #contentTest let-item="record">
+      <nz-content [nzTheme]="theme" class="drawer-container" *ngIf="getBody.station_code||getBody.pog_key">
+        <!-- <div> -->
+        <nz-tabset nzType="card" *ngIf="chackPog" class="rightcard" style="height: 100%;">
+          <nz-tab nzTitle="超载分组{{'{'+getBody.pog_name+'}'}}{{'placard.controller'|i18n}}">
+            <!-- <h3>
+            超载分组{{'{'+getBody.pog_name+'}'}}{{'placard.controller'|i18n}}</h3> -->
+            <button nz-button (click)="btnEvent({action:'controller_add'})">
+              <i nz-icon nzType="plus" nzTheme="outline"></i>
+              {{'btn.plus'|i18n}}
+            </button>
+            <div nz-row style="align-content: flex-start;height: calc(100% - 28px);overflow: auto;width: 100%;">
+              <nz-card nz-col class="card" nzType="inner" [class.nopermit]="item.permit==false"
+                *ngFor="let item of controllerList" [nzExtra]="extraTemplate" nzTitle="
+                [{{(item.permit==false?'btn.noAllowLeave':'btn.AllowLeave')|i18n}}]{{item.blsr_name}}">
+                <p style="margin-bottom: 0px;" *ngFor="let data of item.blsd_list" nz-tooltip
+                  nzTooltipTitle="{{data.value_name}}">
+                  {{data.blr_name}}：{{data.value_name}}
+                </p>
+                <ng-template #extraTemplate>
+                  <a (click)="btnEvent({action:'controller_updata',node:item})">
+                    <i nz-icon nzType="edit" nzTheme="outline" style="color: #fff;"></i>
+                  </a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <a (click)="btnEvent({action:'controller_del',node:item})">
+                    <i nz-icon nzType="delete" nzTheme="outline" style="color: #fff;"></i>
+                  </a>
+                </ng-template>
+              </nz-card>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+        <!-- </div> -->
+        <nz-tabset nzType="card" *ngIf="!chackPog" class="rightcard" style="height: calc(25%);">
+          <nz-tab nzTitle="关联方案">
+            <!-- <h3>关联方案</h3> -->
+            <div nz-row class="programme" [nzGutter]="16">
+              <nz-card nz-col nzSpan="8">
+                <nz-list nzBordered nzSize="small">
+                  <nz-list-header>绑定方案</nz-list-header>
+                  <nz-list-item *ngFor="let item of bindprogrammeList" nzNoFlex (click)="getDetail(item)"
+                    [class.chack-pos]="item.chack">
+                    {{ item.blsr_name }}
+                    <ul nz-list-item-actions>
+                      <nz-list-item-action (click)="$event.stopPropagation()">
+                        <a nz-popconfirm nzPopconfirmTitle="是否确认删除?" nzPopconfirmPlacement="bottom"
+                          (nzOnConfirm)="delScheme(item)">
+                          <i nz-icon nzType="minus" nzTheme="outline" style="color:red"></i>
+                        </a>
+                      </nz-list-item-action>
+                    </ul>
+                  </nz-list-item>
+                </nz-list>
+              </nz-card>
+              <nz-card nz-col nzSpan="8">
+                <nz-list nzBordered nzSize="small">
+                  <nz-list-header>可绑定方案</nz-list-header>
+                  <nz-list-item *ngFor="let item of programmeList" nzNoFlex (click)="getDetail({blsr_key:item.key})"
+                    [class.chack-pos]="item.chack">
+                    {{ item.name }}
+                    <ul nz-list-item-actions>
+                      <nz-list-item-action (click)="$event.stopPropagation()">
+                        <a (click)="saveScheme(item)" *ngIf="!item.isbinding">
+                          <i nz-icon nzType="plus" nzTheme="outline"></i>
+                        </a>
+                      </nz-list-item-action>
+                    </ul>
+                  </nz-list-item>
+                </nz-list>
+              </nz-card>
+              <nz-card nz-col nzSpan="8" *ngIf="pro_detail.length!=0">
+                <nz-list nzBordered nzSize="small">
+                  <nz-list-header>方案详细</nz-list-header>
+                  <nz-list-item *ngFor="let item of pro_detail">
+                    {{item.blr_name}}{{item.comparetype}}{{item.value_name?item.value_name:item.value}}
+                  </nz-list-item>
+                </nz-list>
+              </nz-card>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+        <nz-tabset nzType="card" *ngIf="!chackPog" class="rightcard listcard">
+          <nz-tab nzTitle="{{'popupField.title5'|i18n}}">
+            <!-- <h3>{{'popupField.title5'|i18n}}</h3> -->
+            <div class="title5">
+              <crud2 #crud class="crud" [router]="url" [jsonname]="fieldcode" [list]="list" [position]="true"
+                [getBody]="getBody" [checkbox]="false" showLayout="Container" [isDataOnInit]="false"
+                [FrontPagination]="true" [columns]="columns" [modular]="modular" [fields]="field"
+                [lastColumnTpl]="lastColumnTpl" [ExtendColumnTpl]="ExtendColumnTpl" [showAdvanced]="false">
+              </crud2>
+              <ng-template #lastColumnTpl let-item="record">
+                <a nz-popconfirm [nzPopconfirmTitle]="'confirm.confirm_remove'|i18n"
+                  (nzOnConfirm)="btnEvent({action:'hangid_del',node:item})" nzType="link" nz-tooltip nzTooltipTitle="移除载具">
+                  移除载具
+                </a>
+              </ng-template>
+              <ng-template #ExtendColumnTpl let-value="value" let-column="column" let-data="record" let-index="index">
+                <ng-container *ngIf="column.coums=='filtrating'">
+                  {{data[column.coums]==true?"筛选中":"站位内"}}
+                </ng-container>
+              </ng-template>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </nz-content>
+    </ng-template>
+    <ng-template #sideColumnTpl let-item="record">
+      <div>
+        <button nz-button nzType="primary" (click)="btnEvent({action:'plusGroup_add'})">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>{{'btn.plusGroup'|i18n}}</button>
+      </div>
+      <div style="margin-top:5px">
+        <nz-collapse class="collapse">
+          <nz-collapse-panel [nzHeader]="HeaderTpl" [nzActive]="panel.active" [nzExtra]="extraTpl"
+            [nzDisabled]="panel.disabled" *ngFor="let panel of stationList;let i=index" [class.chack]="panel.check">
+            <ng-template #HeaderTpl>
+              <div class="collapse-panel" (click)="$event.stopPropagation();onclick(panel,'pog_key',$event)">
+                [组] {{panel.name}}
+              </div>
+            </ng-template>
+            <!-- <p style="margin:0;" *ngFor="let data of panel.pos_list">
+                    {{data.bls_name}}[{{data.bls_code}}]
+                </p> -->
+            <!-- <ng-template #headerTpl></ng-template> -->
+            <nz-list nzSize="small">
+              <nz-list-item *ngFor="let data of panel.pos_list" [class.chack-pos]="data.check"
+                (click)="$event.stopPropagation();onclick({data,pog_key:panel.key,pog_name:panel.name},'bls_code',$event)">
+                <span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[站位]{{data.bls_code}}
+                  <nz-tag [nzColor]="'#f50'" *ngIf="data.isoverload==false" nz-tooltip nzTooltipTitle="超载站未生效，请配置方案"
+                    [nzTooltipColor]="'#f50'">未生效</nz-tag>
+                </span>
+                <ul nz-list-item-actions>
+                  <nz-list-item-action>
+                    <nz-switch [ngModel]="data.running" nzCheckedChildren="{{'btn.open'|i18n}}"
+                      *ngIf="data.isoverload!=false" nzUnCheckedChildren="{{'btn.close'|i18n}}"
+                      [class.open]="!data.running||data.running==true" [class.close]="data.running==false"
+                      [class.Disabled]="data.isoverload==false"
+                      (ngModelChange)="btnEvent({action:'switch',node:data,ev:$event})">
+                    </nz-switch>
+                  </nz-list-item-action>
+                  <!-- <nz-list-item-action>
+                    <a nz-popover (nzPopoverVisibleChange)="btnEvent({action:'programme',node:data})"
+                      (click)="$event.stopPropagation()" nzPopoverTitle="{{'btn.programme'|i18n}}"
+                      [nzPopoverPlacement]="'bottom'" nzPopoverTrigger="click"
+                      [nzPopoverContent]="programmeTpl">{{"btn.programme"|i18n}}</a>
+                    <ng-template #programmeTpl>
+                      <nz-list nzBordered nzSize="small" style="max-height: 200px;overflow: auto;">
+                        <nz-list-item *ngFor="let item of programmeList" nzNoFlex>{{ item.name }}
+                          <ul nz-list-item-actions>
+                            <nz-list-item-action>
+                              <a (click)="saveScheme(item,data)" *ngIf="!item.isbinding">
+                                <i nz-icon nzType="plus" nzTheme="outline"></i>
+                              </a>
+                              <a nz-popconfirm nzPopconfirmTitle="是否确认删除?" nzPopconfirmPlacement="bottom"
+                                (nzOnConfirm)="delScheme(item,data)" *ngIf="item.isbinding">
+                                <i nz-icon nzType="minus" nzTheme="outline" style="color:red"></i>
+                              </a>
+                            </nz-list-item-action>
+                          </ul>
+                        </nz-list-item>
+                      </nz-list>
+                    </ng-template>
+                  </nz-list-item-action> -->
+                  <nz-list-item-action>
+                    <a (click)="btnEvent({action:'bls_del',node:data},$event)">
+                      {{'btn.delete'|i18n}}
+                    </a>
+                  </nz-list-item-action>
+                </ul>
+              </nz-list-item>
+            </nz-list>
+            <ng-template #extraTpl let-item>
+              <div class="extra" (click)="$event.stopPropagation();">
+                <!-- <a (click)="btnEvent({action:'controller_add',node:{pog_key:panel.key,pog_name:panel.name}},$event)">
+                {{'btn.control'|i18n}}
+              </a> -->
+                <!-- <nz-divider nzType="vertical"></nz-divider> -->
+                <a nz-popover (nzPopoverVisibleChange)="btnEvent({action:'setGrouping'})"
+                  (click)="$event.stopPropagation()" nzPopoverTitle="{{'placard.setGrouping'|i18n}}"
+                  [nzPopoverPlacement]="'bottom'" nzPopoverTrigger="click" [nzPopoverContent]="setGroupingtpl">
+                  {{'placard.setGrouping'|i18n}}</a>
+                <ng-template #setGroupingtpl>
+                  <nz-list nzBordered nzSize="small" style="max-height: 200px;overflow: auto;">
+                    <nz-list-item *ngFor="let item of setGroupList" nzNoFlex>{{ item.code }}[{{item.name}}]
+                      <ul nz-list-item-actions>
+                        <nz-list-item-action>
+                          <a (click)="submitForm({key:item.key,pog_key:panel.key})">
+                            <i nz-icon nzType="plus" nzTheme="outline"></i>
+                          </a>
+                        </nz-list-item-action>
+                      </ul>
+                    </nz-list-item>
+                  </nz-list>
+                </ng-template>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="btnEvent({action:'plusGroup_update',node:panel},$event)">
+                  <i nz-icon nzType="edit" nzTheme="outline"></i>
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a (click)="btnEvent({action:'plusGroup_del',node:panel},$event)">{{'btn.delete'|i18n}}</a>
+              </div>
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+        <!-- <nz-list nzBordered nzSize="small">
+            <ng-container *ngFor="let item of stationList">
+                <nz-list-header style="font-weight: bold;display: flex;justify-content: space-between;"
+                    (click)="onclick(item,'pog_key')">
+                    {{item.name}}
+                    <ul nz-list-item-actions>
+                        <nz-list-item-action>
+                            <a (click)="btnEvent({action:'hangerdetail',node:item})">{{'placard.hangerdetail'|i18n}}</a>
+                        </nz-list-item-action>
+                        <nz-list-item-action>
+                            <a
+                                (click)="btnEvent({action:'controller_add',node:{pog_key:item.key,pog_name:item.name}})">{{'btn.control'|i18n}}</a>
+                        </nz-list-item-action>
+                        <nz-list-item-action>
+                            <a
+                                (click)="btnEvent({action:'setGrouping',node:{pog_key:item.key}})">{{'placard.setGrouping'|i18n}}</a>
+                        </nz-list-item-action>
+                        <nz-list-item-action>
+                            <a (click)="btnEvent({action:'plusGroup_update',node:item,ev:$event})"><i nz-icon
+                                    nzType="edit" nzTheme="outline"></i></a>
+                        </nz-list-item-action>
+                        <nz-list-item-action>
+                            <a
+                                (click)="btnEvent({action:'plusGroup_del',node:item,ev:$event})">{{'btn.delete'|i18n}}</a>
+                        </nz-list-item-action>
+                    </ul>
+                </nz-list-header>
+                <nz-list-item *ngFor="let data of item.pos_list"
+                    (click)="onclick({data,pog_key:item.key,pog_name:item.name},'bls_code')">
+                    &nbsp;&nbsp; {{data.bls_name}}[{{data.bls_code}}]
+                    <ul nz-list-item-actions>
+                        <nz-list-item-action>
+                            <nz-switch [ngModel]="data.running" nzCheckedChildren="{{'btn.open'|i18n}}"
+                                nzUnCheckedChildren="{{'btn.close'|i18n}}"
+                                (ngModelChange)="btnEvent({action:'switch',node:data,ev:$event})"></nz-switch>
+                        </nz-list-item-action>
+                        <nz-list-item-action><a (click)="btnEvent(item)">{{"btn.programme"|i18n}}</a>
+                        </nz-list-item-action>
+                    </ul>
+                </nz-list-item>
+            </ng-container>
+        </nz-list> -->
+      </div>
+    </ng-template>
+    <ng-template #searchActionsBody let-item="record">
+      <!-- <form nz-form>
+        <nz-form-item *ngIf="isseach('som_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.som_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.som_code" name="som_code" url="OrderMaster" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pwb_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pwb_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pwb_code" name="pwb_code" url="WorkBill" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psi_key" name="psi_code"
+                    [DataTxt]="isseach('psi_name')==true?'name':'code'" url="styleinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psz_code')==true||isseach('psz_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.psz_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psz_key" name="psz_code" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pci_code')==true||isseach('pci_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pci_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pci_key" name="psz_code" url="colorinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('bpi_code')==true||isseach('bpi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.bpi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.bpi_key" name="bpi_code" url="partinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('rfid')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.rfid'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="rfid" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.rfid" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pti_tagcode')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.pti_tagcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="pti_tagcode" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pti_tagcode" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('isfrozen')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whInventory.isfrozen'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <nz-select [(ngModel)]="crud.seniorModel.isfrozen" name="isfrozen">
+                    <nz-option [nzValue]="true" nzLabel="{{'placard.yes'|i18n}}"></nz-option>
+                    <nz-option [nzValue]="false" nzLabel="{{'placard.no'|i18n}}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form> -->
+    </ng-template>
+  </nz-tab>
+  <nz-tab nzTitle="方案信息">
+    <programme #programme></programme>
+  </nz-tab>
+</nz-tabset>
+<controller #controller [modular]="modular" (editDone)="btnEvent({action:'controller',node:getBody})"></controller>
+<hangerdetail #hangerdetail [modular]="modular" (editDone)="getGroup()"></hangerdetail>
+<setGrouping #setGrouping [modular]="modular" (editDone)="getGroup()"></setGrouping>

@@ -1,0 +1,36 @@
+<crud2 #crud showLayout="side-top-left" [router]="url" [jsonname]="fieldcode" [list]="list"
+    [sideColumnTpl]="sideColumnTpl" [Lwidth]="'20%'" (actionClick)="btnEvent($event)"
+    keyword_placeholder="basAttribute.code" [columns]="columns" [modular]="modular" [fields]="field"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basAttribute.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="code" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.code" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basAttribute.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.name" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('level')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basAttribute.level'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="level" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.level" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<ng-template #sideColumnTpl let-item="record">
+  <class-ztree #Menu class="tree" commUrl="w_customattribute/extend"
+    [modular]="modular" title="{{'basAttribute.blr_key'|i18n}}"
+    [action]="modular.btnClass" Datadaty="getattribute/"
+    (onclick)="onclick($event)" (onAction)="onAction($event)"></class-ztree>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></edit>

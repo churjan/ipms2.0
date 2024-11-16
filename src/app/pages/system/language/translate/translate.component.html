@@ -1,0 +1,58 @@
+
+<crud
+    #crud
+    [columns] = "tableColumns"
+    [topRightActionsTpl]="topRightActionsTpl"
+    [lastColumnTpl] = "operationTpl"
+    [lastColumnWidth]="'50px'"
+    [showSelection] ="false"
+    [service]="languageTranslateService"
+    [tpls]="{valueTpl: valueTpl, titleTpl: titleTpl}"
+    >
+</crud>
+
+<ng-template #topRightActionsTpl>
+<button nz-button nzType="primary" (click)="import.open()" *hasPermission="['system_lang_translate_imp']">
+    <i nz-icon nzType="import"></i> {{ 'import'|i18n }}
+</button>
+<button nz-button nzType="primary" (click)="export.open()" *hasPermission="['system_lang_translate_exp']">
+    <i nz-icon nzType="export"></i> {{ 'export'|i18n }}
+</button>
+<button nz-button nzType="default" (click)="crud.delete()" *hasPermission="['system_lang_translate_del']">
+    <i nz-icon nzType="delete"></i> {{ 'btn.delete'|i18n }}
+</button>
+</ng-template>
+
+<ng-template #titleTpl let-title="title">
+    {{title}} 
+    <i 
+        class="pointer"
+        nz-tooltip 
+        nzTooltipTitle="{{ 'language.ps'|i18n }}" 
+        nz-icon 
+        nzType="question-circle" 
+        nzTheme="outline"></i>
+</ng-template>
+
+<ng-template #valueTpl let-item="record" let-field="field">
+    <span *hasPermission="['system_lang_translate_imp','reverse']">{{item[field]}}</span>
+    <div class="editable-cell" [hidden]="editKey === item.key && editFlag === field" (click)="startEdit(item.key,field)" *hasPermission="['system_lang_translate_imp']">{{item[field]}}</div>
+    <input [hidden]="editKey !== item.key || editFlag !== field" type="text" nz-input [(ngModel)]="item[field]" (blur)="stopEdit(item,field)" />
+</ng-template>
+
+<!-- 行内操作按钮 -->
+<ng-template #operationTpl let-item="record">
+    <button 
+        *hasPermission="['system_lang_translate_del']"
+        nz-button 
+        nzType="text" 
+        nzSize="small" 
+        (click)="crud.delete(item)" 
+        nz-tooltip 
+        nzTooltipTitle="{{ 'btn.delete'|i18n }}" >
+        <i nz-icon nzType="delete"></i>
+    </button>
+</ng-template>
+
+<export #export [languages]="languages"></export>
+<import #import [languages]="languages" (importDone)="importDone()"></import>

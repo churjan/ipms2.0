@@ -1,0 +1,165 @@
+<idrawer *ngIf="visible" [title]="title+'---['+model.opp_type_name+']'" [width]="width" height="60%"
+    justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div class="see_title">
+            {{'placard.basein'|i18n}}
+        </div>
+        <div class="see_cont">
+            <div nz-row class="fontSize">
+                <!-- 作业单号 -->
+                <div nz-col nzSpan="3">{{'pmWork.code'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.code || ''">{{model.code || ''}}</span>
+                </div>
+                <!-- 作业单数量 -->
+                <div nz-col nzSpan="3">{{'pmWork.quantity'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.quantity || ''"> {{model.quantity}}</span>
+                </div>
+                <!-- 已生成数量 -->
+                <div nz-col nzSpan="3">{{'pmWork.taginfonum'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.taginfonum|| ''">{{model.taginfonum}}</span>
+                </div>
+                <!-- 作业单百分比超量 -->
+                <div nz-col nzSpan="4">{{'pmWork.workbillquantityexcesspercentage'|i18n}}：</div>
+                <div nz-col nzSpan="2" class="see_cont_text">
+                    <span nz-tooltip
+                        [nzTooltipTitle]="model.workbillquantityexcesspercentage || ''">{{model.workbillquantityexcesspercentage || ''}}</span>
+                </div>
+            </div>
+            <div nz-row class="fontSize" style="margin-top: 6px;">
+                <!-- 款号 -->
+                <div nz-col nzSpan="3">{{'pmWork.psi_code'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psi_code || ''">{{model.psi_code || ''}}</span>
+                </div>
+                <!-- 款名 -->
+                <div nz-col nzSpan="3">{{'pmWork.psi_name'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psi_name || ''">{{model.psi_name || ''}}</span>
+                </div>
+                <!-- 颜色 -->
+                <div nz-col nzSpan="3">{{'pmWork.pci_name'|i18n}}：</div>
+                <div nz-col nzSpan="3" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.pci_name || ''">{{model.pci_name || ''}}</span>
+                </div>
+                <!-- 尺码 -->
+                <div nz-col nzSpan="4">{{'pmWork.psz_code'|i18n}}：</div>
+                <div nz-col nzSpan="2" class="see_cont_text">
+                    <span nz-tooltip [nzTooltipTitle]="model.psz_code || ''">{{model.psz_code || ''}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="see_title">{{'placard.BuildSet'|i18n}}</div>
+        <div class="see_cont">
+            <div nz-row class="fontSize set">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>{{'pmWork.generatedquantity'|i18n}}</th>
+                            <td>
+                                <nz-input-number [(ngModel)]="body.number" [nzMin]="1" [nzStep]="1" (change)="change()">
+                                </nz-input-number>
+                            </td>
+                            <th>{{'pmWork.cangeneratedquantity'|i18n}}</th>
+                            <td>{{model.quantity-model.taginfonum}}</td>
+                        </tr>
+                        <tr *ngIf="tagmode!=1">
+                            <th>{{'pmWork.packagenumber2'|i18n}}</th>
+                            <td>
+                                <nz-input-number [(ngModel)]="body.packagenumber" [nzMin]="1" [nzStep]="1"
+                                    (change)="change()">
+                                </nz-input-number>
+                            </td>
+                            <th><span>{{'placard.singlepackagenumber'|i18n}}</span>{{'pmWork.singlepackagenumber'|i18n}}
+                            </th>
+                            <td>{{body.singlepackagenumber}}</td>
+                        </tr>
+                        <tr *ngIf="tagmode==0||tagmode==3">
+                            <th colSpan="4" class="tagcheck">
+                                <div><label nz-checkbox [(ngModel)]="istag"
+                                        (ngModelChange)="checkbox()">{{'pmWork.istag'|i18n}}</label></div>
+                            </th>
+                        </tr>
+                        <tr *ngIf="tagmode==1||istag==true">
+                            <th>{{'pmWork.tagnumber'|i18n}}</th>
+                            <td>
+                                <nz-input-number [(ngModel)]="body.tagnumber" [nzMin]="1" [nzStep]="1"
+                                    (change)="change()">
+                                </nz-input-number>
+                            </td>
+                            <th><span>{{'placard.singletagnumber'|i18n}}</span>{{'pmWork.singletagnumber'|i18n}}</th>
+                            <td>{{body.singletagnumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <div nz-col nzSpan="4" class="settitle">
+                    <p class="height-50" [class.height-75]="ispackage&&istag" style="border-bottom: none;"><label nz-checkbox [(ngModel)]="ispackage">包扎标签</label></p>
+                    <p class="height-50" [class.height-75]="ispackage&&istag"><label nz-checkbox [(ngModel)]="istag">普通标签</label></p>
+                </div>
+                <div nz-col nzSpan="5" class="settitle">
+                    <p [class.height-50]="ispackage||istag" [class.height-100]="!ispackage&&!istag">{{'pmWork.generatedquantity'|i18n}}</p>
+                    <p class="height-50" *ngIf="ispackage">单包数量</p>
+                    <p class="height-50" *ngIf="istag">件数/衣架</p>
+                </div>
+                <div nz-col nzSpan="5">
+                    <p [class.height-50]="ispackage||istag" [class.height-100]="!ispackage&&!istag">
+                        <nz-input-number [(ngModel)]="body.number" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </p>
+                    <p class="height-50" *ngIf="ispackage">
+                        <nz-input-number [(ngModel)]="body.packagenumber" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </p>
+                    <p class="height-50" *ngIf="istag">
+                        <nz-input-number [(ngModel)]="body.tagnumber" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </p>
+                </div>
+                <div nz-col nzSpan="5" class="settitle">
+                    <p [class.height-50]="ispackage||istag" [class.height-100]="!ispackage&&!istag">可生成数量</p>
+                    <p class="height-50" *ngIf="ispackage">生成标签数（包）</p>
+                    <p class="height-50" *ngIf="istag">生成标签数（个）</p>
+                </div>
+                <div nz-col nzSpan="5" style="background-color: #f6f6f6;">
+                    <p [class.height-50]="ispackage||istag" [class.height-100]="!ispackage&&!istag">{{model.quantity-model.taginfonum}}</p>
+                    <p class="height-50" *ngIf="ispackage">{{body.singlepackagenumber}}</p>
+                    <p class="height-50" *ngIf="istag">{{body.singletagnumber}}</p>
+                </div> -->
+                <!-- <nz-descriptions nzBordered nzSize="small">
+                    <nz-descriptions-item nzTitle="可生成数量">{{model.quantity-model.taginfonum}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{'pmWork.taginfonum'|i18n}}" [nzSpan]="2">{{model.taginfonum}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{'pmWork.generatedquantity'|i18n}}">
+                        <nz-input-number [(ngModel)]="body.number" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="{{'pmWork.workbillquantityexcesspercentage'|i18n}}" [nzSpan]="2">
+                        {{model.workbillquantityexcesspercentage}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="部件码绑定数量">
+                        <nz-input-number [(ngModel)]="body.tagnumber" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="部件包码绑定数量" [nzSpan]="2">
+                        <nz-input-number [(ngModel)]="body.packagenumber" [nzMin]="1" [nzStep]="1" (change)="change()">
+                        </nz-input-number>
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="单部件码个数">{{body.singletagnumber}}
+                    </nz-descriptions-item>
+                    <nz-descriptions-item nzTitle="单部件包码个数">
+                        {{body.singlepackagenumber}}
+                    </nz-descriptions-item>
+                </nz-descriptions> -->
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+    </ng-template>
+</idrawer>

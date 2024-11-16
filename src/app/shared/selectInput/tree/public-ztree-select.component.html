@@ -1,0 +1,6 @@
+<nz-tree-select #tree nzPlaceHolder="{{title?title:'checkdata.check'|i18n}}" [nzDropdownMatchSelectWidth]="true"
+    [nzShowSearch]="true" class="treeSelect" [nzDropdownStyle]="{ 'max-height': maxheight+'px' }" [(ngModel)]="value"
+    [nzNodes]="nodes" [nzAsyncData]="true" (nzSearchValueChange)="search($event)"
+    (nzExpandChange)="onExpandChange($event)" [nzAllowClear]="true" (nzClick)="Click($event)"
+    (ngModelChange)="clickItem($event)" [nzHideUnMatched]="true">
+</nz-tree-select>

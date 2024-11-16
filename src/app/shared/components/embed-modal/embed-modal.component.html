@@ -1,0 +1,15 @@
+<div class="modal" [class.show]="isVisible">
+    <div
+        class="modal-background-view"
+        (click)="maskClosable && onClose()"
+    ></div>
+    <div class="modal-view" [style.marginTop]="marginTop" [style.width]="width">
+        <div class="modal-header-view">
+            <div class="fz16">{{ title }}</div>
+            <i nz-icon nzType="close" class="pointer" (click)="onClose()"></i>
+        </div>
+        <div class="modal-body-view" [style.height]="bodyHeight" [class.no-padding]="noPadding">
+            <ng-content [select]="componentName"></ng-content>
+        </div>
+    </div>
+</div>

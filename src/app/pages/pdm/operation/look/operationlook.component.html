@@ -1,0 +1,53 @@
+<idrawer *ngIf="visible" [title]="title" [width]="'50%'" justifyContent="center" height="80%" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.code" | i18n }}</div>
+            <div class="value-txt">{{ model.code }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.name" | i18n }}</div>
+            <div class="value-txt">{{ model.name }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.poc_name" | i18n }}</div>
+            <div class="value-txt">{{ model.poc_name }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.style_name" | i18n }}</div>
+            <div class="value-txt">{{ model.style_name }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.custom_code" | i18n }}</div>
+            <div class="value-txt">{{ model.custom_code}}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.standard_time" | i18n }}</div>
+            <div class="value-txt">{{ model.standard_time }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.standard_wages" | i18n }}</div>
+            <div class="value-txt">{{ model.standard_wages }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.notspectaculars" | i18n }}</div>
+            <div class="value-txt"> {{(model.notspectaculars==true?'placard.yes':'placard.no')|i18n}}</div>
+        </div>
+
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.requrement" | i18n }}</div>
+            <div class="value-txt">{{ model.requrement }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.qc_requrement" | i18n }}</div>
+            <div class="value-txt">{{ model.qc_requrement }}</div>
+        </div>
+        <div class="row-item-view">
+            <div class="sub-txt mb8">{{ "pdmOperation.description" | i18n }}</div>
+            <div class="value-txt">{{ model.description }}</div>
+        </div>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+    </ng-template>
+</idrawer>

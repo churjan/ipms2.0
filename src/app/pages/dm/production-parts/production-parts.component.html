@@ -1,0 +1,32 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)"
+    keyword_placeholder="basPart.code" [columns]="columns" [modular]="modular" [fields]="field"
+    [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basPart.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="code" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.code" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basPart.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.name" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('partClassName')==true">
+            <nz-form-label [nzSpan]="24">{{ 'basPart.partClassName'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="partClassName" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.partClassName" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<app-edit-production-parts #edit [modular]="modular" (editDone)="crud.reloadData($event)"></app-edit-production-parts>
+
+<app-view-production-parts #view [modular]="modular" (editDone)="crud.reloadData($event)"></app-view-production-parts>
+<PartSingleton #PartSingleton [modular]="modular" (editDone)="crud.reloadData($event)"></PartSingleton>

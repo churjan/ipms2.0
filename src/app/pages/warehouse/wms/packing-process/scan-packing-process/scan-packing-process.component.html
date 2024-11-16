@@ -1,0 +1,385 @@
+<div *nzModalTitle>
+  <div class="packing-modal-header-view">
+    <div>包装进度</div>
+    <div class="status-view">
+      <div class="mr32">当前站位：{{ wss.curStation.fullName }}</div>
+      <div class="mr32">站位状态：{{ stationStatusName }}</div>
+      <div class="mr64">当前产量：{{ stationNum }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="page-view">
+  <div class="left-view mr8">
+    <div class="card-view">
+      <div class="card-title text-1 border-1">方案</div>
+      <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
+        <nz-descriptions-item nzTitle="方案总箱数">
+          {{ boxInfo.box_quantity }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="方案总件数">
+          {{ boxInfo.quantity }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="已分拣完成箱数">
+          {{ boxInfo.sorting_box_quantity }}
+        </nz-descriptions-item>
+      </nz-descriptions>
+      <div class="card-title text-1 border-1 between-view">
+        <span>核箱</span>
+        <button
+          nz-button
+          nzType="primary"
+          nz-popconfirm
+          nzPopconfirmTitle="确定要打印箱号吗？"
+          nzOkText="{{ 'btn.determine' | i18n }}"
+          nzCancelText="{{ 'btn.cancel' | i18n }}"
+          (nzOnConfirm)="onPrintBox()"
+        >
+          <i nz-icon nzType="printer"></i>打印箱贴
+        </button>
+      </div>
+      <nz-descriptions nzBordered [nzColumn]="1" nzSize="small">
+        <nz-descriptions-item nzTitle="当前箱号">
+          {{ boxInfo.xianghao }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="当前箱分拣到位件数">
+          {{ boxInfo.current_box_sorting_quantity }}
+        </nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="当前箱总件数">
+                    {{ boxInfo.current_box_in_quantity }}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="已扫件数">
+                    {{ boxInfo.current_box_packing_quantity }}
+                </nz-descriptions-item>
+                <nz-descriptions-item nzTitle="余未扫件数">
+                    {{ boxInfo.current_box_un_packing_quantity }}
+                </nz-descriptions-item> -->
+        <nz-descriptions-item nzTitle="当前箱扫件进度">
+          <div class="progress-view">
+            <div class="between-view">
+              <span
+                >总件数:
+                {{ boxInfo.current_box_in_quantity }}
+              </span>
+              <span
+                >已扫件数:
+                {{ boxInfo.current_box_packing_quantity }}
+              </span>
+              <span
+                >未扫件数:
+                {{ boxInfo.current_box_un_packing_quantity }}
+              </span>
+            </div>
+            <nz-progress
+              [nzPercent]="
+                (boxInfo.current_box_packing_quantity /
+                  boxInfo.current_box_in_quantity) *
+                100
+              "
+              [nzFormat]="toPercentFormat"
+              nzSize="small"
+            ></nz-progress>
+          </div>
+        </nz-descriptions-item>
+      </nz-descriptions>
+      <div class="card-title text-1 border-1">核套</div>
+      <nz-descriptions
+        nzBordered
+        [nzColumn]="1"
+        nzSize="small"
+        class="average-length"
+      >
+        <nz-descriptions-item nzTitle="当前扫码套号">
+          {{ boxInfo.taohao }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="当前箱内总套数">
+          {{ boxInfo.current_box_tao_quantity }}
+        </nz-descriptions-item>
+
+        <nz-descriptions-item nzTitle="当前套扫件进度">
+          <div class="between-view">
+            <span>总件数:{{ boxInfo.current_tao_quantity }} </span>
+            <span
+              >已扫件数:
+              {{ boxInfo.current_tao_packing_quantity }}
+            </span>
+            <span
+              >未扫件数:
+              {{ boxInfo.current_tao_un_packing_quantity }}
+            </span>
+          </div>
+          <nz-progress
+            [nzPercent]="
+              (boxInfo.current_tao_packing_quantity /
+                boxInfo.current_tao_quantity) *
+              100
+            "
+            [nzFormat]="toPercentFormat"
+            nzSize="small"
+          ></nz-progress>
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
+    <div class="card-view mt8">
+      <div class="card-title text-3 border-3">方案订单批</div>
+      <nz-descriptions nzBordered [nzColumn]="1" nzSize="small">
+        <nz-descriptions-item nzTitle="合同订单编码">
+          {{ boxInfo.htbn }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="使用客户名称">
+          {{ boxInfo.zzkh }}
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="装箱订单编码">
+          {{ boxInfo.zhuangxinfenzu }}
+        </nz-descriptions-item>
+      </nz-descriptions>
+      <nz-table
+        #productOrder
+        [nzData]="boxInfo.dingdans"
+        nzSize="small"
+        [nzScroll]="{ x: '360px', y: 'calc(100vh - 775px)' }"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th nzwidth="120px">生产订单</th>
+            <th nzwidth="120px">生产订单编码</th>
+            <th nzwidth="120px">款式编码</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of productOrder.data">
+            <td>{{ item.dingdanmingxiid }}</td>
+            <td>{{ item.pihao }}</td>
+            <td>{{ item.chengpinhuohao }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  <div class="main-view">
+    <div class="flex-view mb8">
+      <div class="card-view flex-1 mr8">
+        <div class="card-title text-4 border-4 reload-view">
+          <span>唯一码</span>
+          <a
+            nz-button
+            nzType="link"
+            [disabled]="!clothNo"
+            (click)="fetchPackingProcess()"
+          >
+            <span nz-icon nzType="reload" nzTheme="outline"> </span>
+            刷新
+          </a>
+        </div>
+        <div class="flex-center-view mb16">
+          <span class="card-title text-4">当前衣服唯一码：</span>
+          <input
+            nz-input
+            [disabled]="!wss.stationKey"
+            [ngModel]="clothNo"
+            (keydown.enter)="onEnterKeyDown()"
+            (input)="onInput($event)"
+            #clothNoInput
+            style="width: 200px"
+          />
+        </div>
+        <div class="flex-center-view">
+          <span class="card-title text-4">分拣载具唯一码：</span>
+          <div style="width: 200px">
+            {{ boxInfo.carrier_code }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-view">
+        <div>
+          <div class="card-title text-2 border-2">包材</div>
+          <nz-descriptions nzBordered [nzColumn]="5" nzSize="small">
+            <nz-descriptions-item nzTitle="外包材">
+              {{ boxInfo.xiangxing }}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="中包材码/二级中包材码">
+              {{ boxInfo.taohao }}
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </div>
+        <!-- <div class="flex-view">
+                    <div class="mr8">
+                        <div class="card-sub-title text-2">综合包材（套）</div>
+                        <nz-descriptions
+                            nzBordered
+                            [nzColumn]="5"
+                            nzSize="small"
+                        >
+                            <nz-descriptions-item nzTitle="衣架">
+                                ......
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="套袋">
+                                ......
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="手提袋">
+                                ......
+                            </nz-descriptions-item>
+                        </nz-descriptions>
+                    </div>
+                    <div>
+                        <div class="card-sub-title text-2">
+                            独立产品包材（当前扫码件）
+                        </div>
+                        <nz-descriptions
+                            nzBordered
+                            [nzColumn]="2"
+                            nzSize="small"
+                        >
+                            <nz-descriptions-item nzTitle="独立套袋">
+                                ......
+                            </nz-descriptions-item>
+                            <nz-descriptions-item nzTitle="其它">
+                                ......
+                            </nz-descriptions-item>
+                        </nz-descriptions>
+                    </div>
+                </div> -->
+      </div>
+    </div>
+    <div class="body-view">
+      <div class="table-view" #tableView>
+        <nz-table
+          #clothTable
+          [nzData]="clothList"
+          nzSize="small"
+          [nzScroll]="{ y: tableHeight + 'px', x: '1680px' }"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <th nzWidth="160px">箱码+箱号</th>
+              <th nzWidth="160px">客户部门</th>
+              <th nzWidth="70px">性别</th>
+              <th nzWidth="70px">姓名</th>
+              <th nzWidth="100px">款式分类</th>
+              <th nzWidth="100px">号型</th>
+              <th nzWidth="100px">规格</th>
+              <th nzWidth="140px">衣服唯一码</th>
+              <th nzWidth="160px">载具号</th>
+              <th nzWidth="120px">当前位置</th>
+              <th nzWidth="120px">箱内套号</th>
+              <th nzWidth="140px">套内件号/总件数</th>
+              <th nzWidth="120px">完成状态</th>
+              <th nzWidth="140px">打印时间</th>
+              <th nzWidth="120px" [nzRight]="true">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of clothTable.data"
+              [class.orange-bg]="item.isFinish"
+              [class.red-bg]="item.isHalfFinish && item.iscomplete"
+            >
+              <td>
+                <span>{{ item.expr1 }}</span>
+                <nz-tag nzColor="error" *ngIf="item.state === 2" class="ml5">
+                  {{ item.state_name }}
+                </nz-tag>
+              </td>
+              <td>{{ item.bumenquancheng }}</td>
+              <td>{{ item.gender }}</td>
+              <td>{{ item.xingming }}</td>
+              <td>{{ item.pinming }}</td>
+              <td>{{ item.haoxing }}</td>
+              <td>{{ item.guige }}</td>
+              <td>{{ item.tiaoma }}</td>
+              <td>{{ item.carrierid }}</td>
+              <td>
+                {{ item.current_bls_code }}
+              </td>
+              <td>{{ item.taohao }}</td>
+              <td>
+                <span *ngIf="item.taohao"
+                  >{{ item.tao_index }}/{{ item.tao_quantity }}</span
+                >
+              </td>
+              <td>{{ item.iscomplete ? "完成" : "" }}</td>
+              <td>
+                {{ item.print_time | date : "yyyy-MM-dd HH:mm:ss" }}
+              </td>
+              <td [nzRight]="true">
+                <a
+                  nz-popconfirm
+                  nzPopconfirmTitle="确定要打印不干胶吗？"
+                  nzOkText="{{ 'btn.determine' | i18n }}"
+                  nzCancelText="{{ 'btn.cancel' | i18n }}"
+                  (nzOnConfirm)="onPrintSuit(item)"
+                  nz-button
+                  nzType="link"
+                  *ngIf="item.iscomplete && item.taohao"
+                >
+                  打印不干胶
+                </a>
+                <a
+                  nz-popconfirm
+                  nzPopconfirmTitle="要确认缺件吗？"
+                  nzOkText="{{ 'btn.determine' | i18n }}"
+                  nzCancelText="{{ 'btn.cancel' | i18n }}"
+                  (nzOnConfirm)="onConfirm(item)"
+                  nz-button
+                  nzType="link"
+                  *ngIf="!item.iscomplete && item.state !== 2"
+                >
+                  确认缺件
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot class="sticky">
+            <tr>
+              <td>汇总</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>合计{{ totalQuantity }}套</td>
+              <td></td>
+              <td>完成{{ completedQuantity }}件</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </nz-table>
+        <div class="footer-view mt5 mb5">
+          <span nz-icon nzType="alert" nzTheme="outline" class="ml5 mr5"></span>
+          <span>黄色表示已完成套号，红色表示在扫套号</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #tplContent>
+  <span>
+    当前扫的衣服唯一码是
+    <strong class="ml5 mr5">{{ clothNo }}</strong>
+    ，所在套号
+    <strong class="ml5 mr5">{{ currentCloth?.taohao }}</strong>
+    已集齐，是否打印不干胶？
+  </span>
+</ng-template>
+
+<ng-template #customTitle>
+  <i
+    nz-icon
+    nzType="warning"
+    nzTheme="outline"
+    style="color: #faad14; font-size: 24px"
+    class="mr16"
+  ></i>
+  <span>警告</span>
+</ng-template>

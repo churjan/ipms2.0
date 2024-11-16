@@ -1,0 +1,172 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="99%" (onClose)="close()"
+    [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <!-- <div class="m-t--20 tabset-wrapper"> -->
+        <!-- <nz-tabset> -->
+        <!-- <nz-tab nzTitle="{{ 'placard.basein'|i18n }}"> -->
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="4" nzRequired>{{
+                    'wmsOutcontrol.name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="8" nzErrorTip="{{
+                    'inputdata.input'|i18n }}/{{ 'name'|i18n }}">
+                    <input nz-input formControlName="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                        (keydown)="submitForm($event)" />
+                </nz-form-control>
+                <nz-form-label [nzSpan]="4" nzRequired>{{
+                    'wmsOutcontrol.poi_name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="20" nzErrorTip="{{
+                    'checkdata.check'|i18n}}/{{ 'poi_name'|i18n
+                    }}">
+                    <nz-select formControlName="poi_key" nzShowSearch nzAllowClear nzPlaceHolder="{{
+                        'checkdata.check'|i18n}}">
+                        <nz-option *ngFor="let item of procedures" [nzValue]="item.key" [nzLabel]="item.name">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="4" nzRequired>{{
+                    'wmsOutcontrol.state_name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="8" nzErrorTip="{{
+                    'checkdata.check'|i18n}}/{{ 'wmsOutcontrol.state_name'|i18n }}">
+                    <nz-radio-group formControlName="state">
+                        <label nz-radio [nzValue]="1">{{
+                            'placard.enable'|i18n }}</label>
+                        <label nz-radio [nzValue]="99">{{
+                            'placard.disable'|i18n }}</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+        <nz-tabset>
+            <nz-tab nzTitle="{{ 'placard.setstation'|i18n }}">
+                <ina-ztree-select [setting]="setting" title="{{'checkdata.check_line'|i18n}}" [params]="stationRailtree"
+                    datatype="NewGetList/" (onSelect)="getstation($event)"></ina-ztree-select>
+                <nz-transfer class="transfer" [nzDataSource]="transferData" nzShowSearch
+                    [nzRenderList]="[renderList, renderList]" [nzTitles]="['('+('placard.canSelect'|i18n)+')',
+                        '('+('placard.selected'|i18n)+')']" [nzShowSelectAll]="false" [nzFilterOption]="filterOption"
+                    (nzChange)="transferChange($event)">
+                    <ng-template #renderList let-items let-stat="stat" let-direction="direction"
+                        let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
+                        <div class="transfer-table-wrapper">
+                            <nz-table #table [nzFrontPagination]="false" [nzShowPagination]="false"
+                                [nzScroll]="{ x: '100%', y: 'calc(100% - 35px)' }" [nzData]="$asTransferItems(items)"
+                                [nzBordered]="true" nzSize="small">
+                                <thead>
+                                    <tr>
+                                        <th nzAlign="center" nzWidth="40px" [nzChecked]="stat.checkAll"
+                                            [nzIndeterminate]="stat.checkHalf"
+                                            (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                        <th nzAlign="center">{{
+                                                'wmsOutcontrol.lineCode'|i18n }}</th>
+                                        <th nzAlign="center">{{
+                                                'wmsOutcontrol.bls_name'|i18n }}</th>
+                                        <th nzAlign="center">{{
+                                                'wmsOutcontrol.bls_code'|i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                        <td nzAlign="center" [nzChecked]="!!data.checked"
+                                            (nzCheckedChange)="onItemSelect(data)"></td>
+                                        <td nzAlign="center">{{ data.pname}}</td>
+                                        <td nzAlign="center">{{ data.title}}</td>
+                                        <td nzAlign="center">{{ data.code }}</td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </ng-template>
+                </nz-transfer>
+            </nz-tab>
+            <nz-tab nzTitle="{{'placard.verifyoverload'|i18n}}">
+                <nz-transfer class="transfer" [nzDataSource]="opData" nzShowSearch
+                    [nzRenderList]="[renderList2, renderList2]" [nzTitles]="['('+('placard.canSelect'|i18n)+')',
+                        '('+('placard.selected'|i18n)+')']" [nzShowSelectAll]="false" [nzFilterOption]="filterOption"
+                    (nzChange)="transferChange2($event)">
+                    <ng-template #renderList2 let-items let-stat="stat" let-direction="direction"
+                        let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
+                        <div class="transfer-table-wrapper">
+                            <nz-table #table [nzFrontPagination]="false" [nzShowPagination]="false"
+                                [nzScroll]="{ x: '100%', y: 'calc(100% - 35px)' }" [nzData]="$asTransferItems(items)"
+                                [nzBordered]="true" nzSize="small">
+                                <thead>
+                                    <tr>
+                                        <th nzAlign="center" nzWidth="40px" [nzChecked]="stat.checkAll"
+                                            [nzIndeterminate]="stat.checkHalf"
+                                            (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                        <th nzAlign="center">{{
+                                                'wmsOutcontrol.poi_name'|i18n }}</th>
+                                        <th nzAlign="center">{{
+                                                'wmsOutcontrol.poi_code'|i18n }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                        <td nzAlign="center" [nzChecked]="!!data.checked"
+                                            (nzCheckedChange)="onItemSelect(data)"></td>
+                                        <td nzAlign="center">{{ data.name}}</td>
+                                        <td nzAlign="center">{{ data.code}}</td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </ng-template>
+                </nz-transfer>
+
+            </nz-tab>
+        </nz-tabset>
+        <!-- <nz-divider nzText="{{ 'placard.station'|i18n }}设置"></nz-divider> -->
+        <!-- </nz-tab> -->
+        <!-- <nz-tab nzTitle="{{ 'placard.station'|i18n }}"> -->
+        <!-- <ina-ztree-select [setting]="setting" title="请选择产线" [params]="stationRailtree" datatype="NewGetList/"
+            (onSelect)="getstation($event)"></ina-ztree-select> -->
+        <!-- <nz-transfer class="transfer" [nzDataSource]="transferData" nzShowSearch
+            [nzRenderList]="[renderList, renderList]" [nzTitles]="['('+('placard.canSelect'|i18n)+')',
+            '('+('placard.selected'|i18n)+')']" [nzShowSelectAll]="false" [nzFilterOption]="filterOption"
+            (nzChange)="transferChange($event)">
+            <ng-template #renderList let-items let-stat="stat" let-direction="direction"
+                let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
+                <div class="transfer-table-wrapper">
+                    <nz-table #table [nzFrontPagination]="false" [nzShowPagination]="false"
+                        [nzScroll]="{ x: '100%', y: 'calc(100% - 35px)' }" [nzData]="$asTransferItems(items)"
+                        [nzBordered]="true" nzSize="small">
+                        <thead>
+                            <tr>
+                                <th nzAlign="center" nzWidth="40px" [nzChecked]="stat.checkAll"
+                                    [nzIndeterminate]="stat.checkHalf" (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                <th nzAlign="center">{{
+                                    'wmsOutcontrol.lineCode'|i18n }}</th>
+                                <th nzAlign="center">{{
+                                    'wmsOutcontrol.bls_name'|i18n }}</th>
+                                <th nzAlign="center">{{
+                                    'wmsOutcontrol.bls_code'|i18n }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                <td nzAlign="center" [nzChecked]="!!data.checked"
+                                    (nzCheckedChange)="onItemSelect(data)"></td>
+                                <td nzAlign="center">{{ data.pname
+                                    }}</td>
+                                <td nzAlign="center">{{ data.title
+                                    }}</td>
+                                <td nzAlign="center">{{ data.code }}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </ng-template>
+        </nz-transfer> -->
+        <!-- </nz-tab> -->
+        <!-- </nz-tabset> -->
+        <!-- </div> -->
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{ 'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

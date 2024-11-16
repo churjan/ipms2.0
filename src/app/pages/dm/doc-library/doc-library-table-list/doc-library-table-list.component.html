@@ -1,0 +1,108 @@
+<div class="table-list-view">
+    <div class="filter-view mb16">
+        <div class="flex-1">
+            <button nz-button (click)="onMutilDelete()" *ngIf="dls.btnAuth('del')">
+                {{ "btn.delete" | i18n }}
+            </button>
+        </div>
+
+        <div>
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input nz-input placeholder="{{ 'inputdata.input_xx2' | i18n:('placard.keyword' | i18n) }}"
+                    [(ngModel)]="keywords" (keyup.enter)="onKeyUp($event)" style="width: 300px" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+            </ng-template>
+        </div>
+
+        <nz-button-group>
+            <button nz-button nzType="primary" (click)="onSearch()">
+                {{ "btn.search" | i18n }}
+            </button>
+            <button nz-button nzType="default" (click)="onReset()">
+                <i nz-icon nzType="redo"></i>{{ "btn.reset" | i18n }}
+            </button>
+        </nz-button-group>
+
+        <div style="line-height: 32px" class="pointer ml8" (click)="onAdvancedSearch()">
+            <span class="mr3">{{ "btn.advancedSearch" | i18n }}</span>
+            <i nz-icon nzType="down" *ngIf="!isShowAdvancedSearch"></i>
+            <i nz-icon nzType="up" *ngIf="isShowAdvancedSearch"></i>
+        </div>
+    </div>
+    <div class="table-view" #tableView>
+        <nz-table [nzData]="tableList" nzShowSizeChanger [nzFrontPagination]="false" [nzLoading]="loading"
+            [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzBordered]="true" nzSize="small"
+            [nzShowTotal]="totalTemplate" [nzPageSizeOptions]="[15, 30, 45, 50, 100, 200]" [nzShowQuickJumper]="true"
+            (nzQueryParams)="onQueryParamsChange($event)" [nzScroll]="{ x: 'auto', y: tableHeight + 'px' }">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="50px" [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+                        (nzCheckedChange)="onAllChecked($event)" *ngIf="isChecked(columnList)"></th>
+                    <ng-container *ngFor="let item of columnList; let i = index">
+                        <th [nzWidth]="item.width" [nzAlign]="item.align" [nzLeft]="!!item.left"
+                            [nzRight]="!!item.right" nz-resizable (nzResize)="onTableResize($event, item.name)"
+                            *ngIf="item.code !== 'checked'">
+                            {{ item.name }}
+                            <nz-resize-handle nzDirection="right">
+                                <div class="resize-trigger"></div>
+                            </nz-resize-handle>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of tableList; let i = index">
+                    <td nzLeft [nzChecked]="setOfCheckedId.has(data.key)"
+                        (nzCheckedChange)="onItemChecked(data.key, $event)" *ngIf="isChecked(columnList)"></td>
+                    <ng-container *ngFor="let item of columnList">
+                        <td [nzAlign]="item.align" [nzLeft]="!!item.left" [nzRight]="!!item.right"
+                            *ngIf="item.code !== 'checked'">
+                            <ng-container *ngIf="!item.tpl">
+                                {{ data[item.code] }}
+                            </ng-container>
+                            <ng-container *ngIf="item.tpl">
+                                <ng-container *ngTemplateOutlet="
+                                        tdTpl;
+                                        context: {
+                                            $implicit: item,
+                                            i: this.i,
+                                            record: data
+                                        }
+                                    ">
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<ng-template #totalTemplate let-total>
+    {{ "placard.totalnum" | i18n | covertTranslation : total }}
+</ng-template>
+
+<ng-template #tdTpl let-item let-i="i" let-record="record">
+    <ng-container *ngIf="item.tpl === 'noTpl'">
+        <span>{{ pageSize * (pageIndex - 1) + i + 1 }}</span>
+    </ng-container>
+    <ng-container *ngIf="item.tpl === 'operationTpl'">
+        <button nz-button nzType="text" nzSize="small" nz-tooltip nzTooltipTitle="{{ 'btn.see' | i18n }}"
+            (click)="onPreview(record)">
+            <i nz-icon nzType="eye"></i>
+        </button>
+        <button nz-button nzType="text" nzSize="small" nz-tooltip nzTooltipTitle="{{ 'btn.delete' | i18n }}"
+            (click)="onDelete(record)" *ngIf="dls.btnAuth('del')">
+            <i nz-icon nzType="delete"></i>
+        </button>
+    </ng-container>
+</ng-template>
+
+<app-embed-drawer title="{{ 'btn.advancedSearch' | i18n }}" [(isVisible)]="isShowAdvancedSearch"
+    [componentName]="'app-doc-library-advanced-search'">
+    <app-doc-library-advanced-search [advanceParams]="advanceParams" *ngIf="isShowAdvancedSearch">
+    </app-doc-library-advanced-search>
+</app-embed-drawer>

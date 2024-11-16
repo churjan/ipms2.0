@@ -1,0 +1,80 @@
+<nz-table #basicTable [nzShowSizeChanger]="true" [nzData]="data"
+    [nzBordered]="true" [nzFrontPagination]="frontPagination"
+    [nzLoading]="loading" [nzTotal]="total" [(nzPageSize)]="pageSize"
+    [(nzPageIndex)]="pageIndex" [nzPageSizeOptions]="pageSizeOptions"
+    [nzShowTotal]="totalTemplate"
+    (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+    (nzQueryParams)="onQueryParamsChange($event)" [nzScroll]="{ x: xScroll, y:
+    yScroll || yAutoScroll }" nzSize="small" nzTableLayout="fixed">
+    <thead>
+        <tr>
+            <th *ngIf="showSelection" nzLeft nzWidth="50px"
+                [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+                (nzCheckedChange)="onAllChecked($event)"></th>
+            <th *ngIf="showIndex" nzLeft nzWidth="70px" nzAlign="center"
+                class="ellipsis" title="{{ 'placard.No'|i18n }}">{{
+                'placard.No'|i18n }}</th>
+
+            <th *ngFor="let item of columns" [nzShowSort]="item.sort"
+                [nzColumnKey]="item.code" [nzSortFn]="item.sortFn"
+                [nzSortPriority]="item.sortPriority" [nzWidth]="item.width"
+                [nzAlign]="item.align" [nzLeft]="'left' == item.fixed"
+                [nzRight]="'right' == item.fixed">
+
+                <ng-container *ngIf="!item.headTpl"><span class="ellipsis"
+                        title="{{ item.title }}">{{ item.title }}</span></ng-container>
+                <ng-container *ngIf="item.headTpl">
+                    <span class="ellipsis" title="{{ item.title }}">
+                        <ng-container *ngTemplateOutlet="tpls[item.headTpl];
+                            context: {
+                            title: item.title,
+                            item: item
+                            }"></ng-container>
+                    </span>
+                </ng-container>
+
+            </th>
+
+            <th *ngIf="lastColumnTpl" [nzWidth]="lastColumnWidth" nzRight>
+                <ng-container *ngIf="lastColumnTitle === null"><span
+                        class="ellipsis" title="{{ 'btn.operation'|i18n }}">{{
+                        'btn.operation'|i18n }}</span></ng-container>
+                <ng-container *ngIf="lastColumnTitle !== null"><span
+                        class="ellipsis" title="{{ lastColumnTitle }}">{{
+                        lastColumnTitle }}</span></ng-container>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of basicTable.data;let i= index">
+            <td *ngIf="showSelection" nzLeft
+                [nzChecked]="setOfCheckedId.has(item.key)"
+                (nzCheckedChange)="onItemChecked(item.key, $event)"></td>
+            <td *ngIf="showIndex" nzLeft nzAlign="center">{{(pageSize*(pageIndex-1))+i+1}}</td>
+            <td *ngFor="let column of columns" [nzAlign]="column.align"
+                nz-tooltip [nzTooltipTitle]="item[column.code]"
+                [nzLeft]="'left'== column.fixed" [nzRight]="'right' ==
+                column.fixed" [nzEllipsis]="column.ellipsis? true : false">
+                <ng-container *ngIf="!column.tpl">{{item[column.code]}}</ng-container>
+                <ng-container *ngIf="column.tpl">
+                    <ng-container *ngTemplateOutlet="tpls[column.tpl]; context:
+                        {
+                        field: column.code,
+                        text: item[column.code],
+                        record: item,
+                        index: i
+                        }"></ng-container>
+                </ng-container>
+            </td>
+
+            <td *ngIf="lastColumnTpl" nzRight>
+                <ng-container *ngTemplateOutlet="lastColumnTpl; context:
+                    {record: item, index: i}"></ng-container>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<ng-template #totalTemplate let-total>
+    {{ 'placard.totalnum'|i18n| covertTranslation: total }}
+</ng-template>

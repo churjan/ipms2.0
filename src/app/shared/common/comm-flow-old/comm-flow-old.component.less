@@ -1,0 +1,354 @@
+﻿/**闂磋窛璋冩暣*/
+.spacer {
+    flex: 1 1 auto;
+}
+
+.recommend {
+    position: absolute;
+    top     : 1rem;
+    right   : 1rem;
+}
+
+.flow-box {
+    &>nz-header {
+        height         : 36px;
+        background     : #ffffff;
+        padding        : 0 20px;
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+
+        &>.toggle-group {
+            nz-divider {
+                margin: 0 8px
+            }
+        }
+    }
+
+    &>nz-layout {
+        height: 47.4rem;
+
+        .op-check {
+            .list-box {
+                height : calc(100% - 32px);
+                padding: 0 5px;
+            }
+        }
+
+        .shadow {
+            width    : auto;
+            max-width: 75px;
+
+            li {
+                position: relative;
+
+                i {
+                    position: absolute;
+                    right   : 0;
+                }
+            }
+        }
+
+        .inner-layout {
+            height        : 100%;
+            display       : flex;
+            flex-direction: row;
+            overflow      : hidden;
+
+            .inner-layout-right {
+                position: relative;
+                overflow: hidden;
+                width   : -webkit-fill-available;
+
+                .tabset {
+                    background-color   : #fff;
+                    // width           : 89rem;
+                    height             : 100%;
+
+                    .icon {
+                        margin: 0;
+                    }
+
+                    .part-op {
+                        height: 100%;
+
+                        nz-list-item {
+                            flex-direction: column;
+                            border        : unset;
+                            padding       : 0;
+                            cursor        : all-scroll;
+
+                            .OPheader {
+                                display         : flex;
+                                align-items     : center;
+                                justify-content : flex-start;
+                                background-color: #f2f2f2;
+                                padding         : 5px 0;
+
+                                &>span {
+                                    padding-left: 1em;
+                                    font-weight : bold;
+                                    font-size   : 16px;
+                                }
+
+                                .scrollWrap {
+                                    padding-left: 0;
+                                    font-weight : bold;
+                                    font-size   : 16px;
+                                    width       : 64%;
+                                    white-space : nowrap;
+                                    overflow    : hidden;
+
+                                    .scroll {
+                                        display          : inline-block;
+                                        white-space      : pre;
+                                        -webkit-animation: 10s scroll linear infinite;
+                                        animation        : 10s scroll linear infinite;
+                                    }
+
+                                    @keyframes scroll {
+
+                                        //璧峰浣嶇疆
+
+                                        0% {
+                                            transform        : translateX(0%);
+                                            -webkit-transform: translateX(0%);
+                                        }
+
+                                        //缁堢偣浣嶇疆
+
+                                        100% {
+                                            transform        : translateX(-100%);
+                                            -webkit-transform: translateX(-100%);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+
+                        .option {
+                            flex-direction: column;
+                            padding       : 5px 0;
+                            padding-top   : 0;
+                            overflow      : auto;
+                            height        : 100%;
+                            nz-list-item {
+                                padding-bottom: 5px;
+                                nz-card {
+                                    width : 100%;
+                                    border: 0px;
+
+                                    p {
+                                        margin-bottom: 0.5em;
+                                        position     : relative;
+
+                                        span {
+                                            margin-left: 10px
+                                        }
+                                    }
+                                }
+                            }
+
+                            .ant-list-item ::ng-deep>.ant-card .ant-card-body {
+                                padding   : 10px 24px;
+                                min-height: 65px;
+                            }
+
+                        }
+
+                    }
+
+                    .Addtab {
+                        margin: 0 5px;
+                    }
+                }
+
+                .dragParent {
+                    width           : 300px;
+                    height          : calc(100% - 45px);
+                    position        : absolute;
+                    background-color: #f1f1f1;
+                    top             : 45px;
+                    right           : 0;
+
+                    .example-box {
+                        height: 100%;
+
+                        nz-card {
+                            width : 100%;
+                            height: 100%;
+
+                            .selectList {
+                                height  : calc(100% - 30px);
+                                overflow: auto;
+                            }
+                        }
+                    }
+
+                    .example-box ::ng-deep>.ant-card .ant-card-body {
+                        height : calc(100% - 95px);
+                        padding: 0 10px;
+
+                    }
+
+                    .select {
+                        width : 100%;
+                        margin: 10px 0;
+                    }
+                }
+            }
+
+            .inner-layout-right ::ng-deep>.ant-tabs-card .ant-tabs-nav {
+                height: 2rem;
+                margin: 0px 0px 1px;
+
+                .ant-tabs-nav-wrap {
+                    width: calc(100% - 88px);
+
+                    button {
+                        height    : 100%;
+                        min-height: 100%;
+                    }
+                }
+            }
+
+            .inner-layout-right ::ng-deep>.ant-tabs-card .ant-tabs-content {
+                height: 100%;
+            }
+        }
+
+    }
+
+    nz-divider {
+        margin: 0;
+    }
+
+    .mainColor {
+        color: #F44336;
+    }
+}
+
+.styleflowbox {
+    height: calc(100% - 110px);
+}
+
+.tabs-nav {
+    height: 2rem;
+    margin: 0 0 10px 0;
+}
+
+.op-btn {
+    margin    : 0;
+    flex      : 0 0 auto;
+    padding   : 0;
+    font-size : 0;
+    list-style: none;
+
+    li {
+        padding-left: 0;
+        position    : relative;
+        display     : inline-block;
+        padding     : 0 8px;
+        color       : rgba(0, 0, 0, 0.45);
+        font-size   : 14px;
+        line-height : 1.5715;
+        text-align  : center;
+        cursor      : pointer;
+
+        .margin-right8 {
+            margin-right: 8px;
+        }
+    }
+}
+
+.Preview-tips {
+    color      : #ff4700;
+    font-weight: bold;
+}
+
+.Fold {
+    color: #f49d41;
+}
+
+.seal {
+    right            : 10px;
+    width            : 40px;
+    height           : max-content;
+    text-align       : center;
+    position         : absolute;
+    top              : 4px;
+    right            : 0;
+    border           : 1px solid red;
+    color            : red;
+    font-weight      : 700;
+    font-size        : xx-small;
+    transform        : rotate(30deg);
+    -ms-transform    : rotate(30deg);
+    -webkit-transform: rotate(30deg);
+    -o-transform     : rotate(30deg);
+    -moz-transform   : rotate(30deg);
+    z-index          : 9999;
+    left             : 105px;
+}
+
+.seal-color {
+    border: 1px solid #0bc11e;
+    color : #0bc11e;
+}
+
+.seal-title {
+    top       : 1px;
+    right     : -11px;
+    width     : 61px;
+    transform : rotate(36deg);
+    background: #58a;
+    background: linear-gradient(233deg, transparent 10px, #58a 0) right,
+        linear-gradient(-216deg, transparent 13px, #58a 0) left;
+    border           : none;
+    color            : #fff;
+    background-size  : 50% 100%;
+    background-repeat: no-repeat;
+}
+
+.seal-anchor {
+    top        : 0px;
+    left       : -14px;
+    height     : 25px;
+    line-height: 25px;
+    width      : 55px;
+    transform  : rotate(-45deg);
+    background : #a0bfd3;
+    background : linear-gradient(225deg, transparent 16px, #a0bfd3 0) right,
+        linear-gradient(-224deg, transparent 16px, #a0bfd3 0) left;
+    border           : none;
+    color            : #fff;
+    background-size  : 51% 100%;
+    background-repeat: no-repeat;
+}
+
+.route-o,
+.help-o,
+.route:hover,
+.route:focus,
+.route:active,
+.help:hover {
+    border-color : #f00000;
+    box-shadow   : 1px -1px black;
+    box-shadow   : inset 0 0 5px #fa0000cc;
+    border-radius: 5px;
+}
+
+.styFalowinfo {
+    margin: 0 !important;
+
+    .gutter-row {
+        height: 35px;
+        margin: 10px 0;
+
+        nz-form-item {
+            margin: 0;
+        }
+    }
+}

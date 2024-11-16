@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>loading</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+</head>
+
+<body class="beauty-scroll">
+    <app-root></app-root>
+
+    <script>
+        window.onload = () => {
+            if (document.title && document.title != "loading") return false
+            let timer = null
+            clearInterval(timer)
+            timer = setInterval(() => {
+                const translate = localStorage.getItem('translate') ? JSON.parse(localStorage.getItem('translate')) : {}
+                if (translate.common && translate.common.sysName) {
+                    document.title = sessionStorage.sysName ? sessionStorage.sysName : translate.common
+                        .sysName
+                    clearInterval(timer)
+                }
+            }, 200)
+        }
+
+    </script>
+</body>
+
+</html>

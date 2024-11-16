@@ -1,0 +1,99 @@
+<crud2
+  #crud
+  [router]="url"
+  [jsonname]="fieldcode"
+  [list]="list"
+  (actionClick)="btnEvent($event)"
+  [isKeyQuery]="true"
+  [isDataOnInit]="false"
+  [isAction]="false"
+  [isRefresh]="false"
+  [columns]="columns"
+  [modular]="modular"
+  [fields]="field"
+  [isKeyword]="false"
+  [KeyQuery]="KeyQuery"
+  [checkbox]="false"
+  [isStatistics]="true"
+  (onReset)="onReset()"
+  detail="datalist"
+  [searchActionsBody]="searchActionsBody"
+  [isSetList]="false"
+></crud2>
+
+<ng-template #KeyQuery let-item="record">
+  <date-select
+    [isRange]="true"
+    #dateselect
+    (onSelect)="
+      crud.SearchModel.starttime = $event.start;
+      crud.SearchModel.endtime = $event.end
+    "
+  ></date-select>
+</ng-template>
+
+<ng-template #searchActionsBody>
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "reportYield.psi" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.psi_key"
+          name="psi_key"
+          url="styleinfo"
+          DataTxt="code"
+          secondary="name"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "reportYield.pci_name" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.pci_key"
+          name="pci_key"
+          url="colorinfo"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "reportYield.psz_name" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.psz_key"
+          name="psz_key"
+          url="sizeinfo"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{
+        "wmsCountingdemand.pwb_code" | i18n
+      }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input
+          nz-input
+          name="pwb_code"
+          placeholder="{{ 'inputdata.input' | i18n }}"
+          [(ngModel)]="crud.seniorModel.pwb_code"
+          (keydown)="crud.Search($event)"
+        />
+      </nz-form-control>
+      </nz-form-item>
+  </form>
+</ng-template>

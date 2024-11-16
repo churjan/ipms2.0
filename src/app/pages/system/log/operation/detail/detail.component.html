@@ -1,0 +1,23 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center"
+    height="auto" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-descriptions nzBordered nzSize="small" [nzColumn]="2">
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.url'|i18n }}">{{data.url}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.action'|i18n }}">{{data.action}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.sui_username'|i18n
+                }}">{{data.sui_username}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{
+                'sysLogoperation.elapsedtotlalseconds'|i18n }}">{{data.elapsedtotlalseconds}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.time'|i18n }}"
+                [nzSpan]="2">{{data.time}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.requestdata'|i18n
+                }}" [nzSpan]="3">
+                <pre>{{data.requestdata|json}}</pre>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="{{ 'sysLogoperation.responsedata'|i18n
+                }}" [nzSpan]="3">
+                <pre>{{data.responsedata|json}}</pre>
+            </nz-descriptions-item>
+        </nz-descriptions>
+    </ng-template>
+</idrawer>

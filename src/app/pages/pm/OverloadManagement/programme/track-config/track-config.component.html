@@ -1,0 +1,16 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" (onClose)="close()"
+    [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div class="page-view">
+            <div class="left-view mr16">
+                <track-tree2></track-tree2>
+            </div>
+            <div class="middle-view mr16">
+                <app-track-unselect-table [record]="record"></app-track-unselect-table>
+            </div>
+            <div class="right-view">
+                <app-track-select-table [record]="record"></app-track-select-table>
+            </div>
+        </div>
+    </ng-template>
+</idrawer>

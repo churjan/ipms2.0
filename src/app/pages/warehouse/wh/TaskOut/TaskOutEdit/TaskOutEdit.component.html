@@ -1,0 +1,132 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.som_code'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="som_key" url="OrderMaster" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.pwb_code'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="pwb_key" url="WorkBill" [isshow]="false"
+                                (onSelect)="onSelect($event)">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.psi_key'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="psi_key" url="styleinfo">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.pci_key'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="pci_key" url="colorinfo">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.psz_key'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="psz_key" url="sizeinfo">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.bpi_key'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="bpi_key" url="partinfo">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.inventory_type'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                                [isdisabled]="Disable" formControlName="inventory_type" DataFiled="value"
+                                DataTxt="description" urltype="enum" url="inventorytypeenum" [isshow]="false">
+                            </ina-common-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item style="margin-bottom: 8px;">
+                        <nz-form-label [nzSpan]="8">{{'whTaskOut.num'|i18n}}</nz-form-label>
+                        <nz-form-control [nzSpan]="16">
+                            <input nz-input formControlName="num" placeholder="{{'inputdata.input'|i18n}}"
+                                (keydown)="submitForm($event)" min="0" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <nz-divider nzText="{{'placard.ShippingPortSelection'|i18n}}"></nz-divider>
+        <ina-ztree-select [setting]="setting" [params]="stationRailtree" datatype="NewGetList/"
+            (onSelect)="getstation($event)"></ina-ztree-select>
+        <nz-transfer nzShowSearch [nzDataSource]="transferData" class="transfer"
+            [nzRenderList]="[renderList, renderList]" [nzTitles]="['('+('placard.canSelect'|i18n)+')',
+            '('+('placard.selected'|i18n)+')']" [nzListStyle]="{height: 'calc(100%)'}" [nzShowSelectAll]="false"
+            [nzFilterOption]="filterOption" (nzChange)="transferChange($event)">
+            <ng-template #renderList let-items let-stat="stat" let-onItemSelectAll="onItemSelectAll"
+                let-onItemSelect="onItemSelect">
+                <div class="transfer-table-wrapper">
+                    <nz-table #table [nzData]="$asTransferItems(items)" [nzFrontPagination]="false" nzSize="small"
+                        [nzShowPagination]="false" [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }"
+                        [nzBordered]="true" nzSize="small">
+                        <thead>
+                            <tr>
+                                <th nzAlign="center" nzWidth="40px" [nzChecked]="stat.checkAll"
+                                    [nzIndeterminate]="stat.checkHalf" (nzCheckedChange)="onItemSelectAll($event)"></th>
+                                <th nzAlign="center">{{
+                                    'whTaskOut.out_infeed_code'|i18n }}</th>
+                                <th nzAlign="center">{{
+                                    'whTaskOut.out_infeed_name'|i18n }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                                <td nzAlign="center" nzWidth="40px" [nzChecked]="!!data.checked"
+                                    (nzCheckedChange)="onItemSelect(data)"></td>
+                                <td nzAlign="center">{{ data.code }}</td>
+                                <td nzAlign="center">{{ data.title }}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </ng-template>
+        </nz-transfer>
+
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button nzType="primary" (click)="submitForm()" *ngIf="validateForm.value.state!=99"
+            (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting"
+            class="m-l-6">{{'btn.save'|i18n}}</button>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

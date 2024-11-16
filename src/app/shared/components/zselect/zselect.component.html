@@ -1,0 +1,20 @@
+<nz-select
+    [class]="getClass"
+    [style]="getStyle"
+    [nzPlaceHolder]=" 'checkdata.check'|i18n "
+    (nzScrollToBottom)="onSearch($event)"
+    (nzOnSearch)="getList($event)"
+    nzAllowClear
+    [nzShowSearch]="isSearch"
+    [nzServerSearch]="isScrollToBottom"
+    [(ngModel)]="setValue"
+    (ngModelChange)="getData($event)"
+>
+        <ng-container *ngFor="let item of list">
+            <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+        </ng-container>
+        <nz-option *ngIf="loading" nzDisabled nzCustomContent>
+            <span nz-icon nzType="loading" class="loading-icon"></span>
+            {{ 'url.redirect'|i18n }}...
+        </nz-option>
+</nz-select>

@@ -1,0 +1,38 @@
+<nz-page-header
+    (nzBack)="onNavigateTo(1)"
+    nzBackIcon
+    nzTitle="{{ 'btn.return' | i18n }}">
+    <nz-page-header-extra>
+        <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            [disabled]="!validateForm.valid"
+            [nzLoading]="isBtnLoading"
+            (click)="onCheck()">
+            <i nz-icon nzType="trademark"></i>
+            {{ "btn.register" | i18n }}
+        </button>
+    </nz-page-header-extra>
+</nz-page-header>
+<form nz-form [formGroup]="validateForm" nzLayout="vertical">
+    <nz-form-item>
+        <nz-form-label [nzSpan]="22" nzRequired>
+            {{"install.authFile" | i18n}}
+            <span class="spacer"></span>
+            <nz-upload [nzAction]="uploadUrl" nzAccept=".txt" [nzHeaders]="uploadingHeader()">
+                <button nz-button>
+                    <i nz-icon nzType="upload"></i>
+                    <span>{{ 'selectFile'|i18n }}</span>
+                </button>
+            </nz-upload>
+        </nz-form-label>
+        <nz-form-control>
+            <textarea
+                formControlName="code"
+                nz-input
+                rows="4"
+                placeholder="{{ 'install.iptAuthFile' | i18n }}"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>

@@ -1,0 +1,5 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [showAdvanced]="false"
+  keyword_placeholder="structureRuleScheme.code" [columns]="columns" [modular]="modular" [fields]="field"
+  [getBody]="{type:3}"></crud2>
+<programme-edit #edit [modular]="modular" (editDone)="crud.reloadData($event)"></programme-edit>
+<app-track-config #config [modular]="modular" (editDone)="crud.reloadData($event)"></app-track-config>

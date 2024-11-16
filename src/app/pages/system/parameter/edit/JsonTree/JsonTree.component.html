@@ -1,0 +1,70 @@
+<nz-tree-view #treeview [nzTreeControl]="treeControl" [nzDataSource]="dataSource" [trackBy]="trackBy">
+    <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
+        <ng-container *ngIf="node.edit!=true">
+            <nz-tree-node-option [nzDisabled]="node.disabled" [nzSelected]="selectListSelection.isSelected(node)"
+                (nzClick)="updata(node)">
+                {{ node.name }}
+            </nz-tree-node-option>
+            <button nz-button nzType="text" nzSize="small" (click)="delete(node)" *ngIf="node.key!='1'">
+                <i nz-icon nzType="minus" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="text" nzSize="small" *ngIf="node.type=='Array'||node.type=='object'"
+                (click)="addNewNode(node)">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+            </button>
+        </ng-container>
+        <span [hidden]="!node.edit">
+            <ng-container *ngTemplateOutlet="edtitem"></ng-container>
+        </span>
+    </nz-tree-node>
+
+    <nz-tree-node *nzTreeNodeDef="let node; when: hasNoContent" nzTreeNodeIndentLine>
+        <ng-container *ngTemplateOutlet="edtitem"></ng-container>
+    </nz-tree-node>
+
+    <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
+        <nz-tree-node-toggle>
+            <i nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon></i>
+        </nz-tree-node-toggle>
+        <nz-tree-node-option (nzClick)="updata(node)"> {{ node.name
+            }}</nz-tree-node-option>
+        <button nz-button nzType="text" nzSize="small" *ngIf="node.type=='Array'||node.type=='object'"
+            (click)="addNewNode(node)">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+        <button nz-button nzType="text" nzSize="small" (click)="delete(node)">
+            <i nz-icon nzType="minus" nzTheme="outline"></i>
+        </button>
+    </nz-tree-node>
+</nz-tree-view>
+<ng-template #edtitem>
+    <nz-input-group nzCompact #inputElement style="min-width: 300px;">
+        <!-- <ina-common-select class="select" title=""
+            formControlName="style"
+            DataFiled="value"
+            urltype="enum" url="uidatatype"
+            DataTxt="description"
+            [isshow]="false">
+        </ina-common-select> -->
+        <nz-select placeholder="type" style="min-width: 5.75rem;" [(ngModel)]="alternative.type">
+            <nz-option [nzLabel]="'option.string'|i18n" [nzValue]="'string'"></nz-option>
+            <nz-option [nzLabel]="'option.Array'|i18n" [nzValue]="'Array'"></nz-option>
+            <nz-option [nzLabel]="'option.object'|i18n" [nzValue]="'object'"></nz-option>
+            <nz-option [nzLabel]="'option.number'|i18n" [nzValue]="'number'"></nz-option>
+            <nz-option [nzLabel]="'option.boolean'|i18n" [nzValue]="'boolean'"></nz-option>
+        </nz-select>
+        <input type="text" nz-input placeholder="{{'placard.fild'|i18n}}" style="width:35%;"
+            [(ngModel)]="alternative.code" />
+        <input style="width:40%" class="passenger-input" nz-input [(ngModel)]="alternative.value"
+            *ngIf="alternative.type=='string'" placeholder="{{'placard.value'|i18n}}" />
+        <nz-input-number [(ngModel)]="alternative.value" style="width:40%" *ngIf="alternative.type=='number'"
+            placeholder="{{'placard.value'|i18n}}"></nz-input-number>
+        <nz-switch [(ngModel)]="alternative.value" style="vertical-align:
+            sub;margin: 0 5px;" nzCheckedChildren="{{'placard.yes'|i18n}}" *ngIf="alternative.type=='boolean'"
+            nzUnCheckedChildren="{{'placard.no'|i18n}}"></nz-switch>
+    </nz-input-group>
+    &nbsp;
+    <button nz-button nzSize="small" (click)="saveNode(editNode,
+        alternative)">{{'btn.Confirmed'|i18n}}</button>
+    <button nz-button nzSize="small" (click)="cancle(editNode)">{{'btn.cancel'|i18n}}</button>
+</ng-template>

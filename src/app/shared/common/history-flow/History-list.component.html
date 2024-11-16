@@ -1,0 +1,9 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="90%" nzSize="small"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <crud2 #flowcrud [router]="url" [jsonname]="url" style="height: 100%;" [getBody]="body" [showAdvanced]="false"
+            listFun="history" (actionClick)="btnEvent($event)" asktype="getlist" [columns]="columns" [modular]="modular"
+            [isSetList]="false" [btnGroup]="btnaction" [isAction]="false" [fields]="field"></crud2>
+        <Backups #flow [modular]="modular" (editDone)="flowcrud.reloadData($event)"></Backups>
+    </ng-template>
+</idrawer>

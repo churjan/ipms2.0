@@ -1,0 +1,27 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+    <ng-template #contentTpl>
+        <div nz-row class="form-control">
+            <div nz-col [nzSpan]="2" class="form-label required">{{ 'name'|i18n }}</div>
+            <div nz-col [nzSpan]="22">
+                <input nz-input [(ngModel)]="validateForm.name" name="name" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+            </div>
+        </div>
+        <div nz-row class="form-control">
+            <div nz-col [nzSpan]="2" class="form-label required">{{ 'condition'|i18n }}</div>
+            <div nz-col [nzSpan]="22">
+                <conditions #conditions [(data)]="validateForm.conditions" [fieldOptions]="fieldOptions" [valueOptions]="valueOptions"></conditions>
+            </div>
+        </div>
+        <div nz-row class="form-control">
+            <div nz-col [nzSpan]="2" class="form-label">{{ 'description'|i18n }}</div>
+            <div nz-col [nzSpan]="22">
+                <textarea nz-input [(ngModel)]="validateForm.description" placeholder="{{ 'inputdata.input'|i18n }}" (keydown)="submitForm($event)" nzAutosize></textarea>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="close()">{{  'btn.cancel'|i18n}}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting" [nzLoading]="submiting" class="m-l-6">{{  'btn.save'|i18n}}</button>
+    </ng-template>
+</idrawer>

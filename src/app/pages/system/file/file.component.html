@@ -1,0 +1,44 @@
+
+<crud
+    #crud
+    [columns] = "tableColumns"
+    [topRightActionsTpl]="topRightActionsTpl"
+    [lastColumnTpl] = "operationTpl"
+    [lastColumnWidth] = "'50px'"
+    [service]="fileService"
+    [tpls]="{timeTpl: timeTpl,sizeTpl: sizeTpl, pathTpl: pathTpl}"
+>
+</crud>
+
+<ng-template #topRightActionsTpl>
+    <button nz-button nzType="default" (click)="crud.delete()" *hasPermission="['system_file_del']">
+        <i nz-icon nzType="delete"></i> {{ 'btn.delete'|i18n }}
+    </button>
+</ng-template>
+
+<ng-template #pathTpl let-text="text">
+    <a [ngStyle]="{textDecoration: 'underline'}" [href]="commonService.baseUrl+text" target="_balnk">{{text}}</a>
+</ng-template>
+
+<ng-template #timeTpl let-text="text">
+    {{text|time}}
+</ng-template>
+
+<ng-template #sizeTpl let-text="text">
+    {{(text/1024).toFixed(2)}} KB
+</ng-template>
+
+<!-- 行内操作按钮 -->
+<ng-template #operationTpl let-item="record">
+    <button 
+        *hasPermission="['system_file_del']"
+        nz-button 
+        nzType="text" 
+        nzSize="small" 
+        (click)="crud.delete(item)" 
+        nz-tooltip 
+        nzTooltipTitle="{{ 'btn.delete'|i18n }}" 
+        class="m-l-6">
+        <i nz-icon nzType="delete"></i>
+    </button>
+</ng-template>

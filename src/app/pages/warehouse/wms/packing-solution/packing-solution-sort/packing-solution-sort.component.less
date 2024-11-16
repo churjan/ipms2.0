@@ -1,0 +1,37 @@
+::ng-deep {
+  .cdk-drag-preview {
+    display: table;
+    box-sizing: initial;
+    background-color: initial;
+    box-shadow: initial;
+  }
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+
+  .cdk-drag-animating {
+    transition: initial;
+  }
+}
+
+:host ::ng-deep {
+  .ant-table .ant-btn {
+    padding: 4px 8px;
+  }
+}
+.body-view {
+  padding: 8px;
+  display: flex;
+  align-items: flex-start;
+  .middle-view {
+    margin-left: 16px;
+    margin-right: 16px;
+    align-self: center;
+  }
+}
+.footer-view {
+  padding: 8px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+}

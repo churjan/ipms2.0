@@ -1,0 +1,18 @@
+<div class="page beauty-scroll">
+    <nz-card class="page-container p-b-15">
+        <div class="wrapper beauty-scroll">
+            <div class="wrapper-container">
+                <div class="left beauty-scroll">
+                    <class-ztree #Menu class="tree" title="{{'placard.MenuInfo'|i18n}}" commUrl="MenuInfo"
+                        [modular]="modular" [action]="modular.btnClass" (onAction)="onAction($event)"></class-ztree>
+                </div>
+                <div class="right">
+                    <edit #menuEdit [nodeEdit]="nodeEdit" [treeData]="treeDataToEdit" (onUpdate)="menuUpdate($event)"
+                        (onAdd)="menuAdd($event)" [model]="model"></edit>
+                </div>
+            </div>
+        </div>
+    </nz-card>
+</div>
+
+<node #nodeEdit [modular]="modular" (onSave)="menuEdit.nodeSave($event)"></node>

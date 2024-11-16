@@ -1,0 +1,127 @@
+<div class="table-list-view">
+    <div class="left-view">
+        <div class="mr8">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                <input
+                    type="text"
+                    nz-input
+                    placeholder="{{ 'btn.search' | i18n }}"
+                    [(ngModel)]="keywords"
+                    (keyup.enter)="onKeyUp()"
+                />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+        <nz-table
+            [nzData]="workStationList"
+            [nzBordered]="true"
+            nzShowSizeChanger
+            [nzFrontPagination]="false"
+            [nzTotal]="total"
+            [nzPageSize]="pageSize"
+            [nzPageIndex]="pageIndex"
+            (nzQueryParams)="onQueryParamsChange($event)"
+            nzSize="small"
+            [nzScroll]="{y}"
+            [nzShowTotal]="totalTemplate"
+        >
+            <thead>
+                <tr>
+                    <th nzWidth="50px" nzAlign="center">
+                        {{ "placard.No" | i18n }}
+                    </th>
+                    <th>{{ "placard.processNo" | i18n }}</th>
+                    <th>{{ "placard.processName" | i18n }}</th>
+                    <th nzWidth="80px" nzAlign="center">
+                        {{ "btn.operation" | i18n }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of workStationList; let i = index">
+                    <td nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.code }}</td>
+                    <td>{{ data.name }}</td>
+                    <td nzAlign="center">
+                        <i
+                            nz-icon
+                            nzType="plus"
+                            nzTheme="outline"
+                            style="color: red; font-size: 16px"
+                            class="pointer"
+                            (click)="onAdd(data)"
+                        ></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <ng-template #totalTemplate let-total>
+            {{ "placard.totalnum" | i18n | covertTranslation: total }}
+        </ng-template>
+    </div>
+    <div class="right-view">
+        <div class="mr8">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                <input
+                    type="text"
+                    nz-input
+                    placeholder="{{ 'btn.search' | i18n }}"
+                    [ngModel]="keywords2"
+                    (keyup.enter)="onKeyUp2($event)"
+                />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+        <nz-table
+            [nzData]="workStationSelectedFilterList"
+            [nzBordered]="true"
+            [nzShowPagination]="false"
+            nzSize="small"
+            [nzScroll]="{y}"
+        >
+            <thead>
+                <tr>
+                    <th nzWidth="50px" nzAlign="center">
+                        {{ "placard.No" | i18n }}
+                    </th>
+                    <th>{{ "placard.schemeCode" | i18n }}</th>
+                    <th>{{ "placard.schemeName" | i18n }}</th>
+                    <th>{{ "placard.proportion" | i18n }}</th>
+                    <th nzWidth="80px" nzAlign="center">
+                        {{ "btn.operation" | i18n }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="
+                        let data of workStationSelectedFilterList;
+                        let i = index
+                    "
+                >
+                    <td nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.poi_code }}</td>
+                    <td>{{ data.poi_name }}</td>
+                    <td>
+                        <nz-input-number [(ngModel)]=" data.mixtureratio" [nzMin]="0" (keyup.enter)="onEditRatio(data)" style="width:100%;"></nz-input-number>
+                    </td>
+                    <td nzAlign="center">
+                        <i
+                            nz-icon
+                            nzType="minus"
+                            nzTheme="outline"
+                            style="color: red; font-size: 16px"
+                            class="pointer"
+                            (click)="onDelete(data)"
+                        ></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

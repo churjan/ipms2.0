@@ -1,0 +1,38 @@
+<idrawer
+    *ngIf="visible"
+    [title]="title"
+    justifyContent="center"
+    nzSize="small"
+    (onClose)="close()"
+    [content]="contentTpl"
+    [footer]="footerTpl"
+>
+</idrawer>
+<ng-template #contentTpl>
+    <span>{{'checkdata.check_station'|i18n}}：</span>
+    <nz-select
+        [(ngModel)]="wss.curStation"
+        (ngModelChange)="onStationChange()"
+        [compareWith]="compareFn"
+        style="width: 200px"
+    >
+        <nz-option
+            *ngFor="let item of wss.stationList"
+            [nzLabel]="item.fullName"
+            [nzValue]="item"
+        ></nz-option>
+    </nz-select>
+</ng-template>
+
+<ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ "btn.cancel" | i18n }}</button>
+    <button
+        nz-button
+        nzType="primary"
+        (click)="onPrint()"
+        [nzLoading]="isBtnLoading"
+        class="ml5"
+    >
+        {{ "btn.print" | i18n }}
+    </button>
+</ng-template>

@@ -1,0 +1,20 @@
+
+<idrawer *ngIf="visible" [title]="title" [width]="'80%'" justifyContent="center"
+  height="99%"
+  nzSize="small" [footer]="footerTpl"
+  (onClose)="close()" [content]="contentTpl">
+  <ng-template #contentTpl>
+    <nz-descriptions nzBordered nzSize="small" [nzColumn]="2">
+      <nz-descriptions-item nzTitle="{{'sysLogrun.time'|i18n}}">{{model.time}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="{{'sysLogrun.source'|i18n}}">{{model.source}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="{{'sysLogrun.level'|i18n}}">{{model.level}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="{{'sysLogrun.type'|i18n}}">{{model.type}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="{{'sysLogrun.content'|i18n}}" [nzSpan]="2">
+        <pre class="text-left">{{JsonFormat(model.content,'JSON')}}</pre>
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ 'btn.cancel'|i18n }}</button>
+  </ng-template>
+</idrawer>

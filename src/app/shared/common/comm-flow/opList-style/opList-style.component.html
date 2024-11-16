@@ -1,0 +1,35 @@
+<!-- 工序搜索 -->
+<div class="op-search">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="{{'placard.searching'|i18n}}" (keydown)="searchOp($event)"
+            [(ngModel)]="selectedval" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search" class="pointer" (click)="searchOp()"></i>
+    </ng-template>
+</div>
+
+<!-- 工序列表 -->
+<div id="boxlist" class="list-box">
+    <cdk-virtual-scroll-viewport itemSize="5" class="infinite-container">
+        <nz-list dense cdkDropList id="todoList" [cdkDropListData]="OperationList">
+            <nz-list-item *cdkVirtualFor="let item of OperationList; let i=index;" class="list-item" cdkDrag
+                id="{{item.code}}" [cdkDragData]="i" [class.added]="item.hasselect">
+                <nz-skeleton *ngIf="!item" [nzAvatar]="true" [nzParagraph]="{ rows: 1 }"></nz-skeleton>
+                <nz-list-item-meta>
+                    <nz-list-item-meta-title>{{item.code }}</nz-list-item-meta-title>
+                    <nz-list-item-meta-description>{{item.name }}</nz-list-item-meta-description>
+                </nz-list-item-meta>
+                <ul nz-list-item-actions style="margin-left: 5px;">
+                    <nz-list-item-action>
+                        <a (click)="add(item)"> <i nz-icon nzType="plus" nzTheme="outline"></i></a>
+                    </nz-list-item-action>
+                </ul>
+                <div *cdkDragPreview class="chack">[{{item.code }}]{{item.name }}</div>
+            </nz-list-item>
+            <nz-list-empty *ngIf="!OperationList||OperationList.cachedData.length ===
+                0">
+            </nz-list-empty>
+        </nz-list>
+    </cdk-virtual-scroll-viewport>
+</div>

@@ -1,0 +1,134 @@
+.tree-head {
+    border-radius   : 2px 2px 0 0;
+    width           : 100%;
+    height          : 32px;
+    background-color: #3082ff;
+    flex-direction  : column;
+
+    .title {
+        float       : left;
+        width       : auto;
+        padding-left: 10px;
+        height      : 32px;
+        color       : #fff;
+        line-height : 32px;
+        max-width   : 50%;
+        margin      : 0;
+    }
+
+    .btnGroup {
+        float          : right;
+        width          : auto;
+        height         : 32px;
+        color          : #fff;
+        line-height    : 32px;
+        align-items    : center;
+        justify-content: flex-end;
+    }
+}
+
+.tree-main {
+    padding: 10px;
+
+    width        : 100%;
+    height       : calc(100% - 32px);
+    overflow     : hidden;
+    border       : 1px solid #3082ff;
+    border-top   : 0px;
+    border-radius: 0 0 3px 3px;
+
+    .tree-search {
+        margin-bottom: 10px;
+    }
+
+    .treeview {
+        height  : calc(100% - 55px);
+        overflow: auto;
+
+        nz-tree-node {
+            width: 100%;
+
+            nz-tree-node-option {
+                width: inherit;
+
+                .item {
+
+                    align-items: flex-end;
+                }
+            }
+
+            .item {
+                //     height         : 35px;
+                //     line-height    : 35px;
+                    width          : 100%;
+                    display        : flex;
+                //     align-items    : center;
+                //     justify-content: flex-end;
+
+                // span:first-child {
+                //     padding    : 0 5px;
+                //     white-space: nowrap;
+                // }
+
+                // .tree-node-selected {
+                //     background-color: #bae7ff;
+                // }
+
+                nz-tree-node-toggle {
+                    line-height: 35px;
+                }
+
+                nz-tree-node-option {
+                    padding: 0;
+                    .item {
+                        height         : 35px;
+                        line-height    : 35px;
+                        width          : 100%;
+                        display        : flex;
+                        align-items    : center;
+                        justify-content: flex-end;
+
+                        span:first-child {
+                            // padding    : 0 5px;
+                            white-space: nowrap;
+                        }
+
+                        .tree-node-selected {
+                            background-color: #bae7ff;
+                        }
+
+                        .treenodetitle {
+                            white-space  : nowrap;
+                            overflow     : hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+
+                // .treenodetitle {
+                //     white-space  : nowrap;
+                //     overflow     : hidden;
+                //     text-overflow: ellipsis;
+                // }
+            }
+        }
+    }
+
+}
+
+/**间距调整*/
+.spacer {
+    flex: 1 1 auto;
+}
+
+// .item {
+//     display    : inline-flex;
+//     align-items: center
+// }
+// *{
+//     width: 240px;
+//     height: calc(100% - 32px);
+//     overflow: hidden;
+//     margin: 16px 0px 0px 16px;
+//     float: left;
+// }

@@ -1,0 +1,81 @@
+<div class="zcont">
+    <div class="zcondition">
+        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-label nzFor="content">{{'popupField.content'|i18n}}</nz-form-label>
+                <nz-form-control [nzErrorTip]="('inputdata.input2'|i18n) + ('popupField.content'|i18n) + '！'">
+                    <input nz-input style="width: 400px;" class="zcondition_input" formControlName="content"
+                        [placeholder]="'inputdata.input_key'|i18n" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-label nzRequired nzFor="time">{{'popupField.date'|i18n}}</nz-form-label>
+                <nz-form-control
+                    [nzErrorTip]="('checkdata.check'|i18n)+('popupField.log'|i18n)+('popupField.date'|i18n)+ '！'">
+                    <nz-date-picker class="zcondition_input" formControlName="time" [nzDisabledDate]="disabledDate"
+                        [nzFormat]="dateFormat"></nz-date-picker>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-label nzRequired nzFor="type">{{'popupField.style'|i18n}}</nz-form-label>
+                <nz-form-control
+                    [nzErrorTip]="('checkdata.check'|i18n)+('popupField.log'|i18n)+('popupField.style'|i18n)">
+                    <nz-select class="zcondition_input" formControlName="type" nzAllowClear
+                        [nzPlaceHolder]="'checkdata.check'|i18n" (ngModelChange)="genderChange($event)">
+                        <nz-option *ngFor="let item of this.typeList" [nzLabel]="item.name" [nzValue]="item.code">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top"
+                *ngIf="validateForm.get('type').value==1007 || validateForm.get('type').value==1008">
+                <nz-form-label nzRequired nzFor="code">{{'popupField.line_code2'|i18n}}</nz-form-label>
+                <nz-form-control
+                    [nzErrorTip]="('checkdata.check'|i18n)+('popupField.equipment'|i18n)+('popupField.line_code2'|i18n)">
+                    <div class="zcondition_input">
+                        <ina-common-select [title]="'checkdata.check'|i18n" formControlName="code" DataFiled="code"
+                            [other]="{group:'Line'}" datatype="getlist" url="LayoutStructure">
+
+                        </ina-common-select>
+                    </div>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top" *ngIf="validateForm.get('type').value==1008">
+                <nz-form-label>{{'popupField.stationCode'|i18n}}</nz-form-label>
+                <nz-form-control>
+                    <input nz-input class="zcondition_input" formControlName="StationCode" placeholder="" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-label nzFor="level">{{'popupField.level'|i18n}}</nz-form-label>
+                <nz-form-control>
+                    <nz-select class="zcondition_input" formControlName="level" nzAllowClear
+                        [nzPlaceHolder]="'checkdata.check'|i18n">
+                        <nz-option *ngFor="let item of this.levelList" [nzLabel]="item.name" [nzValue]="item.code">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-control>
+                    <button nz-button nzType="primary" (click)="newTab()">{{'btn.search'|i18n}}</button>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="zcondition_in_top">
+                <nz-form-control>
+                    <button nz-button nzType="default" (click)="reset()">{{'btn.reset'|i18n}}</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+    <div class="zcont_table">
+        <nz-tabset [(nzSelectedIndex)]="index" nzType="editable-card" nzHideAdd (nzClose)="closeTab($event)">
+            <nz-tab (nzClick)="toTab(i)" *ngFor="let tab of tabs; let i = index" nzClosable [nzTitle]="tab">
+                <retrieval-details [cont]="contList[i]" [time]="time || null"
+                    [type]="validateForm.get('type').value || null" [code]="validateForm.get('code').value || ''"
+                    [StationCode]="validateForm.get('StationCode').value || ''"
+                    [level]="validateForm.get('level').value" [page]="1" [pageSize]="100"></retrieval-details>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>

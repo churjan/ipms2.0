@@ -1,0 +1,16 @@
+.row-view{
+  height: 300px;
+  overflow: hidden auto;
+}
+.row-item-view{
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed #999;
+}
+.sub-txt{
+  color:#00000073;
+}
+.value-txt{
+  line-height: 22px;
+  height: 22px;
+}

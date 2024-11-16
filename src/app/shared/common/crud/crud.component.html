@@ -1,0 +1,182 @@
+<div class="page beauty-scroll">
+  <!-- 基础 -->
+  <nz-card class="page-container DataDisplay" *ngIf="showLayout=='Up-Down'">
+    <ng-container *ngTemplateOutlet="top"></ng-container>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </nz-card>
+  <!-- 查看 -->
+  <nz-card class="page-container DataDisplay" *ngIf="showLayout=='Container'">
+    <nz-content [nzTheme]="theme" class="drawer-container Container">
+      <div class="drawer-content">
+        <ng-container *ngTemplateOutlet="isTest==true?tableTest:table"></ng-container>
+      </div>
+    </nz-content>
+  </nz-card>
+  <!-- 左侧树 -->
+  <nz-card class="page-container DataDisplay" *ngIf="showLayout=='side-top-left'">
+    <nz-layout class="top-side-left" [nzTheme]="theme">
+      <ng-container *ngTemplateOutlet="side"></ng-container>
+      <nz-layout class="layout-right">
+        <ng-container *ngIf="!contentTest">
+          <ng-container *ngTemplateOutlet="top"></ng-container>
+          <ng-container *ngTemplateOutlet="contentTest?contentTest:content"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="contentTest">
+          <ng-container *ngTemplateOutlet="contentTest?contentTest:content"></ng-container>
+        </ng-container>
+      </nz-layout>
+    </nz-layout>
+  </nz-card>
+  <nz-card class="page-container DataDisplay" *ngIf="showLayout=='top-side-right'">
+    <!-- <nz-layout class="top-side-right" [nzTheme]="theme"> -->
+    <ng-container *ngTemplateOutlet="top"></ng-container>
+    <nz-layout class="content" [nzTheme]="theme" [class]="theme">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+      <ng-container *ngTemplateOutlet="side"></ng-container>
+    </nz-layout>
+    <!-- </nz-layout> -->
+  </nz-card>
+</div>
+<!-- 导入 -->
+<imp #imp [modular]="modular" [impurl]="impurl" [xlsurl]="xlsurl" (editDone)="Importreturn($event)"></imp>
+<!-- 顶栏 -->
+<ng-template #top>
+  <nz-header>
+    <!-- 批量按钮 -->
+    <nz-button-group class="button-group">
+      <ng-container *ngFor="let item of btnGroup.common;let i=index">
+        <button nz-button *ngIf="i<=3" [nzType]="item.action.toLowerCase()=='add'?'primary':'default'"
+          (click)="onAction({action:item.action,sonbtn:item.sonbtn,title:item.name})">
+          <i nz-icon [nzType]="item.icon"></i>
+          {{item.name}}
+        </button>
+      </ng-container>
+      <ng-container *ngIf="btnGroup.common.length>4">
+        <button nz-button nz-dropdown [nzDropdownMenu]="downloadfile">{{'btn.extended'|i18n}}
+          <i nz-icon nzType="down"></i>
+        </button>
+        <nz-dropdown-menu #downloadfile="nzDropdownMenu">
+          <ul nz-menu>
+            <ng-container *ngFor="let item of btnGroup.common;let
+                            i=index">
+              <li nz-menu-item *ngIf="i>3" (click)="onAction({action:item.action,sonbtn:item.sonbtn,title:item.name})">
+                <i nz-icon [nzType]="item.icon"></i>
+                {{item.name}}
+              </li>
+            </ng-container>
+          </ul>
+        </nz-dropdown-menu>
+      </ng-container>
+    </nz-button-group>
+    <span class="spacer"></span>
+    <!-- 查询 -->
+    <div class="keyWords" nz-row nzJustify="center" nzAlign="top" *ngIf="showTableTop">
+      <ng-container *ngTemplateOutlet="keyWords"></ng-container>
+    </div>
+  </nz-header>
+</ng-template>
+<!-- 左侧栏 -->
+<ng-template #side>
+  <nz-sider [nzTheme]="theme" [class.layout-left]="showLayout=='side-top-left'"
+    [class.layout-right]="showLayout=='top-side-right'" [nzWidth]="showLayout=='top-side-right'?Rwidth:Lwidth"
+    *ngIf="sideColumnTpl">
+    <ng-container *ngTemplateOutlet="sideColumnTpl"></ng-container>
+  </nz-sider>
+</ng-template>
+<!-- 主模块 -->
+<ng-template #content>
+  <nz-content [nzTheme]="theme" class="drawer-container">
+    <div class="drawer-backdrop" [class.drawer-shown]="visible" (click)="visible=!visible">
+    </div>
+    <div class="drawer ant-layout" [class.drawer-open]="visible" [class.drawer-close]="!visible">
+      <ng-container *ngTemplateOutlet="searchActions"></ng-container>
+      <ng-container *ngTemplateOutlet="impoutTest?impoutTest:null"></ng-container>
+    </div>
+    <div class="drawer-backdrop" [class.drawer-shown]="impoutVisible" (click)="impoutVisible=!impoutVisible">
+    </div>
+    <div class="drawer ant-layout" *ngIf="impoutTest" [class.drawer-open]="impoutVisible"
+      [class.drawer-close]="!impoutVisible">
+      <ng-container *ngTemplateOutlet="impoutTest?impoutTest:null"></ng-container>
+    </div>
+    <div class="drawer-content">
+      <ng-container *ngTemplateOutlet="isTest==true?tableTest:table"></ng-container>
+    </div>
+  </nz-content>
+</ng-template>
+<!-- 关键字查询 -->
+<ng-template #keyWords>
+  <ng-container *ngTemplateOutlet="KeyQuery"></ng-container>
+  <nz-input-group [nzSuffix]="suffixIcon" *ngIf="isKeyword==true">
+    <input nz-input placeholder="{{'placard.keyword_xx'|i18n:(keyword_placeholder|i18n)}}"
+      [(ngModel)]="SearchModel.keywords" (keyup)="Search($event)" />
+  </nz-input-group>
+  <ng-template #suffixIcon>
+    <i nz-icon nzType="search" (click)="Search()"></i>
+  </ng-template>
+
+  <nz-button-group>
+    <button nz-button nzType="primary" (click)="Search()"
+      [hidden]="!isKeyword&&!showAdvanced&&!KeyQuery">{{'btn.search'|i18n }}</button>
+    <button nz-button (click)="Reset(isRefresh)" [hidden]="!isKeyword&&!showAdvanced&&!KeyQuery">
+      <i nz-icon nzType="reload" nzTheme="outline"></i>
+      {{'btn.reset'|i18n}}</button>
+    <a nz-button nz-tooltip nzTooltipTitle=" {{'btn.setList'|i18n}}" nz-dropdown [nzDropdownMenu]="setcolumns"
+      *ngIf="isSetList" [nzOverlayClassName]="'columnsdropdown'" [nzClickHide]="false">
+      <i nz-icon nzType="funnel-plot" nzTheme="outline"></i>
+    </a>
+  </nz-button-group>
+  <nz-dropdown-menu #setcolumns="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item *ngFor="let item of AllColumns">
+        <div nz-row style="width: 200px;align-items: center;justify-content: space-between;">
+          <div nz-col nz-checkbox [(ngModel)]="item.check" (ngModelChange)="setColumns(item)"
+            [nzDisabled]="item.disable">{{ jsonname+'.'+item.coums|i18n}}</div>
+          <input nz-col nz-input type="number" style="width:70px" [(ngModel)]="item.widthnum" *ngIf="project=='AiDaGao'"
+            (click)="$event.stopPropagation()" (change)="setColumns(item)" [min]="item.minwidth">
+        </div>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <a class="m-l-6 advancedSearch" *ngIf="showAdvanced" [ngClass]="{active: advancedActive}" (click)="visible=!visible">
+    {{ 'btn.advancedSearch'|i18n }}
+    <i nz-icon [nzType]="!visible?'down':'up'"></i>
+  </a>
+</ng-template>
+<!-- 高级查询 -->
+<ng-template #searchActions>
+  <nz-page-header (nzBack)="visible=false" [nzBackIcon]="'logout'">
+    <nz-page-header-extra>
+      <button nz-button (click)="Search()">
+        <i nz-icon nzType="search" nzTheme="outline"></i>
+        {{'btn.search'|i18n}}
+      </button>
+      <button nz-button (click)="Localreset(isRefresh)">
+        <i nz-icon nzType="reload" nzTheme="outline"></i>
+        <span>{{'btn.reset'|i18n}}</span>
+      </button>
+    </nz-page-header-extra>
+  </nz-page-header>
+  <nz-divider></nz-divider>
+  <div class="SearchForm">
+    <ng-container *ngTemplateOutlet="searchActionsBody"></ng-container>
+  </div>
+</ng-template>
+<!-- 表格列表 -->
+<ng-template #table>
+  <ina-list-show class="listshow" *ngIf="!isReport" #listshow [modular]="modular" [position]="position" [columns]="isdynamic ==
+        true?dynamicColumns:columns" [fields]="fields" (onPage)="onPage($event)" (onclick)="onclick($event)"
+    [FrontPagination]="FrontPagination" [isSetList]="isSetList" [ExtendColumnTpl]="ExtendColumnTpl"
+    (lineClick)="onlineClick($event)" [data]="list" [jsonname]="jsonname" [router]="router" [btnGroup]="btnGroup"
+    [checkbox]="checkbox" [NegStatus]="NegStatus" [Status]="Status" [statusnode]="statusnode" [isAction]="isAction"
+    [isStatistics]="isStatistics" [sumNode]="sumNode" (onAction)="onAction($event)" (onSelect)="setOfCheckedId=$event"
+    [options]="options" [lastColumnTpl]="lastColumnTpl" [lastColumnWidth]="lastColumnWidth" [FooterTpl]="FooterTpl"
+    (Resizewidth)="AllColumns=$event">
+  </ina-list-show>
+  <ina-Report-show class="listshow" #Reportshow *ngIf="isReport" [modular]="modular" [position]="position" [columns]="isdynamic ==
+    true?dynamicColumns:columns" [fields]="fields" (onPage)="onPage($event)" (onclick)="onclick($event)"
+    [ExtendColumnTpl]="ExtendColumnTpl" (lineClick)="onlineClick($event)" [data]="list" [jsonname]="jsonname"
+    [router]="router" [btnGroup]="btnGroup" [checkbox]="checkbox" [NegStatus]="NegStatus" [Status]="Status"
+    [isAction]="isAction" [isStatistics]="isStatistics" [sumNode]="sumNode" (onAction)="onAction($event)"
+    (onSelect)="setOfCheckedId=$event" [options]="options" [lastColumnTpl]="lastColumnTpl" [FooterTpl]="FooterTpl">
+  </ina-Report-show>
+</ng-template>

@@ -1,0 +1,35 @@
+<div class="table-wrapper">
+    <div class="table-title">{{ 'tags.process'|i18n }}</div>
+    <div class="table-body">
+        <nz-table
+            nzSize="small"
+            #processTable
+            [nzData]="data"
+            [nzBordered]="true"
+            [nzShowPagination]="false"
+            >
+            <thead>
+                <tr>
+                    <th>{{ 'procedureName'|i18n }}</th>
+                    <th>{{ 'tags.poiCode'|i18n }}</th>
+                    <th>{{ 'blsName'|i18n }}</th>
+                    <th>{{ 'blsCode'|i18n }}</th>
+                    <th>{{ 'tags.carrierId'|i18n }}</th>
+                    <th>{{ 'tags.finishTime'|i18n }}</th>
+                    <th>{{ 'employeeName'|i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of processTable.data">
+                    <td>{{item.poi_name}}</td>
+                    <td>{{item.poi_code}}</td>
+                    <td>{{item.productionrecord?.bls_name}}</td>
+                    <td>{{item.productionrecord?.bls_code}}</td>
+                    <td>{{item.productionrecord?.carrierid}}</td>
+                    <td>{{item.productionrecord?.happen_time|time}}</td>
+                    <td>{{item.productionrecord?.hei_name}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

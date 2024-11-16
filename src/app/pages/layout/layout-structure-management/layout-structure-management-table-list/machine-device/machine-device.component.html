@@ -1,0 +1,113 @@
+<div class="table-list-view">
+    <div class="left-view">
+        <div class="mr8">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                <input
+                    type="text"
+                    nz-input
+                    placeholder="{{ 'btn.search' | i18n }}"
+                    [(ngModel)]="keywords"
+                    (keyup.enter)="onKeyUp()"
+                />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+        <nz-table
+            [nzData]="machineList"
+            [nzBordered]="true"
+            [nzShowPagination]="false"
+            nzSize="small"
+            [nzScroll]="{y}"
+        >
+            <thead>
+                <tr>
+                    <th nzWidth="50px" nzAlign="center">
+                        {{ "placard.No" | i18n }}
+                    </th>
+                    <th>{{ "placard.productionEquipmentCode" | i18n }}</th>
+                    <th>{{ "placard.productionEquipment" | i18n }}</th>
+                    <th nzWidth="80px" nzAlign="center">
+                        {{ "btn.operation" | i18n }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of machineList; let i = index">
+                    <td nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.code }}</td>
+                    <td>{{ data.name }}</td>
+                    <td nzAlign="center">
+                        <i
+                            nz-icon
+                            nzType="plus"
+                            nzTheme="outline"
+                            style="color: red; font-size: 16px"
+                            class="pointer"
+                            (click)="onAdd(data)"
+                        ></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div class="right-view">
+        <div class="mr8">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="mb16">
+                <input
+                    type="text"
+                    nz-input
+                    placeholder="{{ 'btn.search' | i18n }}"
+                    [ngModel]="keywords2"
+                    (keyup.enter)="onKeyUp2($event)"
+                />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
+        <nz-table
+            [nzData]="machineSelectedFilterList"
+            [nzBordered]="true"
+            [nzShowPagination]="false"
+            nzSize="small"
+            [nzScroll]="{y}"
+        >
+            <thead>
+                <tr>
+                    <th nzWidth="50px" nzAlign="center">
+                        {{ "placard.No" | i18n }}
+                    </th>
+                    <th>{{ "placard.productionEquipmentCode" | i18n }}</th>
+                    <th>{{ "placard.productionEquipment" | i18n }}</th>
+                    <th nzWidth="80px" nzAlign="center">
+                        {{ "btn.operation" | i18n }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="
+                        let data of machineSelectedFilterList;
+                        let i = index
+                    "
+                >
+                    <td nzAlign="center">{{ i + 1 }}</td>
+                    <td>{{ data.dmdi_code }}</td>
+                    <td>{{ data.dmdi_name }}</td>
+                    <td nzAlign="center">
+                        <i
+                            nz-icon
+                            nzType="minus"
+                            nzTheme="outline"
+                            style="color: red; font-size: 16px"
+                            class="pointer"
+                            (click)="onDelete(data)"
+                        ></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

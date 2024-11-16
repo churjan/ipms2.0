@@ -1,0 +1,13 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" nzSize="small"
+    [footer]="footerTpl" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-tree #nzTreeComponent [nzData]="nodes" nzCheckable nzMultiple [nzCheckedKeys]="defaultCheckedKeys"
+            [nzSelectedKeys]="defaultSelectedKeys" (nzClick)="nzEvent($event)" (nzCheckBoxChange)="nzEvent($event)">
+        </nz-tree>
+    </ng-template>
+    <ng-template #footerTpl>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+            [nzLoading]="submiting" class="m-l-6">{{'btn.save'|i18n}}</button>
+        <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+    </ng-template>
+</idrawer>

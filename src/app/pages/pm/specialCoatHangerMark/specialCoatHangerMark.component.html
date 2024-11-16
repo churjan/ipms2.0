@@ -1,0 +1,221 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[isLeftSpinning]="isLeftSpinning"
+[leftTreeTitle]="leftTreeTitle"
+[leftTreeTool]="leftTreeTool"
+[leftTreeInput]="leftTreeInput"
+[leftTree]="leftTree" 
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch"
+[zadvancedSearch]="zadvancedSearch"
+[zadvancedCont]="zadvancedCont"
+[isTablePage]="isTablePage"
+[tablePage]="tablePage"
+[tableData]="tableData"
+[pageSize]="queryParams.pageSize"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[format]="format"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+>
+</zpage>
+
+<!-- 左侧树工具栏内容 -->
+<ng-template #leftTreeTool>
+    <a nz-dropdown nzTrigger="click" class="zleft_top_right_a">
+        <i nz-icon nzTheme="outline" nzType="reload" (click)="toReloadTree()"></i>
+    </a>
+</ng-template>
+<!-- 左侧树的查询区域 -->
+<ng-template #leftTreeInput>
+    <nz-input-group style="margin-bottom: 10px;" [nzSuffix]="suffixIcon">
+        <input nz-input [placeholder]="'placard.search'|i18n" [(ngModel)]="searchValue"/>
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+</ng-template>
+<!-- 左侧树tree -->
+<ng-template #leftTree>
+    <nz-tree
+        #ltree
+        [nzData]="nodes"
+        [nzSearchValue]="searchValue"
+        (nzClick)="nzTreeEvent($event)"
+        (nzSearchValueChange)="nzEvent($event)"
+        [nzHideUnMatched]="true" 
+    ></nz-tree>
+</ng-template>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword_clothes'|i18n" [(ngModel)]="queryParams.keywords" (keyup.enter)="toSearch(1)"/>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" nzSearch (click)="resetQueryParams(1)"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+<!-- 高级搜索 搜索按钮 -->
+<ng-template #zadvancedSearch>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" (click)="toSearch(1)">
+        <span nz-icon nzType="search"></span>
+        {{ 'btn.search'|i18n }}
+    </button>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" nzSearch (click)="resetQueryParams(2)">
+        <span nz-icon nzType="reload"></span>
+        {{ 'btn.reset'|i18n }}
+    </button>
+</ng-template>
+<!-- 高级搜索 搜索条件 -->
+<ng-template #zadvancedCont>
+    <div class="zadvanced_search_label">{{ 'popupField.som_key'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.som_key"
+        (nzScrollToBottom)="onOrderSearch($event)"
+        (nzOnSearch)="onOrderSearch($event)"
+        nzAllowClear
+        nzShowSearch
+        [nzServerSearch]="true"
+        >
+            <ng-container *ngFor="let item of orderList">
+                <nz-option [nzLabel]="item.code" [nzValue]="item.key"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="orderLoading" nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                {{ 'url.redirect'|i18n }}...
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.pwb_key'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.pwb_key"
+        (nzScrollToBottom)="onWorkSearch($event)"
+        (nzOnSearch)="onWorkSearch($event)"
+        nzAllowClear
+        nzShowSearch
+        [nzServerSearch]="true"
+        >
+            <ng-container *ngFor="let item of workList">
+                <nz-option [nzLabel]="item.code" [nzValue]="item.key"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="workLoading" nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                {{ 'url.redirect'|i18n }}...
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.psi_key'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        nzAllowClear
+        nzShowSearch
+        nzServerSearch
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.psi_key"
+        [nzShowArrow]="true"
+        [nzFilterOption]="true"
+        (nzOnSearch)="onStyleSearch($event)"
+        >
+            <nz-option *ngFor="let item of styleList" [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.pci_key'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        nzAllowClear
+        nzShowSearch
+        nzServerSearch
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.pci_key"
+        [nzShowArrow]="true"
+        [nzFilterOption]="true"
+        (nzOnSearch)="onColorSearch($event)"
+        >
+            <nz-option *ngFor="let item of colorList" [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.psz_key'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        nzAllowClear
+        nzShowSearch
+        nzServerSearch
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.psz_key"
+        [nzShowArrow]="true"
+        [nzFilterOption]="true"
+        (nzOnSearch)="onSizeSearch($event)"
+        >
+            <nz-option *ngFor="let item of sizeList" [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.isabnormal'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        nzAllowClear
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.isabnormal"
+        (nzOnSearch)="onAbnormalSearch($event)"
+        >
+            <nz-option *ngFor="let item of abnormalList" [nzLabel]="item.name" [nzValue]="item.key"></nz-option>
+        </nz-select>
+    </div>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index" let-value="value">
+    <ng-container *ngIf="column.format=='toHangerid'">
+        <span *ngIf="column.tip" nz-tooltip [nzTooltipTitle]="value">
+            <a (click)="toHangerid(data)">{{value}}</a>
+        </span>
+        <span *ngIf="!column.tip">
+            <a (click)="toHangerid(data)">{{value}}</a>
+        </span>
+    </ng-container>
+    <ng-container *ngIf="column.format=='isOk'">
+        <span *ngIf="column.tip" nz-tooltip [nzTooltipTitle]="value?('format.yes'|i18n):('format.no'|i18n)">
+            {{value?('format.yes'|i18n):('format.no'|i18n)}}
+        </span>
+        <span *ngIf="!column.tip">
+            {{value?('format.yes'|i18n):('format.no'|i18n)}}
+        </span>
+    </ng-container>
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 标记异常 -->
+<zpopup-confirm
+*ngIf="isPopupMark" 
+[type]="1"
+[text]="'confirm.confirm_mark'|i18n"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupMarkConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupMarkConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isPopupMarkConfirm" (click)="toMarkSub()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>

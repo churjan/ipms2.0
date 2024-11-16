@@ -1,0 +1,52 @@
+<idrawer *ngIf="visible" title="{{ 'btn.advancedSearch'|i18n }}" [width]="width" height="100%" (onClose)="close()"
+    [content]="contentTpl" [btnTpl]="btnTpl" [issearch]="true">
+    <ng-template #contentTpl>
+        <form nz-form [formGroup]="validateForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'wmsOutcontrol.outControl'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="control_key"
+                        url="w_WarehouseOutControl" [isshow]="false">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{ 'wmsOutcontrol.name'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input formControlName="name" placeholder="{{
+                        'inputdata.input'|i18n }}" (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{
+                    'wmsOutcontrol.code'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <input nz-input formControlName="code" placeholder="{{ 'inputdata.input'|i18n }}"
+                        (keydown)="submitForm($event)" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="24">{{
+                    'wmsOutcontrol.scheme'|i18n }}</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                    <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" formControlName="relation_key"
+                        url="w_WarehouseOutRelation" [isshow]="false">
+                    </ina-common-select>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-template>
+    <ng-template #btnTpl>
+        <button nz-button (click)="reset()">{{ 'btn.reset'|i18n }}</button>
+        <!-- <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button> -->
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" class="m-l-6">{{ 'btn.search'|i18n
+            }}</button>
+    </ng-template>
+
+    <ng-template #footerTpl>
+        <button nz-button (click)="reset()">{{ 'btn.reset'|i18n }}</button>
+        <button nz-button (click)="close()">{{ 'btn.close'|i18n }}</button>
+        <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)"
+            class="m-l-6">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+</idrawer>

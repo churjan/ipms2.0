@@ -1,0 +1,33 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" showLayout="side-top-left" [list]="list"
+    (actionClick)="btnEvent($event)" [Lwidth]="'20%'" [sideColumnTpl]="sideColumnTpl" [columns]="columns"
+    [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody"></crud2>
+<ng-template #sideColumnTpl let-item="record">
+    <class-ztree #Menu class="tree" commUrl="QualityCauseClass" [modular]="modular"
+        title="{{'basQuality.bqcc_key'|i18n}}" [action]="modular.btnClass" (onclick)="onclick($event)"
+        (onAction)="onAction($event)"></class-ztree>
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'basQuality.code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="code" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.code" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'basQuality.name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="name" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.name" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<app-edit-quality-item-management #edit [modular]="modular" (editDone)="crud.reloadData($event)">
+</app-edit-quality-item-management>
+<app-view-quality-item-management #view [modular]="modular" (editDone)="crud.reloadData($event)">
+</app-view-quality-item-management>
+<app-quality-with-process #process [modular]="modular" (editDone)="crud.reloadData($event)"></app-quality-with-process>
+<app-edit-quality-item-management-catalog #classEdit [modular]="modular" Nickname="classurl" (editDone)="succsave($event)">
+</app-edit-quality-item-management-catalog>

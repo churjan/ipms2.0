@@ -1,0 +1,8 @@
+<nz-descriptions nzBordered [nzColumn]="4" nzSize="small">
+    <nz-descriptions-item *ngFor="let item of attrList" [nzTitle]="item.blsta_chinesename">{{ item.attribute }}
+    </nz-descriptions-item>
+    <!-- <nz-descriptions-item [nzTitle]="'layoutExhibition.volume'|i18n">{{ skuList.volume }}</nz-descriptions-item>
+    <nz-descriptions-item [nzTitle]="'layoutExhibition.sku_composition'|i18n">{{ skuList.sku_composition }}
+    </nz-descriptions-item>
+    <nz-descriptions-item [nzTitle]="'layoutExhibition.sku_maximum'|i18n">{{ skuList.sku_maximum }}</nz-descriptions-item> -->
+</nz-descriptions>

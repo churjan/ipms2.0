@@ -1,0 +1,30 @@
+<div class="m-form" *ngIf="newmodel">
+    <table>
+        <tr>
+            <th style="width: 110px;text-align: right;">{{field["name"]}}:</th>
+            <td>
+                <input type="text" class="form-control" [(ngModel)]="newmodel.psopm_name"
+                    [readonly]="!newmodel.psopm_key?'':'readonly'" />
+            </td>
+            <th style="width: 110px;text-align: right;">{{field["code"]}}:</th>
+            <td>
+                <input type="text" class="form-control" [(ngModel)]="newmodel.psopm_code" readonly />
+            </td>
+            <th colspan="2"></th>
+        </tr>
+        <tr>
+            <th style="width: 110px;text-align: right;" *ngIf="pormType && pormType.length>0">
+                {{tipsMsg.check_router}}:
+            </th>
+            <td *ngIf="pormType && pormType.length>0">
+                <select class="form-control" [(ngModel)]="newmodel.psorm_key" (change)="mapselect(newmodel.psorm_key)">
+                    <option selected value="">{{tipsMsg.check}}</option>
+                    <option *ngFor="let type of pormType" value="{{type.key}}">{{type.name}}</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="flow" style="height: calc(100% - 64px);" *ngIf="newmodel">
+    <lookflow [model]="model" [inpara]="inpara" [mapkey]="newmodel.psorm_key"></lookflow>
+</div>

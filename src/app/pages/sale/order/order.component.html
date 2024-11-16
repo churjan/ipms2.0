@@ -1,0 +1,872 @@
+<!-- 主体框架 -->
+<zpage 
+#zpage
+[openLeft]="openLeft"
+[topInput]="topInput"
+[isAdvancedSearch]="isAdvancedSearch"
+[zadvancedSearch]="zadvancedSearch"
+[zadvancedCont]="zadvancedCont"
+[isTablePage]="isTablePage"
+[tablePage]="tablePage"
+[tableData]="tableData"
+[pageSize]="queryParams.pageSize"
+[columns]="columns"
+[isCheck]="isCheck"
+[isCheckAll]="isCheckAll"
+[isNumber]="isNumber"
+[isOperation]="isOperation"
+[tableLoading]="tableLoading"
+[format]="format"
+(topBtn)="getTopBtn($event)"
+(tableBtn)="getTableBtn($event)"
+(getCheckedIdList)="getCheckedId($event)"
+(getSortList)="getSortList($event)"
+(getBtnGroup)="getBtnGroup($event)"
+[isAdvancedSearch]="isAdvancedSearch"
+>
+</zpage>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+    <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+        <input type="text" nz-input [placeholder]="'placard.keyword_orderid'|i18n" [(ngModel)]="queryParams.keywords" (keyup.enter)="toSearch(1)" />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+    </ng-template>
+    <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+    </ng-template>
+    <button nz-button nzType="default" style="margin-left: -2px;" nzSearch (click)="resetSearch(1)"><span nz-icon nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+<!-- 高级搜索内部 搜索按钮 -->
+<ng-template #zadvancedSearch>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" (click)="toSearch(1)">
+        <span nz-icon nzType="search"></span>
+        {{ 'btn.search'|i18n }}
+    </button>
+    <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" nzSearch (click)="resetSearch(2)">
+        <span nz-icon nzType="reload"></span>
+        {{ 'btn.reset'|i18n }}
+    </button>
+</ng-template>
+<!-- 高级搜索 搜索条件 -->
+<ng-template #zadvancedCont>
+    <div class="zadvanced_search_label">{{ 'popupField.somCode'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.code" /></div>
+    <div class="zadvanced_search_label">{{ 'popupField.sci'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn"
+        [nzPlaceHolder]=" 'checkdata.check'|i18n "
+        [(ngModel)]="queryParams.sci_key"
+        (nzScrollToBottom)="onCustomerSeniorSearch($event)"
+        (nzOnSearch)="onCustomerSeniorSearch($event)"
+        nzAllowClear
+        nzShowSearch
+        [nzServerSearch]="true"
+        >
+            <ng-container *ngFor="let item of customerSeniorSearchSList">
+                <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="customerSeniorSearchLoading" nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                {{ 'url.redirect'|i18n }}...
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.state'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn" nzShowSearch nzAllowClear [nzPlaceHolder]=" 'checkdata.check'|i18n " [(ngModel)]="queryParams.state">
+            <ng-container *ngFor="let item of stateSeniorSearchList">
+                <nz-option [nzLabel]="item.description+'['+item.name+']'" [nzValue]="item.value"></nz-option>
+            </ng-container>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.distributionChannel'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-select class="zadvanced_search_input_btn" nzShowSearch nzAllowClear [nzPlaceHolder]=" 'checkdata.check'|i18n " [(ngModel)]="queryParams.sale_channel">
+            <ng-container *ngFor="let item of distributionChannelList">
+                <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+            </ng-container>
+        </nz-select>
+    </div>
+    <div class="zadvanced_search_label">{{ 'popupField.salesman'|i18n }}</div>
+    <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.salername" /></div>
+    <div class="zadvanced_search_label">{{ 'saleOrder.taking_time'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-range-picker class="zadvanced_search_input_btn" [nzFormat]="dateFormat" [(ngModel)]="queryParams.requestdeliverydate" (ngModelChange)="onDateToDateChange($event,'requestdeliverydate')"></nz-range-picker>
+    </div>
+    <div class="zadvanced_search_label">{{ 'saleOrder.create_time'|i18n }}</div>
+    <div class="zadvanced_search_input">
+        <nz-range-picker class="zadvanced_search_input_btn" [nzFormat]="dateFormat" [(ngModel)]="queryParams.create_time" (ngModelChange)="onDateToDateChange($event,'create_time')"></nz-range-picker>
+    </div>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为这条数据的全部值 value为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index" let-value="value">
+    <ng-container *ngIf="column.format=='toState'">
+        <div class="progress_tip" *ngIf="toTimeComparison(data.requestdeliverydate)?false:true">{{'fail.f_overdue'|i18n}}</div>
+        <div class="progress">
+            <!-- 修改进度条颜色（状态） [nzStatus]="toTimeComparison(data.requestdeliverydate)?'active':'exception'" -->
+            <nz-progress [nzPercent]="value==0?5:value==1?30:value==2?60:value==3?100:5" nzSize="small" [nzFormat]="formatOne"></nz-progress>
+        </div>
+        <!-- <div class="progress_tip" [style]="toTimeComparison(data.requestdeliverydate)?'':'color:#f00;'">{{toTimeComparison(data.requestdeliverydate)?"":"已逾期"}}</div> -->
+    </ng-container>
+    <ng-container *ngIf="column.format=='time'">
+        <span *ngIf="column.tip" nz-tooltip [nzTooltipTitle]="value?value.substring(0,10):''">
+            {{value?value.substring(0,10):''}}
+        </span>
+        <span *ngIf="!column.tip">
+            {{value?value.substring(0,10):''}}
+        </span>
+    </ng-container>
+    <ng-container *ngIf="column.format=='sale_channel'">
+        <span *ngIf="column.tip" nz-tooltip [nzTooltipTitle]="toFormatSaleChannel(value)">
+            {{toFormatSaleChannel(value)}}
+        </span>
+        <span *ngIf="!column.tip">
+            {{toFormatSaleChannel(value)}}
+        </span>
+    </ng-container>
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+    <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)" (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper></nz-pagination>
+    <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 弹窗 -------------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopup" 
+[width]="1400" 
+[height]="770" 
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupCont"
+[zpopupFoot]="zpopupFoot"
+></zpopup>
+<!-- 弹窗 内容 -->
+<ng-template #zpopupCont>
+    <form nz-form [formGroup]="validateForm">
+        <div class="cont_title">{{ 'popupField.title1'|i18n }}</div>
+        <div class="cont_in" style="margin-top: 20px;">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 订单编号 -->
+                        <nz-form-label style="width: 82px;" nzRequired nzFor="code">{{'popupField.somCode'|i18n}}</nz-form-label>
+                        <nz-form-control nzErrorTip="">
+                            <input type="text" nz-input formControlName="code" placeholder="" readonly/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 客户 -->
+                        <nz-form-label style="width: 82px;" nzFor="sci_key">{{'popupField.sci'|i18n}}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="'checkdata.check'|i18n">
+                            <nz-select style="width: 100%;"
+                                [nzPlaceHolder]=" 'checkdata.check'|i18n "
+                                formControlName="sci_key"
+                                (nzScrollToBottom)="onCustomerSearch($event)"
+                                (nzOnSearch)="onCustomerSearch($event)"
+                                nzAllowClear
+                                nzShowSearch
+                                [nzServerSearch]="true"
+                                >
+                                    <ng-container *ngFor="let item of customerList">
+                                        <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+                                    </ng-container>
+                                    <nz-option *ngIf="customerLoading" nzDisabled nzCustomContent>
+                                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                                        {{ 'url.redirect'|i18n }}...
+                                    </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 业务类型 -->
+                        <nz-form-label style="width: 82px;">{{'popupField.businessType'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <nz-select style="width: 100%;" nzShowSearch nzAllowClear [nzPlaceHolder]="'checkdata.check'|i18n" formControlName="businesstyle">
+                                <ng-container *ngFor="let item of businessTypeList">
+                                    <nz-option [nzLabel]="item.name+'['+item.description+']'" [nzValue]="item.value"></nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        <div class="cont_in">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 销售人员 -->
+                        <nz-form-label style="width: 82px;" nzRequired nzFor="salername">{{'popupField.salesman'|i18n}}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="'inputdata.input'|i18n">
+                            <input type="text" nz-input formControlName="salername" [placeholder]="'inputdata.input'|i18n"/>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 销售渠道 -->
+                        <nz-form-label style="width: 82px;" nzRequired nzFor="sale_channel">{{'popupField.distributionChannel'|i18n}}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="'checkdata.check'|i18n">
+                            <input type="text" nz-input formControlName="sale_channel" [placeholder]="'inputdata.input'|i18n"/>
+                            <!-- <nz-select style="width: 100%;" nzShowSearch nzAllowClear [nzPlaceHolder]="'checkdata.check'|i18n" formControlName="sale_channel">
+                                <ng-container *ngFor="let item of distributionChannelList">
+                                    <nz-option [nzLabel]="item.name" [nzValue]="item.key"></nz-option>
+                                </ng-container>
+                            </nz-select> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 数量 -->
+                        <nz-form-label style="width: 82px;" nzRequired >{{'popupField.num'|i18n}}</nz-form-label>
+                        <nz-form-control >
+                            <nz-input-number style="width: 100%;border: 0;" nzDisabled nzBorderless formControlName="total" [nzMin]="1" [nzStep]="1" [nzPrecision]="0"></nz-input-number>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        <div class="cont_in">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 受理日期 -->
+                        <nz-form-label style="width: 82px;" nzRequired nzFor="taking_time">{{'popupField.acceptanceDate'|i18n}}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="'checkdata.check'|i18n">
+                            <nz-date-picker style="width: 100%;" formControlName="taking_time"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8">
+                    <nz-form-item>
+                        <!-- 交货日期 -->
+                        <nz-form-label style="width: 82px;" nzRequired nzFor="requestdeliverydate">{{'saleOrder.taking_time'|i18n}}</nz-form-label>
+                        <nz-form-control [nzErrorTip]="'checkdata.check'|i18n">
+                            <nz-date-picker style="width: 100%;" formControlName="requestdeliverydate"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        <div class="cont_in" style="height: 122px;">
+            <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="24">
+                    <nz-form-item>
+                        <!-- 备注 -->
+                        <nz-form-label style="width: 82px;" nzFor="remark">{{'popupField.remarks'|i18n}}</nz-form-label>
+                        <nz-form-control>
+                            <textarea  rows="4" nz-input formControlName="remark"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="details">
+        <nz-tabset>
+            <nz-tab [nzTitle]="'popupField.details'|i18n">
+                <button style="margin-bottom: 10px;" nz-button (click)="addRow()" nzType="primary">{{'btn.addition'|i18n}}</button>
+                <nz-table [nzPageSize]="999999" [nzShowPagination]="false" nzSize="small" #editRowTable nzBordered [nzData]="listOfData" [nzScroll]="{x:'1100px',y:auto}">
+                <thead>
+                    <tr>
+                        <!-- 款式名称 -->
+                        <th nzWidth="240px" nzAlign="center">{{'popupField.psi2'|i18n}}</th>
+                        <!-- 颜色 -->
+                        <th nzWidth="240px" nzAlign="center">{{'popupField.pci2'|i18n}}</th>
+                        <!-- 尺码 -->
+                        <th nzWidth="240px" nzAlign="center">{{'popupField.psz2'|i18n}}</th>
+                        <!-- 数量 -->
+                        <th nzWidth="240px" nzAlign="center">{{'popupField.num'|i18n}}</th>
+                        <!-- 交货日期 -->
+                        <th nzWidth="240px"nzAlign="center">{{'saleOrder.taking_time'|i18n}}</th>
+                        <!-- 操作 -->
+                        <th nzWidth="120px" nzAlign="center">{{'btn.operation'|i18n}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of editRowTable.data,let i = index " class="editable-row">
+                    <td nzWidth="240px" nzAlign="center">
+
+                        <!-- <input  type="text" nz-input   /> -->
+                        <!-- <nz-select 
+                         
+                        style="width: 220px;" 
+                        nzShowSearch 
+                        nzAllowClear 
+                        nzPlaceHolder="" 
+                        [(ngModel)]="data.psi_key" 
+                        (ngModelChange)="showStyle(i,$event)">
+                            <ng-container *ngFor="let item of styleList">
+                                <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+                            </ng-container>
+                        </nz-select> -->
+                        <zselect 
+                        [getStyle]="'width: 220px;'" 
+                        [urlTyle]="'style'"
+                        [setValue]="data.psi_key" 
+                        [isSearch]="true"
+                        [isScrollToBottom]="true"
+                        (reData)="getSelectValue($event)"
+                        [getValue]="'style_'+i"
+                        >
+                        </zselect>
+                    </td>
+                    <td nzWidth="240px" nzAlign="center">
+                        <zselect 
+                        [getStyle]="'width: 220px;'" 
+                        [urlTyle]="'color'"
+                        [setValue]="data.pci_key" 
+                        [isSearch]="true"
+                        [isScrollToBottom]="true"
+                        (reData)="getSelectValue($event)"
+                        [getValue]="'color_'+i"
+                        >
+                        </zselect>
+                    </td>
+                    <td nzWidth="240px" nzAlign="center">
+                        <!-- <nz-select 
+                        style="width: 220px;" 
+                        nzShowSearch 
+                        nzAllowClear 
+                        nzPlaceHolder="" 
+                        [(ngModel)]="data.psz_key" 
+                        (ngModelChange)="showSize(i,$event)">
+                            <ng-container *ngFor="let item of sizeList">
+                                <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+                            </ng-container>
+                        </nz-select> -->
+                        <zselect 
+                        [getStyle]="'width: 220px;'" 
+                        [urlTyle]="'size'"
+                        [setValue]="data.psz_key" 
+                        [isSearch]="true"
+                        [isScrollToBottom]="true"
+                        (reData)="getSelectValue($event)"
+                        [getValue]="'size_'+i"
+                        >
+                        </zselect>
+                    </td>
+                    <td nzWidth="120px" nzAlign="center">
+                        <nz-input-number style="width: 100%;"  [(ngModel)]="data.quantity" [nzMin]="1" [nzStep]="1" [nzPrecision]="0" (ngModelChange)="detailsSum()"></nz-input-number>
+                    </td>
+                    <td nzWidth="240px" nzAlign="center">
+                        <!-- [nzDisabledDate]="disabledAddEndDate" -->
+                        <nz-date-picker style="width: 100%;"  [(ngModel)]="data.requestdeliverydate" [nzAllowClear]="false" [nzFormat]="dateFormat" (ngModelChange)="onListDateChange(i,$event)" style="width: 100%;"></nz-date-picker>
+                    </td>
+                    <td nzWidth="120px" nzAlign="center">
+                        
+                        <a nz-popconfirm [nzPopconfirmTitle]="'btn.isDelete'|i18n" (nzOnConfirm)="deleteRow(data.key)">{{'btn.delete'|i18n}}</a>
+                    </td>
+                    </tr>
+                </tbody>
+                </nz-table>
+            </nz-tab>
+            <!-- <nz-tab [nzTitle]="'popupField.expand'|i18n">
+                <form nz-form>
+                    <div class="cont_in">
+                        <div nz-row [nzGutter]="24">
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 投入番号 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.investmentCode'|i18n}}</nz-form-label>
+                                    <nz-form-control>
+                                        <input type="text" nz-input  placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 面料番号 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.fabricCode'|i18n}}</nz-form-label>
+                                    <nz-form-control >
+                                        <input type="text" nz-input placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 品牌 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.brand'|i18n}}</nz-form-label>
+                                    <nz-form-control>
+                                        <input type="text" nz-input placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont_in">
+                        <div nz-row [nzGutter]="24">
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 订单种类 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.orderType'|i18n}}</nz-form-label>
+                                    <nz-form-control>
+                                        <input type="text" nz-input  placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 支店信息 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.branchStore'|i18n}}</nz-form-label>
+                                    <nz-form-control >
+                                        <input type="text" nz-input placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 受注国 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.recipientCountry'|i18n}}</nz-form-label>
+                                    <nz-form-control>
+                                        <input type="text" nz-input placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont_in">
+                        <div nz-row [nzGutter]="24">
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 配送国 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.distributionCountry'|i18n}}</nz-form-label>
+                                    <nz-form-control>
+                                        <input type="text" nz-input  placeholder=""/>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="8">
+                                <nz-form-item> -->
+                                    <!-- 过干燥箱 -->
+                                    <!-- <nz-form-label style="width: 82px;">{{'popupField.dryingBox'|i18n}}</nz-form-label>
+                                    <nz-form-control >
+                                        <nz-select style="width: 100%;" nzAllowClear nzPlaceHolder="" >
+                                            <nz-option nzLabel="是" nzValue="1"></nz-option>
+                                            <nz-option nzLabel="否" nzValue="0"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </nz-tab> -->
+        </nz-tabset>
+    </div>
+</ng-template>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupFoot>
+    <button style="margin-right: 10px;" *ngIf="popupType=='add'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+    <button style="margin-right: 10px;" *ngIf="popupType=='update'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+<!-- 查看 --------------------------------------------------------------------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopupSee" 
+[width]="1250" 
+[height]="800" 
+[isLoading]="isSeeLoading"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupSeeCont"
+[zpopupFoot]="zpopupSeeFoot">
+</zpopup>
+<!-- 查看 内容 -->
+<ng-template #zpopupSeeCont>
+    <div class="see_title">
+        {{'placard.basein'|i18n}}
+    </div>
+    <div class="see_cont">
+        <div nz-row class="fontSize">
+            <!-- 订单编号 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.somCode'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text" >
+                <span nz-tooltip [nzTooltipTitle]="seeData.code || ''">{{seeData.code || ''}}</span>
+            </div>
+            <!-- 订单状态 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.orderState'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text" [style]="(toTimeComparison(seeData.requestdeliverydate)?'':'color:#f00;')">
+                {{formatOne(seeData.state==0?5:seeData.state==1?30:seeData.state==2?60:seeData.state==3?100:5)}}{{toTimeComparison(seeData.requestdeliverydate)?'':'（'+('placard.Overdue'|i18n)+'）'}}
+            </div>
+            <!-- 创建日期 -->
+            <div nz-col nzSpan="2">
+                {{'saleOrder.create_time'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.create_time?seeData.create_time.substring(0,10):''">{{seeData.create_time?seeData.create_time.substring(0,10):''}}</span>
+            </div>
+            <!-- 创建人名 -->
+            <div nz-col nzSpan="2">
+                {{'saleOrder.creat_name'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.create_name || ''">{{seeData.create_name || ''}}</span>
+            </div>
+        </div>
+        <div nz-row class="fontSize" style="margin-top: 6px;">
+            <!-- 客户 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.sci'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.sci_name || ''">{{seeData.sci_name || ''}}</span>
+            </div>
+            <!-- 业务类型 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.businessType'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.businesstyle_name?seeData.businesstyle_name:''">{{seeData.businesstyle_name?seeData.businesstyle_name:''}}</span>
+            </div>
+            <!-- 销售人员 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.salesman'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.salername || ''">{{seeData.salername || ''}}</span>
+            </div>
+            <!-- 销售渠道 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.distributionChannel'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="saleChannel || ''">{{saleChannel || ''}}</span>
+            </div>
+        </div>
+        <div nz-row class="fontSize" style="margin-top: 6px;">
+            <!-- 数量 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.num'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.total || ''">{{seeData.total || ''}}</span>
+            </div>
+            <!-- 受理时间 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.acceptanceDate'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.taking_time?seeData.taking_time.substring(0,10):''">{{seeData.taking_time?seeData.taking_time.substring(0,10):''}}</span>
+            </div>
+            <!-- 交货时间 -->
+            <div nz-col nzSpan="2">
+                {{'saleOrder.taking_time'|i18n}}：
+            </div>
+            <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.requestdeliverydate?seeData.requestdeliverydate.substring(0,10):''">{{seeData.requestdeliverydate?seeData.requestdeliverydate.substring(0,10):''}}</span>
+            </div>
+            <!-- 套数 -->
+            <!-- <div nz-col nzSpan="2">
+                {{'popupField.totalNum'|i18n}}：
+            </div> -->
+            <!-- <div nz-col nzSpan="4" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="''">{{''}}</span>
+            </div> -->
+            <!-- 备注 -->
+            <div nz-col nzSpan="2">
+                {{'popupField.remarks'|i18n}}：
+            </div>
+            <div nz-col nzSpan="16" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.remark || ''">{{seeData.remark || ''}}</span>
+            </div>
+        </div>
+        <!-- <div nz-row class="fontSize" style="margin-top: 6px;"> -->
+            <!-- 备注 -->
+            <!-- <div nz-col nzSpan="2">
+                {{'popupField.remarks'|i18n}}：
+            </div>
+            <div nz-col nzSpan="16" class="see_cont_text">
+                <span nz-tooltip [nzTooltipTitle]="seeData.remark || ''">{{seeData.remark || ''}}</span>
+            </div>
+        </div> -->
+    </div>
+    <div class="see_title" style="margin-top: 20px;">{{'placard.detailInfo'|i18n}}</div>
+    <div class="see_cont">
+        <div class="see_cont_left" [style]="isSeeArrange?'width:70%;':''">
+            <nz-table #finishedTable [nzData]="seeDataTable" nzSize="small" [nzBordered]="true" [nzShowPagination]="false" [nzPageSize]="999999" [nzScroll]="{y:'330px'}">
+                <thead>
+                  <tr>
+                    <th nzWidth="140px">{{'popupField.psiCode'|i18n}}</th>
+                    <th nzWidth="160px">{{'popupField.psiName'|i18n}}</th>
+                    <th >{{'popupField.color'|i18n}}</th>
+                    <th>{{'popupField.psz_code'|i18n}}</th>
+                    <th>{{'popupField.num'|i18n}}</th>
+                    <th>{{'saleOrder.taking_time'|i18n}}</th>
+                    <th nzWidth="49px" nzRight nzAlign="center">{{'popupField.arrange'|i18n}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of finishedTable.data">
+                    <td>{{data.psi_code}}</td>
+                    <td>{{data.psi_name}}</td>
+                    <td>{{data.pci_name}}</td>
+                    <td>{{data.psz_name}}</td>
+                    <td>{{data.quantity}}</td>
+                    <td>{{data.requestdeliverydate?data.requestdeliverydate.substring(0,10):''}}</td>
+                    <td nzRight nzAlign="center"><a (click)="toSeeInArrange(data)"><i nz-icon nzType="right-circle" nzTheme="outline"></i></a></td>
+                  </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div [class]="'see_cont_right '+(isSeeArrange?'see_cont_right_ac':'')">
+            <div class="see_cont_right_title" [style]="isSeeArrange?'display:block;':'display:none;'">
+                {{'popupField.arrange_title'|i18n}}
+                <div class="see_cont_right_title_close" (click)="closeSeeInArrange()">×</div>
+            </div>
+            <div class="see_cont_right_twotitle" [style]="isSeeArrange?'display:block;':'display:none;'">
+                <!-- 数量 -->
+                <div class="see_cont_right_twotitle_in" style="border-left: 0px;">{{'popupField.num'|i18n}}：{{seeArrangeList.quantity}}({{'unit.piece'|i18n}})</div>
+                <!-- 可用库存量 -->
+                <!-- <div class="see_cont_right_twotitle_in">{{'popupField.availableInventoryNum'|i18n}}：{{seeArrangeList.inventorytotal}}({{'unit.piece'|i18n}})</div> -->
+                <!-- 生产中量 -->
+                <div class="see_cont_right_twotitle_in">{{'popupField.produceNum'|i18n}}：{{seeArrangeList.workedquantity}}({{'unit.piece'|i18n}})</div>
+                <!-- 待安排量 -->
+                <div class="see_cont_right_twotitle_in" style="border-left: 0px;">{{'popupField.waitNum'|i18n}}：{{seeArrangeList.quantity - seeArrangeList.workedquantity}}({{'unit.piece'|i18n}})</div>
+                <!-- 填充满两行 -->
+                <div class="see_cont_right_twotitle_in"></div>
+            </div>
+            <div class="see_cont_timeline" [style]="isSeeArrange?'display:block;':'display:none;'">
+                <div class="see_cont_timeline_in">
+                    <nz-timeline [nzReverse]="false">
+                        <nz-timeline-item *ngFor="let item of seeArrangeList.arrangeList,let i = index">
+                            {{'popupField.start_time'|i18n}}：{{item.create_time?item.create_time.substring(0,10):''}}
+                            <br/>
+                            {{'popupField.workbill_code'|i18n}}：{{item.code}}
+                            <br/>
+                            {{'popupField.num'|i18n}}：{{item.quantity}}({{'unit.piece'|i18n}})
+                        </nz-timeline-item>
+                    </nz-timeline>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- 查看 底部 -->
+<ng-template #zpopupSeeFoot>
+    <button style="margin-right: 10px;" *ngIf="popupType=='confirm'" nz-button nzType="primary" [nzLoading]="isLoading" (click)="toConfirmProduce()">{{ 'btn.determine_production'|i18n }}</button>
+</ng-template>
+
+<!-- 确认生产 提示窗 -->
+<zpopup-confirm
+*ngIf="isPopupConfirmProduce" 
+[type]="1"
+[text]="'confirm.confirm_production'|i18n"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmProduceConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmProduceConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isSyncLoading" (click)="subConfirmProduce()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>
+
+
+<!-- 排单 --------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopupArrange" 
+[width]="1500" 
+[height]="850" 
+[isLoading]="isArrangeLoading"
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupArrangeCont"
+[zpopupFoot]="zpopupArrangeFoot"
+></zpopup>
+<ng-template #zpopupArrangeCont>
+    <div class="arrange_top">
+        <span style="padding-right: 20px;">{{ 'popupField.som_key'|i18n }}：{{orderData.code}}</span>
+        <span class="arrange_top_in">{{ 'popupField.sci'|i18n }}：{{orderData.sci_name}}</span> 
+        <span class="arrange_top_in">{{ 'popupField.num'|i18n }}：{{orderData.total}}</span>
+        <span class="arrange_top_in">{{ 'saleOrder.taking_time'|i18n }}：{{orderData.requestdeliverydate?orderData.requestdeliverydate.substring(0,10):''}}</span> 
+        <span class="arrange_top_in">{{ 'popupField.salesman'|i18n }}：{{orderData.salername}}</span> 
+        <span class="arrange_top_in">{{ 'popupField.businessType'|i18n }}：</span>
+        <span class="arrange_top_in">{{ 'popupField.distributionChannel'|i18n }}：{{toFormatSaleChannel(orderData.sale_channel)}}</span>
+    </div>
+    <div class="arrange_table">
+        <nz-table [nzPageSize]="999999" [nzShowPagination]="false" nzSize="small" #orderTable nzBordered [nzData]="orderStyleList" [nzScroll]="{y:'180px'}">
+            <thead>
+                <tr>
+                    <!-- 图 -->
+                    <th nzLeft nzWidth="48px" nzAlign="center">{{ 'popupField.img'|i18n }}</th>
+                    <!-- 货品 -->
+                    <th nzWidth="350px">{{ 'popupField.psi2'|i18n }}</th>
+                    <!-- 件数 -->
+                    <th>{{ 'popupField.binding_quantity'|i18n }}</th>
+                    <!-- 交货日期 -->
+                    <th>{{ 'saleOrder.taking_time'|i18n }}</th>
+                    <!-- 待安排量-->
+                    <th>{{ 'popupField.waitNum'|i18n }}({{ 'unit.piece'|i18n }}) </th>
+                    <!-- 可用库存量(件) -->
+                    <!-- <th>{{ 'popupField.availableInventoryNum'|i18n }}({{ 'unit.piece'|i18n }})</th> -->
+                    <!-- 生产中量(件) -->
+                    <th>{{ 'popupField.produceNum'|i18n }}({{ 'unit.piece'|i18n }})</th>
+                    <!-- 操作 -->
+                    <th>{{ 'btn.operation'|i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of orderTable.data">
+                    <td nzLeft nzAlign="center"><img nz-image width="22px" height="22px" [nzSrc]="fallback" [nzFallback]="fallback" alt="" /></td>
+                    <td nzWidth="350px">{{data.psi_name + " " + data.pci_name + " " + data.psz_name}}</td>
+                    <td>{{data.quantity}}</td>
+                    <td>{{(data.requestdeliverydate?data.requestdeliverydate.substring(0,10):'')}}</td>
+                    <td>{{(data.quantity - data.workedquantity) || 0}}</td>
+                    <!-- <td>{{data.inventorytotal || 0}}</td> -->
+                    <td>{{data.workedquantity}}</td>
+                    <td>
+                        <span *ngIf="data.quantity - data.workedquantity==0">{{ 'btn.arrange_ok'|i18n }}</span>
+                        <a *ngIf="data.quantity - data.workedquantity>0" (click)="getOneAddArrange(data)">{{ 'btn.arrange2'|i18n }}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <div class="arrange_top" style="margin-top: 10px; text-align: right;">
+        <button [disabled]="toArrangeList.length==0" style="margin-right: 10px;" nz-button (click)="batchSaveByOrder()" nzType="primary">{{ 'btn.generate_job'|i18n }}</button>
+        <button [disabled]="toAllArrange()" nz-button (click)="allArrange()" nzType="primary">{{ 'btn.ks_arrange'|i18n }}</button>
+    </div>
+    <div class="arrange_table">
+        <nz-table [nzPageSize]="999999" [nzLoading]="tableToArrangeListLoading" [nzShowPagination]="false" nzSize="small" #arrangeTable2 nzBordered [nzData]="toArrangeList" [nzScroll]="{y:'180px'}">
+            <thead>
+                <tr>
+                    <th nzLeft nzWidth="48px" nzAlign="center">{{ 'placard.No'|i18n }}</th>
+                    <th>{{ 'popupField.psi2'|i18n }}</th>
+                    <th>{{ 'popupField.pci2'|i18n }}</th>
+                    <th>{{ 'popupField.psz2'|i18n }}</th>
+                    <th nzWidth="180px">{{ 'popupField.start_time'|i18n }}</th>
+                    <th nzWidth="180px">{{ 'saleOrder.taking_time'|i18n }}</th>
+                    <th>{{ 'popupField.num'|i18n }}</th>
+                    <th nzAlign="center" nzWidth="48px">{{ 'btn.operation'|i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of arrangeTable2.data,let i = index">
+                    <td nzLeft nzAlign="center">{{i+1}}</td>
+                    <td>{{item.psi_name}}</td>
+                    <td>{{item.pci_name}}</td>
+                    <td>{{item.psz_name}}</td>
+                    <td nzWidth="180px">
+                        <nz-date-picker style="width: 100%;" (nzOnOpenChange)="inputOpenChange(item)" [nzDisabledDate]="startDisabledDate"  [(ngModel)]="item.start_time" [nzFormat]="dateFormat" (ngModelChange)="setArrangeDateChange(i,$event,'start_time')" style="width: 100%;"></nz-date-picker>
+                    </td>
+                    <td nzWidth="180px">
+                        <nz-date-picker style="width: 100%;" (nzOnOpenChange)="inputOpenChange(item)" [nzDisabledDate]="endDisabledDate" [(ngModel)]="item.end_time" [nzFormat]="dateFormat" (ngModelChange)="setArrangeDateChange(i,$event,'requestdeliverydate')" style="width: 100%;"></nz-date-picker>
+                    </td>
+                    <td>
+                        <nz-input-number style="width: 100%;"  [(ngModel)]="item.noquantity" [nzMin]="1" [nzStep]="1" [nzPrecision]="0" (keyup)="arrangeSum(item)"></nz-input-number>
+                    </td>
+                    <td nzAlign="center" nzWidth="48px">
+                        <a (click)="getOneAubtractionArrange(item.id)">
+                            <i nz-icon nzType="delete" nzTheme="outline"  nz-tooltip [nzTooltipTitle]="'btn.delete'|i18n"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+    <!-- 作业单已生成信息 -->
+    <div class="arrange_top2">
+        {{ 'placard.toGenerateJob'|i18n }}
+    </div>
+    <div class="arrange_table">
+        <nz-table [nzPageSize]="999999" [nzShowPagination]="false" nzSize="small" #arrangeListTable nzBordered [nzData]="arrangeList" [nzScroll]="{y:'180px'}">
+            <thead>
+                <tr>
+                    <!-- 作业单号 -->
+                    <th nzLeft nzWidth="120px" nzAlign="center">{{ 'popupField.oddNumber'|i18n }}</th>
+                    <!-- 款式 -->
+                    <th>{{ 'popupField.psi2'|i18n }}</th>
+                    <!-- 颜色 -->
+                    <th>{{ 'popupField.pci2'|i18n }}</th>
+                    <!-- 尺码 -->
+                    <th>{{ 'popupField.psz2'|i18n }}</th>
+                    <!-- 开始时间 -->
+                    <th nzWidth="140px">{{ 'popupField.start_time'|i18n }}</th>
+                    <!-- 交货时间 -->
+                    <th nzWidth="140px">{{ 'saleOrder.taking_time'|i18n }}</th>
+                    <!-- 数量 -->
+                    <th>{{ 'popupField.num'|i18n }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of arrangeListTable.data,let i = index">
+                    <td nzLeft nzAlign="center">{{data.code}}</td>
+                    <td>{{data.psi_name}}</td>
+                    <td>{{data.pci_name}}</td>
+                    <td>{{data.psz_name}}</td>
+                    <td>{{data.create_time?data.create_time.substring(0,10):''}}</td>
+                    <td>{{data.requestdeliverydate?data.requestdeliverydate.substring(0,10):''}}</td>
+                    <td>{{data.quantity}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</ng-template>
+<ng-template #zpopupArrangeFoot>
+
+</ng-template>
+
+<!-- 导入 ---------------------------------------------------->
+<zpopup 
+[popupTitle]="zpopupTiele" 
+*ngIf="isPopupImport" 
+[width]="700" 
+[height]="400" 
+(getClosePopup)="closePopup()" 
+[zpopupCont]="zpopupImportCont"
+[zpopupFoot]="zpopupImportFoot">
+</zpopup>
+<!-- 导入 内容 -->
+<ng-template #zpopupImportCont>
+    <div class="down"><button nz-button nzType="dashed">{{ 'btn.downmodel'|i18n }}</button> <span style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span></div>
+    <div class="import">
+        <nz-upload
+        nzType="drag"
+        [nzMultiple]="true"
+        [nzAction]="upExcel()"
+        (nzChange)="importChange($event)"
+        [nzHeaders]="uploadingHeader()"
+        >
+        <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+        <p class="ant-upload-hint">
+            {{ 'warning.importTip2'|i18n }}
+        </p>
+        </nz-upload>
+    </div>
+</ng-template>
+<!-- 导入 底部 -->
+<ng-template #zpopupImportFoot>
+    
+</ng-template>
+
+
+<!-- 删除---------------------------------------------------->
+<zpopup-confirm
+*ngIf="isPopupConfirm" 
+[delDataNum]="delDataNum"
+(getClosePopup)="closePopup()" 
+[zpopupConfirmFoot]="zpopupConfirmFoot"
+> 
+</zpopup-confirm>
+<!-- 弹窗 底部按钮 -->
+<ng-template #zpopupConfirmFoot>
+    <button nz-button nzType="primary" [nzLoading]="isLoading" (click)="submit()">{{ 'btn.determine'|i18n }}</button>
+</ng-template>

@@ -1,0 +1,181 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="70%" bodyPadding="0 20px" justifyContent="center"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <div *ngIf="copyvisible!=true">
+            <div nz-row class="newflow-title">
+                <nz-button-group class="button-group" nz-col nzSize="small">
+                    <button nz-button [nzType]="'primary'" (click)="onAction({action:'add',title:'plus'})">
+                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                        {{'btn.plus'|i18n}}
+                    </button>
+                    <button nz-button (click)="onAction({action:'imp',title:'import'})">
+                        <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+                        {{'btn.import'|i18n}}
+                    </button>
+                    <button nz-button (click)="copyvisible=true">
+                        <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+                        {{'btn.cpyop'|i18n}}
+                    </button>
+                </nz-button-group>
+            </div>
+            <div nz-row class="newflow-main">
+                <!-- <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.psi_key'|i18n) }}"
+                    [(ngModel)]="seniorModel.psi_key" name="psi_key" url="styleinfo"
+                    (onSelect)="onSelect($event,'psi_key')">
+                </ina-common-select> -->
+                <nz-table #basicTable nzOuterBordered [nzData]="listOfData" [nzFrontPagination]="false" nzSize="small"
+                    [nzScroll]="{ x:'calc(100% - 10px)',y:'21rem' }" nzPaginationType="small"
+                    [nzPageIndex]="pageMap.page" [nzPageSize]="pageMap.pagesize" [nzPageSizeOptions]="options.pageList"
+                    [nzTotal]="options.total">
+                    <thead>
+                        <tr>
+                            <th nzLeft>{{'commFlow.name'|i18n}}</th>
+                            <th>{{'commFlow.tag'|i18n}}</th>
+                            <th nzRight nzAlign="center" nzWidth="120px">{{'btn.operation'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data;let i=index">
+                            <td>{{ data.name }}</td>
+                            <td>{{ data.tag }}</td>
+                            <td nzRight nzAlign="center">
+                                <a (click)="onAction({action:'preview',title:'preview',node:data})">
+                                    {{'btn.preview'|i18n}}</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="onAction({action:'check',title:'PWRM',node:data})">
+                                    {{'btn.choice'|i18n}}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+        <div *ngIf="copyvisible==true">
+            <div nz-row class="newflow-title">
+                <h1>{{'btn.cpyop'|i18n}}</h1>
+            </div>
+            <div nz-row class="newflow-main">
+                <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.psi_key'|i18n) }}"
+                    [(ngModel)]="seniorModel.psi_key" name="psi_key" url="styleinfo"
+                    (onSelect)="onSelect($event,'psi_key')">
+                </ina-common-select>
+                <nz-table #basicTable nzOuterBordered [nzData]="listOfData" [nzFrontPagination]="false" nzSize="small"
+                    [nzScroll]="{ x:'calc(100% - 10px)',y:'21rem' }" nzPaginationType="small"
+                    [nzPageIndex]="pageMap.page" [nzPageSize]="pageMap.pagesize" [nzPageSizeOptions]="options.pageList"
+                    [nzTotal]="options.total">
+                    <thead>
+                        <tr>
+                            <th nzLeft>{{'commFlow.name'|i18n}}</th>
+                            <th>{{'commFlow.tag'|i18n}}</th>
+                            <th nzRight nzAlign="center" nzWidth="120px">{{'btn.operation'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data;let i=index">
+                            <td>{{ data.name }}</td>
+                            <td>{{ data.tag }}</td>
+                            <td nzRight nzAlign="center">
+                                <a (click)="onAction({action:'copypreview',title:'preview',node:data})">
+                                    {{'btn.preview'|i18n}}</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a nz-popover nzPopoverTitle="{{'placard.copyset'|i18n}}"
+                                    [nzPopoverContent]="copyContent"
+                                    [nzPopoverTrigger]="'click'">{{'btn.cpyop'|i18n}}</a>
+                                <ng-template #copyContent>
+                                    <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+                                        <input type="text" nz-input placeholder="{{'inputdata.input_name'|i18n}}"
+                                            [(ngModel)]="newmodel.name" />
+                                    </nz-input-group>
+                                    <ng-template #suffixButton>
+                                        <button nz-button nzType="primary" nzSearch
+                                            (click)="onAction({action:'copynew',title:'cpyop',node:data})">
+                                            <span nz-icon nzType="save"></span>
+                                        </button>
+                                    </ng-template>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+        <!-- <nz-tabset class="body-tabset" style="height: 100%;" nzSize="small" [(nzSelectedIndex)]="panels"
+            (nzSelectChange)="getDate($event.index==0?'StyleOperation':'WorkBillOperation')">
+            <nz-tab nzTitle="款式工序流">
+                <ng-container *ngTemplateOutlet="flowColumnTpl"></ng-container>
+            </nz-tab>
+            <nz-tab nzTitle="独立工序流">
+                <ng-container *ngTemplateOutlet="flowColumnTpl"></ng-container>
+            </nz-tab>
+        </nz-tabset>
+        <ng-template #flowColumnTpl> 
+            <div nz-row class="newflow-title">
+                <h3 nz-col>现有工序流</h3>
+                <nz-button-group class="button-group" nz-col nzSize="small">
+                    <button nz-button [nzType]="'primary'" (click)="onAction({action:'add',title:'新增'})">
+                        <i nz-icon nzType="plus" nzTheme="outline"></i>
+                        新增
+                    </button>
+                    <button nz-button (click)="onAction({action:'imp',title:'导入'})">
+                        <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+                        导入
+                    </button>
+                </nz-button-group>
+            </div>
+            <div nz-row class="newflow-main">
+                <div nz-row *ngIf="panels==1" [nzGutter]="[8]">
+                    <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.pwb_key'|i18n) }}"
+                        [(ngModel)]="seniorModel.pwb_key" name="pwb_key" url="WorkBill" DataTxt="code" [isshow]="false"
+                        (onSelect)="onSelect($event)">
+                    </ina-common-select>
+                    <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.psi_key'|i18n) }}"
+                        [(ngModel)]="seniorModel.psi_key" name="psi_key" url="styleinfo"
+                        (onSelect)="onSelect($event,'psi_key')">
+                    </ina-common-select>
+                    <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.psz_key'|i18n) }}"
+                        [(ngModel)]="seniorModel.psz_key" name="psz_key" url="sizeinfo"
+                        (onSelect)="onSelect($event,'psz_key')">
+                    </ina-common-select>
+                    <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.pci_key'|i18n) }}"
+                        [(ngModel)]="seniorModel.pci_key" name="pci_key" url="colorinfo"
+                        (onSelect)="onSelect($event,'pci_key')">
+                    </ina-common-select>
+                </div>
+                <nz-table #basicTable nzOuterBordered [nzData]="listOfData" [nzFrontPagination]="false" nzSize="small"
+                    [nzScroll]="{ x:'calc(100% - 10px)',y:'21rem' }" nzPaginationType="small"
+                    [nzPageIndex]="pageMap.page" [nzPageSize]="pageMap.pagesize" [nzPageSizeOptions]="options.pageList"
+                    [nzTotal]="options.total">
+                    <thead>
+                        <tr>
+                            <th *ngIf="panels==1">作业单</th>
+                            <th *ngIf="panels==1">款式</th>
+                            <th *ngIf="panels==1">颜色</th>
+                            <th *ngIf="panels==1">尺码</th>
+                            <th>工序流名称</th>
+                            <th nzRight nzAlign="center" nzWidth="60px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data;let i=index">
+                            <td *ngIf="panels==1">{{ data.pwb_code}} </td>
+                            <td *ngIf="panels==1">{{ data.psi_code}}-{{ data.psi_name}}</td>
+                            <td *ngIf="panels==1">{{ data.pci_name}}</td>
+                            <td *ngIf="panels==1">{{ data.psz_name}}</td>
+                            <td>{{ data.name }}</td>
+                            <td nzRight nzAlign="center">
+                                <a (click)="onAction({action:'check',title:'选择',node:data})">预览</a>
+                                <a (click)="onAction({action:'check',title:'复制',node:data})">复制</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+      </ng-template> -->
+    </ng-template>
+</idrawer>
+<flow-new #flow style="text-align: left;" [modular]="modular" (editDone)="close()" (onOut)="onOut()"></flow-new>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (editDone)="close()" (onReturn)="onOut($event)"></flow3>
+<!-- 导入 -->
+<imp #imp [modular]="modular" impurl="impurl" xlsurl="xlsurl" (editDone)="setImpData($event)"></imp>
+<Middlepage #Middlepage style="text-align: left;" [modular]="modular" (editDone)="close()" (onOut)="onOut($event)">
+</Middlepage>

@@ -1,0 +1,207 @@
+{
+    "tistle": "执行端监控",
+    "url": "layoutstructure/stations/",
+    "otherUrl": {
+        "allsku": "layoutstructure/volume/infeeds/sku"
+    },
+    "nzLeft": 4,
+
+    "columns": [
+        "station_code",
+        "station_name",
+        "station_type_name",
+        "station_state_name",
+        "pad_mac",
+        "employee_name",
+        "current_operation",
+        "last_doing_carrier_code",
+        "last_out_carrier_code",
+        "infeeds"
+    ],
+    "fields": [
+        {
+            "name": "生产线号",
+            "code": "line_code"
+        },
+        {
+            "name": "生产线名",
+            "code": "line_name"
+        },
+        {
+            "name": "站位编号",
+            "code": "station_code"
+        },
+        {
+            "name": "站位名称",
+            "code": "station_name"
+        },
+        {
+            "name": "站位类型",
+            "code": "station_type_name"
+        },
+        {
+            "name": "站位状态",
+            "noshow": true,
+            "code": "station_state"
+        },
+        {
+            "name": "状态",
+            "type": "state",
+            "stateclass": {
+                "code": "station_state",
+                "false": "f00"
+            },
+            "code": "station_state_name"
+        },
+        {
+            "name": "MAC",
+            "code": "pad_mac"
+        },
+        {
+            "name": "员工编号",
+            "code": "employee_code"
+        },
+        {
+            "name": "员工姓名",
+            "code": "employee_name"
+        },
+        {
+            "name": "作业单",
+            "code": "workbill_code"
+        },
+        {
+            "name": "款号",
+            "code": "style_code"
+        },
+        {
+            "name": "款名",
+            "code": "style_name"
+        },
+        {
+            "name": "颜色编号",
+            "code": "color_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "color_name"
+        },
+        {
+            "name": "尺码编号",
+            "code": "size_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "size_name"
+        },
+        {
+            "name": "部件编号",
+            "code": "part_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "part_name"
+        },
+        {
+            "name": "在制工序编号",
+            "code": "current_operation_code"
+        },
+        {
+            "name": "在制工序名称",
+            "code": "current_operation_name"
+        },
+        {
+            "name": "在制工序",
+            "noshow": true,
+            "code": "current_operation"
+        },
+        {
+            "name": "工序产量",
+            "type": "number",
+            "code": "operation_output"
+        },
+        {
+            "name": "工序总耗时",
+            "type": "number",
+            "code": "operation_worktime"
+        },
+        {
+            "name": "工序SAM",
+            "type": "number",
+            "code": "operation_sam"
+        },
+        {
+            "name": "工序效率",
+            "code": "operation_efficiency"
+        },
+        {
+            "name": "返修数量",
+            "type": "number",
+            "code": "repair_quantity"
+        },
+        {
+            "name": "员工产量",
+            "type": "number",
+            "code": "total_output"
+        },
+        {
+            "name": "员工总耗时",
+            "type": "number",
+            "code": "total_worktime"
+        },
+        {
+            "name": "员工SAM",
+            "type": "number",
+            "code": "total_sam"
+        },
+        {
+            "name": "员工效率",
+            "code": "total_efficiency"
+        },
+        {
+            "name": "最近做工载具",
+            "code": "last_doing_carrier_code"
+        },
+        {
+            "name": "最近出站载具",
+            "code": "last_out_carrier_code"
+        },
+        {
+            "name": "站位进轨",
+            "code": "infeeds",
+            "disabled": true,
+            "nzRight": true,
+            "extend": true,
+            "width": 350
+        },
+        {
+            "name": "进轨编号",
+            "noshow": true,
+            "code": "infeed_code"
+        },
+        {
+            "noshow": true,
+            "name": "进轨容量",
+            "code": "volume"
+        },
+        {
+            "name": "进轨载具数",
+            "noshow": true,
+            "code": "carrier_count"
+        },
+        {
+            "name": "是否硬满载",
+            "noshow": true,
+            "code": "hardware_overload"
+        },
+        {
+            "code": "sku_composition",
+            "noshow": true,
+            "name": "SKU组合方式"
+        },
+        {
+            "code": "sku_maximum",
+            "noshow": true,
+            "name": "可存最大SKU数"
+        }
+    ]
+}

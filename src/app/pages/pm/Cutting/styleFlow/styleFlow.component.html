@@ -1,0 +1,23 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="90%" nzSize="small"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <crud2 #flowcrud [router]="url" [jsonname]="'pdmStyle'" *ngIf="list" style="height: 100%;" [getBody]="body"
+            showLayout="Up-Down" [showAdvanced]="false" listFun="getFlow" [list]="list" (actionClick)="btnEvent($event)"
+            [columns]="columns" [modular]="modular" [impurl]="'flowimpurl'" xlsurl="flowxlsurl" [btnGroup]="btnaction"
+            [impNode]="{key:key}" [fields]="field" [ExtendColumnTpl]="ExtendTpl">
+        </crud2>
+        <!-- 行内数据表现扩展 -->
+        <ng-template #ExtendTpl let-item="record" let-column="column">
+            <nz-select [(ngModel)]="item[column.coums]" style="width: 100%;" nzPlaceHolder="{{'warning.noset'|i18n}}"
+                (ngModelChange)="btnEvent({action:'Reflux',node:item})">
+                <nz-option [nzValue]="" nzLabel="{{'warning.noset'|i18n}}"></nz-option>
+                <nz-option [nzValue]="true" nzLabel="{{'placard.backflow'|i18n}}"></nz-option>
+                <nz-option [nzValue]="false" nzLabel="{{'placard.nobackflow'|i18n}}"></nz-option>
+            </nz-select>
+        </ng-template>
+        <flow #flow [modular]="modular" (editDone)="_flowcrud.reloadData(false)"></flow>
+        <!-- <flow-old #flow [modular]="modular" (editDone)="_flowcrud.reloadData(false)"></flow-old> -->
+        <History-flow #History [modular]="modular" [Component]="false" [url]="'pdmStyle'"
+            (editDone)="_flowcrud.reloadData($event)"></History-flow>
+    </ng-template>
+</idrawer>

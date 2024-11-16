@@ -1,0 +1,211 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="90%" nzSize="small"
+  (onClose)="close()" [content]="contentTpl">
+  <ng-template #contentTpl>
+    <crud2 #flowcrud [router]="url" [jsonname]="'pdmStyle'" *ngIf="list" style="height: 100%;" [getBody]="body"
+      showLayout="Up-Down" [showAdvanced]="false" listFun="getFlownew" [list]="list" (actionClick)="btnEvent($event)"
+      [columns]="columns" [modular]="modular" [impurl]="'flownewimpurl'" xlsurl="flownewxlsurl" [btnGroup]="btnaction"
+      [isSetList]="false" [fields]="field" [ExtendColumnTpl]="ExtendTpl" (impClick)="setImpData($event,'flowcrud')">
+    </crud2>
+    <!-- 行内数据表现扩展 -->
+    <ng-template #ExtendTpl let-item="record" let-column="column">
+      <nz-select [(ngModel)]="item[column.coums]" style="width: 100%;" nzPlaceHolder="{{'warning.noset'|i18n}}"
+        (ngModelChange)="btnEvent({action:'Reflux',node:item})">
+        <nz-option [nzValue]="" nzLabel="{{'warning.noset'|i18n}}"></nz-option>
+        <nz-option [nzValue]="true" nzLabel="{{'placard.backflow'|i18n}}"></nz-option>
+        <nz-option [nzValue]="false" nzLabel="{{'placard.nobackflow'|i18n}}"></nz-option>
+      </nz-select>
+    </ng-template>
+    <!-- <flow-old #flow [modular]="modular" (editDone)="_flowcrud.reloadData(false)"></flow-old> -->
+    <History #History [modular]="modular" [Component]="false" [url]="'pdmStyle'"
+      (editDone)="_flowcrud.reloadData($event)"></History>
+  </ng-template>
+</idrawer>
+<idrawer *ngIf="copyvisible" [title]="title" [width]="width" justifyContent="center" height="90%" nzSize="small"
+  (onClose)="copyclose()" [content]="copycontentTpl">
+  <ng-template #copycontentTpl>
+    <div nz-row class="newflow-title">
+      <nz-button-group class="button-group" nz-col nzSize="small">
+        <button nz-button [nzType]="'primary'" (click)="onAction({action:'add',title:'plus'})">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
+          {{'btn.plus'|i18n}}
+        </button>
+        <button nz-button (click)="onAction({action:'imp',title:'import'})">
+          <i nz-icon nzType="cloud-upload" nzTheme="outline"></i>
+          {{'btn.import'|i18n}}
+        </button>
+      </nz-button-group>
+    </div>
+    <div nz-row class="newflow-main">
+      <ina-common-select nz-col nzSpan="6" title="{{ 'checkdata.check_xx'|i18n:('pmWork.psi_key'|i18n) }}"
+        [(ngModel)]="seniorModel.psi_key" name="psi_key" url="styleinfo" (onSelect)="onSelect($event,'psi_key')">
+      </ina-common-select>
+      <nz-table #basicTable nzOuterBordered [nzData]="copylistOfData" [nzFrontPagination]="false" nzSize="small"
+        [nzScroll]="{ x:'calc(100% - 10px)',y:'21rem' }" nzPaginationType="small" [nzPageIndex]="pageMap.page"
+        [nzPageSize]="pageMap.pagesize" [nzPageSizeOptions]="options.pageList" [nzTotal]="options.total">
+        <thead>
+          <tr>
+            <th nzLeft>{{'commFlow.poi_name'|i18n}}</th>
+            <th>{{'commFlow.tag'|i18n}}</th>
+            <th nzRight nzAlign="center" nzWidth="120px">{{'btn.operation'|i18n}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data;let i=index">
+            <td>{{ data.name }}</td>
+            <td>{{ data.tag }}</td>
+            <td nzRight nzAlign="center">
+              <a (click)="onAction({action:'preview',title:'preview',node:data})">{{'btn.preview'|i18n}}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a nz-popover nzPopoverTitle="{{'placard.copyset'|i18n}}" [nzPopoverContent]="copyContent"
+                [nzPopoverTrigger]="'click'">{{'btn.cpyop'|i18n}}</a>
+              <ng-template #copyContent>
+                <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+                  <input type="text" nz-input placeholder="{{'inputdata.input_name'|i18n}}" [(ngModel)]="newmodel.name"
+                    style="width: 100%;" />
+                  <input type="text" class="form-control" *ngIf="versionPower=='1'" name="version"
+                    placeholder="{{'pdmStyle.version'|i18n}}" nz-input [(ngModel)]="newmodel.tag" style="width: 100%;" />
+                  <ina-common-select *ngIf="versionPower=='3'||versionPower=='5'" style="width: 50%;" class="select"
+                    url="VirtualLayout" title="{{'pdmStyle.version'|i18n}}" name="version" DataFiled="code"
+                    Datatyle="getlist/" [(ngModel)]="newmodel.tag">
+                  </ina-common-select>
+                  <ina-common-select class="select" *ngIf="versionPower=='2'||versionPower=='4'" style="width: 50%;"
+                    url="LayoutStructure/extend" title="{{'pdmStyle.version'|i18n}}" Datatyle="getlist/" DataTxt="code"
+                    [ispaging]="false" DataFiled="code" name="version" [other]="{maketree:false,BLST_Group:'Line'}"
+                    [(ngModel)]="newmodel.tag">
+                  </ina-common-select>
+                </nz-input-group>
+                <ng-template #suffixButton>
+                  <button nz-button nzType="primary" nzSearch
+                    (click)="onAction({action:'copynew',title:'copy',node:data})">
+                    <span nz-icon nzType="save"></span>
+                  </button>
+                </ng-template>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-template>
+</idrawer>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (onReturn)="btnEvent($event)"
+  (editDone)="_flowcrud.reloadData($event)" (onOut)="onOut()"></flow3>
+<Middlepage #Middlepage style="text-align: left;" [modular]="modular" (editDone)="_flowcrud.reloadData($event)"
+  (onOut)="onOut()">
+</Middlepage>
+<!-- 导入 -->
+<imp #imp [modular]="modular" (editDone)="setImpData($event)"></imp>
+<idrawer *ngIf="laborratevisible" title="{{'placard.laborratese'|i18n}}" [width]="width" justifyContent="center"
+  height="90%" nzSize="small" (onClose)="laborclose()" [content]="laborcontentTpl" [footer]="footerTpl">
+  <ng-template #laborcontentTpl>
+    <nz-table #editRowTable nzBordered class="labortable" [nzData]="listOfData" [nzFrontPagination]="false"
+      [nzShowPagination]="false" [nzScroll]="{y:'94%'}">
+      <thead>
+        <tr>
+          <th>{{'commFlow.poi_code'|i18n}}
+            <nz-filter-trigger [(nzVisible)]="poi_codevisible" [nzActive]="searchValue.poi_code.length > 0"
+              [nzDropdownMenu]="codemenu">
+              <span nz-icon nzType="search"></span>
+            </nz-filter-trigger>
+          </th>
+          <th nzWidth="30%">{{'commFlow.poi_name'|i18n}}
+            <nz-filter-trigger [(nzVisible)]="poi_namevisible" [nzActive]="searchValue.poi_name.length > 0"
+              [nzDropdownMenu]="menu">
+              <span nz-icon nzType="search"></span>
+            </nz-filter-trigger>
+          </th>
+          <th>{{'commFlow.production_wages'|i18n}}</th>
+          <th>{{'commFlow.production_time'|i18n}}(s)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row" [id]="data.poi_code">
+          <td>
+            <span class="poi_code"
+              *ngIf="!data.poi_codelabel||data.poi_codelabel.length==0||searchValue.poi_code.length == 0">{{ data.poi_code }}</span>
+            <span *ngIf="searchValue.poi_code.length > 0">
+              <label *ngFor="let item of data.poi_codelabel"
+                [class.highlight]="item==searchlength.highlight">{{ item }}</label>
+            </span>
+          </td>
+          <td>
+            <span class="poi_name"
+              *ngIf="!data.poi_namelabel||data.poi_namelabel.length==0||searchValue.poi_name.length == 0">{{ data.poi_name }}</span>
+            <span *ngIf="searchValue.poi_name.length > 0">
+              <label *ngFor="let item of data.poi_namelabel"
+                [class.highlight]="item==searchlength.highlight">{{ item }}</label>
+            </span></td>
+          <td><input type="number" nz-input [(ngModel)]="data.standard_wages" /></td>
+          <td><input type="number" nz-input [(ngModel)]="data.standard_time" /></td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <nz-dropdown-menu #codemenu="nzDropdownMenu">
+      <ng-container *ngTemplateOutlet="filterdropdownTpl"></ng-container>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ng-container *ngTemplateOutlet="filterdropdownTpl"></ng-container>
+    </nz-dropdown-menu>
+    <ng-template #filterdropdownTpl>
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-input-group class="group" [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton">
+            <input type="text" nz-input placeholder="{{'inputdata.input'|i18n}}" (keyup)="search()"
+              [(ngModel)]="searchValue[poi_codevisible==true?'poi_code':'poi_name']" />
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <span style="color: #ccc;">{{searchlength.select}}/{{searchlength.all}}</span>
+          </ng-template>
+          <ng-template #suffixButton>
+            <div>
+              <a nz-button nzSize="small" nzType="link" (click)="position(-1)" [disabled]="searchlength.select<=1">
+                <i nz-icon nzType="up" nzTheme="outline"></i>
+              </a>
+              <a nz-button nzSize="small" nzType="link" (click)="position(1)"
+                [disabled]="searchlength.select>=searchlength.all">
+                <i nz-icon nzType="down" nzTheme="outline"></i>
+              </a>
+              <a nz-button nzSize="small" nzType="link" (click)="reset()">
+                <i nz-icon nzType="close" nzTheme="outline"></i>
+              </a>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-template>
+    <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <nz-input-group class="group" [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton">
+                        <input type="text" nz-input placeholder="请输入" (keyup)="search()"
+                            [(ngModel)]="searchValue[poi_codevisible==true?'poi_code':'poi_name']" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                        <span style="color: #ccc;">{{searchlength.select}}/{{searchlength.all}}</span>
+                    </ng-template>
+                    <ng-template #suffixButton>
+                        <div>
+                            <a nz-button nzSize="small" nzType="link" (click)="position(-1)"
+                                [disabled]="searchlength.select<=1">
+                                <i nz-icon nzType="up" nzTheme="outline"></i>
+                            </a>
+                            <a nz-button nzSize="small" nzType="link" (click)="position(1)"
+                                [disabled]="searchlength.select>=searchlength.all">
+                                <i nz-icon nzType="down" nzTheme="outline"></i>
+                            </a>
+                            <a nz-button nzSize="small" nzType="link" (click)="reset()">
+                                <i nz-icon nzType="close" nzTheme="outline"></i>
+                            </a>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </nz-dropdown-menu> -->
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="downloadreport()">{{ 'btn.export'|i18n }}</button>
+    <button nz-button (click)="laborclose()" class="m-l-6">{{ 'btn.cancel'|i18n }}</button>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
+      [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n }}</button>
+  </ng-template>
+</idrawer>.

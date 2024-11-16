@@ -1,0 +1,74 @@
+<nz-input-group [nzSuffix]="suffixTemplateInfo" nz-dropdown [nzDropdownMenu]="menu" [nzTrigger]="'click'"
+    [nzClickHide]="false" [(nzVisible)]="Open">
+    <input type="text" nz-input [placeholder]="title?title:('checkdata.check'|i18n)" [(ngModel)]="value_name"
+        readonly />
+</nz-input-group>
+<ng-template #suffixTemplateInfo>
+    <span nz-icon class="ant-input-clear-icon close" nzTheme="fill" nzType="close-circle" *ngIf="value_name"
+        (click)="value_name = null"></span>
+    <!-- <i nz-icon nzType="close-circle" nzTheme="outline"></i> -->
+    <i nz-icon class="ant-input-clear-icon point" [nzType]="Open!=true?'caret-down':'caret-up'" nzTheme="fill"></i>
+</ng-template>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu nzSelectable style="padding:5px;width:800px;max-height:320px ;">
+        <!-- 查找 -->
+        <div nz-row style="margin-bottom:5px ;">
+            <nz-input-group nz-col nzSpan="8" [nzSearch]="false" nzSize="small" [nzSuffix]="suffixIconSearch">
+                <input type="text" nz-input placeholder="{{'placard.worksearch'|i18n}}" [(ngModel)]="searchvalue"(change)="GetData()" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+            </ng-template>
+            <button nz-button nzType="primary"style="margin-left:10kpx ;" (click)="allreset()"><i nz-icon nzType="reload"
+                    nzTheme="outline"></i>{{'btn.reset'|i18n}}</button>
+            <!--   <div nz-col nzSpan="16" *ngIf="isstatu">
+                状态：
+                <nz-radio-group [(ngModel)]="staturadio" nzName="radiogroup">
+                    <label nz-radio nzValue="0">新建</label>
+                    <label nz-radio nzValue="1">确认生产</label>
+                    <label nz-radio nzValue="2">生产中</label>
+                    <label nz-radio nzValue="99">完成</label>
+                </nz-radio-group>
+            </div> -->
+        </div>
+        <!-- 列表 -->
+        <nz-table #tableSelect nzBordered nzShowSizeChanger nzShowQuickJumper class="table" [nzOuterBordered]="true"
+            nzSize="small" nzPaginationType="small" nzTableLayout="fixed" [nzScroll]="{ x: '750px', y: '160px' }"
+            [nzFrontPagination]="false" [nzData]="optionList" [nzPageIndex]="pageMap.page"
+            [nzPageSize]="pageMap.pagesize" [nzTotal]="options.total" [nzPageSizeOptions]="options.pageList"
+            (nzPageSizeChange)="PageSizeChange($event)" (nzPageIndexChange)="PageIndexChange($event)">
+            <thead>
+                <tr nzSingleSort>
+                    <!-- <th nzShowCheckbox nzLeft nzWidth="40px" [(nzChecked)]="allChecked"></th> -->
+                    <th *ngFor="let item of column;let i=index" nzShowSort [nzSortFn]="true" nzCustomFilter
+                        nzWidth="130px" [nzLeft]="i==0" [nzRight]="i==column.length-1"
+                        (nzSortOrderChange)="SortOrderChange($event,item)">
+                        {{jsonname+'.'+item |i18n}}
+                        <nz-filter-trigger [(nzVisible)]="filvisible[item]" [nzActive]="filsearchValue[currentField]"
+                            [nzDropdownMenu]="filtertrigger" (nzVisibleChange)="filterFieldOpen($event,item)">
+                            <span nz-icon nzType="search"></span>
+                        </nz-filter-trigger>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of tableSelect.data;let i=index" (click)="clickItem(data)">
+                    <!-- <td nzShowCheckboxs nzLeft [(nzChecked)]="data.checked" (nzCheckedChange)="onItemChecked(data)"></td> -->
+                    <td *ngFor="let item of column;let ci=index" [nzRight]="ci==column.length-1" [nzLeft]="ci==0">
+                        {{data[item]}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <nz-dropdown-menu #filtertrigger="nzDropdownMenu">
+            <div class="ant-table-filter-dropdown">
+                <div class="search-box">
+                    <input type="text" nz-input placeholder="{{ 'inputdata.input'|i18n }}"
+                        [(ngModel)]="filsearchValue[currentField]" />
+                    <button nz-button nzSize="small" nzType="primary" (click)="Search()"
+                        class="search-button">{{ 'btn.search'|i18n }}</button>
+                    <button nz-button nzSize="small" (click)="empty()">{{ 'btn.reset'|i18n }}</button>
+                </div>
+            </div>
+        </nz-dropdown-menu>
+    </ul>
+</nz-dropdown-menu>

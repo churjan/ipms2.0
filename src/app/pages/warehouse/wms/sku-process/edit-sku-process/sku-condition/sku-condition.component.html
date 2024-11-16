@@ -1,0 +1,160 @@
+<form nz-form [nzLayout]="'horizontal'" [formGroup]="form">
+  <div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="24">
+      <div class="mb8">{{ "placard.schemeCondition" | i18n }}</div>
+      <nz-table
+        [nzBordered]="true"
+        [nzData]="[{}]"
+        [nzShowPagination]="false"
+        nzSize="small"
+        [nzScroll]="{ x: 'auto', y: 'auto' }"
+        style="height: 340px"
+      >
+        <thead>
+          <tr>
+            <th [nzWidth]="'50px'">{{ "placard.No" | i18n }}</th>
+            <th [nzWidth]="'250px'">
+              {{ "placard.condition" | i18n }}
+            </th>
+            <th [nzWidth]="'100px'">
+              {{ "placard.conditionLimit" | i18n }}
+            </th>
+            <th [nzWidth]="'250px'">
+              {{ "placard.value" | i18n }}
+            </th>
+            <th [nzWidth]="'50px'">
+              <button nz-button nzType="primary" nzShape="circle" nzSize="small" (click)="onAddFiled()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody formArrayName="blsd_list">
+          <ng-container *ngFor="let data of blsd_list.controls; let i = index">
+            <tr [formGroupName]="i">
+              <td>
+                <span>{{ i + 1 }}</span>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control>
+                    <app-single-select
+                      formControlName="condition"
+                      [label]="'name'"
+                      [valueKey]="'key'"
+                      [isShowClear]="false"
+                      [width]="'100%'"
+                      [path]="'/admin/LayoutStructureRules/getlist?Module=3'"
+                      (ngModelChange)="onConditionChange(i)"
+                    >
+                    </app-single-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control>
+                    <app-single-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode === 'judgment-input'"
+                      formControlName="comparetype"
+                      [label]="'description'"
+                      [valueKey]="'description'"
+                      [valueFields]="'description'"
+                      [path]="'/admin/Enum/?method=comparetypeenum'"
+                      [width]="'100%'"
+                      [isShowClear]="false"
+                    >
+                    </app-single-select>
+                    <app-single-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode !== 'judgment-input'"
+                      formControlName="comparetype"
+                      [label]="'description'"
+                      [valueKey]="'description'"
+                      [valueFields]="'description'"
+                      [path]="'/admin/Enum/?method=publiccomparetypeenum'"
+                      [width]="'100%'"
+                      [isShowClear]="false"
+                    >
+                    </app-single-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <nz-form-item>
+                  <nz-form-control>
+                    <ng-container
+                      *ngIf="
+                        !blsd_list.at(i).value.condition?.optionmode ||
+                        blsd_list.at(i).value.condition?.optionmode.includes('input')
+                      "
+                    >
+                      <input
+                        *ngIf="['', undefined, null, 'String'].includes(blsd_list.at(i).value.condition?.inputtype)"
+                        nz-input
+                        formControlName="value"
+                        placeholder="{{ 'inputdata.input' | i18n }}"
+                        style="width: 100%"
+                      />
+                      <nz-input-number
+                        *ngIf="['Int', 'Decimal'].includes(blsd_list.at(i).value.condition?.inputtype)"
+                        nz-input
+                        formControlName="value"
+                        placeholder="{{ 'inputdata.input' | i18n }}"
+                        style="width: 100%"
+                      ></nz-input-number>
+
+                      <nz-switch
+                        *ngIf="['Bool'].includes(blsd_list.at(i).value.condition?.inputtype)"
+                        formControlName="value"
+                      ></nz-switch>
+                    </ng-container>
+                    <ina-common-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode === 'customselect'"
+                      DataFiled="value"
+                      formControlName="value"
+                      [optionList]="blsd_list.at(i).value.condition?.optionvalue"
+                      (onSelect)="form.value.blsd_list[i].value_name = $event ? $event.name : ''"
+                    >
+                    </ina-common-select>
+                    <ina-common-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode === 'select'"
+                      formControlName="value"
+                      [url]="blsd_list.at(i).value.condition?.optionvalue"
+                      (onSelect)="form.value.blsd_list[i].value_name = $event ? $event.name : ''"
+                    >
+                    </ina-common-select>
+                    <ina-common-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode === 'extendselect'"
+                      formControlName="value"
+                      [other]="{
+                        extend: blsd_list.at(i).value.condition?.key
+                      }"
+                      [url]="blsd_list.at(i).value.condition?.optionvalue"
+                      (onSelect)="form.value.blsd_list[i].value_name = $event ? $event.name : ''"
+                    >
+                    </ina-common-select>
+                    <ina-common-select
+                      *ngIf="blsd_list.at(i).value.condition?.optionmode === 'enumselect'"
+                      DataFiled="value"
+                      DataTxt="description"
+                      formControlName="value"
+                      urltype="enum"
+                      [url]="blsd_list.at(i).value.condition?.optionvalue"
+                      (onSelect)="form.value.blsd_list[i].value_name = $event ? $event.description : ''"
+                    >
+                    </ina-common-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </td>
+              <td>
+                <button nz-button nzType="primary" nzDanger nzShape="circle" nzSize="small" (click)="onRemoveFiled(i)">
+                  <i nz-icon nzType="minus"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</form>

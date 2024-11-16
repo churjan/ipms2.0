@@ -1,0 +1,84 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [isKeyword]="false"
+  [columns]="columns" [modular]="modular" showLayout="side-top-left" [sideColumnTpl]="sideColumnTpl" [Lwidth]="'20%'"
+  [ExtendColumnTpl]="ExtendTpl" [fields]="field" [searchActionsBody]="searchActionsBody" [lastColumnTpl]="operationTpl">
+</crud2>
+<!-- 行内操作按钮 -->
+<ng-template #operationTpl let-item="record">
+  <!-- <td nzRight [nzWidth]="(btnGroup.single.length+1)*32+'px'" nzAlign="center" *ngIf="isAction"> -->
+  <a nz-tooltip nzTooltipTitle="{{(item.enable!=true?'btn.open':'btn.close')|i18n }}" (click)="play(item)">
+    <i nz-icon [nzType]="item.enable!=true?'play-square':'stop'" [class]="item.enable!=true?'green':'red'"
+      nzTheme="fill"></i>
+  </a>
+  <nz-divider nzType="vertical"></nz-divider>
+  <!-- </td> -->
+</ng-template>
+<!-- 扩展列 -->
+<ng-template #ExtendTpl let-item="record" let-column="column">
+  {{item.qty-item.bond_qty>0?(item.qty-item.bond_qty):0}}
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+  <form nz-form>
+    <nz-form-item *ngIf="isseach('som_code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.som_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.som_code"
+          name="som_code" url="OrderMaster" [isshow]="false" DataFiled="code">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('pwb_code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.pwb_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.pwb_code"
+          name="pwb_code" url="WorkBill" [isshow]="false" DataFiled="code">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('mix_code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.mix_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <input nz-input name="mix_code" placeholder="{{ 'inputdata.input'|i18n }}"
+          [(ngModel)]="crud.seniorModel.mix_code" (keydown)="crud.Search($event)" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('bpi_name')==true||isseach('bpi_code')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.bpi_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" [(ngModel)]="crud.seniorModel.bpi_code"
+          name="bpi_code" url="partinfo" DataFiled="code">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.psi_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" DataFiled="code"
+          [(ngModel)]="crud.seniorModel.psi_code" name="psi_code" [DataTxt]="isseach('psi_name')==true?'name':'code'"
+          url="styleinfo">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="isseach('psz_code')==true||isseach('psz_name')==true">
+      <nz-form-label [nzSpan]="24">{{ 'pmCutting.psz_code'|i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}" DataFiled="code"
+          [(ngModel)]="crud.seniorModel.psz_code" name="psz_code" url="sizeinfo">
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #sideColumnTpl let-item="record">
+  <class-ztree commUrl="LayoutStructure/extend" [modular]="modular" children="sonlist"
+    [disabled]="{field:'group',value:'Station'}" [params]="{maketree:true,moduletype:2,removein:true}"
+    title="{{'pmCutting.layout'|i18n}}" [TooltipVisible]="true" Datadaty="NewGetList" (onclick)="onclick($event)">
+  </class-ztree>
+</ng-template>
+<edit #edit [modular]="modular" (editDone)="crud.reloadData($event);crud.setOfCheckedId=[]"></edit>
+<editBatch #editBatch [modular]="modular" (editDone)="crud.reloadData($event);crud.setOfCheckedId=[]"></editBatch>
+<Cut-Client #Client [modular]="modular" (editDone)="crud.reloadData($event);"></Cut-Client>
+<flow #flow [modular]="modular" (editDone)="crud.reloadData($event)"></flow>
+<styleFlow #Styleflow (editDone)="crud.reloadData($event)"></styleFlow>
+<Flow-new #flownew (editDone)="crud.reloadData($event)"></Flow-new>
+<flow3 #flow3 style="text-align: left;" [modular]="modular" (onReturn)="btnEvent($event)" [isCutIn]="true"
+  (editDone)="crud.reloadData($event)" (onOut)="btnEvent($event)"></flow3>

@@ -1,0 +1,26 @@
+<nz-descriptions nzBordered [nzColumn]="2">
+    <nz-descriptions-item nzTitle="{{ 'placard.name' | i18n }}">
+        {{ detailInfo.name }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.entityFields' | i18n }}">
+        {{ detailInfo.field }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.optionMethod' | i18n }}">
+        {{ detailInfo.optionmode }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.weights' | i18n }}">
+        {{ detailInfo.weight }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.weights' | i18n }}">
+        {{ detailInfo.weight }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.disable' | i18n }}">
+        {{ detailInfo.isdisabled }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.sort' | i18n }}" [nzSpan]="2">
+        {{ detailInfo.sort }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'placard.optionValue' | i18n }}" [nzSpan]="2">
+        <pre>{{ detailInfo.optionvalue }}</pre>
+    </nz-descriptions-item>
+</nz-descriptions>

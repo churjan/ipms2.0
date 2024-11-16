@@ -1,0 +1,30 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" nzSize="small" [bodyPadding]="'0'"
+    [height]="'99%'" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <nz-tabset nzTabPosition="left" [nzCanDeactivate]="canDeactivate" (nzSelectChange)="SelectChange($event)"
+            style="height: 100%;">
+            <nz-tab *ngFor="let tab of stylecuments" [nzTitle]="tab.name">
+                <span>{{'placard.formatrequirements'|i18n}}：{{tab.description}}</span>
+                <div class="clearfix">
+                    <nz-upload [nzAction]="upExcel()" nzListType="picture-card" [nzHeaders]="uploadingHeader()"
+                        [(nzFileList)]="fileList" [nzShowButton]="fileList.length <8" [nzPreview]="handlePreview"
+                        (nzChange)="uploadChange($event)" [nzAccept]="UploadFormat" [nzRemove]="delete"
+                        [nzShowUploadList]="{showDownloadIcon:false,showPreviewIcon:true,showRemoveIcon
+                        :true}">
+                        <div>
+                            <i nz-icon nzType="plus"></i>
+                            <div style="margin-top: 8px">{{'btn.upload'|i18n}}</div>
+                        </div>
+                    </nz-upload>
+                    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+                        (nzOnCancel)="previewVisible= false">
+                        <ng-template #modalContent>
+                            <img [src]="previewImage" [ngStyle]="{ width:'100%'}" />
+                            <label>{{previewNmae}}</label>
+                        </ng-template>
+                    </nz-modal>
+                </div>
+            </nz-tab>
+        </nz-tabset>
+    </ng-template>
+</idrawer>

@@ -1,0 +1,879 @@
+<!-- 主体框架 -->
+<zpage #zpage [openLeft]="openLeft" [topInput]="topInput" [isAdvancedSearch]="isAdvancedSearch"
+  [zadvancedSearch]="zadvancedSearch" [zadvancedCont]="zadvancedCont" [isTablePage]="isTablePage"
+  [tablePage]="tablePage" [tableData]="tableData" [pageSize]="queryParams.pageSize" [columns]="columns"
+  [isCheck]="isCheck" [isCheckAll]="isCheckAll" [isNumber]="isNumber" [isOperation]="isOperation"
+  [tableLoading]="tableLoading" [format]="format" (topBtn)="getTopBtn($event)" (tableBtn)="getTableBtn($event)"
+  (getCheckedIdList)="getCheckedId($event)" (getSortList)="getSortList($event)" [isAdvancedSearch]="isAdvancedSearch">
+</zpage>
+
+<!-- 搜索 -->
+<ng-template #topInput>
+  <nz-input-group nzSearch [nzSuffix]="suffixIconSearch" [nzAddOnAfter]="suffixButton" class="ztop_in_select_in_group">
+    <input type="text" nz-input [placeholder]="'placard.keyword_tags_code'|i18n" [(ngModel)]="queryParams.keywords"
+      (keyup.enter)="toSearch(1)" />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <span nz-icon nzType="search"></span>
+  </ng-template>
+  <ng-template #suffixButton>
+    <button nz-button nzType="primary" nzSearch (click)="toSearch(1)">{{ 'btn.search'|i18n }}</button>
+  </ng-template>
+  <button nz-button nzType="default" style="margin-left: -2px;" nzSearch (click)="resetSearch(1)"><span nz-icon
+      nzType="reload"></span>{{ 'btn.reset'|i18n }}</button>
+</ng-template>
+<!-- 高级搜索 搜索按钮 -->
+<ng-template #zadvancedSearch>
+  <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" (click)="toSearch(1)">
+    <span nz-icon nzType="search"></span>
+    {{ 'btn.search'|i18n }}
+  </button>
+  <button nz-button nzType="default" class="zadvanced_search_right_top_left_btn" nzSearch (click)="resetSearch(2)">
+    <span nz-icon nzType="reload"></span>
+    {{ 'btn.reset'|i18n }}
+  </button>
+</ng-template>
+<!-- 高级搜索 搜索条件 -->
+<ng-template #zadvancedCont>
+  <div class="zadvanced_search_label">{{ 'popupField.pwb_key'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <ina-common-select class="zadvanced_search_input_btn" title="" [(ngModel)]="queryParams.pwb_key" name="pwb_key"
+      url="WorkBill" DataTxt="code" [isshow]="false">
+    </ina-common-select>
+    <!-- <nz-select class="zadvanced_search_input_btn" [nzPlaceHolder]=" 'checkdata.check'|i18n "
+            [(ngModel)]="queryParams.pwb_key" (nzScrollToBottom)="onWrokSearch($event)"
+            (nzOnSearch)="onWrokSearch($event)" nzAllowClear nzShowSearch [nzServerSearch]="true">
+            <ng-container *ngFor="let item of workList">
+                <nz-option [nzLabel]="item.code" [nzValue]="item.key"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="workLoading" nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                {{ 'url.redirect'|i18n }}...
+            </nz-option>
+        </nz-select> -->
+  </div>
+  <div class="zadvanced_search_label">{{ 'popupField.psi'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <ina-common-select class="zadvanced_search_input_btn" title="{{ 'checkdata.check'|i18n }}"
+      [(ngModel)]="queryParams.psi_key" name="psi_key" url="styleinfo">
+    </ina-common-select>
+    <!-- <nz-select [(ngModel)]="queryParams.psi_key" (nzScrollToBottom)="onStyleSearch($event)"
+            (nzOnSearch)="onStyleSearch($event)" [nzPlaceHolder]=" 'checkdata.check'|i18n " nzAllowClear nzShowSearch
+            [nzServerSearch]="true" [nzDropdownRender]="styleTemplate">
+            <ng-container *ngFor="let item of styleList">
+                <nz-option [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key"></nz-option>
+            </ng-container>
+            <nz-option *ngIf="styleLoading" nzDisabled nzCustomContent>
+                <span nz-icon nzType="loading" class="loading-icon"></span>
+                {{ 'url.redirect'|i18n }}...
+            </nz-option>
+        </nz-select> -->
+  </div>
+  <div class="zadvanced_search_label">{{ 'popupField.bpi'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <ina-common-select class="zadvanced_search_input_btn" title="" [(ngModel)]="queryParams.bpi_key" name="bpi_key"
+      url="PartInfo">
+    </ina-common-select>
+    <!-- <nz-select class="zadvanced_search_input_btn" nzAllowClear nzShowSearch nzServerSearch
+            [nzPlaceHolder]=" 'checkdata.check'|i18n " [(ngModel)]="queryParams.bpi_key" [nzShowArrow]="true"
+            [nzFilterOption]="true" (nzOnSearch)="onBpiSearch($event)">
+            <nz-option *ngFor="let item of bpiList" [nzLabel]="item.name+'['+item.code+']'" [nzValue]="item.key">
+            </nz-option>
+        </nz-select> -->
+  </div>
+  <div class="zadvanced_search_label">{{ 'pmTags.bpi_ismain'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <nz-select class="zadvanced_search_input_btn" nzAllowClear [nzPlaceHolder]=" 'checkdata.check'|i18n "
+      [(ngModel)]="queryParams.bpi_ismain">
+      <nz-option nzLabel="{{'format.yes'|i18n}}" [nzValue]="true"></nz-option>
+      <nz-option nzLabel="{{'format.no'|i18n}}" [nzValue]="false"></nz-option>
+    </nz-select>
+  </div>
+  <div class="zadvanced_search_label">{{ 'pmTags.style_name'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <nz-select class="zadvanced_search_input_btn" nzAllowClear [nzPlaceHolder]=" 'checkdata.check'|i18n "
+      [(ngModel)]="queryParams.style" [nzLoading]="typeLoading">
+      <nz-option *ngFor="let item of typeList" [nzLabel]="item.description" [nzValue]="item.value"></nz-option>
+    </nz-select>
+  </div>
+  <div class="zadvanced_search_label">{{ 'pmTags.tagcode'|i18n }}</div>
+  <div class="zadvanced_search_input"><input class="zadvanced_search_input_btn" nz-input
+      [placeholder]="'inputdata.input'|i18n" [(ngModel)]="queryParams.tagcode" /></div>
+  <div class="zadvanced_search_label">{{ 'pmTags.state_name'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <nz-select class="zadvanced_search_input_btn" [nzShowArrow]="true" nzMode="tags" nzAllowClear
+      [nzPlaceHolder]=" 'checkdata.check'|i18n " [(ngModel)]="statestr" [nzLoading]="stateLoading">
+      <nz-option *ngFor="let item of stateList" [nzLabel]="item.description" [nzValue]="item.value"></nz-option>
+    </nz-select>
+  </div>
+  <div class="zadvanced_search_label">{{ 'pmTags.serialcode'|i18n }}</div>
+  <div class="zadvanced_search_input">
+    <nz-input-group nzCompact class="zadvanced_search_input_btn">
+      <nz-select [(ngModel)]="searchtype" style="width:30%;" (ngModelChange)="searchtypechange()">
+        <nz-option [nzLabel]="'区间查询'" [nzValue]="'0'"></nz-option>
+        <nz-option [nzLabel]="'定向查询'" [nzValue]="'1'"></nz-option>
+      </nz-select>
+      <input type="text" nz-input [(ngModel)]="queryParams.serialcode_start" *ngIf="searchtype=='0'"
+        style="width:35%;" />
+      <input type="text" nz-input [(ngModel)]="queryParams.serialcode_end" *ngIf="searchtype=='0'" style="width:35%;" />
+      <input type="text" nz-input [(ngModel)]="queryParams.serialcode" *ngIf="searchtype=='1'" style="width:70%;" />
+    </nz-input-group>
+  </div>
+</ng-template>
+
+<!-- 表格内容自定义 column为对应的自定义的columns 中的当前column值 data为当前单元格数据 index计数器-->
+<ng-template #format let-column="column" let-data="data" let-index="index" let-value="value">
+  <ng-container *ngIf="column.format=='code_1D'">
+    <span *ngIf="column.tip" nz-tooltip [nzTooltipTitle]="value">
+      <a (click)="toBarCode(value)">{{value}}</a>
+    </span>
+    <span *ngIf="!column.tip">
+      <a (click)="toBarCode(value)">{{value}}</a>
+    </span>
+  </ng-container>
+
+</ng-template>
+
+<!-- 单独表格翻页控件 -->
+<ng-template #tablePage>
+  <nz-pagination [nzHideOnSinglePage]="false" (nzPageIndexChange)="pageIndexChange($event)"
+    (nzPageSizeChange)="pageSizeChange($event)" [nzPageIndex]="queryParams.page" [nzTotal]="total" nzShowSizeChanger
+    [nzPageSize]="queryParams.pageSize" [nzShowTotal]="totalTemplate" nzSize="small" nzShowQuickJumper
+    [nzPageSizeOptions]="pageSizeOptions">
+  </nz-pagination>
+  <ng-template #totalTemplate let-total>{{ 'placard.totalnum'|i18n| covertTranslation: total }}</ng-template>
+</ng-template>
+
+<!-- 标签重生产 ------------------------------------------------------------------------------------------->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupReProduction" [width]="1400" [height]="700"
+  (getClosePopup)="closePopup()" [zpopupCont]="zpopupReProductionCont" [zpopupFoot]="zpopupReProductionFoot">
+</zpopup>
+<!-- 标签重生产 内容 -->
+<ng-template #zpopupReProductionCont>
+  <div class="btn">
+    <button nz-button nzType="default" (click)="delReProduction()">{{ 'btn.delete'|i18n }}</button>
+    <button nz-button nzType="default" style="margin-left: 10px;"
+      (click)="delAllReProduction()">{{ 'btn.delAllInformation'|i18n }}</button>
+  </div>
+  <div class="inTable">
+    <nz-table #reProductionTable [nzScroll]="{y:'430px'}" [nzShowPagination]="false" [nzBordered]="true"
+      [nzData]="reProductionData" [nzLoading]="reProductionLoading" nzSize="small" [nzPageSize]="9999999"
+      [nzScroll]="{y:'450px'}" (nzCurrentPageDataChange)="onReProductionCurrentPageDataChange($event)">
+      <thead>
+        <tr>
+          <th nzLeft [nzIndeterminate]="reProductionIndeterminate" nzWidth="39px" [(nzChecked)]="reProductionChecked"
+            (nzCheckedChange)="onAllReProductionChecked($event)"></th>
+          <!-- 序号 -->
+          <th nzLeft nzWidth="46px" nzAlign="center">{{ 'popupField.sort_num'|i18n }}</th>
+          <!-- 标签 -->
+          <th nzWidth="160px">{{ 'popupField.tags'|i18n }}</th>
+          <!-- 载具编号 -->
+          <th nzWidth="120px">{{ 'popupField.rfid'|i18n }}</th>
+          <!-- 工序编号 -->
+          <th nzWidth="120px">{{ 'popupField.processNo'|i18n }}</th>
+          <!-- 工序名称 -->
+          <th nzWidth="120px">{{ 'popupField.processName'|i18n }}</th>
+          <!-- 工段 -->
+          <th nzWidth="120px">{{ 'popupField.workshop'|i18n }}</th>
+          <!-- 员工 -->
+          <th nzWidth="100px">{{ 'popupField.staff'|i18n }}</th>
+          <!-- 位置 -->
+          <th nzWidth="100px">{{ 'popupField.position'|i18n }}</th>
+          <!-- 发生时间 -->
+          <th nzWidth="140px">{{ 'popupField.occurrence_time'|i18n }}</th>
+          <!-- 计划完工 -->
+          <th nzWidth="100px">{{ 'pmTags.iscompleted'|i18n }}</th>
+          <!-- 计划产量 -->
+          <th nzWidth="100px">{{ 'pmTags.isrecordoutput'|i18n }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of reProductionTable.data,let i = index">
+          <td nzLeft [nzChecked]="setOfReProductionCheckedId.has(data.key)"
+            (nzCheckedChange)="onItemReProductionChecked(data.key, $event)"></td>
+          <td nzLeft nzAlign="center">{{ i+1 }}</td>
+          <td>{{ data.pti_tagcode }}</td>
+          <td>{{ data.rfid }}</td>
+          <td>{{ data.poi_code }}</td>
+          <td>{{ data.poi_name }}</td>
+          <td>{{ data.bwi_name }}</td>
+          <td>{{ data.hei_name }}</td>
+          <td>{{ data.bls_name }}</td>
+          <td>{{ data.happen_time }}</td>
+          <td>{{ data.iscompleted?('placard.complete'|i18n):('placard.incomplete'|i18n)}}</td>
+          <td>{{ data.isrecordoutput?('placard.complete'|i18n):('placard.incomplete'|i18n) }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</ng-template>
+<!-- 标签重生产 底部 -->
+<ng-template #zpopupReProductionFoot>
+
+</ng-template>
+
+<!-- 查看 --------------------------------------------------------------------------------------------------------------->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupSee" [width]="1250" [height]="800" [isLoading]="isSeeLoading"
+  (getClosePopup)="closePopup()" [zpopupCont]="zpopupSeeCont" [zpopupFoot]="zpopupSeeFoot">
+</zpopup>
+<!-- 查看 内容 -->
+<ng-template #zpopupSeeCont>
+  <div class="see_title">{{ 'placard.basein'|i18n }}</div>
+  <div class="see_cont">
+    <div nz-row class="fontSize">
+      <!-- 作业单号 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.oddNumber'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.pwb_code || ''">{{seeData.pwb_code || ''}}</span>
+      </div>
+      <!-- 条码 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.tagcode'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.tagcode || ''">{{seeData.tagcode || ''}}</span>
+      </div>
+      <!-- 标签 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.tags'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.custom_code || ''">{{seeData.custom_code || ''}}</span>
+      </div>
+      <!-- 类型 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.style'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.style_name || ''">{{seeData.style_name || ''}}</span>
+      </div>
+    </div>
+    <div nz-row class="fontSize" style="margin-top: 6px;">
+      <!-- 款式 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.psi2'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.psi_name || ''">{{seeData.psi_name || ''}}</span>
+      </div>
+      <!-- 颜色 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.pci2'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.pci_name || ''">{{seeData.pci_name || ''}}</span>
+      </div>
+      <!-- 尺码 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.psz2'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.psz_name || ''">{{seeData.psz_name || ''}}</span>
+      </div>
+      <!-- 部件 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.bpi'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.bpi_name || ''">{{seeData.bpi_name || ''}}</span>
+      </div>
+    </div>
+    <div nz-row class="fontSize" style="margin-top: 6px;">
+      <!-- 状态 -->
+      <div nz-col nzSpan="2">
+        {{ 'placard.status'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.state_name || ''">{{seeData.state_name || ''}}</span>
+      </div>
+      <!-- 数量 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.num'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.binding_quantity || ''">{{seeData.binding_quantity || ''}}</span>
+      </div>
+      <!-- 主部件 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.bpiIsmain'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip
+          [nzTooltipTitle]="seeData.bpi_ismain==1?('format.yes'|i18n):('format.no'|i18n)">{{seeData.bpi_ismain==1?('format.yes'|i18n):('format.no'|i18n)}}</span>
+      </div>
+      <!-- 流水号 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.serialcode'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip [nzTooltipTitle]="seeData.serialcode || ''">{{seeData.serialcode || ''}}</span>
+      </div>
+    </div>
+    <div class="fontSize" nz-row style="margin-top: 6px;">
+      <!-- 当前位置 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.current_location_code'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip
+          [nzTooltipTitle]="seeData.currenttype || ('warning.Nolocation'|i18n)">{{seeData.currenttype || ('warning.Nolocation'|i18n)}}</span>
+      </div>
+      <!-- 目标位置 -->
+      <div nz-col nzSpan="2">
+        {{ 'popupField.destinationlocation'|i18n }}：
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+        <span nz-tooltip
+          [nzTooltipTitle]="seeData.destinationlocation || ('warning.Nolocation'|i18n)">{{seeData.destinationlocation || ('warning.Nolocation'|i18n)}}</span>
+      </div>
+      <div nz-col nzSpan="2">
+
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+
+      </div>
+      <div nz-col nzSpan="2">
+
+      </div>
+      <div nz-col nzSpan="4" class="see_cont_text">
+
+      </div>
+    </div>
+  </div>
+  <div class="see_title" style="margin-top: 20px;">{{ 'popupField.relatesInformation'|i18n }}</div>
+  <div class="see_cont">
+    <nz-tabset>
+      <nz-tab [nzTitle]="'popupField.finishedProductCode'|i18n">
+        <nz-table #finishedTable [nzData]="finishedData" nzSize="small" [nzBordered]="true" [nzShowPagination]="false"
+          [nzPageSize]="999999" [nzScroll]="{y:'330px'}">
+          <thead>
+            <tr>
+              <!-- 部件码 -->
+              <th>{{ 'popupField.bpi_code2'|i18n }}</th>
+              <!-- 部件 -->
+              <th>{{ 'popupField.bpi'|i18n }}</th>
+              <!-- 条码 -->
+              <th nzWidth="200px">{{ 'popupField.tagcode'|i18n }}</th>
+              <!-- 载具 -->
+              <th>{{ 'popupField.rf'|i18n }}</th>
+              <!-- 当前位置 -->
+              <th>{{ 'popupField.current_location_code'|i18n }}</th>
+              <!-- 目标位置 -->
+              <th>{{ 'popupField.destinationlocation'|i18n }}</th>
+              <!-- 数量 -->
+              <th>{{ 'popupField.number'|i18n }}</th>
+              <!-- 操作 -->
+              <th nzWidth="49px" nzRight nzAlign="center">{{ 'btn.operation'|i18n }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of finishedTable.data">
+              <td>{{data.bpi_code}}</td>
+              <td>{{data.bpi_name}}</td>
+              <td>{{data.tagcode}}</td>
+              <td></td>
+              <td>{{data.currentlocationcode}}</td>
+              <td>{{data.destinationlocationcode}}</td>
+              <td>{{data.binding_quantity>0?data.binding_quantity:'-'}}</td>
+              <td nzRight nzAlign="center"><a (click)="toSeeIn(data)"><i nz-icon nzType="search"
+                    nzTheme="outline"></i></a></td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+      <!-- 部件码 -->
+      <nz-tab [nzTitle]="'popupField.bpi_code2'|i18n">
+        <nz-table #partsTable [nzData]="partsData" nzSize="small" [nzBordered]="true" [nzShowPagination]="false"
+          [nzPageSize]="999999" [nzScroll]="{y:'330px'}">
+          <thead>
+            <tr>
+              <!-- 部件码 -->
+              <th>{{ 'popupField.bpi_code2'|i18n }}</th>
+              <!-- 部件 -->
+              <th>{{ 'popupField.bpi'|i18n }}</th>
+              <!-- 条码 -->
+              <th nzWidth="200px">{{ 'popupField.tagcode'|i18n }}</th>
+              <!-- 载具编号 -->
+              <th>{{ 'popupField.rfid'|i18n }}</th>
+              <!-- 当前位置 -->
+              <th>{{ 'popupField.current_location_code'|i18n }}</th>
+              <!-- 目标位置 -->
+              <th>{{ 'popupField.destinationlocation'|i18n }}</th>
+              <!-- 数量 -->
+              <th>{{ 'popupField.number'|i18n }}</th>
+              <!-- 操作 -->
+              <th nzWidth="49px" nzRight nzAlign="center">{{ 'btn.operation'|i18n }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of partsTable.data">
+              <td>{{data.bpi_code}}</td>
+              <td>{{data.bpi_name}}</td>
+              <td>{{data.tagcode}}</td>
+              <td>{{data.id}}</td>
+              <td>{{data.currentlocationcode}}</td>
+              <td>{{data.destinationlocationcode}}</td>
+              <td>{{data.binding_quantity>0?data.binding_quantity:'-'}}</td>
+              <td nzRight nzAlign="center">
+                <a (click)="toSeeIn(data)"><i nz-icon nzType="search" nzTheme="outline"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</ng-template>
+<!-- 查看 底部 -->
+<ng-template #zpopupSeeFoot>
+
+</ng-template>
+
+<!-- 条形码 ----------------------------------------------------------------->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupBarCode" [width]="900" [height]="320" (getClosePopup)="closePopup()"
+  [zpopupCont]="zpopupBarCodeCont" [zpopupFoot]="zpopupBarCodeFoot">
+</zpopup>
+<!-- 条形码 内容 -->
+<ng-template #zpopupBarCodeCont>
+  <ngx-barcode style="text-align: center;" [bc-value]="barCode" [bc-display-value]="true"></ngx-barcode>
+</ng-template>
+<!-- 条形码 底部 -->
+<ng-template #zpopupBarCodeFoot>
+
+</ng-template>
+
+<!-- 打印 ----------------------------------------------------------------->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupPrint" [width]="1250" [height]="800" (getClosePopup)="closePopup()"
+  [isLoading]="isPrintLoading" [zpopupCont]="zpopupPrintCont" [zpopupFoot]="zpopupPrintFoot">
+</zpopup>
+<!-- 打印 内容 -->
+<ng-template #zpopupPrintCont>
+  <nz-layout class="Printlayout">
+    <nz-sider nzCollapsible [nzCollapsedWidth]="0" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" [nzWidth]="400">
+      <form nz-form class="form">
+        <nz-divider nzText="{{'Print.papersize'|i18n}}" nzOrientation="left"></nz-divider>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="boxW">{{'Print.width'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="mm">
+              <input nz-input type="number" [(ngModel)]="Custom.boxW" name="boxW" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="boxH">{{'Print.height'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="mm">
+              <input nz-input type="number" [(ngModel)]="Custom.boxH" name="boxH" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-divider nzText="{{'Print.content'|i18n}}" nzOrientation="left"></nz-divider>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="showDail">{{'Print.displayfields'|i18n}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="19" [nzXs]="24">
+            <div style="border-bottom: 1px solid rgb(233, 233, 233);">
+              <label nz-checkbox [(ngModel)]="allChecked" name="allChecked" (ngModelChange)="updateAllChecked()"
+                [nzIndeterminate]="indeterminate">
+                {{'Print.allchack'|i18n}}
+              </label>
+            </div>
+            <br />
+            <nz-checkbox-wrapper style="width: 100%;">
+              <div nz-row>
+                <div nz-col nzSpan="8" *ngFor="let item of configItem.allDail">
+                  <label nz-checkbox [nzValue]="item.value" name="{{item.value}}"
+                    (ngModelChange)="log($event,item.value)"
+                    [(ngModel)]="item.checked">{{ 'pmTags.'+item.value|i18n }}</label>
+                </div>
+              </div>
+            </nz-checkbox-wrapper>
+          </nz-form-control>
+        </nz-form-item>
+        <!-- <nz-form-item class="form-item">
+                    <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="showDail">显示预览</nz-form-label>
+                    <nz-form-control [nzSm]="19" [nzXs]="24">
+                        <nz-tag *ngFor="let sd of Custom.showDail" style="margin-bottom: 5px;">{{'pmTags.'+sd|i18n}}
+                        </nz-tag>
+                    </nz-form-control>
+                </nz-form-item> -->
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="titlefontsize">{{'Print.titlefontsize'|i18n}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.titlefontsize" type="number" name="titlefontsize"
+                (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="Datafontsize">{{'Print.Datafontsize'|i18n}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.Datafontsize" type="number" name="Datafontsize" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="titlewidth">{{'Print.titlewidth'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.titlewidth" type="number" name="titlewidth" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="datawidth">{{'Print.datawidth'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.datawidth" type="number" name="datawidth" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="lineheight">{{'Print.lineheight'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.lineheight" type="number" name="lineheight" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="ishole">{{'Print.hole'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <label nz-checkbox [(ngModel)]="Custom.ishole" name="ishole" (ngModelChange)="update()"></label>
+          </nz-form-control>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="istime">{{'Print.time'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <label nz-checkbox [(ngModel)]="Custom.istime" name="istime" (ngModelChange)="update()"></label>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-divider nzText="{{'Print.holearea'|i18n}}" nzOrientation="left" *ngIf="Custom.ishole==true">
+        </nz-divider>
+        <div *ngIf="Custom.ishole==true">
+          <nz-form-item class="form-item">
+            <!-- <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="rwidth">宽</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [(ngModel)]="Custom.rwidth" name="rwidth" (change)="update()" />
+                        </nz-form-control> -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="rheight">{{'Print.height'|i18n}}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-input-group nzAddOnAfter="px">
+                <input nz-input [(ngModel)]="Custom.rheight" type="number" name="rheight" (change)="update()" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <nz-divider nzText="{{'Print.time'|i18n}}" nzOrientation="left" *ngIf="Custom.istime==true">
+        </nz-divider>
+        <div *ngIf="Custom.istime==true">
+          <nz-form-item class="form-item">
+            <!-- <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="twidth">宽</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <nz-input-group nzAddOnAfter="px">
+                                <input nz-input [(ngModel)]="Custom.twidth" name="rwidth" (change)="update()" />
+                            </nz-input-group>
+                        </nz-form-control> -->
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="theight">{{'Print.height'|i18n}}</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <nz-input-group nzAddOnAfter="px">
+                <input nz-input [(ngModel)]="Custom.theight" type="number" name="theight" (change)="update()" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <nz-divider nzText="{{'Print.barcodeset'|i18n}}" nzOrientation="left"></nz-divider>
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="bartype">{{'Print.bartype'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-radio-group [(ngModel)]="Custom.bartype" name="bartype" (ngModelChange)="update()">
+              <label nz-radio nzValue="ngx">{{'Print.ngx'|i18n}}</label>
+              <label nz-radio nzValue="qr">{{'Print.qr'|i18n}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item" *ngIf="Custom.bartype=='qr'">
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="size">{{'Print.size'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.size" type="number" name="size" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item" *ngIf="Custom.bartype=='ngx'">
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="barwidth">{{'Print.width'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.barwidth" type="number" name="barwidth" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="barheight">{{'Print.height'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group nzAddOnAfter="px">
+              <input nz-input [(ngModel)]="Custom.barheight" type="number" name="barheight" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="form-item" *ngIf="Custom.bartype=='ngx'">
+          <!-- <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="barmargin">间隔</nz-form-label>
+                    <nz-form-control [nzSm]="7" [nzXs]="24">
+                        <nz-input-group nzAddOnAfter="px">
+                            <input nz-input [(ngModel)]="Custom.barmargin" name="barmargin" (change)="update()" />
+                        </nz-input-group>
+                    </nz-form-control> -->
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="bartextalign">{{'Print.textalign'|i18n}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <!-- <input nz-input [(ngModel)]="Custom.bartextalign" name="bartextalign" (change)="update()" /> -->
+            <nz-select [(ngModel)]="Custom.bartextalign" name="bartextalign" (ngModelChange)="update()">
+              <nz-option nzValue="center" nzLabel="{{'Print.center'|i18n}}"></nz-option>
+              <nz-option nzValue="left" nzLabel="{{'Print.left'|i18n}}"></nz-option>
+              <nz-option nzValue="right" nzLabel="{{'Print.right'|i18n}}"></nz-option>
+            </nz-select>
+          </nz-form-control>
+          <!-- </nz-form-item>
+                <nz-form-item class="form-item"> -->
+          <nz-form-label [nzSm]="5" [nzXs]="24" nzFor="bcwidth">{{'Print.bcwidth'|i18n}}</nz-form-label>
+          <nz-form-control [nzSm]="7" [nzXs]="24">
+            <nz-input-group>
+              <input nz-input [(ngModel)]="Custom.bcwidth" type="number" name="bcwidth" (change)="update()" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <button nz-button nzType="primary" (click)="setSubmit()">{{'Print.setSubmit'|i18n}}</button>
+      <button nz-button (click)="DefaultPrint()" style="margin-left:5px ;">{{'btn.reset'|i18n}}</button>
+    </nz-sider>
+    <nz-layout>
+      <div
+        [ngStyle]="{'width': configItem.boxW+'px','height':configItem.boxH+'px','margin': 'auto','border':'1px solid','overflow':'auto'}">
+        <div id="printPaly">
+          <div *ngFor="let item of barCodeList" [ngStyle]="configItem.background">
+            <!-- 孔洞 -->
+            <div [ngStyle]="configItem.reserved" *ngIf="configItem.ishole==true"></div>
+            <!-- 时间戳 -->
+            <div [ngStyle]="configItem.subtitle" *ngIf="configItem.istime==true">
+              {{item[configItem.showField]}}
+            </div>
+            <!-- <div> -->
+            <!-- 属性 -->
+            <div *ngFor="let sd of configItem.showDail" [ngStyle]="configItem.contentBack">
+              <div [ngStyle]="configItem.contentTitle">{{ 'pmTags.'+sd|i18n }}:</div>
+              <div [ngStyle]="configItem.contentData">{{item[sd]}}</div>
+            </div>
+            <!-- </div> -->
+            <!-- 条形码 -->
+            <div [ngStyle]="configItem.barcode" *ngIf="configItem.bartype=='ngx'">
+              <ngx-barcode [bc-value]="item.tagcode" [bc-width]="transform(configItem.bcwidth)" [bc-format]="'CODE128'"
+                [bc-display-value]="true"></ngx-barcode>
+            </div>
+            <!-- 二维码 -->
+            <div [ngStyle]="configItem.barcode" *ngIf="configItem.bartype=='qr'">
+              <qr-code [value]="item.tagcode" [size]="configItem.size" background="#f2f1f1"></qr-code>
+            </div>
+          </div>
+          <!-- <div style="width: 288px; height: 600px; page-break-after: always;" *ngFor="let item of barCodeList">
+            <div style="width: 200px; height: 100px; margin: 0 auto;"></div>
+            <div style="width: 200px; height: 32px; font-size: 18px; line-height: 32px;padding-left: 22px;">{{item.reference}}</div>
+            
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.psi_code'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.psi_code}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.psz_code'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.psz_code}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.bpi_name'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.bpi_name}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.pci_code'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.pci_name}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.bed_sort'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.bed_sort}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.copy'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.copy}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.pack_sort'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.pack_sort}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.pwd_sort'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.pwd_sort}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.binding_quantity'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.binding_quantity}}</div>
+            </div>
+            <div style="width: 288px; height: 32px; margin: 0 auto;">
+                <div style="float: left;
+                width: 74px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                padding-right: 10px;
+                text-align: right;">{{ 'popupField.bpi_code'|i18n }}:</div>
+                <div style="float: left;
+                width: 180px;
+                height: 32px;
+                font-size: 24px;
+                line-height: 32px;
+                border-bottom: 1px solid #000;
+                text-align: center;">{{item.start_code + '-' + item.end_code}}</div>
+            </div>
+            <div style="width: 288px; height: 142px; margin: 20px auto 0 auto; text-align: center;">
+                <ngx-barcode [bc-value]="item.tagcode" [bc-format]="'CODE128'" [bc-display-value]="true"></ngx-barcode>
+            </div>
+        </div> -->
+        </div>
+      </div>
+    </nz-layout>
+  </nz-layout>
+</ng-template>
+<!-- 打印 底部 -->
+<ng-template #zpopupPrintFoot>
+  <button nz-button nzType="primary" [nzLoading]="isPrintLoading"
+    (click)="printSubmit()">{{ 'btn.print'|i18n }}</button>
+  <button nz-button nzType="primary" [nzLoading]="isPrintLoading" style="margin-left:5px ;"
+    (click)="isCollapsed = !isCollapsed">{{'Print.Customset'|i18n}}</button>
+</ng-template>
+
+<!-- 导入 ---------------------------------------------------->
+<zpopup [popupTitle]="zpopupTiele" *ngIf="isPopupImport" [width]="700" [height]="400" (getClosePopup)="closePopup()"
+  [zpopupCont]="zpopupImportCont" [zpopupFoot]="zpopupImportFoot">
+</zpopup>
+<!-- 导入 内容 -->
+<ng-template #zpopupImportCont>
+  <div class="down"><button nz-button nzType="dashed" (click)="toExcelModel()">{{ 'btn.downmodel'|i18n }}</button>
+    <span style="padding-left: 10px;">{{ 'checkdata.downTip'|i18n }}</span></div>
+  <div class="import">
+    <nz-upload nzType="drag" [nzMultiple]="true" [nzAction]="upExcel()" [nzHeaders]="uploadingHeader()"
+      (nzChange)="importChange($event)" [nzBeforeUpload]="beforeUpload" [nzMultiple]="false" [nzDisabled]="isUpload">
+      <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="inbox"></i>
+      </p>
+      <p class="ant-upload-text">{{ 'warning.importTip'|i18n }}</p>
+      <p class="ant-upload-hint">
+        {{ 'warning.importTip2'|i18n }}
+      </p>
+    </nz-upload>
+  </div>
+</ng-template>
+<!-- 导入 底部 -->
+<ng-template #zpopupImportFoot>
+
+</ng-template>

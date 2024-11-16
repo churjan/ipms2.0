@@ -1,0 +1,94 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" justifyContent="center" height="90%" nzSize="small"
+  (onClose)="close()" [content]="contentTpl" [footer]="footerTpl">
+  <ng-template #contentTpl>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzRequired>{{ 'pmOverloadManagement.permit'|i18n }}</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-switch [(ngModel)]="node.permit" name="permit" nzCheckedChildren="{{'btn.AllowLeave'|i18n}}"
+            nzUnCheckedChildren="{{'btn.noAllowLeave'|i18n}}" [class.open]="node.permit" [class.close]="!node.permit">
+          </nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4" nzRequired>{{ 'pmOverloadManagement.blsr_name'|i18n }}</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <input nz-input placeholder="{{'inputdata.input'|i18n}}" [(ngModel)]="node.blsr_name" name="blsr_name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="4">{{ 'pmOverloadManagement.sort'|i18n }}</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-input-number [(ngModel)]="node.sort" name="sort" [nzMin]="1" [nzStep]="1" style="width: 50%;">
+          </nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div>
+      <nz-table #borderedTable nzBordered [nzData]="node.blsd_list" [nzShowPagination]="false" nzSize="small"
+        [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th nzWidth="80px" nzLeft nzAlign="center">{{'placard.No'|i18n}}</th>
+            <th nzWidth="180px">{{'pmOverloadManagement.blr_key'|i18n}}</th>
+            <th nzWidth="180px">{{'pmOverloadManagement.value'|i18n}}</th>
+            <th nzWidth="80px" nzRight nzAlign="center">
+              <a (click)="addblsd_list()">
+                <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of borderedTable.data;let i=index">
+            <td nzAlign="center">{{i+1}}</td>
+            <td>
+              <ina-common-select class="select" title="" name="condition" DataTxt="name" [other]="{Module:1}"
+                [(ngModel)]="data.blr_key " url="LayoutStructureRules" Datatyle="getlist"
+                (onSelect)="onConditionChange($event,data)">
+              </ina-common-select>
+            </td>
+            <td>
+              <ng-container *ngIf="!data.optionmode ||data.optionmode.includes('input')">
+                <input *ngIf="['',undefined,null,'String'].includes(data.inputtype)" nz-input [(ngModel)]="data.value"
+                  name="value" placeholder="{{'inputdata.input' | i18n}}" style="width: 100%" />
+                <nz-input-number *ngIf="['Int', 'Decimal'].includes(data.inputtype)" nz-input [(ngModel)]="data.value"
+                  name="value" placeholder="{{'inputdata.input' | i18n}}" style="width: 100%"></nz-input-number>
+
+                <nz-switch *ngIf="['Bool'].includes(data.inputtype)" [(ngModel)]="data.value" name="value">
+                </nz-switch>
+              </ng-container>
+              <ina-common-select *ngIf="data.optionmode === 'customselect'" DataFiled="value" [(ngModel)]="data.value"
+                name="value" [optionList]="data.optionvalue" (onSelect)="data.value_name=$event?$event.name:''">
+              </ina-common-select>
+              <ina-common-select *ngIf="data.optionmode === 'select'" [(ngModel)]="data.value" name="value"
+                [ispaging]="false" [url]="data.optionvalue"
+                (onSelect)="data.value_name=$event?($event.name?$event.name:$event.code):''">
+              </ina-common-select>
+              <ina-common-select *ngIf="data.optionmode === 'fullselect'" [(ngModel)]="data.value" name="value"
+                [ispaging]="false" [url]="data.optionvalue" Datatyle=""
+                (onSelect)="data.value_name=$event?($event.name?$event.name:$event.code):''">
+              </ina-common-select>
+              <ina-common-select *ngIf="data.optionmode === 'extendselect'" [(ngModel)]="data.value" name="value"
+                [other]="{extend:data.key}" [ispaging]="false" [url]="data.optionvalue"
+                (onSelect)="data.value_name=$event?$event.name:''">
+              </ina-common-select>
+              <ina-common-select *ngIf="data.optionmode === 'enumselect'" DataFiled="value" DataTxt="description"
+                [(ngModel)]="data.value" name="value" urltype="enum" [url]="data.optionvalue"
+                (onSelect)="data.value_name=$event?$event.description:''">
+              </ina-common-select>
+            </td>
+            <td nzRight nzAlign="center">
+              <a (click)="minus(data,i)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [nzLoading]="submiting"
+      class="m-l-6">{{'btn.save'|i18n}}</button>
+    <button nz-button (click)="close()">{{'btn.cancel'|i18n}}</button>
+  </ng-template>
+</idrawer>

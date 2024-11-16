@@ -1,0 +1,43 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item *ngFor="let control of listOfControl; let i= index">
+        <nz-form-control
+            nzErrorTip="Please input passenger's name or delete this field.">
+            <nz-input-group nzCompact>
+                <nz-select [formControlName]="control.controlInstance">
+                    <nz-option [nzLabel]="'Option1'" [nzValue]="'Option1'"></nz-option>
+                    <nz-option [nzLabel]="'Option2'" [nzValue]="'Option2'"></nz-option>
+                </nz-select>
+                <input type="text" nz-input
+                    [formControlName]="control.controlInstance"
+                    style="width:
+                    20%;" />
+                <input
+                    class="passenger-input"
+                    nz-input
+                    placeholder="placeholder"
+                    [attr.id]="control.id"
+                    [formControlName]="control.controlInstance"
+                    />
+            </nz-input-group>
+            <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
+                (click)="removeField(control, $event)"></i>
+
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20,
+            offset: 4 }">
+            <button nz-button nzType="dashed" class="add-button"
+                (click)="addField($event)">
+                <i nz-icon nzType="plus"></i>
+                Add field
+            </button>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20,
+            offset: 4 }">
+            <button nz-button nzType="primary">Submit</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>

@@ -1,0 +1,32 @@
+.mat-quality {
+    height: calc(100%);
+    overflow: auto;
+}
+.mat-quality th {
+    height: 37px;
+    opacity: 1;
+}
+.mat-quality th,
+.mat-quality td {
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+.table-head {
+    padding-right: 6px;
+    background-color: #e4e7e8;
+    height: 37px;
+    opacity: 1;
+    color: #000;
+}
+.table-body {
+    width: 100%;
+    height: calc(100% - 37px);
+    overflow-y: scroll;
+}
+.table-head table,
+.table-body table {
+    width: 100%;
+}
+.table-body table tr:nth-child(2n + 1) {
+    background-color: #f2f2f2;
+}

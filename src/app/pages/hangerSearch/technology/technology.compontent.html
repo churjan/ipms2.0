@@ -1,0 +1,195 @@
+<!-- <h2 mat-dialog-title style="margin-bottom: 10px;">{{tipList.detailedin}}</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content style="height: 100%;">
+    <mat-card style="padding: 0;" *ngIf="models">
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">{{tipList.Excipients}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.accessorylist" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="acce_name">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.acce_name}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="hinban">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.hinban}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.hinban}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="color">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.color}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.color}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="size">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.size}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.size}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.quantity}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.quantity}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="yarn">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.yarn}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.yarn}}</td>
+
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="accessories; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: accessories;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">{{tipList.inch_info}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.inchlist" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="inchname">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.inchname}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="basic_value">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.basic_value}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.basic_value}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="adjusted_value">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.adjusted_value}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.adjusted_value}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="actual_value">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.actual_value}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.actual_value}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="inch; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: inch;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">{{tipList.lin_info}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.linelist" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="linename">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.linename}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="color">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.color}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.color}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="linehinban">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.linehinban}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.hinban}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="line; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: line;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">opt</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.opts" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="subcatename">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.subcatename}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.subcatename}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="optcode">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.optcode}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.optcode}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="optname">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.optname}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.optname}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="opts; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: opts;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">{{tipList.ant_info}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.antiskidstrip" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="stripname">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.stripname}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="anthinban">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.anthinban}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.hinban}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="stripcolor">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.stripcolor}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.color}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="antiskidstrip; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: antiskidstrip;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-header style="height: 25px;line-height: 25px;">
+            <mat-card-subtitle><img src="assets/img/order_icon.png" alt="" srcset="">{{tipList.Othermatters}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div class="example-container mat-elevation-z8" style="margin-top: 1px;height: auto;box-shadow: none;">
+                <table mat-table [dataSource]="models.otherlist" class="mat-table">
+                    <ng-container matColumnDef="No">
+                        <th mat-header-cell *matHeaderCellDef> {{tipList.No}}</th>
+                        <td mat-cell *matCellDef="let date;let i = index"> {{date.i}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="stripname">
+                        <th mat-header-cell *matHeaderCellDef>{{fields.stripname}}</th>
+                        <td mat-cell *matCellDef="let date">{{date.name}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="color">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.color}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.color}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="actual_value">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">{{fields.actual_value}}</th>
+                        <td mat-cell *matCellDef="let date" class="text-center">{{date.actual}}</td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="other; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: other;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close>{{buttonList.cancels}}</button>
+</mat-dialog-actions> -->

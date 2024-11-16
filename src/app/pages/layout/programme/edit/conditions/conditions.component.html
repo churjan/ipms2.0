@@ -1,0 +1,70 @@
+<nz-table #conditionTable [nzData]="data" [nzBordered]="true" [nzShowPagination]="false" nzSize="small">
+    <thead>
+        <tr>
+            <th>{{ 'placard.fild'|i18n }}</th>
+            <th nzWidth="80px">{{ 'placard.operator'|i18n }}</th>
+            <th>{{ 'placard.value'|i18n }}</th>
+            <th>
+                <button nz-button type="button" nzType="text" (click)="add()">
+                    <i nz-icon nzType="plus"></i>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of conditionTable.data;let i= index">
+            <td>
+                <ina-common-select class="select" title="" Datatyle="" [(ngModel)]="item.field"
+                    (onSelect)="ChangeAttr($event,item)" url="layoutstructurerules">
+                </ina-common-select>
+                <!-- <nz-select nzShowSearch [(ngModel)]="item.field" nzPlaceHolder="{{  'checkdata.check'|i18n}}" (ngModelChange)="ChangeAttr(item)">
+                    <nz-option [nzValue]="ite.key" [nzDisabled]="checkSelected(ite.key)" [nzLabel]="ite.name" *ngFor="let ite of fieldOptions"></nz-option>
+                </nz-select> -->
+            </td>
+            <td>
+                <nz-select [(ngModel)]="item.operator" nzPlaceHolder="{{
+                    'checkdata.check'|i18n}}">
+                    <nz-option *ngFor="let operator of operators" [nzValue]="operator" [nzLabel]="operator"></nz-option>
+                </nz-select>
+            </td>
+            <td>
+                <ng-container *ngIf="item.optionmode=='select'">
+                    <ina-common-select class="select" title="" [(ngModel)]="item.value" DataTxt="code" secondary="name"
+                        [url]="item.optionvalue" (onSelect)="item.value_name=$event.code">
+                    </ina-common-select>
+                </ng-container>
+                <ng-container *ngIf="item.optionmode=='extendselect'">
+                    <ina-common-select class="select" title="" [other]="{extend:item.field}" [(ngModel)]="item.value"
+                        DataTxt="name" [url]="item.optionvalue" [isshow]="false"
+                        (onSelect)="item.value_name=$event.name">
+                    </ina-common-select>
+                </ng-container>
+                <ng-container *ngIf="item.optionmode=='enumselect'">
+                    <ina-common-select class="select" title="" [(ngModel)]="item.value" [url]="item.optionvalue"
+                        DataFiled="value" urltype="enum" DataTxt="description" [isshow]="false"
+                        (onSelect)="item.value_name=$event.description">
+                    </ina-common-select>
+                </ng-container>
+                <ng-container *ngIf="item.optionmode=='customselect'">
+                    <ina-common-select class="select" title="" [(ngModel)]="item.value" [isSeach]="false"
+                        [optionList]="item.valueslist" DataFiled="value" (onSelect)="item.value_name=$event.name"
+                        DataTxt="name" [isshow]="false">
+                    </ina-common-select>
+                </ng-container>
+                <ng-container
+                    *ngIf="!item.optionmode||item.optionmode=='text'||item.optionmode=='input'||item.optionmode=='judgment-input'">
+                    <input nz-input [(ngModel)]="item.value" name="item.value"
+                        placeholder="{{ 'inputdata.input'|i18n }}" (keyup)="testing($event,item)"
+                        [nzStatus]="item.Status"
+                        [type]="item.inputtype=='Int'||item.inputtype=='Decimal'?'number':'text'" />
+                </ng-container>
+            </td>
+            <td>
+                <button nz-button type="button" nzType="text" (click)="delete(i)" [disabled]="!canDeleteAll &&
+                    conditionTable.data?.length <= 1">
+                    <i nz-icon nzType="minus"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

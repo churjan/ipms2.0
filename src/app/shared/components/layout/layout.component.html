@@ -1,0 +1,108 @@
+<nz-layout class="wrapper">
+    <nz-header class="head">
+        <div class="left" [ngClass]="{collapsed: collapsed}">
+            <img class="logo" src="/assets/images/logo.png">
+            <h1 *ngIf="siderMode != 'over'">{{sysName?sysName:( 'sysName'|i18n) }}</h1>
+            <i nz-icon class="anticon trigger" [nzType]="collapsed ? 'menu-unfold' : 'menu-fold'"
+                (click)="collapsed=!collapsed"></i>
+        </div>
+        <div class="right" [ngClass]="{over:siderMode == 'over'}">
+            <span nz-dropdown class="action" nzPlacement="bottomRight" [nzDropdownMenu]="menuAccount">
+                <nz-avatar class="avatar" nzSize="small" nzIcon="user"></nz-avatar>
+                <span class="name" *ngIf="current?.name">{{ current?.name }}</span>
+                <span class="down"><i nz-icon nzType="down" nzTheme="outline"></i></span>
+            </span>
+            <span class="action" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="menuLanguage">
+                <i nz-icon nzType="global" nzTheme="outline"></i>
+                <span class="name">{{ languageName?languageName:'简体中文'}}</span>
+                <span class="down"><i nz-icon nzType="down" nzTheme="outline"></i></span>
+            </span>
+            <span class="action" (click)="search()"><i nz-icon nzType="search" nzTheme="outline"></i>
+                <span class="name">{{ 'main.hangerQuery'|i18n }}</span>
+            </span>
+            <span class="action" (click)="LCD()"><i nz-icon nzType="search" nzTheme="outline"></i>
+                <span class="name">{{ 'main.LCD'|i18n }}</span>
+            </span>
+            <span class="action" nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="menuTheme">
+                <i nz-icon nzType="skin" nzTheme="outline"></i>
+                <span class="name">{{ 'main.theme'|i18n }}</span>
+                <span class="down"><i nz-icon nzType="down" nzTheme="outline"></i></span>
+            </span>
+            <a class="action" target="_blank" href="http://www.ina-ina.com/"><i nz-icon nzType="home"
+                    nzTheme="outline"></i> <span class="name">{{ 'main.ina'|i18n }}</span></a>
+            <span class="action" nz-dropdown nzPlacement="bottomLeft" [nzDropdownMenu]="menuSet"
+                *ngIf="project=='AiDaGao'">
+                <i nz-icon nzType="setting" nzTheme="outline"></i>
+            </span>
+        </div>
+    </nz-header>
+    <nz-content class="body">
+        <nz-sider class="menus beauty-scroll1" *ngIf="siderMode == 'side'" nzCollapsible [(nzCollapsed)]="collapsed"
+            [nzWidth]="siderWidth" [nzTrigger]="null">
+            <ng-container [ngTemplateOutlet]="sider"></ng-container>
+        </nz-sider>
+        <div class="main" [ngClass]="{collapsed: collapsed,over:siderMode == 'over'}">
+            <tabbar></tabbar>
+            <div class="window">
+                <router-outlet *ngIf="NavTabs==true"></router-outlet>
+            </div>
+        </div>
+    </nz-content>
+</nz-layout>
+
+<!-- 手机等小屏幕 over -->
+<nz-drawer *ngIf="siderMode == 'over'" [nzClosable]="false" [nzVisible]="!collapsed" [nzWidth]="siderWidth"
+    nzPlacement="left" (nzOnClose)="collapsed = true" [nzBodyStyle]="{ padding:0, height: '100%'}">
+    <div class="beauty-scroll1 menu-mini">
+        <nz-sider [nzTrigger]="null">
+            <ng-container [ngTemplateOutlet]="sider"></ng-container>
+        </nz-sider>
+    </div>
+</nz-drawer>
+
+<!-- 左侧菜单按钮列表 -->
+<ng-template #sider>
+    <navbar [data]="siderMenus" [inlineCollapsed]="siderMode == 'over' ? false : collapsed"></navbar>
+</ng-template>
+
+<!-- 用户中心 -->
+<nz-dropdown-menu #menuAccount="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item routerLink="/account/info">
+            <i nz-icon nzType="user"></i>{{ 'User.info'|i18n }}
+        </li>
+        <li nz-menu-item routerLink="/account/password">
+            <i nz-icon nzType="lock"></i>{{ 'User.password'|i18n }}
+        </li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item (click)="logout()">
+            <i nz-icon nzType="logout"></i>{{ 'User.logout'|i18n }}
+        </li>
+    </ul>
+</nz-dropdown-menu>
+
+<!-- 语言 -->
+<nz-dropdown-menu #menuLanguage="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item (click)="languageChange('Zh')">简体中文</li>
+        <li nz-menu-item (click)="languageChange(item.language)" *ngFor="let item of language">{{item.languagename}}
+        </li>
+    </ul>
+</nz-dropdown-menu>
+
+<!-- 主题 -->
+<nz-dropdown-menu #menuTheme="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item (click)="themeChange('default')">{{ 'main.themeLight'|i18n }}</li>
+        <li nz-menu-item (click)="themeChange('dark')">{{ 'main.themeDark'|i18n }}</li>
+    </ul>
+</nz-dropdown-menu>
+<!-- 设置 -->
+<nz-dropdown-menu #menuSet="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item>{{'main.tableAuthority'|i18n}}
+            <nz-switch nzSize="small" style="margin-left:5px ;" (click)="$event.stopPropagation()" [(ngModel)]="tableCW"
+                name="tableCW" (ngModelChange)="tableAuthority()"></nz-switch>
+        </li>
+    </ul>
+</nz-dropdown-menu>

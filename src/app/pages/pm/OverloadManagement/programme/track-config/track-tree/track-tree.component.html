@@ -1,0 +1,9 @@
+<div class="page-view">
+    <nz-input-group [nzSuffix]="suffixIcon" class="mb16">
+        <input type="text" nz-input placeholder="{{'placard.search'|i18n}}" [(ngModel)]="searchValue" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+        <i nz-icon nzType="search"></i>
+    </ng-template>
+    <nz-tree class="tree-view" [nzData]="nodes" [nzSearchValue]="searchValue" (nzClick)="nzEvent($event)"></nz-tree>
+</div>

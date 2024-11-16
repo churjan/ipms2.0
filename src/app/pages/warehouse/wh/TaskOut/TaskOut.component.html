@@ -1,0 +1,105 @@
+<crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [columns]="columns"
+    [modular]="modular" [fields]="field" [searchActionsBody]="searchActionsBody" [lastColumnTpl]="operationTpl"></crud2>
+<!-- 行内操作按钮 -->
+<ng-template #operationTpl let-item="record">
+    <nz-select [(ngModel)]="item.state" (ngModelChange)="changeStatus(item)"
+        [nzDisabled]="item.state == 10 || item.state == 99" [ngStyle]="{width: '100px'}">
+        <nz-option [nzValue]="ws.value" nzLabel="{{ws.description}}" *ngFor="let ws of warehousetaskoutenum"
+            [nzDisabled]="ws.value==99||ws.value==0"></nz-option>
+    </nz-select>
+    <nz-divider nzType="vertical"></nz-divider>
+</ng-template>
+<ng-template #searchActionsBody let-item="record">
+    <form nz-form>
+        <nz-form-item *ngIf="isseach('som_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.som_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.som_key" name="som_code" url="OrderMaster" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pwb_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.pwb_code'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pwb_key" name="pwb_code" url="WorkBill" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('bpi_name')==true||isseach('bpi_code')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.bpi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.bpi_key" name="bpi_code" url="partinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psi_code')==true||isseach('psi_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.psi_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psi_key" name="psi_code"
+                    [DataTxt]="isseach('psi_name')==true?'name':'code'" url="styleinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('psz_code')==true||isseach('psz_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.psz_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.psz_key" name="psz_code" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pci_code')==true||isseach('pci_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.pci_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pci_key" name="pci_key" url="sizeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('rfid')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.rfid'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="rfid" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.rfid" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('pti_tagcode')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.pti_tagcode'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <input nz-input name="pti_tagcode" placeholder="{{ 'inputdata.input'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.pti_tagcode" (keydown)="crud.Search($event)" />
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.state_name'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.state" name="state" DataFiled="value" DataTxt="description"
+                    urltype="enum" url="warehousetaskoutenum" [isshow]="false">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('create_hei_code')==true||isseach('create_hei_name')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.create_hei_key'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <ina-common-select class="select" title="{{ 'checkdata.check'|i18n }}"
+                    [(ngModel)]="crud.seniorModel.create_hei_key" name="create_hei_key" url="Employeeinfo">
+                </ina-common-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="isseach('create_time')==true">
+            <nz-form-label [nzSpan]="24">{{ 'whTaskOut.create_time'|i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="24">
+                <date-select [isRange]="true" class="select" widthClass="width100"
+                    (onSelect)="crud.seniorModel.create_time_start=$event.start;crud.seniorModel.create_time_end=$event.end">
+                </date-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</ng-template>
+<TaskOutEdit #edit (editDone)="crud.reloadData($event);" [modular]="modular"></TaskOutEdit>
+<TaskOut-look #look [modular]="modular"></TaskOut-look>

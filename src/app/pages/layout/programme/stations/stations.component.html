@@ -1,0 +1,14 @@
+<idrawer *ngIf="visible" [title]="title" width="700px" height="100%" headerHeight="48px" bodyPadding="10px 20px 0" (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <itable 
+            [data]="data" 
+            [total]="data?.length" 
+            [loading]="loading" 
+            [columns]="tableColumns"
+            [frontPagination]="true"
+            [showSelection]="false"
+            [maskAlert]="true"
+            >
+        </itable>
+    </ng-template>
+</idrawer>

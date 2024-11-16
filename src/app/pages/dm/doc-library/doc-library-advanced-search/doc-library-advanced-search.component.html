@@ -1,0 +1,47 @@
+<div class="form-view">
+    <div class="form-header-view">
+        <div class="flex-1">
+            <i
+                nz-icon
+                nzType="logout"
+                nzTheme="outline"
+                class="fz16 pointer"
+                (click)="onClose()"
+            ></i>
+        </div>
+        <button nz-button class="mr8" (click)="onReset()">
+            {{ "btn.reset" | i18n }}
+        </button>
+        <button nz-button nzType="primary" (click)="onQuery()">
+            {{ "btn.search" | i18n }}
+        </button>
+    </div>
+    <div class="form-body-view">
+        <form nz-form [formGroup]="form" nzLayout="vertical">
+            <nz-form-item>
+                <nz-form-label>{{
+                    "placard.originFileName" | i18n
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input
+                        nz-input
+                        formControlName="originalname"
+                        placeholder="{{ 'inputPlaceholder' | i18n }}"
+                    />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label>{{
+                    "placard.fileExtension" | i18n
+                }}</nz-form-label>
+                <nz-form-control>
+                    <input
+                        nz-input
+                        formControlName="extension"
+                        placeholder="{{ 'inputPlaceholder' | i18n }}"
+                    />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
