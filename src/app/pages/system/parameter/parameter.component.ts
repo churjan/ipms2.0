@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ParameterService } from '~/pages/system/parameter/parameter.service';
 import { ListTemplateComponent } from '~/shared/common/base/list-template.component';
+import { CollocationComponent } from './collocation/collocation.component';
 import { EditComponent } from './edit/edit.component';
 
 @Component({
@@ -11,6 +12,7 @@ import { EditComponent } from './edit/edit.component';
 })
 export class ParameterComponent extends ListTemplateComponent {
     @ViewChild('edit', { static: false }) _edit: EditComponent;
+    @ViewChild('collocation', { static: false }) _collocation: CollocationComponent;
 
     // tableColumns: any[] = []
   options: any[] = [];
@@ -32,6 +34,14 @@ export class ParameterComponent extends ListTemplateComponent {
           this.options = v;
         })
         // this.tableColumns = this.parameterService.tableColumns()
+    }
+    btnEvent(event) {
+      switch (event.action) {
+        case 'collocation':
+          this._collocation.open(event)
+          break;
+      }
+      super.btnEvent(event);
     }
 
     openModal(model: any) {

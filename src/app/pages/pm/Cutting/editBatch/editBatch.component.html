@@ -40,13 +40,13 @@
           <td *ngFor="let item of column;let ci=index" [nzLeft]="ci==0">
             {{data[item]}}</td>
           <td>{{data.quantity}}</td>
-          <td nzRight  nzWidth="480px">
+          <td nzRight nzWidth="480px">
             <button nz-button nzSize="small" nzType="primary" (click)="data.isget=true" *ngIf="!data.isget"
               class="search-button">获取部件</button>
             <ina-common-select class="select" title="" [(ngModel)]="data.bpi_list" DataFiled="code" DataTxt="name"
               url="partinfo/extend" Datatyle="GetByWorbbillCode" *ngIf="data.isget" [multiple]="true"
               [other]="{pwb_code:data.code,station_code:model.station_code}" [ispaging]="false"
-              (onSelect)="clickItem(data)">
+              (onSelect)="clickItem(data,$event)">
             </ina-common-select>
           </td>
           <!-- <td nzRight>
@@ -86,7 +86,7 @@
           <td *ngFor="let item of column;let ci=index" [nzLeft]="ci==0" nzWidth="130px">{{data.pwb_code}}</td>
           <td>{{data.quantity}}</td>
           <td>
-            {{data.bpi_name}}
+            {{data.bpi_name}}[ {{data.bpi_code}}]
             <!-- <span *ngFor="let bpi of data.bpi_list">{{bpi}}&nbsp;&nbsp;</span> -->
           </td>
           <td nzRight nzWidth="100px">

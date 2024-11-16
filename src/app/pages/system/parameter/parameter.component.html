@@ -1,12 +1,12 @@
 <crud2 #crud [router]="url" [jsonname]="fieldcode" [list]="list" (actionClick)="btnEvent($event)" [isKeyQuery]="true"
-    [KeyQuery]="KeyQuery" keyword_placeholder="sysParameters.name" [showAdvanced]="false" [columns]="columns"
-    [modular]="modular" [fields]="field"></crud2>
+  [KeyQuery]="KeyQuery" keyword_placeholder="sysParameters.name" [showAdvanced]="false" [columns]="columns"
+  [modular]="modular" [fields]="field"></crud2>
 <ng-template #KeyQuery let-item="record">
-    <nz-radio-group [(ngModel)]="crud.seniorModel.type" (ngModelChange)="crud.Search()">
-        <label nz-radio [nzValue]="o.value" *ngFor="let o of options">
-            {{ o.description}}
-        </label>
-    </nz-radio-group>
+  <nz-radio-group [(ngModel)]="crud.seniorModel.type" (ngModelChange)="crud.Search()">
+    <label nz-radio [nzValue]="o.value" *ngFor="let o of options">
+      {{ o.description}}
+    </label>
+  </nz-radio-group>
 </ng-template>
 <!-- 
 <crud
@@ -56,3 +56,4 @@
     {{text|time}}
 </ng-template> -->
 <edit #edit (editDone)="crud.reloadData($event)"></edit>
+<collocation #collocation></collocation>

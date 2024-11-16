@@ -17,14 +17,16 @@
       <nz-layout cdkDropListGroup [nzTheme]="theme" (mousemove)="stationmove($event)" (mouseup)="dragEnd($event)">
         <!-- 拖行占位符 -->
         <div class="drag-placeholder">[{{dragStation.code}}]{{dragStation.name}}</div>
-        <!-- 工序选择 -->
+        <!-- 左侧选择 -->
         <nz-sider nzWidth="300px" class="op-check" *ngIf="power.IsUpdate==true">
           <nz-tabset nzSize="small" [(nzSelectedIndex)]="listSelectedIndex"
             (nzSelectedIndexChange)="$event==0?opList.qy($event):($event==3?opListstyle.qy($event):null)">
+            <!-- 全工序 -->
             <nz-tab nzTitle="{{'placard.alllop'|i18n}}">
               <opList #opList (mouseleave)="isDrop($event)" (onDrag)="opAdd($event)"></opList>
             </nz-tab>
-            <nz-tab nzTitle="{{'placard.stawaitteam'|i18n}}">
+            <!-- 站位 -->
+            <nz-tab nzTitle="{{'placard.stawaitteam'|i18n}}" *ngIf="power.mappower == true">
               <div class="dragParent">
                 <div class="example-box">
                   <nz-card [nzTitle]="toolbar" [nzExtra]="extraTemplate">
@@ -92,6 +94,7 @@
                 </div>
               </div>
             </nz-tab>
+            <!-- 款式工序 -->
             <nz-tab nzTitle="{{'placard.styleopteam'|i18n}}"
               *ngIf="power.type == 'S'&&btnGroup&&btnGroup[0]&&btnGroup[0].action=='styleop'">
               <opList-style #opListstyle (mouseleave)="isDrop($event)" [psi_key]="node.psi_key"
@@ -485,7 +488,7 @@
                                     <li *ngFor="let OPSitem of OperationRule">
                                       {{'placard.Specify'|i18n:OPSitem.blr_name}}
                                       <ina-common-select class="select" [multiple]="true"
-                                        *ngIf="item.optionmode=='select'" [(ngModel)]="pov[OPSitem.blr_field+'s']"
+                                        *ngIf="OPSitem.optionmode=='select'" [(ngModel)]="pov[OPSitem.blr_field+'s']"
                                         title="{{ 'checkdata.check_xx'|i18n:OPSitem.blr_name }}"
                                         (onSelect)="change($event,pov,OPSitem)" [url]="OPSitem.optionvalue">
                                       </ina-common-select>

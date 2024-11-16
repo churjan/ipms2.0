@@ -246,7 +246,8 @@
         "existencePartNoRepeat": "已存在该部件，请勿重复添加！",
         "Please_completePartdata": "请填写完整部件信息！",
         "valueNoRepeat": "条件已存在，请勿重复添加！",
-        "CPWRM": "请选择工序流路线图！"
+        "CPWRM": "请选择工序流路线图！",
+        "NotApplicable":"当前路线计算方式不适用站位配置"
     },
     "sucess": {
         "s_Login": "登录成功！",

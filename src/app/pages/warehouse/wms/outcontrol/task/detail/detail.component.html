@@ -19,7 +19,7 @@
             <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.code' | i18n }}"
               >{{ outControlTaskdata.code }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.outControl' | i18n }}" [nzSpan]="2">
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.outControl' | i18n }}">
               {{ outControlTaskdata.control_name }}</nz-descriptions-item
             >
             <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.scheme' | i18n }}">
@@ -35,19 +35,23 @@
             <nz-descriptions-item nzTitle="{{ 'wmsOuttask.type_name' | i18n }}">
               {{ outControlTaskdata.type_name }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'wmsOuttask.state_name' | i18n }}" [nzSpan]="2">
+            <nz-descriptions-item nzTitle="{{ 'wmsOuttask.state_name' | i18n }}">
               {{ outControlTaskdata.state_name }}
             </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.bls_code' | i18n }}" [nzSpan]="3">
-              <!-- <pre
-                                *ngFor="let item of outControlTaskdata.routes">{{ 'wmsOutcontrol.bls_code'|i18n }}：{{item.bls_code}}   {{ 'bls_name'|i18n }}：{{item.bls_name}}</pre> -->
-              <div style="overflow: auto; max-height: 500px">
-                <div *ngFor="let item of outControlTaskdata.routes">
-                  <span class="mr50">{{ "wmsOutcontrol.bls_code" | i18n }}：{{ item.bls_code }}</span>
-                  <span>{{ "wmsOutcontrol.bls_name" | i18n }}：{{ item.bls_name }}</span>
-                </div>
-              </div>
+
+            <nz-descriptions-item [nzTitle]="item.name" *ngFor="let item of outControlTaskdata.attributes">
+              {{ item.value_name }}
             </nz-descriptions-item>
+          </nz-descriptions>
+          <nz-descriptions nzBordered nzSize="small" class="mt8">
+            <nz-descriptions-item nzTitle="{{ 'wmsOutcontrol.bls_code' | i18n }}">
+                <div style="overflow: auto; max-height: 150px">
+                  <div *ngFor="let item of outControlTaskdata.routes">
+                    <span class="mr50">{{ "wmsOutcontrol.bls_code" | i18n }}：{{ item.bls_code }}</span>
+                    <span>{{ "wmsOutcontrol.bls_name" | i18n }}：{{ item.bls_name }}</span>
+                  </div>
+                </div>
+              </nz-descriptions-item>
           </nz-descriptions>
         </nz-tab>
         <nz-tab nzTitle="{{ 'placard.outDetail' | i18n }}">

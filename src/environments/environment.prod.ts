@@ -9,7 +9,7 @@ export const environment = {
     rootUrl: `http://${document.domain}:5001/`,
     imgUrl: `http://${document.domain}:5001`,//访问图片所需地址
     logUrl: `http://${document.domain}:5001`,//检索日志所需地址
-    version: "4.11.6",
+    version: "4.11.9",
     defaultPageSize: 15,
     tokenKey: 'token',
     interface: {

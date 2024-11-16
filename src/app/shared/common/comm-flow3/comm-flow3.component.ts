@@ -876,7 +876,8 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
         let pwd = par.detaillist;
         this.newOP[par.bpi_code].forEach(d => { d.checked = false; });
         pwd.forEach(d => { d.checked = false; });
-        if (this.power.mappower == true && this.routecalculation == "1") {
+        // if (this.power.mappower == true && this.routecalculation == "1") {
+        if (this.power.mappower == true) {
             if (this.power.issdiction == true) {
                 opch.checked = true;
                 this.selectoeder = opch;
@@ -1250,6 +1251,11 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                     percent: '100%'
                 };
                 if (toElem.closest('#routelist').length > 0) {
+                    if (this.routecalculation != "1") {
+                        this.message.error(this.getTipsMsg('warning.NotApplicable'));
+                        this.isDown = false;
+                        return;
+                    }
                     if (this.isoverload == true) {
                         this._service.comList('SchemeOverload/Extend/IsOverload', { Station_Key: this.dragStation.key }).then(v => {
                             this.dropadd(drge, data)
@@ -1706,6 +1712,10 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
     /**站位添加 */
     Add(data) {
         let drge: any = {};
+        if (this.routecalculation != "1") {
+            this.message.error(this.getTipsMsg('warning.NotApplicable'));
+            return;
+        }
         if (!data.mixtureratio || data.mixtureratio === null) { data.mixtureratio = 0; }
         if (UtilService.isEmpty(data.mixtureratio)) {
             this.message.error(this.getTipsMsg('warning.vrs'));
@@ -1717,6 +1727,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
             this.message.error(this.getTipsMsg('warning.mrs'));
             return;
         }
+        console.log(this.selectoeder)
         if (this.selectoeder) {
             if (!this.selectoeder.poi_code) {
                 this.message.error(this.getTipsMsg('checkdata.check_setop'));

@@ -7,9 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParameterRoutingModule } from './parameter-routing.module'
 import { JsonFileComponent } from './edit/JsonFile/JsonFile.component';
 import { JsonTreeComponent } from './edit/JsonTree/JsonTree.component';
+import { CollocationComponent } from './collocation/collocation.component';
 
 @NgModule({
-  declarations: [ParameterComponent, EditComponent,JsonFileComponent,JsonTreeComponent],
+  declarations: [ParameterComponent, EditComponent,JsonFileComponent,JsonTreeComponent,CollocationComponent],
   imports: [
     CommonModule,
     ParameterRoutingModule,

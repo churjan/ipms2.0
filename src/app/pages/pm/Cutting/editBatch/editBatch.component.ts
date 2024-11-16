@@ -185,13 +185,14 @@ export class EditBatchComponent extends FormTemplateComponent {
         this.validateForm.addControl('bpi_code', new FormControl(null, Validators.required))
     }
     /**选中值 */
-    clickItem(v?) {
+    clickItem(v?, ev?) {
         if (v) {
             this.previewList = this.previewList.filter(p => p.pwb_code != v.code);
             if (v.bpi_list.length > 0) {
                 v.checked = true;
                 let transfer = new Array();
-                v.bpi_list.forEach(vb => {
+                if (ev) { v.bpi_data = ev }
+                v.bpi_list.forEach((vb, vbi) => {
                     transfer.push({
                         station_code: this.model.station_code,
                         pwb_code: v.code,
@@ -201,6 +202,7 @@ export class EditBatchComponent extends FormTemplateComponent {
                         psz_name: v.psz_name,
                         quantity: v.quantity,
                         bpi_code: vb,
+                        bpi_name: v.bpi_data[vbi].name,
                         sort: v.sort
                     })
                 })

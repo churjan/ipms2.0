@@ -37,7 +37,7 @@
                         <tr>
                             <th [nzChecked]="stat.checkAll" [nzIndeterminate]="stat.checkHalf"
                                 (nzCheckedChange)="onItemSelectAll($event)"></th>
-                            <th>{{'placard.No'|i18n}}</th>
+                            <th nzWidth="60px">{{'placard.No'|i18n}}</th>
                             <th *ngIf="direction === 'right'">{{'pdmOperation.start'|i18n}}</th>
                             <th>{{'pdmOperation.proportion'|i18n}}</th>
                         </tr>
