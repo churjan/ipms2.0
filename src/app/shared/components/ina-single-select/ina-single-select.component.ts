@@ -62,6 +62,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   keywords = '';
   optionList = [];
   isLoading = false;
+  searchWords = ''; // 前端对数据进行关键词搜索
 
   get selectedValueObj() {
     return this.optionList.find((item) => item[this.processedNgZorroProps.value] === this.selectedValue);
@@ -105,8 +106,10 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   onSearch(value) {
-    // 如果有自定义选项列表，则不再触发接口请求
-    if (this.processedNgZorroProps.customOptionList) return;
+    if (this.isHasCustomOptionList()) {
+      this.searchWords = value;
+      return;
+    }
     this.keywords = value;
     if (this.processedApiProps.isPaging) {
       this.processedApiProps.page = 1;
@@ -117,7 +120,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   onLoadMore() {
-    if (this.disableClick()) return;
+    if (this.isHasCustomOptionList()) return;
     if (!this.processedApiProps.isPaging) return;
 
     const { page, pageSize, total } = this.processedApiProps;
@@ -127,7 +130,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  disableClick(): boolean {
+  isHasCustomOptionList(): boolean {
     // 如果有自定义选项列表，则不再触发接口请求
     if (this.processedNgZorroProps.customOptionList) return true;
   }

@@ -10,7 +10,7 @@
   (nzScrollToBottom)="onLoadMore()"
 >
   <nz-option
-    *ngFor="let option of optionList"
+    *ngFor="let option of optionList | filterByKeywords : searchWords : processedNgZorroProps.label"
     [nzValue]="option[processedNgZorroProps.value]"
     [nzLabel]="option[processedNgZorroProps.label]"
   ></nz-option>
