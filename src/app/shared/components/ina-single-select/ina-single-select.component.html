@@ -12,6 +12,6 @@
   <nz-option
     *ngFor="let option of optionList | filterByKeywords : searchWords : processedNgZorroProps.label"
     [nzValue]="option[processedNgZorroProps.value]"
-    [nzLabel]="option[processedNgZorroProps.label]"
+    [nzLabel]="option | displayLabel : processedNgZorroProps.label : processedNgZorroProps.secondaryLabel"
   ></nz-option>
 </nz-select>

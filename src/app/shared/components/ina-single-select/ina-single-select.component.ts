@@ -134,7 +134,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
 
   isHasCustomOptionList(): boolean {
     // 如果有自定义选项列表，则不再触发接口请求
-    return !!this.processedNgZorroProps.customOptionList
+    return !!this.processedNgZorroProps.customOptionList;
   }
 
   onChange: any = () => {};
