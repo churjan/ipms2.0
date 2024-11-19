@@ -8,6 +8,7 @@ interface ngZorroProps {
   isAllowClear?: boolean; // 是否允许清除
   label?: string; // 标签
   value?: string; // 值
+  secondaryLabel?: string; // 副标签
   customOptionList?: string; // 选项列表
 }
 
@@ -42,6 +43,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
     isAllowClear: true,
     label: 'name',
     value: 'key',
+    secondaryLabel: '',
     customOptionList: '',
   };
 
@@ -132,7 +134,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
 
   isHasCustomOptionList(): boolean {
     // 如果有自定义选项列表，则不再触发接口请求
-    if (this.processedNgZorroProps.customOptionList) return true;
+    return !!this.processedNgZorroProps.customOptionList
   }
 
   onChange: any = () => {};
