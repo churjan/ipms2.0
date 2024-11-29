@@ -97,9 +97,9 @@ export class EditComponent implements OnInit {
           control_key: data.control_key,
           relation_key: data.relation_key,
           quantity: data.quantity ?? 0,
-          state: data.state.toString(),
+          state: (data.state ?? '').toString(),
           inboundtime: data.inboundtime,
-          type: data.type.toString(),
+          type: (data.type ?? '').toString(),
         });
 
         // 自定义属性
