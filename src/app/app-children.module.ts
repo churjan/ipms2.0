@@ -71,7 +71,7 @@ import { OverloadManagementModule } from './pages/pm/OverloadManagement/Overload
 import { SkuProcessModule } from './pages/warehouse/wms/sku-process/sku-process.module';
 import { AbnormalEventReportModule } from './pages/warehouse/wms/abnormal-event-report/abnormal-event-report.module';
 import { CountingDemandModule } from './pages/warehouse/wms/counting-demand/counting-demand.module';
-import { TestModule } from './pages/warehouse/wh/test/test.module';
+import { TestModule } from './pages/warehouse/wms/test/test.module';
 @NgModule({
   imports: [
     WorkModule,

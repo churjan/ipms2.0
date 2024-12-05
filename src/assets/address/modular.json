@@ -1546,5 +1546,16 @@
             "starttime",
             "endtime"
         ]
-    }
+    },
+    "wmsTest": {
+        "title": "库存统计报表",
+        "url": "admin/Report/CustomWarehouseInventoryReport/GetPageList",
+        "otherUrl": {},
+        "sumNode": [
+            {
+                "f": "quantity",
+                "c": "allnum"
+            }
+        ]
+    },
 }

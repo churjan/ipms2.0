@@ -6679,5 +6679,88 @@
             "noshow": true,
             "code": "pwb_code"
         }        
+    ],
+    "wmsTest": [
+        {
+            "name": "款式",
+            "noshow": true,
+            "code": "psi"
+        },
+        {
+            "name": "款号",
+            "code": "psi_code"
+        },
+        {
+            "name": "款名",
+            "code": "psi_name"
+        },
+        {
+            "name": "颜色",
+            "noshow": true,
+            "code": "pci"
+        },
+        {
+            "name": "颜色编号",
+            "code": "pci_code"
+        },
+        {
+            "name": "颜色名称",
+            "code": "pci_name"
+        },
+        {
+            "name": "尺码",
+            "noshow": true,
+            "code": "psz"
+        },
+        {
+            "name": "尺码编号",
+            "code": "psz_code"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "部件",
+            "noshow": true,
+            "code": "bpi"
+        },
+        {
+            "name": "部件编号",
+            "code": "bpi_code"
+        },
+        {
+            "name": "部件名称",
+            "code": "bpi_name"
+        },
+        {
+            "name": "作业单号",
+            "code": "pwb_code"
+        },
+        {
+            "name": "销售订单号",
+            "code": "som_code"
+        },
+        {
+            "name": "库存类型",
+            "code": "type_name"
+        },
+        {
+            "name": "开始日期",
+            "code": "start_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "结束日期",
+            "code": "end_date",
+            "noshow": true,
+            "type": "time"
+        },
+        {
+            "name": "库存数量",
+            "disabled": true,
+            "code": "quantity"
+        }
     ]
 }

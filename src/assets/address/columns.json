@@ -561,5 +561,12 @@
         "psz_code",
         "psz_name",
         "count"     
+    ],
+    "wmsTest": [
+        "psi_code",
+        "psi_name",
+        "pci_name",
+        "psz_name",
+        "quantity"
     ]
 }
