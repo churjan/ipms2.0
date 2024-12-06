@@ -18,7 +18,6 @@ export class FilterByKeywordsPipe implements PipeTransform {
 })
 export class DisplayLabelPipe implements PipeTransform {
   transform(option: any, label: string, secondaryLabel: string): string {
-    console.log(option, label, secondaryLabel);
     if (secondaryLabel) {
       return `${option[label]}[${option[secondaryLabel]}]`;
     } else {

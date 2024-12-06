@@ -4,6 +4,7 @@ import { merge as _merge, cloneDeep as _cloneDeep } from 'lodash';
 import { RequestService } from '~/shared/services/request.service';
 
 interface ngZorroProps {
+  width?: string; // 宽度
   placeholder?: string; // 关键词
   isAllowClear?: boolean; // 是否允许清除
   label?: string; // 标签
@@ -39,6 +40,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   @Input() ngZorroProps: ngZorroProps;
   processedNgZorroProps: ngZorroProps;
   defaultNgZorroProps: ngZorroProps = {
+    width: '150px',
     placeholder: '请选择',
     isAllowClear: true,
     label: 'name',
@@ -65,6 +67,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   optionList = [];
   isLoading = false;
   searchWords = ''; // 前端对数据进行关键词搜索
+  isInitialLoad = true; // 防止二次请求接口
 
   get selectedValueObj() {
     return this.optionList.find((item) => item[this.processedNgZorroProps.value] === this.selectedValue);
@@ -108,6 +111,10 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   }
 
   onSearch(value) {
+    if (this.isInitialLoad) {
+      this.isInitialLoad = false;
+      return;
+    }
     if (this.isHasCustomOptionList()) {
       this.searchWords = value;
       return;

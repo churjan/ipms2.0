@@ -8,6 +8,7 @@
   nzServerSearch
   (nzOnSearch)="onSearch($event)"
   (nzScrollToBottom)="onLoadMore()"
+  [style.width]="processedNgZorroProps.width"
 >
   <nz-option
     *ngFor="let option of optionList | filterByKeywords : searchWords : processedNgZorroProps.label"
