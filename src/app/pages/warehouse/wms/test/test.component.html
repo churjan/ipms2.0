@@ -1,1 +1,129 @@
-<p>test works!</p>
+<crud2
+  #crud
+  [router]="url"
+  [jsonname]="fieldcode"
+  [list]="list"
+  (actionClick)="btnEvent($event)"
+  [isKeyQuery]="true"
+  [isRefresh]="false"
+  [columns]="columns"
+  [modular]="modular"
+  [fields]="field"
+  [isKeyword]="false"
+  [KeyQuery]="KeyQuery"
+  [checkbox]="false"
+  [isStatistics]="true"
+  (onReset)="onReset()"
+  [searchActionsBody]="searchActionsBody"
+  detail="data"
+  [isReport]="true"
+></crud2>
+<ng-template #searchActionsBody let-item="record">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.som_code" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title="{{ 'checkdata.check' | i18n }}"
+          [(ngModel)]="crud.seniorModel.som_key"
+          name="som_code"
+          url="OrderMaster"
+          [isshow]="false"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.pwb_code" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title="{{ 'checkdata.check' | i18n }}"
+          [(ngModel)]="crud.seniorModel.pwb_key"
+          name="pwb_code"
+          url="WorkBill"
+          [isshow]="false"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.psi" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.psi_key"
+          name="psi_key"
+          url="styleinfo"
+          DataTxt="code"
+          secondary="name"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.psz" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.psz_key"
+          name="psz_key"
+          [linkage]="true"
+          [linkagedata]="{ psi_key: crud.seniorModel.psi_key }"
+          url="sizeInfo"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.pci" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title=""
+          [(ngModel)]="crud.seniorModel.pci_key"
+          name="pci_key"
+          [linkage]="true"
+          [linkagedata]="{ psi_key: crud.seniorModel.psi_key }"
+          url="colorInfo"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.bpi" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title="{{ 'checkdata.check' | i18n }}"
+          [(ngModel)]="crud.seniorModel.bpi_key"
+          name="bpi_code"
+          url="partinfo"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.type" | i18n }}</nz-form-label>
+      <nz-form-control [nzSpan]="24">
+        <ina-common-select
+          class="select"
+          title="{{ 'checkdata.check' | i18n }}"
+          [isdisabled]="Disable"
+          [(ngModel)]="crud.seniorModel.type"
+          name="type"
+          DataFiled="value"
+          DataTxt="description"
+          urltype="enum"
+          url="inventorytypeenum"
+          [isshow]="false"
+        >
+        </ina-common-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>
+<ng-template #KeyQuery let-item="record"> </ng-template>

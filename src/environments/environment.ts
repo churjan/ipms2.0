@@ -43,7 +43,7 @@ export const environment = {
     // imgUrl: 'http://10.205.1.34:5001',//访问图片所需地址
     // logUrl: 'http://10.205.1.34:5001',//检索日志所需地址
 
-    version: "3.2.24",
+    version: "3.2.25",
     defaultPageSize: 15,
     tokenKey: 'token',
     loginPath: '/login',
