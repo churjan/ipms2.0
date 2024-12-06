@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TestRoutingModule } from './test-routing.module';
 import { TestComponent } from './test.component';
+import { OutboundTaskComponent } from './outbound-task/outbound-task.component';
 
 @NgModule({
-  declarations: [TestComponent],
+  declarations: [TestComponent, OutboundTaskComponent],
   imports: [CommonModule, TestRoutingModule, SharedModule, FormsModule, ReactiveFormsModule],
 })
 export class TestModule {}

@@ -1549,7 +1549,7 @@
     },
     "wmsTest": {
         "title": "库存统计报表",
-        "url": "admin/Report/CustomWarehouseInventoryReport/GetPageList",
+        "url": "admin/Report/w_CustomWarehouseInventoryReport/GetPageList",
         "otherUrl": {},
         "sumNode": [
             {

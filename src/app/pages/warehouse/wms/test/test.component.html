@@ -15,11 +15,20 @@
   [isStatistics]="true"
   (onReset)="onReset()"
   [searchActionsBody]="searchActionsBody"
-  detail="data"
+  detail="dtos"
   [isReport]="true"
+  [isDataOnInit]="false"
 ></crud2>
+<ng-template #KeyQuery let-item="record">
+  <app-ina-single-select
+    [(ngModel)]="crud.seniorModel.control_key"
+    (ngModelChange)="crud.Search()"
+    [ngZorroProps]="{placeholder: '请选择出库控制'}"
+    [apiProps]="{ url: 'admin/w_WarehouseOutControl/Option' }"
+  ></app-ina-single-select>
+</ng-template>
 <ng-template #searchActionsBody let-item="record">
-  <form nz-form>
+  <!-- <form nz-form>
     <nz-form-item>
       <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.som_code" | i18n }}</nz-form-label>
       <nz-form-control [nzSpan]="24">
@@ -124,6 +133,7 @@
         </ina-common-select>
       </nz-form-control>
     </nz-form-item>
-  </form>
+  </form> -->
 </ng-template>
-<ng-template #KeyQuery let-item="record"> </ng-template>
+
+<app-outbound-task #outboundTask></app-outbound-task>

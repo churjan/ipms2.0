@@ -1,0 +1,32 @@
+<idrawer
+  *ngIf="visible"
+  [title]="title"
+  [width]="width"
+  height="99%"
+  justifyContent="center"
+  (onClose)="close()"
+  [content]="contentTpl"
+>
+  <ng-template #contentTpl>
+    <form nz-form [formGroup]="validateForm">
+      <div nz-row [nzGutter]="12">
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.name' | i18n }}">
+              <input nz-input formControlName="name" (keydown)="submitForm($event)" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.code' | i18n }}">
+              <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</idrawer>
