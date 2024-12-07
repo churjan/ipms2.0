@@ -103,7 +103,7 @@ export class EditComponent implements OnInit {
         });
 
         // 自定义属性
-        data.attributes.forEach((item) => {
+        data.attributes?.forEach((item) => {
           this.validateForm.patchValue({
             [item.code]: item.value,
           });

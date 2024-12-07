@@ -14,14 +14,14 @@ export class OutboundTaskComponent implements OnInit {
   visible = false;
   validateForm!: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private breakpointObserver: BreakpointObserver,
-    private appService: AppService
-  ) {
+  constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appService: AppService) {
     this.validateForm = this.fb.group({
-      name: [null, [Validators.required]],
-      code: [null, [Validators.required]],
+      name: [null],
+      code: [null],
+      pwb_key: [null],
+      psi_key: [null],
+      pci_key: [null],
+      psz_key: [null],
     });
   }
 
@@ -38,5 +38,15 @@ export class OutboundTaskComponent implements OnInit {
   async open(record: any = {}) {
     this.visible = true;
     this.title = record.key ? this.appService.translate('btn.update') : this.appService.translate('btn.plus');
+    if (record.node) {
+      this.validateForm.patchValue({
+        name: record.node.name,
+        code: record.node.code,
+        pwb_key: record.node.workbill_key,
+        psi_key: record.node.psi_key,
+        pci_key: record.node.pci_key,
+        psz_key: record.node.psz_key,
+      });
+    }
   }
 }

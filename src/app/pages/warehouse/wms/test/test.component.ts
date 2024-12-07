@@ -21,12 +21,10 @@ export class TestComponent extends ListTemplateComponent {
   onReset() {}
 
   btnEvent(ev) {
+    console.log(ev);  
     switch (ev.action) {
       case 'outboundTask':
-        this.outboundTask.open({
-          title: this.getTipsMsg('placard.taskout'),
-          node: null,
-        });
+        this.outboundTask.open(ev);
         break;
 
       default:

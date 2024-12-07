@@ -26,6 +26,50 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.pwb_code' | i18n }}">
+              <app-ina-single-select
+                formControlName="pwb_key"
+                [apiProps]="{ url: 'admin/WorkBill/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.psi_key' | i18n }}">
+              <app-ina-single-select
+                formControlName="psi_key"
+                [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.pci_key' | i18n }}">
+              <app-ina-single-select
+                formControlName="pci_key"
+                [apiProps]="{ url: 'admin/colorinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label nzRequired>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.psz_key' | i18n }}">
+              <app-ina-single-select
+                formControlName="psz_key"
+                [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
       </div>
     </form>
   </ng-template>
