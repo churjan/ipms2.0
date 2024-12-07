@@ -1,30 +1,122 @@
 <idrawer *ngIf="visible" [title]="title" width="99%" justifyContent="center" height="99%" (onClose)="close()"
-  [content]="contentTpl" [footer]="footerTpl">
+  [content]="contentTpl" bodyPadding="0">
   <ng-template #contentTpl>
-    <nz-layout>
-      <!-- 类型 -->
-      <nz-sider>
-        <div nz-flex [nzGap]="'small'">
-          <button nz-button>text</button>
-          <button nz-button>select</button>
-          <button nz-button>number</button>
-          <button nz-button>Link</button>
-        </div>
-      </nz-sider>
-      <nz-content>
-        <nz-layout>
-          <!-- 预览结构 -->
-          <nz-content>Content</nz-content>
-          <!-- 属性配置 -->
-          <nz-sider>Sider</nz-sider>
-        </nz-layout>
-      </nz-content>
-    </nz-layout>
-  </ng-template>
+    <nz-layout style="height: 100%;">
+      <nz-layout>
+        <nz-header class="header">
+          <button nz-button nzType="text"><i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
+          <button nz-button nzType="text"><i nz-icon nzType="delete" nzTheme="outline"></i>清除</button>
 
-  <ng-template #footerTpl>
-    <button nz-button (click)="close()">{{ 'btn.cancel'|i18n}}</button>
-    <button nz-button nzType="primary" (click)="submitForm()" (keydown)="submitForm($event)" [disabled]="submiting"
-      [nzLoading]="submiting" class="m-l-6">{{ 'btn.save'|i18n}}</button>
+        </nz-header>
+        <nz-layout>
+          <!-- 类型 -->
+          <nz-sider class="sider-l" [nzWidth]="'20%'">
+            <div nz-row [nzGutter]="[16,16]" style="width: 100%;" *ngFor="let type of formType">
+              <nz-divider [nzText]="text" nzPlain nzOrientation="left"></nz-divider>
+              <ng-template #text>
+                <i nz-icon nzType="build" nzTheme="outline"></i>
+                {{type.name}}
+              </ng-template>
+              <div nz-col nzSpan="12" class="gutter-row" *ngFor="let item of type.sonlist">
+                <button nz-button (click)="selectType(item,type)" style="width: 100%;">{{item.name}}</button>
+              </div>
+              <!--    <div nz-col [nzSpan]="8" class="gutter-row">
+            <button nz-button>select</button>
+          </div>
+        <button nz-button nz-col class="gutter-row" [nzSpan]="8">number</button>
+          <button nz-button nz-col class="gutter-row" [nzSpan]="8">checkbox</button>
+          <button nz-button nz-col class="gutter-row" [nzSpan]="8">Link</button> -->
+            </div>
+            <div nz-row [nzGutter]="[16,16]" style="width: 100%;">
+              <nz-divider [nzText]="text" nzPlain nzOrientation="left"></nz-divider>
+              <ng-template #text>
+                <i nz-icon nzType="build" nzTheme="outline"></i>
+                布局类型
+              </ng-template>
+              <div nz-col nzSpan="12" class="gutter-row">
+                <button nz-button style="width: 100%;">子集</button>
+              </div>
+            </div>
+          </nz-sider>
+          <!-- 预览结构 -->
+          <nz-content style="padding: 20px;">
+            <form nz-form>
+              <ng-container *ngFor="let item of formList">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="6">{{item.title}}</nz-form-label>
+                  <nz-form-control [nzSpan]="14">
+                    <input nz-input *ngIf="item.type=='text'" placeholder="{{item.placeholder}}" />
+                    <input nz-input *ngIf="item.type=='number'" type="number" placeholder="{{item.placeholder}}" />
+                    <textarea nz-input *ngIf="item.type=='textarea'" placeholder="{{item.placeholder}}"></textarea>
+                    <label nz-checkbox *ngIf="item.type=='checkbox'">Checkbox</label>
+                    <label nz-radio *ngIf="item.type=='radio'">Radio</label>
+                    <nz-switch *ngIf="item.type=='switch'"></nz-switch>
+                    <nz-select *ngIf="item.group=='select'">
+                      <nz-option nzLabel="选项一"></nz-option>
+                      <nz-option nzLabel="选项二"></nz-option>
+                      <nz-option nzLabel="选项三" nzDisabled></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+                <ng-container *ngFor="let item of item.sonlist">
+                </ng-container>
+              </ng-container>
+            </form>
+          </nz-content>
+        </nz-layout>
+      </nz-layout>
+      <!-- 属性配置 -->
+      <nz-sider class="sider-r" [nzWidth]="'20%'">
+        <form nz-form *ngIf="SingleAttr&&(SingleAttr.id||SingleAttr.id==0)">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="title">组件类型</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <nz-select name="type" [(ngModel)]="SingleAttr.type" nzAllowClear nzPlaceHolder="Choose" nzShowSearch
+                (ngModelChange)="updata($event)">
+                <nz-option-group [nzLabel]="ft.name" *ngFor="let ft of formType">
+                  <nz-option [nzValue]="fts.code" [nzLabel]="fts.name" *ngFor="let fts of ft.sonlist"></nz-option>
+                </nz-option-group>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="title">标题</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="title" [(ngModel)]="SingleAttr.title" (keyup.enter)="updata()">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="field">字段</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="field" [(ngModel)]="SingleAttr.field">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="placeholder">占位符</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="placeholder" [(ngModel)]="SingleAttr.placeholder">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item *ngIf="SingleAttr.group=='select'">
+            <nz-form-label [nzSpan]="6" nzFor="placeholder">数据地址</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="placeholder" [(ngModel)]="SingleAttr.url">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item *ngIf="SingleAttr.type=='extend'">
+            <nz-form-label [nzSpan]="6" nzFor="placeholder">扩展地址</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="placeholder" [(ngModel)]="SingleAttr.extend">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item *ngIf="SingleAttr.type=='custom'">
+            <nz-form-label [nzSpan]="6" nzFor="placeholder">自定义数据</nz-form-label>
+            <nz-form-control [nzSpan]="14">
+              <input nz-input name="placeholder" [(ngModel)]="SingleAttr.option">
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-sider>
+    </nz-layout>
   </ng-template>
 </idrawer>

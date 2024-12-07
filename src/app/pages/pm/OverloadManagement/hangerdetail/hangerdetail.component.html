@@ -26,6 +26,13 @@
           <ng-container *ngTemplateOutlet="overloadTpl"></ng-container>
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item *ngIf="isgrouporder">
+        <nz-form-label [nzSpan]="5" nzRequired>{{ 'pmOverloadManagement.group_order'|i18n }}
+        </nz-form-label>
+        <nz-form-control [nzSpan]="19">
+          <ng-container *ngTemplateOutlet="grouporderTpl"></ng-container>
+        </nz-form-control>
+      </nz-form-item>
     </form>
     <ng-template #overloadTpl>
       <nz-table #overloadTable nzBordered [nzData]="overload_options" nzSize="small" [nzShowPagination]="false"
@@ -72,6 +79,51 @@
                   nzTheme="outline"></i></a>
               <nz-divider nzType="vertical" *ngIf="i<overload_options.length-1"></nz-divider>
               <a (click)="minus(data,i)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </ng-template>
+    <ng-template #grouporderTpl>
+      <nz-table #grouporderTable nzBordered [nzData]="grouporder" nzSize="small" [nzShowPagination]="false"
+        [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th nzWidth="80px" nzLeft></th>
+            <th>排序</th>
+            <th nzWidth="120px" nzRight nzAlign="center">
+              <a nz-popover nzPopoverTitle="{{'btn.addition'|i18n}}" [nzPopoverPlacement]="'bottom'"
+                nzPopoverTrigger="click" [nzPopoverContent]="orderplusTpl">
+                <i nz-icon nzType="plus-circle" nzTheme="outline"></i>
+              </a>
+              <ng-template #orderplusTpl>
+                <nz-list nzBordered nzSize="small" style="max-height: 200px;overflow: auto;">
+                  <nz-list-item *ngFor="let item of orderOptions" nzNoFlex>{{ item.Description }}
+                    <ul nz-list-item-actions>
+                      <nz-list-item-action>
+                        <a (click)="addGrouporder(item)">
+                          <i nz-icon nzType="plus" nzTheme="outline"></i>
+                        </a>
+                      </nz-list-item-action>
+                    </ul>
+                  </nz-list-item>
+                </nz-list>
+              </ng-template>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of grouporderTable.data;let i=index">
+            <td>{{i+1}}级排序</td>
+            <td>{{data.value_name}}
+            </td>
+            <td nzRight nzAlign="right">
+              <a (click)="moveChange(i-1,i)" *ngIf="i>0"><i nz-icon nzType="arrow-up" nzTheme="outline"></i></a>
+              <nz-divider nzType="vertical" *ngIf="i>0"></nz-divider>
+              <a (click)="moveChange(i,i+1)" *ngIf="i<grouporder.length-1"><i nz-icon nzType="arrow-down"
+                  nzTheme="outline"></i></a>
+              <nz-divider nzType="vertical" *ngIf="i<grouporder.length-1"></nz-divider>
+              <a (click)="minusChange(data,i)"><i nz-icon nzType="minus" nzTheme="outline"></i></a>
             </td>
           </tr>
         </tbody>

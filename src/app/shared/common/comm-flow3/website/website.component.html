@@ -1,0 +1,69 @@
+<idrawer *ngIf="visible" [title]="title" [width]="width" height="99%" justifyContent="center" nzSize="small"
+    (onClose)="close()" [content]="contentTpl">
+    <ng-template #contentTpl>
+        <ina-ztree-select [setting]="setting" class="select" [params]="{maketree:true,moduletype: 101 }"
+            title="{{'checkdata.check_line'|i18n}}" [(ngModel)]="searchTxt" (onSelect)="search($event)"
+            datatype="NewGetList/">
+        </ina-ztree-select>
+        <nz-transfer [nzDataSource]="list" nzShowSearch [nzShowSelectAll]="false" [nzRenderList]="[leftList, rightList]"
+            (nzSelectChange)="select($event)" (nzChange)="change($event)">
+            <ng-template #leftList let-items let-direction="direction" let-stat="stat"
+                let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
+                <nz-table #t [nzData]="$asTransferItems(items)" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th [nzChecked]="stat.checkAll" [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                            <th>{{'placard.No'|i18n}}</th>
+                            <th *ngIf="direction === 'left'">{{'pdmOperation.start'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of t.data;let i= index" (click)="onItemSelect(data)">
+                            <td [nzChecked]="!!data.checked" [nzDisabled]="data.disabled"
+                                (nzCheckedChange)="onItemSelect(data)"></td>
+                            <td>{{ i+1 }}</td>
+                            <td *ngIf="direction === 'left'">
+                                <nz-tag>{{ data.code }}[{{ data.name }}]</nz-tag>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+            <ng-template #rightList let-items let-direction="direction" let-stat="stat"
+                let-onItemSelectAll="onItemSelectAll" let-onItemSelect="onItemSelect">
+                <nz-table #t [nzData]="$asTransferItems(items)" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th [nzChecked]="stat.checkAll" [nzIndeterminate]="stat.checkHalf"
+                                (nzCheckedChange)="onItemSelectAll($event)"></th>
+                            <th nzWidth="60px">{{'placard.No'|i18n}}</th>
+                            <th *ngIf="direction === 'right'">{{'pdmOperation.start'|i18n}}</th>
+                            <th>{{'pdmOperation.proportion'|i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of t.data;let i= index" (click)="onItemSelect(data)">
+                            <td [nzChecked]="!!data.checked" [nzDisabled]="data.disabled"
+                                (nzCheckedChange)="onItemSelect(data)"></td>
+                            <td>{{ i+1 }}</td>
+                            <td *ngIf="direction === 'right'">
+                                <nz-tag>{{ data.bls_code }}[{{ data.bls_name }}]</nz-tag>
+                            </td>
+                            <td>
+                                <nz-input-group [nzSuffix]="suffixTemplateInfo">
+                                    <input type="number" nz-input min="0" [(ngModel)]="data.mixtureratio"
+                                        (keyup)="skAction($event,data,1)" (blur)="skAction($event,data,1)"
+                                        (focus)="cacheVal(data,1)" />
+                                </nz-input-group>
+                                <ng-template #suffixTemplateInfo>
+                                    <i nz-icon nzType="percentage" nzTheme="outline"></i>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-template>
+        </nz-transfer>
+    </ng-template>
+</idrawer>

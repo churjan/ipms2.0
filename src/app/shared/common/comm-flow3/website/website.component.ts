@@ -10,13 +10,14 @@ import { FormTemplateComponent } from '~/shared/common/base/form-Template.compon
 import { TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
 
 @Component({
-    selector: 'opwebsite',
+    selector: 'website',
     templateUrl: './website.component.html',
     styleUrls: ['./website.component.less']
 })
 export class WebsiteComponent extends FormTemplateComponent {
 
     @Output() editDone = new EventEmitter<boolean>()
+    @Output() onEdit = new EventEmitter();
     list: TransferItem[] = [];
     Operation: TransferItem[] = [];
     $asTransferItems = (data: unknown): any[] => data as any[];
@@ -26,7 +27,7 @@ export class WebsiteComponent extends FormTemplateComponent {
     constructor(
         private fb: FormBuilder,
         private breakpointObserver: BreakpointObserver
-    ) { super() }
+    ) { super(); this.modularInit("pdmOperation"); }
 
     ngOnInit(): void {
         this.otherUrl = this.modular.otherUrl;
@@ -40,12 +41,8 @@ export class WebsiteComponent extends FormTemplateComponent {
     }
 
     async open(record: any) {
-        this.title = this._appService.translate("placard."+record.title);
+        this.title = this._appService.translate("btn." + record.title);
         this.list = new Array();
-        // this._service.comList('LayoutStructure', { maketree: true, moduletype: 101 }, 'GetList').then((result) => {
-        //     result.forEach(v => { v.checked = false; v.direction = 'left' });
-        //     this.list = this.list.concat(result)
-        // })
         if (record.node) {
             this.key = record.node.key
             if (this.key) {
@@ -156,6 +153,7 @@ export class WebsiteComponent extends FormTemplateComponent {
     close(): void {
         this.avatar = null
         this.visible = false
+        this.onEdit.emit({ poi_key: this.key })
     }
 
 

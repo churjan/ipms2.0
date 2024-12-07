@@ -131,7 +131,6 @@ export class FlowLaminationComponent extends FormTemplateComponent {
             case 'check':
                 // this._flow.open(body)  let pro = Object.assign({}, { popm_key: result, psi_key: this.node.psi_key })
                 this._service.saveModel(this.otherUrl.WorkBillSave, 'post', { popm_key: body.node.popm_key, pwb_key: this.record.other_node.key, psi_key: this.record.other_node.psi_key }, (scss) => {
-
                     this._service.getModel('admin/OperationProcessMaster/', body.node.popm_key, (s) => {
                         body = Object.assign(body, { ischeck: true, node: s, worksectionlist: s.worksectionlist })
                         if (s.worksectionlist.length > 0) { body.node.bwi_key = s.worksectionlist[0].bwi_key }

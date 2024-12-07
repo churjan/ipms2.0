@@ -204,7 +204,7 @@
                           <div class="sortClass" nz-col nzFlex="35px">{{opi+1}}</div>
                           <div nz-col nzFlex="auto">
                             <div nz-col class="title"
-                              [class.line-height]="(OP.routelist.length==0&&(!OP.overloadlist||OP.overloadlist.length==0))||OP.show==true">
+                              [class.line-height]="(OP.routelist.length==0&&(!OP.overloadlist||OP.overloadlist.length==0)&&(!OP.helperlist||OP.helperlist.length==0)&&(!OP.schemelist||OP.schemelist.length==0))||OP.show==true">
                               <span class="scrollWrap" (mouseover)="mouseover($event,OP)"
                                 (mouseout)="OP.isscroll=false">
                                 <div [class.scroll]="OP.isscroll" id="{{OP.poi_code}}_{{OP.sort}}">
@@ -228,6 +228,12 @@
                                     <label nz-checkbox [(ngModel)]="OP.isscheme" *ngIf="diversionscheme"
                                       [nzDisabled]="(OP.schemelist&&OP.schemelist.length>0)||(OP.helperlist&&OP.helperlist.length>0)||(OP.overloadlist&&OP.overloadlist.length>0)"
                                       (ngModelChange)="OP.count=setcheckChange(OP,$event,'isscheme')">{{'option.isscheme'|i18n}}</label>
+                                    <a nz-tooltip nzTooltipTitle="分流条件设置" nz-popover
+                                      nzPopoverTitle="分流条件设置：{{OP.poi_name}}" [nzPopoverContent]="setScheme"
+                                      nzPopoverPlacement="bottomRight" nzPopoverTrigger="click"
+                                      (click)="selectoeder=OP;getOperationRule(OP)" *ngIf="OP.isscheme">
+                                      <i nz-icon nzType="apartment" nzTheme="outline"></i>
+                                    </a>
                                   </li>
                                   <li>
                                     <label nz-checkbox [(ngModel)]="OP.ishelp" *ngIf="operationhelper"
@@ -279,10 +285,17 @@
                                 </li>
                                 <nz-divider nzType="vertical"></nz-divider>
                                 <!-- 分流条件设置 -->
-                                <li nz-popover nzPopoverTitle="分流条件设置：{{OP.poi_name}}" [nzPopoverContent]="setScheme"
+                                <!-- <li nz-tooltip nzTooltipTitle="分流条件设置" nz-popover
+                                  nzPopoverTitle="分流条件设置：{{OP.poi_name}}" [nzPopoverContent]="setScheme"
                                   nzPopoverPlacement="bottomRight" nzPopoverTrigger="click"
                                   (click)="selectoeder=OP;getOperationRule(OP)">
-                                  分流条件设置
+                                  <i nz-icon nzType="apartment" nzTheme="outline"></i>
+                                </li>
+                                <nz-divider nzType="vertical"></nz-divider> -->
+                                <!-- 关联站位 -->
+                                <li nz-button nzType="link" nzShape="circle" *ngIf="routecalculation=='2'"
+                                  [hidden]="!power.mappower" (click)="setstation(OP)" nz-tooltip nzTooltipTitle="关联站位">
+                                  <i nz-icon nzType="setting" class="icon" nzTheme="outline"></i>
                                 </li>
                                 <nz-divider nzType="vertical"></nz-divider>
                                 <!-- 删除 -->
@@ -413,7 +426,7 @@
                                 （{{pr.percent?pr.percent:'100%'}}）</span>
                               <!-- 操作栏 -->
                               <nz-button-group nzSize="small"
-                                *ngIf="power.IsUpdate==true&&power.mappower&&power.issdiction==true&&nzSelected!=''">
+                                *ngIf="power.IsUpdate==true&&power.mappower&&power.issdiction==true&&nzSelected!=''&&routecalculation== '1'">
                                 <!-- 配比 -->
                                 <button nz-button nzShape="circle" nzType="link" *ngIf="routertype!='2'" nz-popover
                                   nzPopoverTitle="{{pr.bls_code}}" [nzPopoverContent]="setPercentage"
@@ -669,7 +682,10 @@
 <WorkBalance #Balance [modular]="modular"></WorkBalance>
 <!-- 站位规则设置  -->
 <stationSet #stationSet [modular]="modular"></stationSet>
+<!-- 工价 -->
 <Price #Price [modular]="modular"></Price>
+<!-- 关联站位 -->
+<website #website (onEdit)="returnWebsite($event)"></website>
 <!-- 排序 -->
 <ng-template #setSort>
   <div>

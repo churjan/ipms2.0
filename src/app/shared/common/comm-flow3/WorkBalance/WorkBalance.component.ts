@@ -10,8 +10,7 @@ declare var $: any;
     styleUrls: ['./WorkBalance.component.less']
 })
 export class WorkBalanceComponent extends FormTemplateComponent {
-    constructor(
-        private breakpointObserver: BreakpointObserver,) { super(); }
+    constructor(private breakpointObserver: BreakpointObserver,) { super(); }
     @Input() note: any;
     /**站位 */
     station: any[] = [];
@@ -114,7 +113,7 @@ export class WorkBalanceComponent extends FormTemplateComponent {
                 },
                 tooltip: {
                     formatter: function (v) {
-                        let tip = v.seriesName + '-' +that.getTipsMsg("placard.total") + ':' + v.value;
+                        let tip = v.seriesName + '-' + that.getTipsMsg("placard.total") + ':' + v.value;
                         tip = tip + info[v.dataIndex].reduce((res, cur) => {
                             return res += '<br />' + v.marker + cur.title + '：' + cur.time
                         }, '');

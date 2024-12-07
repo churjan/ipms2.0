@@ -736,7 +736,8 @@
         "returmflow": "返回工序流",
         "ruledel": "规则删除",
         "PWRM": "工序流路线图",
-        "partBwiSet": "部件工段设置页"
+        "partBwiSet": "部件工段设置页",
+        "Associated":"关联站位设置"
     },
     "url": {
         "home": "主页",

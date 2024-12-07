@@ -123,7 +123,7 @@
             "getpage": "api/admin/Operationinfo/",
             "OperationGet": "admin/OperationProcessMaster/",
             "StyleSave": "admin/StyleOperationProcess",
-            "WorkBillSave": "admin/WorkBillOperationProcess "
+            "WorkBillSave": "admin/WorkBillOperationProcess"
         },
         "Mastercolumns": [
             {

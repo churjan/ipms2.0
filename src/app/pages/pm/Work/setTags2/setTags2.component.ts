@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormTemplateComponent } from '~/shared/common/base/form-Template.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { FlowLaminationComponent } from '../flowLamination/flowLamination.component';
 
 class Body {
     pwb_Key: string;
@@ -20,6 +21,7 @@ class Body {
 
 export class SetTags2Content extends FormTemplateComponent {
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver,) { super(); }
+    @ViewChild('flowLamination', { static: false }) _flowLamination: FlowLaminationComponent;
 
     @Output() editDone = new EventEmitter<boolean>()
     model_work: any = {};
@@ -28,7 +30,14 @@ export class SetTags2Content extends FormTemplateComponent {
     submiting: boolean = false
     tab = 0;
     istag: boolean = false
-    ispackage: boolean = false
+    ispackage: boolean = false;
+    /**是否绑定工序流 */
+    isbring: boolean = true;
+    /**待选工序流 */
+    listOfData = new Array();
+    /**绑定值 */
+    BindingValue: string = '';
+    node: any;
     ngOnInit(): void {
         this.otherUrl = this.modular.otherUrl;
         this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
@@ -53,6 +62,17 @@ export class SetTags2Content extends FormTemplateComponent {
         // console.log(record)
         if (record && record.node) {
             this.key = record.node.key;
+            this.node = record.node
+            this._service.comList('WorkBillOperationProcess/Extend/GetByWorkbill', { pwb_key: this.key }).then((v) => {
+                if (v)
+                    this.isbring = true;
+                else {
+                    this.isbring = false;
+                    this._service.getList('admin/StyleOperationProcess/', { psi_key: record.node.psi_key }, (node) => {
+                        this.listOfData = node;
+                    });
+                }
+            })
             this._service.getModel(this.modular.url, this.key, (result) => {
                 if (!result.opp_type) {
                     this.message.error(this.getTipsMsg('warning.noSetFlow'))
@@ -69,6 +89,30 @@ export class SetTags2Content extends FormTemplateComponent {
             this.key = null;
         }
         this.visible = true
+    }
+    /**绑定工序流 */
+    Binding(item) {
+        this.BindingValue = item.key;
+        this._service.saveModel('admin/WorkBillOperationProcess', 'post', { popm_key: item.popm_key, pwb_key: this.key, psi_key: this.node.psi_key }, (scss) => {
+            this.isbring = true;
+        })
+    }
+    flowOpen() {
+        let flowpower = sessionStorage.process && sessionStorage.process == 'true' ? true : false;
+        let mappower = sessionStorage.processroute && sessionStorage.processroute == 'true' ? true : false;
+        let wages = sessionStorage.havewages && sessionStorage.havewages == 'true' ? true : false;
+        let body: any = Object.assign({}, { title: 'CPWRM', other_node: this.node, type: 'W' })
+        body = Object.assign(body, {
+            power: { Iscopy: true, IsUpdate: this.node.state != 0 ? false : true, wages: wages, flowpower: flowpower, mappower: mappower },
+            node: {}
+        })
+        if (this.node.state == 0) {
+            body.isNull = true;
+            this._flowLamination.open(body)
+        } else {
+            this.message.error(this.getTipsMsg('warning.noNewcreate'))
+        }
+
     }
     checkbox() {
         if (this.istag == true) {

@@ -12,6 +12,7 @@ import { environment } from '@/environments/environment';
 import { PriceComponent } from './Price/Price.component';
 import { StationSetComponent } from './stationSet/stationSet.component';
 import { SkuProcessService } from '~/pages/warehouse/wms/sku-process/sku-process.service';
+import { WebsiteComponent } from './website/website.component';
 
 declare var $: any;
 /**权限 */
@@ -54,6 +55,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
     @ViewChild('Price', { static: false }) _Price: PriceComponent;
     /**导入 */
     @ViewChild('imp', { static: false }) _imp: ImpComponent;
+    @ViewChild('website', { static: false }) _website: WebsiteComponent
     @Output() editDone = new EventEmitter<boolean>();
     /**弹窗开启/关闭 */
     avatar: string;
@@ -153,7 +155,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
     /**是否开启备用站*/
     isoverload = false;
     /**是否显示配比*/
-    routertype = false;
+    routertype: string = '1';
     /**是否显示分流*/
     diversionscheme = false;
     /**是否显示帮工*/
@@ -1192,6 +1194,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
             // this.OPSList.forEach(ops => ops.poi_key = OP.poi_key)
         })
     }
+    /**保存规则设置 */
     saveSetScheme() {
         let check = new Array();
         this.OPSList.forEach(cops => {
@@ -1200,6 +1203,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                 check.push({ blr_key: key, poi_key: this.selectoeder.poi_key })
             }
         })
+        if (check.length == 0) check.push({ poi_key: this.selectoeder.poi_key })
         this._service.saveModel('admin/OperationRule/Extend/batch', 'post', check, (sucss) => {
             this.message.success(this.getTipsMsg('sucess.s_set'));
             // this.OPSList.forEach(op => op.checked = false)
@@ -1280,7 +1284,9 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                     schtotal = schtotal + schemedrge.percentage;
                     containersch.map((v) => { v.percent = schtotal > 0 ? ((v.percentage / schtotal) * 100).toFixed(2) + '%' : '0%'; })
                     schemedrge.percent = schtotal > 0 ? ((schemedrge.percentage / schtotal) * 100).toFixed(2) + '%' : '0%';
+                    // if (data.schemelist.length > 0) { schemedrge.schemenode = data.schemelist[0].schemenode } else { this.getOperationRule(data) }
                     data.schemelist.push(schemedrge)
+                    this.getOperationRule(data)
                     let tq = this.StationAggregation.findIndex(sa => sa.code == schemedrge.bls_code)
                     if (tq >= 0) {
                         this.StationAggregation[tq].poi_list.push({
@@ -1305,7 +1311,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                     }
                 }
                 if (toElem.closest('#helplist').length > 0) {
-                    if (data.routelist.length == 0) {
+                    if (!data||data.routelist.length == 0) {
                         this.message.error(this.getTipsMsg('warning.PlaseAddStation'));
                         this.lockAxis = false;
                         return;
@@ -1920,6 +1926,28 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
     /**站位规则设置 */
     stationset() {
         this._stationSet.open({ title: 'placard.stationset', node: this.newFlow })
+    }
+    /**关联站位 */
+    setstation(OP) {
+        this.selectoeder = Object.assign({}, OP);
+        let operation = { key: OP.poi_key, code: OP.poi_code, name: OP.poi_name }
+        this._website.open({ title: 'Associated', node: operation })
+    }
+    returnWebsite(OP) {
+        let par = this.newFlow.partlist[this.selectedIndex];
+        let oi = this.newOP[par.bpi_code].findIndex(i => i.key == this.selectoeder.key)
+        this._service.comList('OperationStructureRelation', { poi_key: OP.poi_key }, 'getlist').then((result) => {
+            this.newOP[par.bpi_code][oi].routelist = new Array();
+            result.forEach(v => {
+                this.newOP[par.bpi_code][oi].routelist.push({ bls_key: v.bls_key, percentage: v.mixtureratio, bls_code: v.bls_code, checked: false })
+            });
+            let total = 0;
+            total = this.newOP[par.bpi_code][oi].routelist.reduce(function (total, currentValue, currentIndex, arr) {
+                return currentValue.percentage ? (total + currentValue.percentage) : total;
+            }, 0);
+            this.newOP[par.bpi_code][oi].routelist.map((v) => { v.percent = total > 0 ? ((v.percentage / total) * 100).toFixed(2) + '%' : '0%'; })
+            this.selectoeder = {};
+        });
     }
     /**导入 */
     impflow() {

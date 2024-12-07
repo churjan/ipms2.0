@@ -1916,6 +1916,11 @@
             "name": "站位",
             "code": "key",
             "noshow": true
+        },
+        {
+            "name": "排序",
+            "code": "group_order",
+            "noshow": true
         }
     ],
     "pmCutting": [

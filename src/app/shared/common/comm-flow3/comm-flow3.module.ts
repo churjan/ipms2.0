@@ -17,6 +17,7 @@ import { PriceComponent } from './Price/Price.component';
 import { OpListStyleComponent } from './opList-style/opList-style.component';
 import { StationSetComponent } from './stationSet/stationSet.component';
 import { MiddlePageComponent } from './Middlepage/Middlepage.component';
+import { WebsiteComponent } from './website/website.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,11 +30,11 @@ import { MiddlePageComponent } from './Middlepage/Middlepage.component';
     SelectInputModule,
     DragDropModule,
     NgxEchartsModule.forRoot({ echarts }),
-    ImpModule
+    ImpModule,
   ],
-  declarations: [MiddlePageComponent, CommFlowthreeComponent, OpListComponent, WorkBalanceComponent, PriceComponent, OpListStyleComponent, StationSetComponent],
+  declarations: [MiddlePageComponent, CommFlowthreeComponent, OpListComponent,WebsiteComponent, WorkBalanceComponent, PriceComponent, OpListStyleComponent, StationSetComponent],
   exports: [
-    MiddlePageComponent, CommFlowthreeComponent, OpListComponent, WorkBalanceComponent, PriceComponent, OpListStyleComponent, StationSetComponent
+    MiddlePageComponent, CommFlowthreeComponent, OpListComponent, WebsiteComponent,WorkBalanceComponent, PriceComponent, OpListStyleComponent, StationSetComponent
   ]
 })
 export class CommFlowthreeModule { }
