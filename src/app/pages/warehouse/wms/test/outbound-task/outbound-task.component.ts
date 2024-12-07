@@ -52,7 +52,7 @@ export class OutboundTaskComponent implements OnInit {
 
   fillFormFields() {
     if (this.record.node) {
-      const { control_key,psi_key, pci_key, psz_key, workbill_key, current_infeed_key } = this.record.node;
+      const { control_key, psi_key, pci_key, psz_key, workbill_key, current_infeed_key } = this.record.node;
       this.validateForm.patchValue({
         control_key,
         psi_key,
@@ -64,5 +64,5 @@ export class OutboundTaskComponent implements OnInit {
     }
   }
 
-  close(){}
+  close() {}
 }
