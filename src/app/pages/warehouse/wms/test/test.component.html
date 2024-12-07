@@ -23,7 +23,7 @@
   <app-ina-single-select
     [(ngModel)]="crud.seniorModel.control_key"
     (ngModelChange)="crud.Search()"
-    [ngZorroProps]="{placeholder: '请选择出库控制'}"
+    [ngZorroProps]="{ width: '200px', placeholder: '请选择出库控制', isAllowClear: false }"
     [apiProps]="{ url: 'admin/w_WarehouseOutControl/Option' }"
   ></app-ina-single-select>
 </ng-template>

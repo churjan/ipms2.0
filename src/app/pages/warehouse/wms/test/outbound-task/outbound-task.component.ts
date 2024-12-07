@@ -12,16 +12,22 @@ export class OutboundTaskComponent implements OnInit {
   title: string;
   width: string;
   visible = false;
+  record: any = {};
   validateForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appService: AppService) {
     this.validateForm = this.fb.group({
       name: [null],
       code: [null],
-      pwb_key: [null],
+      control_key: [null],
+      workbill_key: [null],
       psi_key: [null],
       pci_key: [null],
       psz_key: [null],
+      quantity: [null],
+      state: [null],
+      inboundtime: [null],
+      type: [null],
     });
   }
 
@@ -36,17 +42,27 @@ export class OutboundTaskComponent implements OnInit {
   }
 
   async open(record: any = {}) {
+    console.log(record);
+    this.record = record;
     this.visible = true;
-    this.title = record.key ? this.appService.translate('btn.update') : this.appService.translate('btn.plus');
-    if (record.node) {
+    this.title = this.appService.translate('placard.taskout');
+
+    this.fillFormFields();
+  }
+
+  fillFormFields() {
+    if (this.record.node) {
+      const { control_key,psi_key, pci_key, psz_key, workbill_key, current_infeed_key } = this.record.node;
       this.validateForm.patchValue({
-        name: record.node.name,
-        code: record.node.code,
-        pwb_key: record.node.workbill_key,
-        psi_key: record.node.psi_key,
-        pci_key: record.node.pci_key,
-        psz_key: record.node.psz_key,
+        control_key,
+        psi_key,
+        pci_key,
+        psz_key,
+        workbill_key,
+        current_infeed_key,
       });
     }
   }
+
+  close(){}
 }

@@ -567,6 +567,7 @@
         "psi_name",
         "pci_name",
         "psz_name",
-        "quantity"
+        "workbill_code",
+        "current_station_code"
     ]
 }

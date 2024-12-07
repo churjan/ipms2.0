@@ -15,7 +15,7 @@
         <div nz-col [nzSpan]="8">
           <nz-form-item>
             <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'wmsOutcontrol.name' | i18n }}">
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.name' | i18n }}">
               <input nz-input formControlName="name" (keydown)="submitForm($event)" />
             </nz-form-control>
           </nz-form-item>
@@ -23,7 +23,7 @@
         <div nz-col [nzSpan]="8">
           <nz-form-item>
             <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}/{{ 'wmsOutcontrol.code' | i18n }}">
+            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.code' | i18n }}">
               <input
                 nz-input
                 formControlName="code"
@@ -36,7 +36,7 @@
         <div nz-col [nzSpan]="8">
           <nz-form-item>
             <nz-form-label nzRequired>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}/{{ 'wmsOutcontrol.outControl' | i18n }}">
+            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}{{ 'wmsOutcontrol.outControl' | i18n }}">
               <!-- 出库控制 -->
               <app-ina-single-select
                 formControlName="control_key"
@@ -48,7 +48,7 @@
         <div nz-col [nzSpan]="8">
           <nz-form-item>
             <nz-form-label nzRequired>{{ "wmsOutcontrol.scheme" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}/{{ 'wmsOutcontrol.scheme' | i18n }}">
+            <nz-form-control nzErrorTip="{{ 'checkdata.check' | i18n }}{{ 'wmsOutcontrol.scheme' | i18n }}">
               <!-- 方案 -->
               <app-ina-single-select
                 formControlName="relation_key"

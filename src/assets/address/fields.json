@@ -5079,7 +5079,7 @@
     ],
     "wmsSkuprocess": [
         {
-            "name": "字段值",
+            "name": "方案条件",
             "code": "blsd_name"
         },
         {
@@ -6719,6 +6719,22 @@
         {
             "name": "尺码名称",
             "code": "psz_name"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "尺码名称",
+            "code": "psz_name"
+        },
+        {
+            "name": "作业单号",
+            "code": "workbill_code"
+        },
+        {
+            "name": "仓位编号",
+            "code": "current_station_code"
         },
         {
             "name": "部件",

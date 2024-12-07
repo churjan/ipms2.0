@@ -12,26 +12,38 @@
       <div nz-row [nzGutter]="12">
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.name' | i18n }}">
+            <nz-form-label>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
+            <nz-form-control>
               <input nz-input formControlName="name" (keydown)="submitForm($event)" />
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'wmsOutcontrol.code' | i18n }}">
+            <nz-form-label>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
+            <nz-form-control>
               <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.pwb_code' | i18n }}">
+            <nz-form-label>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
+            <nz-form-control>
               <app-ina-single-select
-                formControlName="pwb_key"
+                formControlName="control_key"
+                [apiProps]="{ url: 'admin/w_WarehouseOutControl/option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <app-ina-single-select
+                formControlName="workbill_key"
+                [ngZorroProps]="{ label: 'code' }"
                 [apiProps]="{ url: 'admin/WorkBill/Option' }"
               ></app-ina-single-select>
             </nz-form-control>
@@ -39,19 +51,19 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.psi_key' | i18n }}">
+            <nz-form-label>{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
+            <nz-form-control>
               <app-ina-single-select
                 formControlName="psi_key"
-                [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+                [apiProps]="{ url: 'admin/styleinfo/Option' }"
               ></app-ina-single-select>
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.pci_key' | i18n }}">
+            <nz-form-label>{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
+            <nz-form-control>
               <app-ina-single-select
                 formControlName="pci_key"
                 [apiProps]="{ url: 'admin/colorinfo/Option' }"
@@ -61,11 +73,67 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
-            <nz-form-control nzErrorTip="{{ 'inputdata.input' | i18n }}{{ 'whTaskOut.psz_key' | i18n }}">
+            <nz-form-label>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
+            <nz-form-control>
               <app-ina-single-select
                 formControlName="psz_key"
                 [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOutcontrol.quantity" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                formControlName="quantity"
+                type="number"
+                min="0"
+                placeholder="{{ 'noLimitPlaceholder' | i18n }}"
+                (keydown)="submitForm($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOutcontrol.state_name" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <app-ina-single-select
+                formControlName="state"
+                [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskStateEnum' } }"
+                [ngZorroProps]="{ value: 'code' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>
+              {{ "wmsOuttask.inboundtime" | i18n }}
+            </nz-form-label>
+            <nz-form-control>
+              <input
+                nz-input
+                formControlName="inboundtime"
+                type="number"
+                min="0"
+                placeholder="{{ 'noLimitPlaceholder' | i18n }}"
+                (keydown)="submitForm($event)"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsOuttask.type_name" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <app-ina-single-select
+                formControlName="type"
+                [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskTypeEnum' } }"
+                [ngZorroProps]="{ value: 'code' }"
               ></app-ina-single-select>
             </nz-form-control>
           </nz-form-item>

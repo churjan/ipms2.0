@@ -40,7 +40,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   @Input() ngZorroProps: ngZorroProps;
   processedNgZorroProps: ngZorroProps;
   defaultNgZorroProps: ngZorroProps = {
-    width: '150px',
+    width: '100%',
     placeholder: '请选择',
     isAllowClear: true,
     label: 'name',
