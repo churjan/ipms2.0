@@ -11,6 +11,7 @@ interface ngZorroProps {
   value?: string; // 值
   secondaryLabel?: string; // 副标签
   customOptionList?: string; // 选项列表
+  isSelectFirstValue?: boolean; // 是否默认选中第一项
 }
 
 interface ApiProps {
@@ -47,6 +48,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
     value: 'key',
     secondaryLabel: '',
     customOptionList: '',
+    isSelectFirstValue: false,
   };
 
   // 接口相关属性
@@ -80,7 +82,13 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
     this.processedApiProps = _merge(_cloneDeep(this.defaultApiProps), this.apiProps);
     const customOptionList = JSON.parse(this.processedNgZorroProps.customOptionList || null);
     if (!customOptionList) {
-      this.fetchList();
+      this.fetchList().then(() => {
+        if(this.processedNgZorroProps.isSelectFirstValue){
+          this.selectedValue = this.optionList[0][this.processedNgZorroProps.value];
+          this.onChange(this.selectedValue);
+        }
+        
+      });
     } else {
       // 如果有自定义选项列表，则使用自定义列表
       this.optionList = customOptionList;
@@ -96,7 +104,7 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
       ...(isPaging && { pageSize }),
       ...extraParams,
     };
-    this.request[method](url, params)
+    return this.request[method](url, params)
       .then((res) => {
         if (isPaging) {
           this.optionList.push(...res.data);

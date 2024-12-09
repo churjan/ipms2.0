@@ -10,6 +10,7 @@ import { OutboundTaskComponent } from './outbound-task/outbound-task.component';
 })
 export class TestComponent extends ListTemplateComponent {
   @ViewChild('outboundTask') outboundTask:OutboundTaskComponent;
+  @ViewChild('controlComponent') controlComponent;
   @ViewChild('crud') crud:CrudComponent;
   constructor(public router: Router) {
     super();
@@ -18,6 +19,9 @@ export class TestComponent extends ListTemplateComponent {
     if (this.url.indexOf('_') == 0) {
       this.url = this.url.substring(1, this.url.length);
     }
+  }
+
+  ngOnInit() {
   }
 
   onReset() {}

@@ -20,10 +20,11 @@
   [isDataOnInit]="false"
 ></crud2>
 <ng-template #KeyQuery let-item="record">
+  <span class="mr8">库区：</span>
   <app-ina-single-select
     [(ngModel)]="crud.seniorModel.control_key"
     (ngModelChange)="crud.Search()"
-    [ngZorroProps]="{ width: '200px', placeholder: '请选择出库控制', isAllowClear: false }"
+    [ngZorroProps]="{ width: '150px', placeholder: '请选择库区', isAllowClear: false, isSelectFirstValue: true }"
     [apiProps]="{ url: 'admin/w_WarehouseOutControl/Option' }"
   ></app-ina-single-select>
 </ng-template>
