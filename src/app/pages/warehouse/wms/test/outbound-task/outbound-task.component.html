@@ -13,7 +13,7 @@
       <div nz-row [nzGutter]="12">
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="name" />
             </nz-form-control>
@@ -21,7 +21,7 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
             <nz-form-control>
               <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
             </nz-form-control>
@@ -29,7 +29,7 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
+            <nz-form-label nzRequired>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
             <nz-form-control>
               <app-ina-single-select
                 formControlName="control_key"
@@ -153,6 +153,36 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+        <!-- <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsAutooutscheme.isbox" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <nz-switch
+                  nz-tooltip
+                  nzTooltipTitle="{{ 'wmsAutooutscheme.isbox' | i18n }}"
+                  formControlName="isbox"
+                  nzCheckedChildren="{{ 'placard.yes' | i18n }}"
+                  nzUnCheckedChildren="{{ 'placard.no' | i18n }}"
+                >
+                </nz-switch>
+                </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "wmsAutooutscheme.box_number" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <input
+                  nz-input
+                  type="number"
+                  formControlName="box_number"
+                  min="0"
+                  placeholder="{{ 'inputdata.input' | i18n }}"
+                />
+            </nz-form-control>
+          </nz-form-item>
+        </div> -->
+        
         <!-- 自定义组件 -->
         <ng-container *ngFor="let item of dynamicFields">
           <div nz-col [nzSpan]="8">
@@ -238,15 +268,80 @@
         </ng-container>
       </div>
     </form>
+    <nz-divider nzText="{{ 'placard.station' | i18n }}"></nz-divider>
+    <ina-ztree-select
+      [setting]="setting"
+      [params]="stationRailtree"
+      datatype="NewGetList/"
+      (onSelect)="onSelectStation($event)"
+    ></ina-ztree-select>
+    <nz-transfer
+      nzShowSearch
+      [nzDataSource]="transferData"
+      [nzRenderList]="[renderList, renderList]"
+      [nzTitles]="['(' + ('placard.canSelect' | i18n) + ')', '(' + ('placard.selected' | i18n) + ')']"
+      [nzListStyle]="{ height: 'calc(100%)' }"
+      [nzShowSelectAll]="false"
+      [nzFilterOption]="filterOption"
+    >
+      <ng-template
+        #renderList
+        let-items
+        let-stat="stat"
+        let-onItemSelectAll="onItemSelectAll"
+        let-onItemSelect="onItemSelect"
+      >
+        <div class="transfer-table-wrapper">
+          <nz-table
+            #table
+            [nzData]="$asTransferItems(items)"
+            [nzFrontPagination]="false"
+            nzSize="small"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '100%', y: 'calc(100% - 45px)' }"
+            [nzBordered]="true"
+            nzSize="small"
+          >
+            <thead>
+              <tr>
+                <th
+                  nzAlign="center"
+                  nzWidth="40px"
+                  [nzChecked]="stat.checkAll"
+                  [nzIndeterminate]="stat.checkHalf"
+                  (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th nzAlign="center">{{ "wmsOutcontrol.lineCode" | i18n }}</th>
+                <th nzAlign="center">{{ "wmsOutcontrol.bls_name" | i18n }}</th>
+                <th nzAlign="center">{{ "wmsOutcontrol.bls_code" | i18n }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                <td
+                  nzAlign="center"
+                  nzWidth="40px"
+                  [nzChecked]="!!data.checked"
+                  (nzCheckedChange)="onItemSelect(data)"
+                ></td>
+                <td nzAlign="center">{{ data.station_name }}</td>
+                <td nzAlign="center">{{ data.bls_name }}</td>
+                <td nzAlign="center">{{ data.bls_code }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </ng-template>
+    </nz-transfer>
   </ng-template>
   <ng-template #footerTpl>
     <button nz-button (click)="close()">{{ "btn.cancel" | i18n }}</button>
     <button
       nz-button
       nzType="primary"
-      (click)="onSubmitForm()"
-      [disabled]="submiting"
-      [nzLoading]="submiting"
+      (click)="onSubmit()"
+      [disabled]="isSubmitting"
+      [nzLoading]="isSubmitting"
       class="m-l-6"
     >
       {{ "btn.save" | i18n }}

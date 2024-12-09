@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChildren, QueryList } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AppService } from '~/shared/services/app.service';
+import { CommonService } from '~/shared/services/http/common.service';
+import { UtilService } from '~/shared/services/util.service';
 import { TestService } from '../test.service';
+import { TransferDirection, TransferItem } from 'ng-zorro-antd/transfer';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { InaSingleSelectComponent } from '~/shared/components/ina-single-select/ina-single-select.component';
 
 @Component({
@@ -13,28 +17,48 @@ import { InaSingleSelectComponent } from '~/shared/components/ina-single-select/
 export class OutboundTaskComponent implements OnInit {
   @ViewChildren('customFieldsComponent') customFieldsComponents: QueryList<InaSingleSelectComponent>;
   @ViewChildren('dynamicFieldsComponent') dynamicFieldsComponents: QueryList<InaSingleSelectComponent>;
+  @Output() editDone = new EventEmitter<boolean>();
   title: string;
   width: string;
   visible = false;
   record: any = {};
   validateForm!: FormGroup;
+  isSubmitting = false;
   customFieldDicts = ['workbill_key', 'psi_key', 'pci_key', 'psz_key', 'current_infeed_key']; // 自定义字段字典
   dynamicFields: any[] = []; // 动态字段
+
+  /**站位 */
+  setting = {
+    DataFiled: 'key',
+    pKey: 'pkey',
+    DataTxt: 'name',
+    child: 'sonlist',
+    url: 'LayoutStructure/extend',
+  };
+  stationRailtree = { maketree: true, moduletype: 101 };
+  transferData: TransferItem[] = [];
+  $asTransferItems = (data: unknown) => data as TransferItem[];
+  stationType = ''; // 站位类型
 
   constructor(
     private fb: FormBuilder,
     private breakpointObserver: BreakpointObserver,
     private appService: AppService,
-    private ts: TestService
+    private commonService: CommonService,
+    private Service: UtilService,
+    private ts: TestService,
+    private message: NzMessageService
   ) {
     this.validateForm = this.fb.group({
-      name: [null],
-      code: [null],
-      control_key: [null],
+      name: [null, Validators.required],
+      code: [null, Validators.required],
+      control_key: [null, Validators.required],
       quantity: [null],
       state: [null],
       inboundtime: [null],
       type: [null],
+      // isbox: [null],
+      // box_number: [null],
     });
   }
 
@@ -60,6 +84,7 @@ export class OutboundTaskComponent implements OnInit {
     });
     this.createAndFillCustomFormFields();
     this.createDynamicFields();
+    this.fetchStationList();
   }
 
   // 创建和填充自定义表单字段
@@ -157,17 +182,88 @@ export class OutboundTaskComponent implements OnInit {
     return attributes;
   }
 
-  close() {
-    this.visible = false;
+  // 获取站位类型
+  fetchStationList() {
+    this.Service.comList('classdata', { pcode: 'outtimerroute' }).then((response) => {
+      this.stationType = response.data[0].code;
+    });
   }
 
-  onSubmitForm() {
+  onSelectStation(e) {
+    this.commonService
+      .structures({
+        path: e.key,
+        blst_group: 'In',
+        stationtype: this.stationType,
+      })
+      .then((data: any) => {
+        const leftTransferData = [];
+        const rightTransferData = this.transferData.filter((item) => item.direction === 'right');
+        const rightKeysSet = new Set(rightTransferData.map((item) => item.bls_key));
+        data.forEach((item) => {
+          if (!rightKeysSet.has(item.key)) {
+            leftTransferData.push({
+              station_name: item.pname,
+              bls_code: item.code,
+              bls_key: item.key,
+              bls_name: item.name,
+              direction: 'left',
+            });
+            this.transferData = [...leftTransferData, ...rightTransferData];
+          }
+        });
+      });
+  }
+
+  close() {
+    this.visible = false;
+    this.validateForm.reset();
+  }
+
+  onSubmit() {
+    if (this.isSubmitting) return;
+    if (!this.validateForm.valid) {
+      this.markControlsDirty(this.validateForm);
+      return;
+    }
     const rawFormValue = this.validateForm.getRawValue();
+    const stationSelected = this.transferData
+      .filter((x) => x.direction === 'right')
+      .map((x) => ({
+        bls_code: x.bls_code,
+        bls_key: x.bls_key,
+        bls_name: x.bls_name,
+      }));
     const params = {
       conditions: this.customFieldsParams(rawFormValue),
       attributes: this.dynamicFieldsParams(rawFormValue),
       ...rawFormValue,
+      routes: stationSelected,
     };
     console.log(params);
+    this.isSubmitting = true;
+    this.ts
+      .submitData(params)
+      .then(() => {
+        this.editDone.emit(true);
+        this.visible = false;
+        this.message.success(this.appService.translate('sucess.s_save'));
+      })
+      .finally(() => {
+        this.isSubmitting = false;
+      });
+  }
+
+  markControlsDirty(group: FormGroup | FormArray): void {
+    Object.keys(group.controls).forEach((key: string) => {
+      const abstractControl = group.controls[key];
+
+      if (abstractControl instanceof FormGroup || abstractControl instanceof FormArray) {
+        this.markControlsDirty(abstractControl);
+      } else {
+        abstractControl.markAsDirty();
+        abstractControl.updateValueAndValidity({ onlySelf: true });
+      }
+    });
   }
 }

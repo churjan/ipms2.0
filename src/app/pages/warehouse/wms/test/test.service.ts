@@ -32,4 +32,17 @@ export class TestService {
         });
     });
   }
+
+  submitData(data) {
+    return new Promise((resolve, reject) => {
+      this.request
+        .post('/admin/w_WarehouseOutTask/extend/save',data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }

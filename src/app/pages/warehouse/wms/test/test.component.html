@@ -28,112 +28,49 @@
   ></app-ina-single-select>
 </ng-template>
 <ng-template #searchActionsBody let-item="record">
-  <!-- <form nz-form>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.som_code" | i18n }}</nz-form-label>
-      <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title="{{ 'checkdata.check' | i18n }}"
-          [(ngModel)]="crud.seniorModel.som_key"
-          name="som_code"
-          url="OrderMaster"
-          [isshow]="false"
-        >
-        </ina-common-select>
-      </nz-form-control>
-    </nz-form-item>
+  <form nz-form>
     <nz-form-item>
       <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.pwb_code" | i18n }}</nz-form-label>
       <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title="{{ 'checkdata.check' | i18n }}"
+        <app-ina-single-select
           [(ngModel)]="crud.seniorModel.pwb_key"
-          name="pwb_code"
-          url="WorkBill"
-          [isshow]="false"
-        >
-        </ina-common-select>
+          name="pwb_key"
+          [ngZorroProps]="{ label: 'code' }"
+          [apiProps]="{ url: 'admin/WorkBill/Option' }"
+        ></app-ina-single-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.psi" | i18n }}</nz-form-label>
       <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title=""
+        <app-ina-single-select
           [(ngModel)]="crud.seniorModel.psi_key"
           name="psi_key"
-          url="styleinfo"
-          DataTxt="code"
-          secondary="name"
-        >
-        </ina-common-select>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.psz" | i18n }}</nz-form-label>
-      <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title=""
-          [(ngModel)]="crud.seniorModel.psz_key"
-          name="psz_key"
-          [linkage]="true"
-          [linkagedata]="{ psi_key: crud.seniorModel.psi_key }"
-          url="sizeInfo"
-        >
-        </ina-common-select>
+          [apiProps]="{ url: 'admin/styleinfo/Option' }"
+        ></app-ina-single-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.pci" | i18n }}</nz-form-label>
       <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title=""
+        <app-ina-single-select
           [(ngModel)]="crud.seniorModel.pci_key"
-          name="pci_key"
-          [linkage]="true"
-          [linkagedata]="{ psi_key: crud.seniorModel.psi_key }"
-          url="colorInfo"
-        >
-        </ina-common-select>
+          name="psz_key"
+          [apiProps]="{ url: 'admin/colorInfo/Option' }"
+        ></app-ina-single-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.bpi" | i18n }}</nz-form-label>
+      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.psz" | i18n }}</nz-form-label>
       <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title="{{ 'checkdata.check' | i18n }}"
-          [(ngModel)]="crud.seniorModel.bpi_key"
-          name="bpi_code"
-          url="partinfo"
-        >
-        </ina-common-select>
+        <app-ina-single-select
+          [(ngModel)]="crud.seniorModel.psz_key"
+          name="psz_key"
+          [apiProps]="{ url: 'admin/sizeInfo/Option' }"
+        ></app-ina-single-select>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="24">{{ "reportInventoryStatistics.type" | i18n }}</nz-form-label>
-      <nz-form-control [nzSpan]="24">
-        <ina-common-select
-          class="select"
-          title="{{ 'checkdata.check' | i18n }}"
-          [isdisabled]="Disable"
-          [(ngModel)]="crud.seniorModel.type"
-          name="type"
-          DataFiled="value"
-          DataTxt="description"
-          urltype="enum"
-          url="inventorytypeenum"
-          [isshow]="false"
-        >
-        </ina-common-select>
-      </nz-form-control>
-    </nz-form-item>
-  </form> -->
+  </form>
 </ng-template>
 
-<app-outbound-task #outboundTask></app-outbound-task>
+<app-outbound-task #outboundTask (editDone)="crud.reloadData($event)"></app-outbound-task>
