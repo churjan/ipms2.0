@@ -79,7 +79,7 @@
                 </nz-input-number>
               </td>
               <th>{{'pmWork.cangeneratedquantity'|i18n}}</th>
-              <td>{{model.quantity-model.taginfonum}}</td>
+              <td>{{model.quantity-model.taginfonum>0?model.quantity-model.taginfonum:0}}</td>
             </tr>
             <tr *ngIf="tagmode!=1">
               <th>{{'pmWork.packagenumber2'|i18n}}</th>

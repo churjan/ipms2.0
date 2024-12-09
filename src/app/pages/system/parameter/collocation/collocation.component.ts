@@ -22,7 +22,8 @@ export class CollocationComponent extends FormTemplateComponent {
     SingleAttr: any = {};
     /**表单数据 */
     formList = new Array();
-
+    /**选中层次 */
+    selectIndex: number = -1
     async open(record: any) {
         this._service.comList('classdata', { pcode: 'jsontype' }, 'getlist').then(result => {
             let input = result.filter(r => /input/.test(r.code))
@@ -33,7 +34,7 @@ export class CollocationComponent extends FormTemplateComponent {
         })
         this.visible = true
     }
-    selectType({ name, code }, group) {
+    selectType({ name, code }, group, arr?) {
         let node: any = Object.assign({
             id: this.formList.length,
             name,
@@ -46,9 +47,25 @@ export class CollocationComponent extends FormTemplateComponent {
         if (/select/.test(group.code)) {
             node = Object.assign(node, { option: [] })
         }
-        this.formList.push(node);
+        if (this.selectIndex >= 0 && this.formList[this.selectIndex].soncheck) {
+            this.formList[this.selectIndex].sonlist.push(node);
+        } else
+            this.formList.push(node);
         this.SingleAttr = Object.assign({}, node, { type: code })
     }
+    /**添加子项 */
+    addSon() {
+        this.selectIndex = this.formList.length - 1;
+        if (this.selectIndex < 0) return;
+        this.formList[this.selectIndex] = Object.assign(this.formList[this.selectIndex], {
+            soncheck: true,
+            isson: true,
+            sonlist: []
+        })
+        console.log(this.formList)
+    }
+    /**退选子项 */
+    cleanCheck() { }
     updata(ftsf) {
         if (ftsf) {
             let group = this.formType.find(fm => new RegExp(`${fm.code}`).test(ftsf));

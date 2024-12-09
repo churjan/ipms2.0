@@ -34,34 +34,48 @@
                 布局类型
               </ng-template>
               <div nz-col nzSpan="12" class="gutter-row">
-                <button nz-button style="width: 100%;">子集</button>
+                <button nz-button style="width: 100%;" (click)="addSon()">子集</button>
               </div>
             </div>
           </nz-sider>
           <!-- 预览结构 -->
           <nz-content style="padding: 20px;">
-            <form nz-form>
+            <form nz-form (click)="cleanCheck()">
               <ng-container *ngFor="let item of formList">
-                <nz-form-item>
-                  <nz-form-label [nzSpan]="6">{{item.title}}</nz-form-label>
-                  <nz-form-control [nzSpan]="14">
-                    <input nz-input *ngIf="item.type=='text'" placeholder="{{item.placeholder}}" />
-                    <input nz-input *ngIf="item.type=='number'" type="number" placeholder="{{item.placeholder}}" />
-                    <textarea nz-input *ngIf="item.type=='textarea'" placeholder="{{item.placeholder}}"></textarea>
-                    <label nz-checkbox *ngIf="item.type=='checkbox'">Checkbox</label>
-                    <label nz-radio *ngIf="item.type=='radio'">Radio</label>
-                    <nz-switch *ngIf="item.type=='switch'"></nz-switch>
-                    <nz-select *ngIf="item.group=='select'">
-                      <nz-option nzLabel="选项一"></nz-option>
-                      <nz-option nzLabel="选项二"></nz-option>
-                      <nz-option nzLabel="选项三" nzDisabled></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-                <ng-container *ngFor="let item of item.sonlist">
-                </ng-container>
+                <ng-container *ngTemplateOutlet="formTpl; context:{record: item}"></ng-container>
               </ng-container>
             </form>
+            <ng-template #formTpl let-item="record">
+              <ng-container *ngTemplateOutlet="formNoSonTpl; context:{record: item}"></ng-container>
+              <ng-container *ngIf="item.isson">
+                <ng-container *ngTemplateOutlet="formSonTpl; context:{record: item}"></ng-container>
+              </ng-container>
+            </ng-template>
+            <ng-template #formNoSonTpl let-item="record">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="6">{{item.title}}</nz-form-label>
+                <nz-form-control [nzSpan]="14">
+                  <input nz-input *ngIf="item.type=='text'" placeholder="{{item.placeholder}}" />
+                  <input nz-input *ngIf="item.type=='number'" type="number" placeholder="{{item.placeholder}}" />
+                  <textarea nz-input *ngIf="item.type=='textarea'" placeholder="{{item.placeholder}}"></textarea>
+                  <label nz-checkbox *ngIf="item.type=='checkbox'">Checkbox</label>
+                  <label nz-radio *ngIf="item.type=='radio'">Radio</label>
+                  <nz-switch *ngIf="item.type=='switch'"></nz-switch>
+                  <nz-select *ngIf="item.group=='select'">
+                    <nz-option nzLabel="选项一"></nz-option>
+                    <nz-option nzLabel="选项二"></nz-option>
+                    <nz-option nzLabel="选项三" nzDisabled></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </ng-template>
+            <ng-template #formSonTpl let-item="record">
+              <span class="sonClass" [class.sonCheckClass]="item.soncheck">
+                <ng-container *ngFor="let data of item.sonlist">
+                  <ng-container *ngTemplateOutlet="formTpl; context:{record: data}"></ng-container>
+                </ng-container>
+              </span>
+            </ng-template>
           </nz-content>
         </nz-layout>
       </nz-layout>

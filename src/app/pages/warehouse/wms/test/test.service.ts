@@ -19,4 +19,17 @@ export class TestService {
         });
     });
   }
+
+  fetchDynamicFields() {
+    return new Promise((resolve, reject) => {
+      this.request
+        .get('/admin/LayoutStructureRules/getlist?Module=5')
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }

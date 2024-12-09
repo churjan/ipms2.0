@@ -6,6 +6,7 @@
   justifyContent="center"
   (onClose)="close()"
   [content]="contentTpl"
+  [footer]="footerTpl"
 >
   <ng-template #contentTpl>
     <form nz-form [formGroup]="validateForm">
@@ -14,7 +15,7 @@
           <nz-form-item>
             <nz-form-label>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
             <nz-form-control>
-              <input nz-input formControlName="name" (keydown)="submitForm($event)" />
+              <input nz-input formControlName="name" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -42,6 +43,7 @@
             <nz-form-label>{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
             <nz-form-control>
               <app-ina-single-select
+                #customFieldsComponent
                 formControlName="workbill_key"
                 [ngZorroProps]="{ label: 'code' }"
                 [apiProps]="{ url: 'admin/WorkBill/Option' }"
@@ -54,6 +56,7 @@
             <nz-form-label>{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
             <nz-form-control>
               <app-ina-single-select
+                #customFieldsComponent
                 formControlName="psi_key"
                 [apiProps]="{ url: 'admin/styleinfo/Option' }"
               ></app-ina-single-select>
@@ -65,6 +68,7 @@
             <nz-form-label>{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
             <nz-form-control>
               <app-ina-single-select
+                #customFieldsComponent
                 formControlName="pci_key"
                 [apiProps]="{ url: 'admin/colorinfo/Option' }"
               ></app-ina-single-select>
@@ -76,8 +80,21 @@
             <nz-form-label>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
             <nz-form-control>
               <app-ina-single-select
+                #customFieldsComponent
                 formControlName="psz_key"
                 [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
+            <nz-form-control>
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="current_infeed_key"
+                [apiProps]="{ url: 'admin/w_layoutstructure/Option' }"
               ></app-ina-single-select>
             </nz-form-control>
           </nz-form-item>
@@ -92,7 +109,6 @@
                 type="number"
                 min="0"
                 placeholder="{{ 'noLimitPlaceholder' | i18n }}"
-                (keydown)="submitForm($event)"
               />
             </nz-form-control>
           </nz-form-item>
@@ -121,7 +137,6 @@
                 type="number"
                 min="0"
                 placeholder="{{ 'noLimitPlaceholder' | i18n }}"
-                (keydown)="submitForm($event)"
               />
             </nz-form-control>
           </nz-form-item>
@@ -138,7 +153,103 @@
             </nz-form-control>
           </nz-form-item>
         </div>
+        <!-- 自定义组件 -->
+        <ng-container *ngFor="let item of dynamicFields">
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-label>{{ item.name }}</nz-form-label>
+              <nz-form-control>
+                <!-- 扩展后端下拉 extendselect -->
+                <!-- admin/w_customattributevalue/Option?keywords=&extend=bf91887b-dc06-48bb-8733-25049ed6442b&page=1&pagesize=20 -->
+                <!-- name key -->
+                <ng-container *ngIf="item.optionmode === 'extendselect'">
+                  <app-ina-single-select
+                    #dynamicFieldsComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/' + item.optionvalue + '/Option',
+                      extraParams: { extend: item.key }
+                    }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 枚举下拉 enumselect -->
+                <!-- admin/Enum/?method=operationenum -->
+                <!-- description value -->
+                <ng-container *ngIf="item.optionmode === 'enumselect'">
+                  <app-ina-single-select
+                    #dynamicFieldsComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/Enum',
+                      extraParams: { method: item.optionvalue },
+                      isPaging: false
+                    }"
+                    [ngZorroProps]="{ label: 'description', value: 'value' }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 输入:input  判断输入:judgment-input-->
+                <ng-container *ngIf="['input', 'judgment-input'].includes(item.optionmode)">
+                  <input
+                    *ngIf="['', undefined, null, 'String'].includes(item.inputtype)"
+                    #dynamicFieldsComponent
+                    nz-input
+                    formControlName="{{ item.field }}"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    style="width: 100%"
+                  />
+                  <nz-input-number
+                    *ngIf="['Int', 'Decimal'].includes(item.inputtype)"
+                    #dynamicFieldsComponent
+                    nz-input
+                    formControlName="{{ item.field }}"
+                    placeholder="{{ 'inputdata.input' | i18n }}"
+                    style="width: 100%"
+                  ></nz-input-number>
+                  <nz-switch
+                    *ngIf="['Bool'].includes(item.inputtype)"
+                    #dynamicFieldsComponent
+                    formControlName="{{ item.field }}"
+                  ></nz-switch>
+                </ng-container>
+                <!-- 自定义下拉 customselect -->
+                <!-- name value -->
+                <ng-container *ngIf="item.optionmode === 'customselect'">
+                  <app-ina-single-select
+                    #dynamicFieldsComponent
+                    formControlName="{{ item.field }}"
+                    [ngZorroProps]="{ value: 'value', customOptionList: item.optionvalue }"
+                  ></app-ina-single-select>
+                </ng-container>
+                <!-- 后端下拉 select -->
+                <!-- admin/partinfo/Option?keywords=&page=1&pagesize=20 -->
+                <!-- name key -->
+                <ng-container *ngIf="item.optionmode === 'select'">
+                  <app-ina-single-select
+                    #dynamicFieldsComponent
+                    formControlName="{{ item.field }}"
+                    [apiProps]="{
+                      url: 'admin/' + item.optionvalue + '/Option'
+                    }"
+                  ></app-ina-single-select>
+                </ng-container>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </ng-container>
       </div>
     </form>
+  </ng-template>
+  <ng-template #footerTpl>
+    <button nz-button (click)="close()">{{ "btn.cancel" | i18n }}</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="onSubmitForm()"
+      [disabled]="submiting"
+      [nzLoading]="submiting"
+      class="m-l-6"
+    >
+      {{ "btn.save" | i18n }}
+    </button>
   </ng-template>
 </idrawer>

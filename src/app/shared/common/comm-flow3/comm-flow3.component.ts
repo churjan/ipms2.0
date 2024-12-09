@@ -915,12 +915,13 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                     detail.routelist = [];
                     detail.helperlist = [];
                     detail.schemelist = [];
-                    if (detail.overloadlist)
+                    if (detail.overloadlist && detail.overloadlist.length > 0)
                         _over.push(...detail.overloadlist)
                 })
-                this._service.deleteModel('admin/schemeoverload/', _over, (s) => {
-                    par.detaillist.forEach(detail => { if (detail.overloadlist) detail.overloadlist = []; })
-                })
+                if (_over && _over.length > 0)
+                    this._service.deleteModel('admin/schemeoverload/', _over, (s) => {
+                        par.detaillist.forEach(detail => { if (detail.overloadlist) detail.overloadlist = []; })
+                    })
                 this.message.success(this.getTipsMsg('sucess.s_clean'));
             }
         })
@@ -1311,7 +1312,7 @@ export class CommFlowthreeComponent extends FormTemplateComponent {
                     }
                 }
                 if (toElem.closest('#helplist').length > 0) {
-                    if (!data||data.routelist.length == 0) {
+                    if (!data || data.routelist.length == 0) {
                         this.message.error(this.getTipsMsg('warning.PlaseAddStation'));
                         this.lockAxis = false;
                         return;

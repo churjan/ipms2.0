@@ -80,7 +80,7 @@ export class SetTags2Content extends FormTemplateComponent {
                 } else {
                     this.model = result;
                     if (this.model.quantity - this.model.taginfonum < 0 && record.tagmode == 1) this.body.tagnumber = 0;
-                    this.body.number = this.model.quantity - this.model.taginfonum;
+                    this.body.number = this.model.quantity - this.model.taginfonum > 0 ? this.model.quantity - this.model.taginfonum : 0;
                     // if (this.istag == true) { this.body.tagnumber = 1; }
                     this.change();
                 }

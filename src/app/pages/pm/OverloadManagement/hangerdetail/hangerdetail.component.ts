@@ -49,11 +49,15 @@ export class HangerDetailComponent extends FormTemplateComponent {
     async open(record: any) {
         this.title = this._appService.translate("btn." + record.title);
         if (record.node) {
-            let { overload_options } = record.node
+            let { overload_options,group_order } = record.node
             let _options = JSON.parse(overload_options);
             _options.forEach(_o => {
                 if (_o == 0) this.isgrouporder = true;
                 this.overload_options.push({ value: _o, value_name: this.OvrLoadGroupEnum.find(on => on.value == _o).Description })
+            })
+            let _group = JSON.parse(group_order);
+            _group.forEach(_g => {
+                this.grouporder.push({ value: _g, value_name: this.orderOptions.find(on => on.value == _g).Description })
             })
             this.node = Object.assign(this.node, record.node)
         } else {
@@ -64,6 +68,12 @@ export class HangerDetailComponent extends FormTemplateComponent {
     minus(data, i) {
         // this.overload_options.splice(i, 1)
         this.overload_options = this.overload_options.filter((nb, index) => index != i)
+        if (this.overload_options.find(item => item.value == 0))
+            this.isgrouporder = true
+        else {
+            this.isgrouporder = false;
+            this.grouporder = new Array();
+        }
     }
     addoverload_options(item) {
         if (this.overload_options.filter(o => o.value == item.value).length > 0) {
@@ -118,11 +128,7 @@ export class HangerDetailComponent extends FormTemplateComponent {
             this.node = Object.assign(this.node, { overload_options: JSON.stringify(_options) })
             if (this.isgrouporder == true && this.grouporder && this.grouporder.length > 0) {
                 let _group = new Array();
-                this.grouporder.forEach(o => {
-                    if (o.value >= 0) {
-                        _group.push(o.value)
-                    }
-                });
+                this.grouporder.forEach(o => { _group.push(o.value) });
                 this.node = Object.assign(this.node, { group_order: JSON.stringify(_group) })
             }
             this.submiting = true;
@@ -136,6 +142,7 @@ export class HangerDetailComponent extends FormTemplateComponent {
     close(): void {
         this.node = {};
         this.overload_options = new Array();
+        this.grouporder = new Array();
         this.visible = false
     }
 }
