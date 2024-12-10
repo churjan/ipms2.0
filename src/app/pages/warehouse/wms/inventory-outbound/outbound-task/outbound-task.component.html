@@ -207,7 +207,7 @@
       </div>
       <div class="form-title mb8">{{ "wmsInventoryoutbound.outbound_condition" | i18n }}</div>
       <div nz-row [nzGutter]="12">
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="8" *ngIf="customFieldDicts.includes('workbill_key')">
           <nz-form-item>
             <nz-form-label [nzSpan]="8">{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
             <nz-form-control [nzSpan]="16">
@@ -220,7 +220,7 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="8" *ngIf="customFieldDicts.includes('psi_key')">
           <nz-form-item>
             <nz-form-label [nzSpan]="8">{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
             <nz-form-control [nzSpan]="16">
@@ -232,7 +232,7 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="8" *ngIf="customFieldDicts.includes('pci_key')">
           <nz-form-item>
             <nz-form-label [nzSpan]="8">{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
             <nz-form-control [nzSpan]="16">
@@ -244,7 +244,7 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="8" *ngIf="customFieldDicts.includes('psz_key')">
           <nz-form-item>
             <nz-form-label [nzSpan]="8">{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
             <nz-form-control [nzSpan]="16">
@@ -256,7 +256,7 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="8" *ngIf="customFieldDicts.includes('current_infeed_key')">
           <nz-form-item>
             <nz-form-label [nzSpan]="8">{{ "wmsInventoryoutbound.shipping_space" | i18n }}</nz-form-label>
             <nz-form-control [nzSpan]="16">

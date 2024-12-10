@@ -8,6 +8,7 @@ import { InventoryOutboundService } from '../inventory-outbound.service';
 import { TransferDirection, TransferItem } from 'ng-zorro-antd/transfer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { InaSingleSelectComponent } from '~/shared/components/ina-single-select/ina-single-select.component';
+import { AppConfig, modularList } from '~/shared/services/AppConfig.service';
 
 @Component({
   selector: 'app-outbound-task',
@@ -24,7 +25,7 @@ export class OutboundTaskComponent implements OnInit {
   record: any = {};
   validateForm!: FormGroup;
   isSubmitting = false;
-  customFieldDicts = ['workbill_key', 'psi_key', 'pci_key', 'psz_key', 'current_infeed_key']; // 自定义字段字典
+  customFieldDicts = []; // 自定义字段字典
   dynamicFields: any[] = []; // 动态字段
 
   /**站位 */
@@ -73,16 +74,41 @@ export class OutboundTaskComponent implements OnInit {
   }
 
   async open(record: any = {}) {
-    console.log(record);
+    const columns = JSON.parse(localStorage.getItem('AllColumns'))?.wmsInventoryoutbound.reduce((acc, item) => {
+      if (item.check) {
+        acc.push(item.coums);
+      }
+      return acc;
+    }, []);
+
+    if (columns) {
+      const fieldMapping = {
+        workbill_code: 'workbill_key',
+        psi_code: 'psi_key',
+        psi_name: 'psi_key',
+        pci_name: 'pci_key',
+        psz_name: 'psz_key',
+        current_station_code: 'current_infeed_key',
+      };
+
+      columns.forEach((item) => {
+        const mappedKey = fieldMapping[item];
+        if (mappedKey && !this.customFieldDicts.includes(mappedKey)) {
+          this.customFieldDicts.push(mappedKey);
+        }
+      });
+    }
+    console.log(this.customFieldDicts);
+
     this.record = record;
     this.visible = true;
     this.title = this.appService.translate('placard.taskout');
 
     // 仓库控制
-    const timestamp = new Date().getTime().toString()
+    const timestamp = new Date().getTime().toString();
     this.validateForm.patchValue({
-      name:timestamp,
-      code:timestamp,
+      name: timestamp,
+      code: timestamp,
       control_key: this.record.node.control_key,
     });
     this.createAndFillCustomFormFields();
@@ -93,7 +119,7 @@ export class OutboundTaskComponent implements OnInit {
   // 创建和填充自定义表单字段
   createAndFillCustomFormFields() {
     this.customFieldDicts.forEach((item) => {
-      this.validateForm.addControl(item, new FormControl({value: null, disabled: true}));
+      this.validateForm.addControl(item, new FormControl({ value: null, disabled: true }));
       this.validateForm.patchValue({
         [item]: this.record.node[item],
       });
@@ -221,6 +247,8 @@ export class OutboundTaskComponent implements OnInit {
   close() {
     this.visible = false;
     this.validateForm.reset();
+    this.customFieldDicts = [];
+    this.dynamicFields = [];
   }
 
   onSubmit() {

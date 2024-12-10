@@ -228,6 +228,7 @@ export class CrudComponent extends ListTemplateComponent {
     get inputVal() {
         return this.btnGroup;
     }
+    @Input() isColSetReload = false; // 列设置后是否重新请求接口
     constructor(private authService: AuthService) { super() }
     /**初始化 */
     ngOnInit(): void {
@@ -449,7 +450,10 @@ export class CrudComponent extends ListTemplateComponent {
             this._service.saveModel('SystemInfo/savekanbansetting', 'post', { key: this.getBody.columns, SettingStr: JSON.stringify(this.columns) })
         }
         // if (UtilService.isNotEmpty(this.SearchModel) && JSON.stringify(this.SearchModel)!='{}')
-        //     this.Search()
+
+        if(this.isColSetReload){
+            this.Search()
+        }
     }
     keywordSearch() { }
     /**单列点击 */
