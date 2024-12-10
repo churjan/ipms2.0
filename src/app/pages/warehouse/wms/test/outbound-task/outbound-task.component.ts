@@ -65,7 +65,7 @@ export class OutboundTaskComponent implements OnInit {
   ngOnInit(): void {
     this.breakpointObserver.observe([Breakpoints.Handset]).subscribe((result) => {
       if (!result.matches) {
-        this.width = '1000px';
+        this.width = '1200px';
       } else {
         this.width = '100%';
       }
@@ -79,7 +79,10 @@ export class OutboundTaskComponent implements OnInit {
     this.title = this.appService.translate('placard.taskout');
 
     // 仓库控制
+    const timestamp = new Date().getTime().toString()
     this.validateForm.patchValue({
+      name:timestamp,
+      code:timestamp,
       control_key: this.record.node.control_key,
     });
     this.createAndFillCustomFormFields();
@@ -90,7 +93,7 @@ export class OutboundTaskComponent implements OnInit {
   // 创建和填充自定义表单字段
   createAndFillCustomFormFields() {
     this.customFieldDicts.forEach((item) => {
-      this.validateForm.addControl(item, new FormControl(null));
+      this.validateForm.addControl(item, new FormControl({value: null, disabled: true}));
       this.validateForm.patchValue({
         [item]: this.record.node[item],
       });
@@ -111,7 +114,7 @@ export class OutboundTaskComponent implements OnInit {
   customFieldsParams(rawFormValue) {
     const conditions = [];
     this.customFieldDicts.forEach((item, index) => {
-      const value = this.validateForm.value[item];
+      const value = this.validateForm.getRawValue()[item];
       if (!value) {
         delete rawFormValue[item];
         return;
@@ -133,7 +136,7 @@ export class OutboundTaskComponent implements OnInit {
   dynamicFieldsParams(rawFormValue) {
     const attributes = [];
     this.dynamicFields.forEach((item, index) => {
-      const value = this.validateForm.value[item.field];
+      const value = this.validateForm.getRawValue()[item.field];
       if (!value) {
         delete rawFormValue[item.field];
         return;
@@ -241,6 +244,7 @@ export class OutboundTaskComponent implements OnInit {
       routes: stationSelected,
     };
     console.log(params);
+    return
     this.isSubmitting = true;
     this.ts
       .submitData(params)

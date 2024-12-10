@@ -13,24 +13,24 @@
       <div nz-row [nzGutter]="12">
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label nzRequired [nzSpan]="8">{{ "wmsOutcontrol.name" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <input nz-input formControlName="name" />
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label nzRequired [nzSpan]="8">{{ "wmsOutcontrol.code" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <input nz-input formControlName="code" placeholder="{{ 'inputdata.input' | i18n }}" />
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label nzRequired>{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label nzRequired [nzSpan]="8">{{ "wmsOutcontrol.outControl" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <app-ina-single-select
                 formControlName="control_key"
                 [apiProps]="{ url: 'admin/w_WarehouseOutControl/option' }"
@@ -40,69 +40,8 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
-            <nz-form-control>
-              <app-ina-single-select
-                #customFieldsComponent
-                formControlName="workbill_key"
-                [ngZorroProps]="{ label: 'code' }"
-                [apiProps]="{ url: 'admin/WorkBill/Option' }"
-              ></app-ina-single-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label>{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
-            <nz-form-control>
-              <app-ina-single-select
-                #customFieldsComponent
-                formControlName="psi_key"
-                [apiProps]="{ url: 'admin/styleinfo/Option' }"
-              ></app-ina-single-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label>{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
-            <nz-form-control>
-              <app-ina-single-select
-                #customFieldsComponent
-                formControlName="pci_key"
-                [apiProps]="{ url: 'admin/colorinfo/Option' }"
-              ></app-ina-single-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
-            <nz-form-control>
-              <app-ina-single-select
-                #customFieldsComponent
-                formControlName="psz_key"
-                [apiProps]="{ url: 'admin/sizeinfo/Option' }"
-              ></app-ina-single-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label>{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
-            <nz-form-control>
-              <app-ina-single-select
-                #customFieldsComponent
-                formControlName="current_infeed_key"
-                [apiProps]="{ url: 'admin/w_layoutstructure/Option' }"
-              ></app-ina-single-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="8">
-          <nz-form-item>
-            <nz-form-label>{{ "wmsOutcontrol.quantity" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label [nzSpan]="8">{{ "wmsOutcontrol.quantity" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <input
                 nz-input
                 formControlName="quantity"
@@ -115,8 +54,8 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "wmsOutcontrol.state_name" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label [nzSpan]="8">{{ "wmsOutcontrol.state_name" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <app-ina-single-select
                 formControlName="state"
                 [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskStateEnum' } }"
@@ -127,10 +66,10 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>
+            <nz-form-label [nzSpan]="8">
               {{ "wmsOuttask.inboundtime" | i18n }}
             </nz-form-label>
-            <nz-form-control>
+            <nz-form-control [nzSpan]="16">
               <input
                 nz-input
                 formControlName="inboundtime"
@@ -143,8 +82,8 @@
         </div>
         <div nz-col [nzSpan]="8">
           <nz-form-item>
-            <nz-form-label>{{ "wmsOuttask.type_name" | i18n }}</nz-form-label>
-            <nz-form-control>
+            <nz-form-label [nzSpan]="8">{{ "wmsOuttask.type_name" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
               <app-ina-single-select
                 formControlName="type"
                 [apiProps]="{ extraParams: { pcode: 'WarehouseOutTaskTypeEnum' } }"
@@ -182,13 +121,77 @@
             </nz-form-control>
           </nz-form-item>
         </div> -->
-        
+      </div>
+      <div class="form-title mb8">{{'placard.customizeSet'|i18n}}</div>
+      <div nz-row [nzGutter]="12">
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{ "whTaskOut.pwb_code" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="workbill_key"
+                [ngZorroProps]="{ label: 'code' }"
+                [apiProps]="{ url: 'admin/WorkBill/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{ "whTaskOut.psi_key" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="psi_key"
+                [apiProps]="{ url: 'admin/styleinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{ "whTaskOut.pci_key" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="pci_key"
+                [apiProps]="{ url: 'admin/colorinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{ "whTaskOut.psz_key" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="psz_key"
+                [apiProps]="{ url: 'admin/sizeinfo/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="8">{{ "wmsTest.shipping_space" | i18n }}</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <app-ina-single-select
+                #customFieldsComponent
+                formControlName="current_infeed_key"
+                [apiProps]="{ url: 'admin/w_layoutstructure/Option' }"
+              ></app-ina-single-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
         <!-- 自定义组件 -->
         <ng-container *ngFor="let item of dynamicFields">
           <div nz-col [nzSpan]="8">
             <nz-form-item>
-              <nz-form-label>{{ item.name }}</nz-form-label>
-              <nz-form-control>
+              <nz-form-label [nzSpan]="8">{{ item.name }}</nz-form-label>
+              <nz-form-control [nzSpan]="16">
                 <!-- 扩展后端下拉 extendselect -->
                 <!-- admin/w_customattributevalue/Option?keywords=&extend=bf91887b-dc06-48bb-8733-25049ed6442b&page=1&pagesize=20 -->
                 <!-- name key -->
