@@ -6686,7 +6686,6 @@
         }        
     ],
     "wmsInventoryoutbound": [
-        
         {
             "name": "款号",
             "code": "psi_code"
@@ -6720,6 +6719,11 @@
             "name": "仓位",
             "noshow": true,
             "code": "shipping_space"
+        },
+        {
+            "name": "出库条件",
+            "noshow": true,
+            "code": "outbound_condition"
         }
     ]
 }
