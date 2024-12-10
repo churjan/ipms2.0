@@ -6685,7 +6685,7 @@
             "code": "pwb_code"
         }        
     ],
-    "wmsTest": [
+    "wmsInventoryoutbound": [
         
         {
             "name": "款号",

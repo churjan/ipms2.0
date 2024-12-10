@@ -4,17 +4,17 @@ import { ListTemplateComponent } from '~/shared/common/base/list-template.compon
 import { CrudComponent } from '~/shared/common/crud/crud.component';
 import { OutboundTaskComponent } from './outbound-task/outbound-task.component';
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.less'],
+  selector: 'app-inventory-outbound',
+  templateUrl: './inventory-outbound.component.html',
+  styleUrls: ['./inventory-outbound.component.less'],
 })
-export class TestComponent extends ListTemplateComponent {
+export class InventoryOutboundComponent extends ListTemplateComponent {
   @ViewChild('outboundTask') outboundTask:OutboundTaskComponent;
   @ViewChild('controlComponent') controlComponent;
   @ViewChild('crud') crud:CrudComponent;
   constructor(public router: Router) {
     super();
-    this.modularInit('wmsTest', router.url);
+    this.modularInit('wmsInventoryoutbound', router.url);
     this.url = router.url.replace(/\//g, '_');
     if (this.url.indexOf('_') == 0) {
       this.url = this.url.substring(1, this.url.length);

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TestComponent } from './test.component';
+import { InventoryOutboundComponent } from './inventory-outbound.component';
 import { environment } from '@/environments/environment';
 
 const routes: Routes = [
   {
-    path: 'wms/test',
-    component: TestComponent,
-    data: environment.routersData.wms['test'],
+    path: 'wms/inventoryoutbound',
+    component: InventoryOutboundComponent,
+    data: environment.routersData.wms['inventoryoutbound'],
   },
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TestRoutingModule {}
+export class InventoryOutboundRoutingModule {}

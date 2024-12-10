@@ -562,7 +562,7 @@
         "psz_name",
         "count"     
     ],
-    "wmsTest": [
+    "wmsInventoryoutbound": [
         "psi_code",
         "psi_name",
         "pci_name",

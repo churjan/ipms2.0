@@ -1547,7 +1547,7 @@
             "endtime"
         ]
     },
-    "wmsTest": {
+    "wmsInventoryoutbound": {
         "title": "库存统计报表",
         "url": "admin/Report/w_CustomWarehouseInventoryReport/GetPageList",
         "otherUrl": {},

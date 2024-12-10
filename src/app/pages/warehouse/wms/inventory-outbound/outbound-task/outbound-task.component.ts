@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
 import { AppService } from '~/shared/services/app.service';
 import { CommonService } from '~/shared/services/http/common.service';
 import { UtilService } from '~/shared/services/util.service';
-import { TestService } from '../test.service';
+import { InventoryOutboundService } from '../inventory-outbound.service';
 import { TransferDirection, TransferItem } from 'ng-zorro-antd/transfer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { InaSingleSelectComponent } from '~/shared/components/ina-single-select/ina-single-select.component';
@@ -46,7 +46,7 @@ export class OutboundTaskComponent implements OnInit {
     private appService: AppService,
     private commonService: CommonService,
     private Service: UtilService,
-    private ts: TestService,
+    private ios: InventoryOutboundService,
     private message: NzMessageService
   ) {
     this.validateForm = this.fb.group({
@@ -102,7 +102,7 @@ export class OutboundTaskComponent implements OnInit {
 
   // 创建动态表单字段
   createDynamicFields() {
-    this.ts.fetchDynamicFields().then((data: any) => {
+    this.ios.fetchDynamicFields().then((data: any) => {
       this.dynamicFields = data;
       this.dynamicFields.forEach((item) => {
         this.validateForm.addControl(item.field, new FormControl(null));
@@ -243,10 +243,8 @@ export class OutboundTaskComponent implements OnInit {
       ...rawFormValue,
       routes: stationSelected,
     };
-    console.log(params);
-    return
     this.isSubmitting = true;
-    this.ts
+    this.ios
       .submitData(params)
       .then(() => {
         this.editDone.emit(true);

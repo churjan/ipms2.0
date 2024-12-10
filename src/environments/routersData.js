@@ -191,7 +191,7 @@ export default {
         skuprocess: { animation: "WarehouseSkuprocess", keepAlive: true },
         abnormaleventreport: { animation: "WarehouseAbnormaleventreport", keepAlive: true },
         countingdemand: { animation: "WarehouseCountingdemand", keepAlive: true },
-        test: { animation: "WarehouseTest", keepAlive: true },
+        inventoryoutbound: { animation: "WarehouseInventoryoutbound", keepAlive: true },
 
 
     }

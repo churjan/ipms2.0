@@ -4,7 +4,7 @@ import { RequestService } from '~/shared/services/request.service';
 @Injectable({
   providedIn: 'root',
 })
-export class TestService {
+export class InventoryOutboundService {
   constructor(private request: RequestService) {}
 
   fetchData(key) {
