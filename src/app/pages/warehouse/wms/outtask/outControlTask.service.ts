@@ -143,11 +143,13 @@ export class OutControlTaskService {
             {
                 title: this.appService.translate("wmsOutcontrol.name"),
                 code: "name",
+                ellipsis:true,
                 width: "160px"
             },
             {
                 title: this.appService.translate("wmsOutcontrol.code"),
-                code: "code"
+                code: "code",
+                width: "160px"
             },
             {
                 title: this.appService.translate("wmsOutcontrol.outControl"),
@@ -155,7 +157,9 @@ export class OutControlTaskService {
             },
             {
                 title: this.appService.translate("wmsOutcontrol.wwor_name"),
-                code: "wwor_name"
+                code: "wwor_name",
+                ellipsis:true,
+                width: "160px"
             },
             {
                 title: this.appService.translate("wmsOutcontrol.state_name"),
@@ -170,6 +174,12 @@ export class OutControlTaskService {
             {
                 title: this.appService.translate("wmsOuttask.type_name"),
                 code: "type_name",
+            },
+            {
+                title: this.appService.translate("wmsOuttask.condition_names"),
+                width: "200px",
+                ellipsis:true,
+                code: "condition_names",
             },
             {
                 title: this.appService.translate("wmsOutcontrol.createtime"),

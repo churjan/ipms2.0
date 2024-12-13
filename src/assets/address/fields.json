@@ -4727,6 +4727,11 @@
             "code": "statusChangeWarn",
             "noshow": true,
             "name": "处于[关闭、完成]状态不允许修改"
+        },
+        {
+            "name": "条件内容",
+            "noshow": true,
+            "code": "condition_names"
         }
     ],
     "wmsOutboundplan": [
