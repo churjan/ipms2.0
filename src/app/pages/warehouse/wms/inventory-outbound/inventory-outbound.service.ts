@@ -36,7 +36,20 @@ export class InventoryOutboundService {
   submitData(data) {
     return new Promise((resolve, reject) => {
       this.request
-        .post('/admin/w_WarehouseOutTask/extend/save',data)
+        .post('/admin/w_WarehouseOutTask/extend/save', data)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  fetchSystemParams(code) {
+    return new Promise((resolve, reject) => {
+      this.request
+        .get(`/admin/systemparameters?code=${code}`)
         .then((response) => {
           resolve(response);
         })
