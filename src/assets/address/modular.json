@@ -1548,7 +1548,7 @@
         ]
     },
     "wmsInventoryoutbound": {
-        "title": "库存统计报表",
+        "title": "库存出库",
         "url": "admin/Report/w_CustomWarehouseInventoryReport/GetPageList",
         "otherUrl": {},
         "sumNode": [
