@@ -1,6 +1,6 @@
 <nz-select
   [(ngModel)]="selectedValue"
-  (ngModelChange)="onChange($event)"
+  (ngModelChange)="updateValueOnChange($event)"
   [nzPlaceHolder]="processedNgZorroProps.placeholder"
   [nzAllowClear]="processedNgZorroProps.isAllowClear"
   [nzDisabled]="disabled"

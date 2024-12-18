@@ -25,6 +25,7 @@
   <app-ina-single-select
     [(ngModel)]="crud.seniorModel.control_key"
     (ngModelChange)="crud.Search()"
+    (retrieveObjectOnValueChange)="onSelectChange($event)"
     [ngZorroProps]="{ width: '150px', placeholder: '请选择库区', isAllowClear: false, isSelectFirstValue: true }"
     [apiProps]="{ url: 'admin/w_WarehouseOutControl/Option' }"
   ></app-ina-single-select>

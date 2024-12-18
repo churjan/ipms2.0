@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { merge as _merge, cloneDeep as _cloneDeep } from 'lodash';
 import { RequestService } from '~/shared/services/request.service';
@@ -37,6 +37,7 @@ interface ApiProps {
   ],
 })
 export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
+  @Output() retrieveObjectOnValueChange = new EventEmitter<any>(); //值发生变化时获取值对应的对象
   // ngzorro 相关属性
   @Input() ngZorroProps: ngZorroProps;
   processedNgZorroProps: ngZorroProps;
@@ -83,11 +84,10 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
     const customOptionList = JSON.parse(this.processedNgZorroProps.customOptionList || null);
     if (!customOptionList) {
       this.fetchList().then(() => {
-        if(this.processedNgZorroProps.isSelectFirstValue){
+        if (this.processedNgZorroProps.isSelectFirstValue) {
           this.selectedValue = this.optionList[0][this.processedNgZorroProps.value];
-          this.onChange(this.selectedValue);
+          this.updateValueOnChange(this.selectedValue);
         }
-        
       });
     } else {
       // 如果有自定义选项列表，则使用自定义列表
@@ -150,6 +150,11 @@ export class InaSingleSelectComponent implements ControlValueAccessor, OnInit {
   isHasCustomOptionList(): boolean {
     // 如果有自定义选项列表，则不再触发接口请求
     return !!this.processedNgZorroProps.customOptionList;
+  }
+
+  updateValueOnChange(value) {
+    this.onChange(value);
+    this.retrieveObjectOnValueChange.emit(this.selectedValueObj);
   }
 
   onChange: any = () => {};

@@ -30,6 +30,10 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
     // });
   }
 
+  onSelectChange(valueObj){
+    console.log(valueObj)
+  }
+
   onReset() {}
 
   btnEvent(ev) {
