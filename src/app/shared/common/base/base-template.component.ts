@@ -38,7 +38,7 @@ export class BaseTemplateComponent implements OnInit {
   _authService: AuthService;
   // _pop: PopupsService;
   /**模块对象 */
-  @Input() modular: any;
+  @Input() modular: any = {};
   /**模块名 */
   fieldcode: string = '';
   /**字段 */
