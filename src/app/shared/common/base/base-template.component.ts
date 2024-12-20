@@ -69,6 +69,8 @@ export class BaseTemplateComponent implements OnInit {
   project = sessionStorage.project;
   /**菜单 */
   menuData
+
+  isDymanicModularNameMode = false; // 是否动态模块名模式
   print = (v) => { return v.toLowerCase() }
   ngOnInit() { }
   GetList() { }
@@ -78,6 +80,9 @@ export class BaseTemplateComponent implements OnInit {
   }
   /**页面文字数据获取 */
   modularInit(modularName, url?, isget = true, language = 'zh') {
+    if(this.isDymanicModularNameMode){
+      this.columns = [];
+    }
 
     // let translatelist = new Array();
     // let slow=AppConfig.slow.find(s=>s.modular==modularName);

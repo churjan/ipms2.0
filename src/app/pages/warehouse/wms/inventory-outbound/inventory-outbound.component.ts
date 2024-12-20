@@ -4,6 +4,8 @@ import { ListTemplateComponent } from '~/shared/common/base/list-template.compon
 import { CrudComponent } from '~/shared/common/crud/crud.component';
 import { OutboundTaskComponent } from './outbound-task/outbound-task.component';
 import { InventoryOutboundService } from './inventory-outbound.service';
+import { AppConfig, modularList } from '~/shared/services/AppConfig.service';
+
 @Component({
   selector: 'app-inventory-outbound',
   templateUrl: './inventory-outbound.component.html',
@@ -13,6 +15,10 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
   @ViewChild('outboundTask') outboundTask: OutboundTaskComponent;
   @ViewChild('controlComponent') controlComponent;
   @ViewChild('crud') crud: CrudComponent;
+
+  isDymanicModularNameMode=true;
+  modularNamePrefix = 'wmsInventoryoutbound';
+
   constructor(public router: Router, private ios: InventoryOutboundService) {
     super();
     this.modularInit('wmsInventoryoutbound', router.url);
@@ -23,15 +29,37 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
   }
 
   ngOnInit() {
-    // this.ios.fetchSystemParams('warehouseOutStockDisplayColumns').then((res: any) => {
-    //   const value = JSON.parse(res.data[0]?.value ?? null);
-    //   console.log(value);
-    //   console.log(typeof value);
-    // });
+    this.ios.fetchSystemParams('warehouseOutStockDisplayColumns').then((res: any) => {
+      const parsedData = JSON.parse(res.data[0]?.value ?? null);
+      if (parsedData) {
+        for (let key in parsedData) {
+          if (key === 'allData') continue;
+          const dynamicModularName = `${this.modularNamePrefix}-${key}`;
+          AppConfig['columns'][dynamicModularName] = parsedData[key];
+          AppConfig['fields'][dynamicModularName] = AppConfig['fields'][this.modularNamePrefix];
+          modularList[dynamicModularName] = modularList[this.modularNamePrefix];
+
+          // 删除缓存
+          // const AllColumns = JSON.parse(localStorage.getItem('AllColumns'));
+          // if (AllColumns) {
+          //   const column = AllColumns[dynamicModularName];
+          //   if (column) {
+          //     delete AllColumns[dynamicModularName];
+          //     localStorage.setItem('AllColumns', JSON.stringify(AllColumns));
+          //   }
+          // }
+          // localStorage.deleteItem('setColumns2');
+        }
+      }
+    });
   }
 
-  onSelectChange(valueObj){
-    console.log(valueObj)
+  onSelectChange(valueObj) {
+    const dynamicModularName = `${this.modularNamePrefix}-${valueObj.code}`;
+    this.modularInit(dynamicModularName, this.url);
+    setTimeout(() => {
+      this.crud.GetList();
+    }, 100);
   }
 
   onReset() {}
