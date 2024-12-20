@@ -68,6 +68,8 @@ export class CrudComponent extends ListTemplateComponent {
     @Input() KeyQuery: ElementRef
     /**高级查询对象 */
     @Input() seniorModel: any = {};
+    /**必传字段，重置时不会被清除 */ 
+    @Input() requiredModel: any = {};
 
     @Input() isAddExpParams: boolean = false;
 
@@ -261,7 +263,7 @@ export class CrudComponent extends ListTemplateComponent {
         const that = this;
         let Model = Object.assign({ url: this.modular[this.listFun] ? this.modular[this.listFun] : this.otherUrl[this.listFun], other: other, data: null })
         let _smodel: any = {};
-        let SearchModel = Object.assign({}, this.SearchModel, this.seniorModel)
+        let SearchModel = Object.assign({}, this.SearchModel, this.seniorModel,this.requiredModel)
         for (let k in SearchModel) {
             if (UtilService.isNotEmpty(SearchModel[k])) { _smodel[k] = SearchModel[k]; }
             if (that.SearchModel[k] == 0) { _smodel[k] = this.SearchModel[k]; }
