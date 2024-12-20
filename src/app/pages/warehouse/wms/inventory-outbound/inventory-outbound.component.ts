@@ -30,7 +30,7 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
   }
 
   ngOnInit() {
-    this.ios.fetchSystemParams('warehouseOutStockDisplayColumns').then((res: any) => {
+    this.ios.fetchSystemParams('WarehouseOutStockDisplayColumns').then((res: any) => {
       const parsedData = JSON.parse(res.data[0]?.value ?? null);
       if (parsedData) {
         for (let key in parsedData) {
