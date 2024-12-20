@@ -73,8 +73,8 @@ export class OutboundTaskComponent implements OnInit {
     });
   }
 
-  async open(record: any = {}) {
-    const columns = JSON.parse(localStorage.getItem('AllColumns'))?.wmsInventoryoutbound.reduce((acc, item) => {
+  async open(record: any = {},columnName) {
+    const columns = JSON.parse(localStorage.getItem('AllColumns'))?.[columnName].reduce((acc, item) => {
       if (item.check) {
         acc.push(item.coums);
       }

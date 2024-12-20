@@ -234,6 +234,9 @@ export class CrudComponent extends ListTemplateComponent {
     constructor(private authService: AuthService) { super() }
     /**初始化 */
     ngOnInit(): void {
+        this.init();
+    }
+    init(){
         if (!localStorage.AllColumns) localStorage.AllColumns = '{}';
         this.AllColumns = JSON.parse(localStorage.AllColumns)[this.jsonname];
         if (this.isCache == true && this.getBody && this.getBody.columns) {
@@ -248,7 +251,7 @@ export class CrudComponent extends ListTemplateComponent {
             this.keywordPlaceholder = this.getTipsMsg("inputdata.input_xx2", this.getTipsMsg("placard.keyword"))
         }
         // this.AllColumns.forChild(ac => ac.check = this.columns.find(c => c.coums == ac.coums) ? true : false);
-        this.AllColumns.forEach(ac => ac.widthnum = ac.widthnum ? ac.widthnum : parseInt(ac.width.replace('px')));
+        this.AllColumns?.forEach(ac => ac.widthnum = ac.widthnum ? ac.widthnum : parseInt(ac.width.replace('px')));
         this.fieldcode = this.jsonname;
         this.sumFile = this.modular.sumNode;
         setTimeout(() => {

@@ -16,12 +16,13 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
   @ViewChild('controlComponent') controlComponent;
   @ViewChild('crud') crud: CrudComponent;
 
-  isDymanicModularNameMode=true;
+  isDymanicModularNameMode = true;
   modularNamePrefix = 'wmsInventoryoutbound';
+  dynamicModularName = '';
 
   constructor(public router: Router, private ios: InventoryOutboundService) {
     super();
-    this.modularInit('wmsInventoryoutbound', router.url);
+    // this.modularInit('wmsInventoryoutbound', router.url);
     this.url = router.url.replace(/\//g, '_');
     if (this.url.indexOf('_') == 0) {
       this.url = this.url.substring(1, this.url.length);
@@ -38,26 +39,33 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
           AppConfig['columns'][dynamicModularName] = parsedData[key];
           AppConfig['fields'][dynamicModularName] = AppConfig['fields'][this.modularNamePrefix];
           modularList[dynamicModularName] = modularList[this.modularNamePrefix];
-
-          // 删除缓存
-          // const AllColumns = JSON.parse(localStorage.getItem('AllColumns'));
-          // if (AllColumns) {
-          //   const column = AllColumns[dynamicModularName];
-          //   if (column) {
-          //     delete AllColumns[dynamicModularName];
-          //     localStorage.setItem('AllColumns', JSON.stringify(AllColumns));
-          //   }
-          // }
-          // localStorage.deleteItem('setColumns2');
         }
       }
     });
   }
 
   onSelectChange(valueObj) {
-    const dynamicModularName = `${this.modularNamePrefix}-${valueObj.code}`;
-    this.modularInit(dynamicModularName, this.url);
+    this.dynamicModularName = `${this.modularNamePrefix}-${valueObj.code}`;
+
+    /**
+     * 删除缓存 start
+     */
+    const AllColumns = JSON.parse(localStorage.getItem('AllColumns'));
+    if (AllColumns) {
+      const column = AllColumns[this.dynamicModularName];
+      if (column) {
+        delete AllColumns[this.dynamicModularName];
+        localStorage.setItem('AllColumns', JSON.stringify(AllColumns));
+      }
+    }
+    localStorage.removeItem('setColumns2');
+    /**
+     * 删除缓存 end
+     */
+
+    this.modularInit(this.dynamicModularName, this.url);
     setTimeout(() => {
+      this.crud.init();
       this.crud.GetList();
     }, 100);
   }
@@ -68,7 +76,7 @@ export class InventoryOutboundComponent extends ListTemplateComponent {
     switch (ev.action) {
       case 'outboundTask':
         ev.node.control_key = this.crud.seniorModel.control_key;
-        this.outboundTask.open(ev);
+        this.outboundTask.open(ev,this.dynamicModularName);
         break;
 
       default:
